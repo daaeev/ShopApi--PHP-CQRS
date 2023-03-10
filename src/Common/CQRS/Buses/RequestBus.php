@@ -3,9 +3,7 @@
 namespace Project\Common\CQRS\Buses;
 
 use DomainException;
-use Project\Common\CQRS\Handlers;
 use Psr\Container\ContainerInterface;
-use Webmozart\Assert\Assert;
 
 class RequestBus implements Interfaces\RequestBus
 {
@@ -14,32 +12,32 @@ class RequestBus implements Interfaces\RequestBus
 
     public function __construct(array $bindings, ContainerInterface $container)
     {
-        Assert::allIsInstanceOf(
-            $bindings,
-            Handlers\Interfaces\RequestHandler::class,
-            'All handlers must be RequestHandler instances'
-        );
-
         $this->bindings = $bindings;
         $this->container = $container;
     }
 
-    public function dispatch($command): mixed
+    public function dispatch(object $command): mixed
     {
         if (!$this->canDispatch($command)) {
             throw new DomainException('Cant dispatch command');
         }
 
-        return $this->retrieveHandler($command)->handle($command);
+        $handler = $this->retrieveHandler($command);
+
+        if (is_callable($handler)) {
+            return call_user_func($handler, $command);
+        }
+
+        throw new DomainException('Cant execute request handler');
     }
 
     public function canDispatch($command): bool
     {
-        return isset($this->bindings[$command]);
+        return isset($this->bindings[$command::class]);
     }
 
-    private function retrieveHandler($command): Handlers\Interfaces\RequestHandler
+    private function retrieveHandler($command): mixed
     {
-        $this->container->get($this->bindings[$command]);
+        return $this->container->get($this->bindings[$command::class]);
     }
 }

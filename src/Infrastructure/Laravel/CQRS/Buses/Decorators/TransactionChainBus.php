@@ -15,7 +15,7 @@ class TransactionChainBus implements Interfaces\ChainBus
         $this->decorated = $decorated;
     }
 
-    public function dispatch($command): mixed
+    public function dispatch(object $command): mixed
     {
         DB::beginTransaction();
 

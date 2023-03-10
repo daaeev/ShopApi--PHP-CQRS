@@ -9,7 +9,7 @@ class ChainBus implements Interfaces\ChainBus
 {
     private array $buses = [];
 
-    public function dispatch($command): mixed
+    public function dispatch(object $command): mixed
     {
         foreach ($this->buses as $bus) {
             if ($bus->canDispatch($command)) {
