@@ -5,7 +5,7 @@ namespace Project\Common\CQRS\Buses;
 use DomainException;
 use Project\Common\CQRS\Buses\Interfaces\RequestBus;
 
-class ChainBus implements Interfaces\ChainBus
+class CompositeBus implements Interfaces\ChainBus
 {
     private array $buses = [];
 

@@ -4,7 +4,7 @@ namespace Project\Common\CQRS\Buses;
 
 use Project\Common\CQRS\Buses\Interfaces\RequestBus;
 
-class ChainEventBus implements Interfaces\ChainBus
+class CompositeEventBus implements Interfaces\ChainBus
 {
     private array $buses = [];
 
