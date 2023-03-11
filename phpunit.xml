@@ -5,11 +5,14 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
+        <testsuite name="Project">
+            <directory suffix="Test.php">./src/Tests</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="ProjectUnit">
+            <directory suffix="Test.php">./src/Tests/Unit</directory>
+        </testsuite>
+        <testsuite name="ProjectLaravelTests">
+            <directory suffix="Test.php">./src/Tests/Laravel</directory>
         </testsuite>
     </testsuites>
     <coverage>
