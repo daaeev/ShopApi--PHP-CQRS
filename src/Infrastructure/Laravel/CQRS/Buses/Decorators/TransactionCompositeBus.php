@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Project\Common\CQRS\Buses\Interfaces;
 use Project\Common\CQRS\Buses\Interfaces\RequestBus;
 
-class TransactionChainBus implements Interfaces\ChainBus
+class TransactionCompositeBus implements Interfaces\ChainBus
 {
     private Interfaces\ChainBus $decorated;
 

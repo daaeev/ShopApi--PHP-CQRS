@@ -4,7 +4,7 @@ namespace Project\Infrastructure\Laravel;
 
 use Project\Common\CQRS\Buses\CompositeBus;
 use Project\Common\CQRS\Buses\CompositeEventBus;
-use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionChainBus;
+use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionCompositeBus;
 use Project\Modules\Test\Infrastructure\Laravel\TestServiceProvider;
 
 class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -28,10 +28,10 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerBuses()
     {
         $this->app->singleton('CommandBus', function () {
-            return new TransactionChainBus(new CompositeBus());
+            return new TransactionCompositeBus(new CompositeBus());
         });
         $this->app->singleton('QueryBus', function () {
-            return new TransactionChainBus(new CompositeBus());
+            return new TransactionCompositeBus(new CompositeBus());
         });
         $this->app->singleton('EventBus', function () {
             return new CompositeEventBus();
