@@ -19,7 +19,7 @@ class RequestBus implements Interfaces\RequestBus
     public function dispatch(object $command): mixed
     {
         if (!$this->canDispatch($command)) {
-            throw new DomainException('Cant dispatch command');
+            throw new DomainException('Cant dispatch command ' . $command::class);
         }
 
         $handler = $this->retrieveHandler($command);
@@ -28,7 +28,7 @@ class RequestBus implements Interfaces\RequestBus
             return call_user_func($handler, $command);
         }
 
-        throw new DomainException('Cant execute request handler');
+        throw new DomainException('Cant execute' . $handler::class . 'request handler');
     }
 
     public function canDispatch($command): bool

@@ -16,14 +16,12 @@ class ChainBus implements Interfaces\ChainBus
                 return $bus->dispatch($command);
             }
         }
+
+        throw new DomainException('Cant dispatch command ' . $command::class);
     }
 
     public function registerBus(RequestBus $bus): void
     {
-        if (in_array($bus, $this->buses)) {
-            throw new DomainException('Bus already registered');
-        }
-
         $this->buses[] = $bus;
     }
 }
