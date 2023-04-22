@@ -5,6 +5,8 @@
          colors="true"
 >
     <testsuites>
+        <!--GLOBAL-->
+
         <testsuite name="Project">
             <directory suffix="Test.php">./src/Tests</directory>
         </testsuite>
@@ -13,6 +15,24 @@
         </testsuite>
         <testsuite name="ProjectLaravelTests">
             <directory suffix="Test.php">./src/Tests/Laravel</directory>
+        </testsuite>
+
+        <!--UNIT-->
+
+        <!--Common entities-->
+        <testsuite name="ProjectUnitCommonEntities">
+            <directory suffix="Test.php">./src/Tests/Unit/Entity</directory>
+        </testsuite>
+        <!--CQRS-->
+        <testsuite name="ProjectUnitCQRS">
+            <directory suffix="Test.php">./src/Tests/Unit/CQRS</directory>
+        </testsuite>
+
+        <!--LARAVEL-->
+
+        <!--CQRS-->
+        <testsuite name="ProjectLaravelCQRS">
+            <directory suffix="Test.php">./src/Tests/Laravel/CQRS</directory>
         </testsuite>
     </testsuites>
     <coverage>
@@ -24,8 +44,8 @@
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
-        <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <env name="DB_DATABASE" value=":memory:"/> -->
+         <env name="DB_CONNECTION" value="sqlite"/>
+         <env name="DB_DATABASE" value=":memory:"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
