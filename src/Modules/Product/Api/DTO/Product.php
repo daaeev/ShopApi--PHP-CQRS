@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Product\Api\DTO;
 
-class Product
+use Project\Common\Utils;
+
+class Product implements Utils\DTO
 {
     public function __construct(
         public readonly int $id,
