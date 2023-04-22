@@ -9,12 +9,12 @@ class IntegerId extends Id
         parent::__construct($id);
     }
 
-    public static function random(): Id
+    public static function random(): IntegerId
     {
         return new self(random_int(1, 9999));
     }
 
-    public static function next(): Id
+    public static function next(): IntegerId
     {
         return new self(null);
     }

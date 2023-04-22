@@ -5,7 +5,7 @@ namespace Project\Common\Entity\Id;
 abstract class Id
 {
     public function __construct(
-        public readonly mixed $id
+        private mixed $id
     ) {}
 
     public function equalsTo(self $other): bool
@@ -19,6 +19,11 @@ abstract class Id
         }
 
         return $other->id === $this->id;
+    }
+
+    public function getId(): mixed
+    {
+        return $this->id;
     }
 
     abstract public static function random(): self;

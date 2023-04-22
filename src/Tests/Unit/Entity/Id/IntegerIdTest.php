@@ -11,23 +11,23 @@ class IntegerIdTest extends \PHPUnit\Framework\TestCase
     {
         $id = new IntegerId(23);
 
-        $this->assertEquals(23, $id->id);
+        $this->assertEquals(23, $id->getId());
         $this->assertTrue($id->equalsTo(new IntegerId(23)));
         $this->assertfalse($id->equalsTo(new IntegerId(1)));
 
         $nullableId = new IntegerId(null);
 
-        $this->assertNull($nullableId->id);
+        $this->assertNull($nullableId->getId());
         $this->assertFalse($nullableId->equalsTo(new IntegerId(null)));
         $this->assertFalse($nullableId->equalsTo(new IntegerId(1)));
 
         $nextId = IntegerId::next();
 
-        $this->assertNull($nextId->id);
+        $this->assertNull($nextId->getId());
 
         $randomId = IntegerId::random();
 
-        $this->assertIsInt($randomId->id);
+        $this->assertIsInt($randomId->getId());
     }
 
     public function testCreateWithNotIntegerIdValue()
