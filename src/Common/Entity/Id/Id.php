@@ -14,6 +14,10 @@ abstract class Id
             return false;
         }
 
+        if (static::class !== $other::class) {
+            return false;
+        }
+
         return $other->id === $this->id;
     }
 
