@@ -114,6 +114,16 @@ class Product implements Events\EventRoot
         return $this->code;
     }
 
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function getAvailability(): Availability
+    {
+        return $this->availability;
+    }
+
     public function getColors(): array
     {
         return $this->colors;
