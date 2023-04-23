@@ -26,7 +26,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Project\\": "src/"
+            "Project\\": "src/",
+            "Tests\\": "tests/"
         }
     },
     "scripts": {

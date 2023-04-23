@@ -13,7 +13,7 @@
         <testsuite name="ProjectUnit">
             <directory suffix="Test.php">./src/Tests/Unit</directory>
         </testsuite>
-        <testsuite name="ProjectLaravelTests">
+        <testsuite name="ProjectLaravel">
             <directory suffix="Test.php">./src/Tests/Laravel</directory>
         </testsuite>
 
@@ -35,11 +35,6 @@
             <directory suffix="Test.php">./src/Tests/Laravel/CQRS</directory>
         </testsuite>
     </testsuites>
-    <coverage>
-        <include>
-            <directory suffix=".php">./app</directory>
-        </include>
-    </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
