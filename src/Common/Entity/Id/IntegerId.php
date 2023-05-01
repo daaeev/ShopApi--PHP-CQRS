@@ -11,11 +11,11 @@ class IntegerId extends Id
 
     public static function random(): IntegerId
     {
-        return new self(random_int(1, 9999));
+        return new static(random_int(1, 9999));
     }
 
     public static function next(): IntegerId
     {
-        return new self(null);
+        return new static(null);
     }
 }

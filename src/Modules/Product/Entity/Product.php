@@ -30,7 +30,7 @@ class Product implements Events\EventRoot
         $this->name = $name;
         $this->code = $code;
         $this->prices = $prices;
-        $this->active = false;
+        $this->active = true;
         $this->availability = Availability::IN_STOCK;
         $this->colors = [];
         $this->sizes = [];
@@ -41,24 +41,37 @@ class Product implements Events\EventRoot
 
     private function guardCorrectConstructData(): void
     {
-        Assert::notEmpty($this->name, 'Product name can not be empty');
-        Assert::notEmpty($this->code, 'Product code can not be empty');
+        $this->guardNotEmptyName();
+        $this->guardNotEmptyCode();
         Assert::allIsInstanceOf(
             $this->prices,
             Price\Price::class,
             'Product prices must be instances if ' . Price\Price::class
         );
+        $this->guardContainsAllCurrencyPricesIfActive();
     }
 
-    private function keepPricesUnique(): void
+    private function guardNotEmptyName(): void
     {
-        $prices = [];
+        Assert::notEmpty($this->name, 'Product name can not be empty');
+    }
 
-        foreach ($this->prices as $price) {
-            $prices[$price->getCurrency()->value] = $price;
+    private function guardNotEmptyCode(): void
+    {
+        Assert::notEmpty($this->code, 'Product code can not be empty');
+    }
+
+    private function guardContainsAllCurrencyPricesIfActive(): void
+    {
+        if (!$this->active) {
+            return;
         }
 
-        $this->prices = $prices;
+        foreach (Price\Currency::active() as $currency) {
+            if (!$this->priceByCurrencyExists($currency)) {
+                throw new DomainException('Product does not contain price for ' . $currency->value . ' currency');
+            }
+        }
     }
 
     private function priceByCurrencyExists(Price\Currency $currency): bool
@@ -72,8 +85,23 @@ class Product implements Events\EventRoot
         return false;
     }
 
+    private function keepPricesUnique(): void
+    {
+        $prices = [];
+
+        foreach ($this->prices as $price) {
+            $prices[$price->getCurrency()->value] = $price;
+        }
+
+        $this->prices = $prices;
+    }
+
     public function delete(): void
     {
+        if ($this->active) {
+            throw new DomainException('Cant delete active product. You need to disable it before deleting');
+        }
+
         $this->addEvent(new ProductEvents\ProductDeleted($this));
     }
 
@@ -84,7 +112,8 @@ class Product implements Events\EventRoot
         }
 
         $this->name = $name;
-        $this->addEvent(new ProductEvents\ProductUpdated($this));
+        $this->guardNotEmptyName();
+        $this->updated();
     }
 
     public function setCode(string $code): void
@@ -94,35 +123,37 @@ class Product implements Events\EventRoot
         }
 
         $this->code = $code;
+        $this->guardNotEmptyCode();
         $this->addEvent(new ProductEvents\ProductCodeChanged($this));
+        $this->updated();
     }
 
-    public function setActive(bool $active): void
+    private function updated()
     {
-        if ($active === $this->active) {
+        $this->addEvent(new ProductEvents\ProductUpdated($this));
+    }
+
+    public function activate()
+    {
+        if (true === $this->active) {
             return;
         }
 
-        $this->active = $active;
+        $this->active = true;
         $this->guardContainsAllCurrencyPricesIfActive();
         $this->addEvent(new ProductEvents\ProductActivityChanged($this));
+        $this->updated();
     }
 
-    private function guardContainsAllCurrencyPricesIfActive(): void
+    public function deactivate()
     {
-        if (!$this->active) {
+        if (false === $this->active) {
             return;
         }
 
-        if (count(Price\Currency::active()) !== count($this->prices)) {
-            throw new DomainException('Product must have all prices by active currencies');
-        }
-
-        foreach (Price\Currency::active() as $currency) {
-            if (!$this->priceByCurrencyExists($currency)) {
-                throw new DomainException('Product does not contain price for ' . $currency->value . ' currency');
-            }
-        }
+        $this->active = false;
+        $this->addEvent(new ProductEvents\ProductActivityChanged($this));
+        $this->updated();
     }
 
     public function setAvailability(Availability $availability): void
@@ -133,6 +164,7 @@ class Product implements Events\EventRoot
 
         $this->availability = $availability;
         $this->addEvent(new ProductEvents\ProductAvailabilityChanged($this));
+        $this->updated();
     }
 
     public function setPrices(array $prices): void
@@ -148,11 +180,13 @@ class Product implements Events\EventRoot
         }
 
         $this->prices = $prices;
+        $this->guardContainsAllCurrencyPricesIfActive();
         $this->keepPricesUnique();
         $this->addEvent(new ProductEvents\ProductPricesChanged($this));
+        $this->updated();
     }
 
-    private function samePrices(array $prices): bool
+    public function samePrices(array $prices): bool
     {
         if (count($this->prices) !== count($prices)) {
             return false;
@@ -161,7 +195,7 @@ class Product implements Events\EventRoot
         foreach ($prices as $price) {
             if (
                 empty($this->prices[$price->getCurrency()->value])
-                || $this->prices[$price->getCurrency()->value]->getPrice() !== $price->getPrice()
+                || !$price->equalsTo($this->prices[$price->getCurrency()->value])
             ) {
                 return false;
             }
@@ -184,10 +218,10 @@ class Product implements Events\EventRoot
 
         $this->colors = $colors;
         $this->keepColorsUnique();
-        $this->addEvent(new ProductEvents\ProductUpdated($this));
+        $this->updated();
     }
 
-    private function sameColors(array $colors): bool
+    public function sameColors(array $colors): bool
     {
         if (count($this->colors) !== count($colors)) {
             return false;
@@ -227,10 +261,10 @@ class Product implements Events\EventRoot
 
         $this->sizes = $sizes;
         $this->keepSizesUnique();
-        $this->addEvent(new ProductEvents\ProductUpdated($this));
+        $this->updated();
     }
 
-    private function sameSizes(array $sizes): bool
+    public function sameSizes(array $sizes): bool
     {
         if (count($this->sizes) !== count($sizes)) {
             return false;
@@ -247,7 +281,13 @@ class Product implements Events\EventRoot
 
     private function keepSizesUnique(): void
     {
-        $this->sizes = array_unique($this->sizes);
+        $sizes = [];
+
+        foreach ($this->sizes as $size) {
+            $sizes[$size->value] = $size;
+        }
+
+        $this->sizes = $sizes;
     }
 
     public function getId(): ProductId

@@ -9,6 +9,14 @@ class Price
         private float $price
     ) {}
 
+    public function equalsTo(self $other): bool
+    {
+        return (
+            ($other->getCurrency() === $this->getCurrency())
+            && ($other->getPrice() === $this->getPrice())
+        );
+    }
+
     public function getPrice(): float
     {
         return $this->price;
