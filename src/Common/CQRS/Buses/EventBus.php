@@ -4,8 +4,9 @@ namespace Project\Common\CQRS\Buses;
 
 use DomainException;
 use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
-class EventBus implements Interfaces\RequestBus
+class EventBus implements Interfaces\RequestBus, EventDispatcherInterface
 {
     private array $bindings;
     private ContainerInterface $container;

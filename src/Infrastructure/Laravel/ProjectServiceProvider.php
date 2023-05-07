@@ -4,6 +4,7 @@ namespace Project\Infrastructure\Laravel;
 
 use Project\Common\CQRS\Buses\CompositeBus;
 use Project\Common\CQRS\Buses\CompositeEventBus;
+use Project\Common\Events\DispatchEventsInterface;
 use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionCompositeBus;
 use Project\Modules\Test\Infrastructure\Laravel\TestServiceProvider;
 
@@ -30,11 +31,17 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->singleton('CommandBus', function () {
             return new TransactionCompositeBus(new CompositeBus());
         });
+
         $this->app->singleton('QueryBus', function () {
             return new TransactionCompositeBus(new CompositeBus());
         });
+
         $this->app->singleton('EventBus', function () {
             return new CompositeEventBus();
+        });
+
+        $this->app->resolving(DispatchEventsInterface::class, function ($object, $app) {
+            $object->setDispatcher($app->make('EventBus'));
         });
     }
 }

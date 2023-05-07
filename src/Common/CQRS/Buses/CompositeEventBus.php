@@ -2,9 +2,10 @@
 
 namespace Project\Common\CQRS\Buses;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Common\CQRS\Buses\Interfaces\RequestBus;
 
-class CompositeEventBus implements Interfaces\ChainBus
+class CompositeEventBus implements Interfaces\ChainBus, EventDispatcherInterface
 {
     private array $buses = [];
 
