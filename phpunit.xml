@@ -5,7 +5,7 @@
          colors="true"
 >
     <testsuites>
-        <!--GLOBAL-->
+        <!--SECTION GLOBAL-->
 
         <testsuite name="Project">
             <directory suffix="Test.php">./src/Tests</directory>
@@ -23,7 +23,7 @@
             <directory suffix="Test.php">./src/Tests/Laravel/Modules</directory>
         </testsuite>
 
-        <!--UNIT-->
+        <!--SECTION UNIT-->
 
         <!--Common entities-->
         <testsuite name="ProjectUnitCommonEntities">
@@ -38,11 +38,15 @@
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>
         </testsuite>
 
-        <!--LARAVEL-->
+        <!--SECTION LARAVEL-->
 
         <!--CQRS-->
         <testsuite name="ProjectLaravelCQRS">
             <directory suffix="Test.php">./src/Tests/Laravel/CQRS</directory>
+        </testsuite>
+        <!--Product-->
+        <testsuite name="ProjectLaravelProduct">
+            <directory suffix="Test.php">./src/Tests/Laravel/Modules/Product</directory>
         </testsuite>
     </testsuites>
     <php>

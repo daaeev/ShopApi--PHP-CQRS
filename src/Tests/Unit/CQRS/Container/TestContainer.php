@@ -2,9 +2,9 @@
 
 namespace Project\Tests\Unit\CQRS\Container;
 
-use Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\ContainerInterface;
 
-class TestContainer implements \Psr\Container\ContainerInterface
+class TestContainer implements ContainerInterface
 {
     private array $bindings = [];
 

@@ -40,7 +40,7 @@ class MemoryProductRepository implements ProductRepositoryInterface
             }
 
             if ($item->getCode() === $entity->getCode()) {
-                throw new DomainException('Product code must be unique');
+                throw new DuplicateKeyException('Product code must be unique');
             }
         }
     }

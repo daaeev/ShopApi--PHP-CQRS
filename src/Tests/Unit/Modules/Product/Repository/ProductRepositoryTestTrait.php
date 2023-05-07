@@ -62,7 +62,7 @@ trait ProductRepositoryTestTrait
         $productWithNotUniqueCode = $this->generateProduct();
         $productWithNotUniqueCode->setCode($product->getCode());
         $this->products->add($product);
-        $this->expectException(DomainException::class);
+        $this->expectException(DuplicateKeyException::class);
         $this->products->add($productWithNotUniqueCode);
     }
 
@@ -100,7 +100,7 @@ trait ProductRepositoryTestTrait
         $this->products->add($product);
         $this->products->add($productWithNotUniqueCode);
         $productWithNotUniqueCode->setCode($product->getCode());
-        $this->expectException(DomainException::class);
+        $this->expectException(DuplicateKeyException::class);
         $this->products->update($productWithNotUniqueCode);
     }
 

@@ -5,7 +5,7 @@ namespace Project\Common\Entity\Id;
 abstract class Id
 {
     public function __construct(
-        private mixed $id
+        protected mixed $id
     ) {}
 
     public function equalsTo(self $other): bool

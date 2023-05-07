@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Product\Entity;
 
-class ProductId extends \Project\Common\Entity\Id\IntegerId
+use Project\Common\Entity\Id\IntegerId;
+
+class ProductId extends IntegerId
 {
 
 }
