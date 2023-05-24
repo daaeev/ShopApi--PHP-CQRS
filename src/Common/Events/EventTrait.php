@@ -4,7 +4,7 @@ namespace Project\Common\Events;
 
 trait EventTrait
 {
-    protected array $events;
+    protected array $events = [];
 
     public function flushEvents(): array
     {

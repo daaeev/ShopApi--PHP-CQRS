@@ -33,6 +33,10 @@
         <testsuite name="ProjectUnitCQRS">
             <directory suffix="Test.php">./src/Tests/Unit/CQRS</directory>
         </testsuite>
+        <!--Events-->
+        <testsuite name="ProjectUnitEvents">
+            <directory suffix="Test.php">./src/Tests/Unit/Events</directory>
+        </testsuite>
         <!--Product-->
         <testsuite name="ProjectUnitProduct">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>

@@ -5,7 +5,6 @@ Product:
   - Переработать интерфейсы шин???
 
 Tests:
-  - Events
   - Hydrator
   - Product handlers
   - Collections

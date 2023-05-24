@@ -21,7 +21,7 @@ trait DispatchEventsTrait
 
     private function checkDispatcherInstantiate(): void
     {
-        if (null === $this->dispatcher) {
+        if (!isset($this->dispatcher)) {
             throw new \DomainException('Dispatcher has not been instantiate');
         }
     }
