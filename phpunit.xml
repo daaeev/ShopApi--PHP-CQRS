@@ -23,6 +23,7 @@
             <directory suffix="Test.php">./src/Tests/Laravel/Modules</directory>
         </testsuite>
 
+        <!--END-SECTION-->
         <!--SECTION UNIT-->
 
         <!--Common entities-->
@@ -37,21 +38,30 @@
         <testsuite name="ProjectUnitEvents">
             <directory suffix="Test.php">./src/Tests/Unit/Events</directory>
         </testsuite>
+
+        <!-- MODULES -->
+
         <!--Product-->
         <testsuite name="ProjectUnitProduct">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>
         </testsuite>
 
+        <!--END-SECTION-->
         <!--SECTION LARAVEL-->
 
         <!--CQRS-->
         <testsuite name="ProjectLaravelCQRS">
             <directory suffix="Test.php">./src/Tests/Laravel/CQRS</directory>
         </testsuite>
+
+        <!-- MODULES -->
+
         <!--Product-->
         <testsuite name="ProjectLaravelProduct">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Product</directory>
         </testsuite>
+
+        <!--END-SECTION-->
     </testsuites>
     <php>
         <env name="APP_ENV" value="testing"/>
