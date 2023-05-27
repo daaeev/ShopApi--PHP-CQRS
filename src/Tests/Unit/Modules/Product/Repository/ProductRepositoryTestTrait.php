@@ -2,16 +2,14 @@
 
 namespace Project\Tests\Unit\Modules\Product\Repository;
 
-use DomainException;
 use Project\Modules\Product\Entity\Product;
 use Project\Modules\Product\Entity\Size\Size;
 use Project\Modules\Product\Entity\ProductId;
 use Project\Common\Repository\NotFoundException;
+use Project\Modules\Product\Entity\Color\HexColor;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Tests\Unit\Modules\Product\Entity\Color\TestColor;
 use Project\Modules\Product\Repository\ProductRepositoryInterface;
-use Project\Tests\Unit\Modules\Product\Entity\Color\OtherTestColor;
 
 trait ProductRepositoryTestTrait
 {
@@ -23,8 +21,8 @@ trait ProductRepositoryTestTrait
     {
         $initial = $this->generateProduct();
         $initial->setColors([
-            new TestColor(md5(rand())),
-            new TestColor(md5(rand())),
+            new HexColor(md5(rand())),
+            new HexColor(md5(rand())),
         ]);
         $initial->setSizes([
             Size::S
@@ -72,9 +70,9 @@ trait ProductRepositoryTestTrait
         $this->products->add($initial);
         $added = $this->products->get($initial->getId());
         $added->setColors([
-            new TestColor(md5(rand())),
-            new TestColor(md5(rand())),
-            new OtherTestColor(md5(rand())),
+            new HexColor(md5(rand())),
+            new HexColor(md5(rand())),
+            new HexColor(md5(rand())),
         ]);
         $added->setCode(md5(rand()));
         $added->setName(md5(rand()));
