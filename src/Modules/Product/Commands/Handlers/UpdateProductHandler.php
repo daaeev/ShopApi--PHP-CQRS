@@ -3,18 +3,18 @@
 namespace Project\Modules\Product\Commands\Handlers;
 
 use Project\Modules\Product\Entity;
+use Project\Modules\Product\Api\DTO;
 use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Product\Commands\UpdateProductCommand;
 use Project\Modules\Product\Repository\ProductRepositoryInterface;
-use Project\Modules\Product\Api\DTO;
 
 class UpdateProductHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private ProductRepositoryInterface $products
+        private ProductRepositoryInterface $products,
     ) {}
 
     public function __invoke(UpdateProductCommand $command): void
@@ -35,10 +35,8 @@ class UpdateProductHandler implements DispatchEventsInterface
         $entity->setSizes(array_map(function (string $size) {
             return Entity\Size\Size::from($size);
         }, $command->sizes));
-        $entity->setColors(array_map(function (object $color) {
-            return match ($color::class) {
-                DTO\Colors\HexColor::class => new Entity\Color\HexColor($color->color)
-            };
+        $entity->setColors(array_map(function (DTO\Color $color) {
+            return Entity\Color\ColorTypeMapper::makeByType($color->type, $color->color);
         }, $command->colors));
 
         $this->products->update($entity);

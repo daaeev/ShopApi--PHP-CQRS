@@ -4,18 +4,18 @@ namespace Project\Modules\Product\Api\DTO;
 
 use Project\Common\Utils\Arrayable;
 
-class Price implements Arrayable
+class Color implements Arrayable
 {
     public function __construct(
-        public readonly string $currency,
-        public readonly float $price,
+        public readonly string $color,
+        public readonly string $type
     ) {}
 
     public function toArray(): array
     {
         return [
-            'currency' => $this->currency,
-            'price' => $this->price
+            'color' => $this->color,
+            'type' => $this->type
         ];
     }
 }

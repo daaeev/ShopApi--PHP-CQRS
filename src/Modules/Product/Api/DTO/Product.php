@@ -25,8 +25,12 @@ class Product implements Utils\DTO
             'code' => $this->code,
             'active' => $this->active,
             'availability' => $this->availability,
-            'prices' => $this->prices,
-            'colors' => $this->colors,
+            'prices' => array_map(function (Price $price) {
+                return $price->toArray();
+            }, $this->prices),
+            'colors' => array_map(function (Color $color) {
+                return $color->toArray();
+            }, $this->colors),
             'sizes' => $this->sizes,
         ];
     }

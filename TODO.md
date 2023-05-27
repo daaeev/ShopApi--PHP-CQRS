@@ -6,3 +6,4 @@ Product:
 Tests:
   - Product handlers
   - Collections
+  - ColorTypeMapper

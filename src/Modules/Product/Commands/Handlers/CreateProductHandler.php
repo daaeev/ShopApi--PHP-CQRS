@@ -14,7 +14,7 @@ class CreateProductHandler implements DispatchEventsInterface
     use DispatchEventsTrait;
 
     public function __construct(
-        private ProductRepositoryInterface $products
+        private ProductRepositoryInterface $products,
     ) {}
 
     public function __invoke(CreateProductCommand $command): int
@@ -39,10 +39,8 @@ class CreateProductHandler implements DispatchEventsInterface
         $entity->setSizes(array_map(function (string $size) {
             return Entity\Size\Size::from($size);
         }, $command->sizes));
-        $entity->setColors(array_map(function (object $color) {
-            return match ($color::class) {
-                DTO\Colors\HexColor::class => new Entity\Color\HexColor($color->color)
-            };
+        $entity->setColors(array_map(function (DTO\Color $color) {
+            return Entity\Color\ColorTypeMapper::makeByType($color->type, $color->color);
         }, $command->colors));
 
         $this->products->add($entity);

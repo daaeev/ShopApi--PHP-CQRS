@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Product\Infrastructure\Laravel\Repository;
 
-use DomainException;
 use Project\Modules\Product\Entity;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
@@ -13,7 +12,7 @@ use Project\Modules\Product\Infrastructure\Laravel\Models as Eloquent;
 class ProductRepository implements ProductRepositoryInterface
 {
     public function __construct(
-        private Hydrator $hydrator
+        private Hydrator $hydrator,
     ) {}
 
     public function add(Entity\Product $entity): void
@@ -72,7 +71,7 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $record->colors = array_map(function (Entity\Color\Color $color) {
             return [
-                'className' => $color::class,
+                'type' => Entity\Color\ColorTypeMapper::getType($color),
                 'value' => $color->getColor()
             ];
         }, $entity->getColors());
@@ -138,11 +137,10 @@ class ProductRepository implements ProductRepositoryInterface
         $hydratedColors = [];
 
         foreach ($record->colors as $color) {
-            if (!class_exists($color['className'])) {
-                throw new DomainException('Color class does not exists');
-            }
-
-            $hydratedColors[$color['value']] = new $color['className']($color['value']);
+            $hydratedColors[$color['value']] = Entity\Color\ColorTypeMapper::makeByType(
+                $color['type'],
+                $color['value']
+            );
         }
 
         return $hydratedColors;
