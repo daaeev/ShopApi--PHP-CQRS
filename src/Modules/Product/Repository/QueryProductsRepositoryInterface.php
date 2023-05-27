@@ -2,9 +2,12 @@
 
 namespace Project\Modules\Product\Repository;
 
+use Project\Modules\Product\Api\DTO;
+use Project\Common\Entity\Collections\PaginatedCollection;
+
 interface QueryProductsRepositoryInterface
 {
-    public function get(int $id): array;
+    public function get(int $id): DTO\Product;
 
-    public function list(int $page, int $limit, array $params): array;
+    public function list(int $page, int $limit, array $params = []): PaginatedCollection;
 }
