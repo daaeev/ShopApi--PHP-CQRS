@@ -27,4 +27,9 @@ class ColorTypeMapper
 
         return $type;
     }
+
+    public static function getTypes(): array
+    {
+        return self::$types;
+    }
 }

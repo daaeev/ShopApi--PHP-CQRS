@@ -9,11 +9,13 @@ class DeleteProduct extends ApiRequest
 {
     public function rules()
     {
-
+        return [
+            'id' => 'bail|required|numeric|integer|exists:products,id'
+        ];
     }
 
     public function getCommand(): DeleteProductCommand
     {
-
+        return new DeleteProductCommand($this->validated('id'));
     }
 }
