@@ -1,0 +1,680 @@
+{
+	"info": {
+		"_postman_id": "0bf4862a-044d-434d-a954-bc5a307b15cc",
+		"name": "Project-ShopApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25995983"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test product",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "active",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "availability",
+									"value": "in_stock",
+									"description": "in_stock|preorder|out_stock",
+									"type": "text"
+								},
+								{
+									"key": "prices[0][currency]",
+									"value": "uah",
+									"description": "uah",
+									"type": "text"
+								},
+								{
+									"key": "prices[0][price]",
+									"value": "420",
+									"type": "text"
+								},
+								{
+									"key": "colors[0][color]",
+									"value": "#000000",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "colors[0][type]",
+									"value": "hex",
+									"description": "hex",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "sizes[]",
+									"value": "l",
+									"description": "xs|s|m|l|xl|xll",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/products",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test product",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "active",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "availability",
+											"value": "in_stock",
+											"description": "in_stock|preorder|out_stock",
+											"type": "text"
+										},
+										{
+											"key": "colors[0][color]",
+											"value": "#000000",
+											"type": "text"
+										},
+										{
+											"key": "colors[0][type]",
+											"value": "hex",
+											"description": "hex",
+											"type": "text"
+										},
+										{
+											"key": "sizes[]",
+											"value": "l",
+											"description": "xs|s|m|l|xl|xll",
+											"type": "text"
+										},
+										{
+											"key": "prices[0][currency]",
+											"value": "uah",
+											"description": "uah",
+											"type": "text"
+										},
+										{
+											"key": "prices[0][price]",
+											"value": "420",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/products",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 02 Jun 2023 13:53:27 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=1000"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "products/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Test update product",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "test-update",
+									"type": "text"
+								},
+								{
+									"key": "active",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "availability",
+									"value": "in_stock",
+									"description": "in_stock|preorder|out_stock",
+									"type": "text"
+								},
+								{
+									"key": "prices[0][currency]",
+									"value": "uah",
+									"description": "uah",
+									"type": "text"
+								},
+								{
+									"key": "prices[0][price]",
+									"value": "425",
+									"type": "text"
+								},
+								{
+									"key": "colors[0][color]",
+									"value": "#000000",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "colors[0][type]",
+									"value": "hex",
+									"description": "hex",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "sizes[]",
+									"value": "l",
+									"description": "xs|s|m|l|xl|xll",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/products/2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Updated",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Test update product",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "test-update",
+											"type": "text"
+										},
+										{
+											"key": "active",
+											"value": "0",
+											"type": "text"
+										},
+										{
+											"key": "availability",
+											"value": "in_stock",
+											"description": "in_stock|preorder|out_stock",
+											"type": "text"
+										},
+										{
+											"key": "colors[0][color]",
+											"value": "#000000",
+											"type": "text"
+										},
+										{
+											"key": "colors[0][type]",
+											"value": "hex",
+											"description": "hex",
+											"type": "text"
+										},
+										{
+											"key": "sizes[]",
+											"value": "l",
+											"description": "xs|s|m|l|xl|xll",
+											"type": "text"
+										},
+										{
+											"key": "prices[0][currency]",
+											"value": "uah",
+											"description": "uah",
+											"type": "text"
+										},
+										{
+											"key": "prices[0][price]",
+											"value": "425",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/products/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 02 Jun 2023 14:22:48 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=996"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"dataset\": {\n        \"id\": \"1\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "products/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/products/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/products/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 02 Jun 2023 14:22:50 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=995"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"dataset\": {\n        \"id\": \"1\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "products/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/products/2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Product",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/products/2",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 02 Jun 2023 14:28:18 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=997"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test update product\",\n        \"code\": \"test-update\",\n        \"active\": true,\n        \"availability\": \"in_stock\",\n        \"prices\": [\n            {\n                \"currency\": \"uah\",\n                \"price\": 425\n            }\n        ],\n        \"colors\": [\n            {\n                \"color\": \"#000000\",\n                \"type\": \"hex\"\n            }\n        ],\n        \"sizes\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/products",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/products?page=1&limit=2",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"products"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 02 Jun 2023 14:30:14 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=993"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test update product\",\n                \"code\": \"test-update\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 425\n                    }\n                ],\n                \"colors\": [\n                    {\n                        \"color\": \"#000000\",\n                        \"type\": \"hex\"\n                    }\n                ],\n                \"sizes\": []\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Test product\",\n                \"code\": \"test2\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 420\n                    }\n                ],\n                \"colors\": [\n                    {\n                        \"color\": \"#000000\",\n                        \"type\": \"hex\"\n                    }\n                ],\n                \"sizes\": [\n                    \"l\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 2,\n            \"total\": 4\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
