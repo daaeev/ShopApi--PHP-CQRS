@@ -31,7 +31,7 @@ class CreateProduct extends ApiRequest
 
             'prices' => 'required|array',
             'prices.*' => 'array',
-            'prices.*.currency' => ['required', Rule::in(Currency::active())],
+            'prices.*.currency' => ['required', Rule::in(array_column(Currency::active(), 'value'))],
             'prices.*.price' => 'required|numeric',
         ];
     }

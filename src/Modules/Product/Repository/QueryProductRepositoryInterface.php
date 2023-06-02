@@ -5,7 +5,7 @@ namespace Project\Modules\Product\Repository;
 use Project\Modules\Product\Api\DTO;
 use Project\Common\Entity\Collections\PaginatedCollection;
 
-interface QueryProductsRepositoryInterface
+interface QueryProductRepositoryInterface
 {
     public function get(int $id): DTO\Product;
 

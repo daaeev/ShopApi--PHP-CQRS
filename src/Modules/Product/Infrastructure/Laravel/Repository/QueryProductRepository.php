@@ -7,9 +7,9 @@ use Project\Common\Repository\NotFoundException;
 use Project\Common\Entity\Collections\Pagination;
 use Project\Common\Entity\Collections\PaginatedCollection;
 use Project\Modules\Product\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Product\Repository\QueryProductsRepositoryInterface;
+use Project\Modules\Product\Repository\QueryProductRepositoryInterface;
 
-class QueryProductRepository implements QueryProductsRepositoryInterface
+class QueryProductRepository implements QueryProductRepositoryInterface
 {
     public function get(int $id): DTO\Product
     {
@@ -32,19 +32,19 @@ class QueryProductRepository implements QueryProductsRepositoryInterface
             $product->code,
             $product->active,
             $product->availability,
-            array_map(function (array $color) {
+            array_map(function (Eloquent\Color $color) {
                 return new DTO\Color(
-                    $color['value'],
-                    $color['type'],
+                    $color->color,
+                    $color->type,
                 );
-            }, $product->colors),
-            $product->sizes,
-            array_map(function (array $price) {
+            }, $product->colors->all()),
+            array_column($product->sizes->all(), 'size'),
+            array_map(function (Eloquent\Price $price) {
                 return new DTO\Price(
-                    $price['currency'],
-                    $price['value'],
+                    $price->currency,
+                    $price->price,
                 );
-            }, $product->prices),
+            }, $product->prices->all()),
         );
     }
 

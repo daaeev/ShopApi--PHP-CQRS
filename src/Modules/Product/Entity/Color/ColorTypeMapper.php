@@ -30,6 +30,6 @@ class ColorTypeMapper
 
     public static function getTypes(): array
     {
-        return self::$types;
+        return array_keys(self::$types);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Product\Commands\Handlers;
 
+use Project\Common\Currency;
 use Project\Modules\Product\Entity;
 use Project\Modules\Product\Api\DTO;
 use Project\Common\Events\DispatchEventsTrait;
@@ -25,7 +26,7 @@ class CreateProductHandler implements DispatchEventsInterface
             $command->code,
             array_map(function (DTO\Price $price) {
                 return new Entity\Price\Price(
-                    $price->currency,
+                    Currency::from($price->currency),
                     $price->price
                 );
             }, $command->prices)

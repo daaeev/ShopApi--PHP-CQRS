@@ -3,12 +3,12 @@
 namespace Project\Modules\Product\Queries\Handlers;
 
 use Project\Modules\Product\Queries\GetProductQuery;
-use Project\Modules\Product\Repository\QueryProductsRepositoryInterface;
+use Project\Modules\Product\Repository\QueryProductRepositoryInterface;
 
 class GetProductHandler
 {
     public function __construct(
-        private QueryProductsRepositoryInterface $repository
+        private QueryProductRepositoryInterface $repository
     ) {}
 
     public function __invoke(GetProductQuery $query): array
