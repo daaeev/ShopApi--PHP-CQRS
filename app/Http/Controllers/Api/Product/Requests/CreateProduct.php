@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\Product\Requests;
 
+use Project\Common\Currency;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
 use Project\Modules\Product\Api\DTO;
 use Project\Modules\Product\Entity\Size\Size;
 use Project\Modules\Product\Entity\Availability;
-use Project\Modules\Product\Entity\Price\Currency;
 use Project\Modules\Product\Entity\Color\ColorTypeMapper;
 use Project\Modules\Product\Commands\CreateProductCommand;
 

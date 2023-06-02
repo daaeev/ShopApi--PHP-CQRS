@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Product\Entity\Price;
+namespace Project\Common;
 
 enum Currency : string
 {
@@ -18,8 +18,15 @@ enum Currency : string
 
     public static function active(): array
     {
-        return [
+        return array_filter(self::cases(), function (self $currency) {
+            return $currency->isActive();
+        });
+    }
+
+    public function isActive(): bool
+    {
+        return in_array($this, [
             self::UAH
-        ];
+        ]);
     }
 }

@@ -8,12 +8,6 @@ class Product extends Model
 {
     protected $table = 'products';
 
-    protected $casts = [
-        'colors' => 'array',
-        'sizes' => 'array',
-        'prices' => 'array',
-    ];
-
     protected $attributes = [
         'active' => true,
     ];
@@ -23,8 +17,20 @@ class Product extends Model
         'code',
         'active',
         'availability',
-        'colors',
-        'sizes',
-        'prices',
     ];
+
+    public function prices()
+    {
+        return $this->hasMany(Price::class, 'product_id', 'id');
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(Size::class, 'product_id', 'id');
+    }
+
+    public function colors()
+    {
+        return $this->hasMany(Color::class, 'product_id', 'id');
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace Project\Modules\Product\Entity\Price;
 
+use Project\Common\Currency;
+
 class Price
 {
     public function __construct(

@@ -2,10 +2,10 @@
 
 namespace Project\Tests\Unit\Modules\Helpers;
 
+use Project\Common\Currency;
 use Project\Modules\Product\Entity\Product;
 use Project\Modules\Product\Entity\ProductId;
 use Project\Modules\Product\Entity\Price\Price;
-use Project\Modules\Product\Entity\Price\Currency;
 
 trait ProductFactory
 {

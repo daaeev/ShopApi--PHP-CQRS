@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('code')->nullable(false)->unique();
             $table->boolean('active')->default(true);
             $table->string('availability')->nullable(false);
-            $table->json('colors');
-            $table->json('sizes');
-            $table->json('prices');
             $table->timestamps();
         });
     }

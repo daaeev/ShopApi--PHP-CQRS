@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Product\Infrastructure\Laravel\Repository;
 
+use Project\Common\Currency;
 use Project\Modules\Product\Entity;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
@@ -38,12 +39,12 @@ class ProductRepository implements ProductRepositoryInterface
         $record->code = $entity->getCode();
         $record->active = $entity->isActive();
         $record->availability = $entity->getAvailability()->value;
+        $record->save();
+        $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
         $this->persistSizes($entity, $record);
         $this->persistColors($entity, $record);
         $this->persistPrices($entity, $record);
-        $record->save();
 
-        $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
     }
 
     private function guardCodeIsUnique(Entity\Product $entity): void
@@ -62,29 +63,37 @@ class ProductRepository implements ProductRepositoryInterface
 
     private function persistSizes(Entity\Product $entity, Eloquent\Product $record): void
     {
-        $record->sizes = array_map(function (Entity\Size\Size $size) {
-            return $size->value;
-        }, $entity->getSizes());
+        $record->sizes()->delete();
+
+        foreach ($entity->getSizes() as $size) {
+            $record->sizes()->create([
+                'size' => $size->value
+            ]);
+        }
     }
 
     private function persistColors(Entity\Product $entity, Eloquent\Product $record): void
     {
-        $record->colors = array_map(function (Entity\Color\Color $color) {
-            return [
-                'type' => Entity\Color\ColorTypeMapper::getType($color),
-                'value' => $color->getColor()
-            ];
-        }, $entity->getColors());
+        $record->colors()->delete();
+
+        foreach ($entity->getColors() as $color) {
+            $record->colors()->create([
+                'color' => $color->getColor(),
+                'type' => Entity\Color\ColorTypeMapper::getType($color)
+            ]);
+        }
     }
 
     private function persistPrices(Entity\Product $entity, Eloquent\Product $record): void
     {
-        $record->prices = array_map(function (Entity\Price\Price $price) {
-            return [
+        $record->prices()->delete();
+
+        foreach ($entity->getPrices() as $price) {
+            $record->prices()->create([
                 'currency' => $price->getCurrency(),
-                'value' => $price->getPrice()
-            ];
-        }, $entity->getPrices());
+                'price' => $price->getPrice()
+            ]);
+        }
     }
 
     public function update(Entity\Product $entity): void
@@ -137,9 +146,9 @@ class ProductRepository implements ProductRepositoryInterface
         $hydratedColors = [];
 
         foreach ($record->colors as $color) {
-            $hydratedColors[$color['value']] = Entity\Color\ColorTypeMapper::makeByType(
-                $color['type'],
-                $color['value']
+            $hydratedColors[$color->color] = Entity\Color\ColorTypeMapper::makeByType(
+                $color->type,
+                $color->color
             );
         }
 
@@ -151,7 +160,7 @@ class ProductRepository implements ProductRepositoryInterface
         $hydratedSizes = [];
 
         foreach ($record->sizes as $size) {
-            $hydratedSizes[$size] = Entity\Size\Size::from($size);
+            $hydratedSizes[$size->size] = Entity\Size\Size::from($size->size);
         }
 
         return $hydratedSizes;
@@ -162,9 +171,9 @@ class ProductRepository implements ProductRepositoryInterface
         $hydratedPrices = [];
 
         foreach ($record->prices as $price) {
-            $hydratedPrices[$price['currency']] = new Entity\Price\Price(
-                Entity\Price\Currency::from($price['currency']),
-                $price['value']
+            $hydratedPrices[$price->currency] = new Entity\Price\Price(
+                Currency::from($price->currency),
+                $price->price
             );
         }
 
