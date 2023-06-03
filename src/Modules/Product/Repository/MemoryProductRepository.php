@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Product\Repository;
 
-use DomainException;
 use Project\Modules\Product\Entity;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;

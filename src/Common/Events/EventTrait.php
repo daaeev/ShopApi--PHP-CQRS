@@ -15,6 +15,8 @@ trait EventTrait
 
     public function addEvent(Event $event): void
     {
-        $this->events[] = $event;
+        if (!in_array($event, $this->events)) {
+            $this->events[] = $event;
+        }
     }
 }

@@ -14,19 +14,32 @@ class EventTraitTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($this->events);
         $events = [
             $this->makeEvent(),
-            $this->makeEvent(),
+        ];
+        array_map([$this, 'addEvent'], $events);
+        $this->assertNotEmpty($this->events);
+        $this->assertCount(1, $this->events);
+        $this->assertSame($events, $this->events);
+        $this->assertSame($events[0], $this->events[0]);
+    }
+
+    public function testFlushEvents()
+    {
+        $this->assertEmpty($this->events);
+        $events = [
             $this->makeEvent(),
         ];
         array_map([$this, 'addEvent'], $events);
         $this->assertNotEmpty($this->events);
-        $this->assertCount(3, $this->events);
-        $this->assertSame($events, $this->events);
-        $this->assertSame($events[0], $this->events[0]);
-        $this->assertSame($events[1], $this->events[1]);
-        $this->assertSame($events[2], $this->events[2]);
+        $this->assertCount(1, $this->events);
+        $flushedEvents = $this->flushEvents();
+        $this->assertEmpty($this->events);
+        $this->assertNotEmpty($flushedEvents);
+        $this->assertCount(1, $flushedEvents);
+        $this->assertSame($events, $flushedEvents);
+        $this->assertSame($events[0], $flushedEvents[0]);
     }
 
-    public function testFlushEvents()
+    public function testAddSameEvents()
     {
         $this->assertEmpty($this->events);
         $events = [
@@ -36,14 +49,8 @@ class EventTraitTest extends \PHPUnit\Framework\TestCase
         ];
         array_map([$this, 'addEvent'], $events);
         $this->assertNotEmpty($this->events);
-        $this->assertCount(3, $this->events);
-        $flushedEvents = $this->flushEvents();
-        $this->assertEmpty($this->events);
-        $this->assertNotEmpty($flushedEvents);
-        $this->assertCount(3, $flushedEvents);
-        $this->assertSame($events, $flushedEvents);
-        $this->assertSame($events[0], $flushedEvents[0]);
-        $this->assertSame($events[1], $flushedEvents[1]);
-        $this->assertSame($events[2], $flushedEvents[2]);
+        $this->assertCount(1, $this->events);
+        $this->assertNotSame($events, $this->events);
+        $this->assertSame($events[0], $this->events[0]);
     }
 }

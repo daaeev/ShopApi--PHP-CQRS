@@ -8,7 +8,7 @@ use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Product\Commands\DeleteProductCommand;
 use Project\Modules\Product\Repository\ProductRepositoryInterface;
 
-class DeleteProductHandlers implements DispatchEventsInterface
+class DeleteProductHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 

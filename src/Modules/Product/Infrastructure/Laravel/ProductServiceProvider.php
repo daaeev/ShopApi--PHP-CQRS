@@ -16,7 +16,7 @@ class ProductServiceProvider extends ServiceProvider
     private array $commandsMapping = [
         Commands\CreateProductCommand::class => Commands\Handlers\CreateProductHandler::class,
         Commands\UpdateProductCommand::class => Commands\Handlers\UpdateProductHandler::class,
-        Commands\DeleteProductCommand::class => Commands\Handlers\DeleteProductHandlers::class,
+        Commands\DeleteProductCommand::class => Commands\Handlers\DeleteProductHandler::class,
     ];
 
     private array $queriesMapping = [
