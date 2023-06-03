@@ -2,5 +2,4 @@
 Administrators
 
 Tests:
-  - Product handlers
   - Collections
