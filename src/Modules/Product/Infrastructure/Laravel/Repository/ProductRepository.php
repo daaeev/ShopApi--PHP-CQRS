@@ -67,7 +67,7 @@ class ProductRepository implements ProductRepositoryInterface
 
         foreach ($entity->getSizes() as $size) {
             $record->sizes()->create([
-                'size' => $size->value
+                'size' => $size->getSize()
             ]);
         }
     }
@@ -160,7 +160,7 @@ class ProductRepository implements ProductRepositoryInterface
         $hydratedSizes = [];
 
         foreach ($record->sizes as $size) {
-            $hydratedSizes[$size->size] = Entity\Size\Size::from($size->size);
+            $hydratedSizes[$size->size] = new Entity\Size\Size($size->size);
         }
 
         return $hydratedSizes;

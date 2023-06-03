@@ -25,7 +25,7 @@ trait ProductRepositoryTestTrait
             new HexColor(md5(rand())),
         ]);
         $initial->setSizes([
-            Size::S
+            new Size(md5(rand()))
         ]);
         $this->products->add($initial);
         $found = $this->products->get($initial->getId());

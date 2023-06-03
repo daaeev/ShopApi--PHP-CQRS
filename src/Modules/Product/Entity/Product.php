@@ -5,6 +5,7 @@ namespace Project\Modules\Product\Entity;
 use DomainException;
 use Project\Common\Events;
 use Webmozart\Assert\Assert;
+use Project\Common\Currency;
 use Project\Modules\Product\Api\Events as ProductEvents;
 
 class Product implements Events\EventRoot
@@ -67,14 +68,14 @@ class Product implements Events\EventRoot
             return;
         }
 
-        foreach (\Project\Common\Currency::active() as $currency) {
+        foreach (Currency::active() as $currency) {
             if (!$this->priceByCurrencyExists($currency)) {
                 throw new DomainException('Product does not contain price for ' . $currency->value . ' currency');
             }
         }
     }
 
-    private function priceByCurrencyExists(\Project\Common\Currency $currency): bool
+    private function priceByCurrencyExists(Currency $currency): bool
     {
         foreach ($this->prices as $price) {
             if ($price->getCurrency() === $currency) {
@@ -271,7 +272,7 @@ class Product implements Events\EventRoot
         }
 
         foreach ($sizes as $size) {
-            if (!in_array($size, $this->sizes)) {
+            if (empty($this->sizes[$size->getSize()])) {
                 return false;
             }
         }
@@ -284,7 +285,7 @@ class Product implements Events\EventRoot
         $sizes = [];
 
         foreach ($this->sizes as $size) {
-            $sizes[$size->value] = $size;
+            $sizes[$size->getSize()] = $size;
         }
 
         $this->sizes = $sizes;

@@ -4,6 +4,10 @@ namespace Project\Modules\Product\Entity\Color;
 
 abstract class Color
 {
+    final public function __construct(
+        protected string $color
+    ) {}
+
     public function equalsTo(self $other): bool
     {
         return (
@@ -12,5 +16,8 @@ abstract class Color
         );
     }
 
-    abstract public function getColor(): string;
+    public function getColor(): string
+    {
+        return $this->color;
+    }
 }

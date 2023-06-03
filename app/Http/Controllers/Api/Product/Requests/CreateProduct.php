@@ -6,7 +6,7 @@ use Project\Common\Currency;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
 use Project\Modules\Product\Api\DTO;
-use Project\Modules\Product\Entity\Size\Size;
+use Project\Modules\Product\Entity\Size\ClotheSize;
 use Project\Modules\Product\Entity\Availability;
 use Project\Modules\Product\Entity\Color\ColorTypeMapper;
 use Project\Modules\Product\Commands\CreateProductCommand;
@@ -27,7 +27,7 @@ class CreateProduct extends ApiRequest
             'colors.*.type' => ['required', Rule::in(ColorTypeMapper::getTypes())],
 
             'sizes' => 'nullable|array',
-            'sizes.*' => ['required', Rule::in(Size::values())],
+            'sizes.*' => 'required|string',
 
             'prices' => 'required|array',
             'prices.*' => 'array',

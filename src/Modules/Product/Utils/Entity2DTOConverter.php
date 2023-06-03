@@ -21,7 +21,7 @@ class Entity2DTOConverter
                     Entity\Color\ColorTypeMapper::getType($color)
                 );
             }, $entity->getColors()),
-            array_map(function (Entity\Size\Size $size) {
+            array_map(function (Entity\Size\ClotheSize $size) {
                 return $size->value;
             }, $entity->getSizes()),
             array_map(function (Entity\Price\Price $price) {

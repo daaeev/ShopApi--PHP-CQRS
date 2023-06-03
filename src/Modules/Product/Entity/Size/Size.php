@@ -2,17 +2,19 @@
 
 namespace Project\Modules\Product\Entity\Size;
 
-enum Size : string
+class Size
 {
-    case XS = 'xs';
-    case S = 's';
-    case M = 'm';
-    case L = 'l';
-    case XL = 'xl';
-    case XLL = 'xll';
+    public function __construct(
+        private string $size
+    ) {}
 
-    public static function values()
+    public function equalsTo(self $other): bool
     {
-        return array_column(self::cases(), 'value');
+        return $this->getSize() === $other->getSize();
+    }
+
+    public function getSize(): string
+    {
+        return $this->size;
     }
 }

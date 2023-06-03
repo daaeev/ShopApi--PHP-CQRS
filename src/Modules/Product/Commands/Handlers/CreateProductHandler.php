@@ -38,7 +38,7 @@ class CreateProductHandler implements DispatchEventsInterface
 
         $entity->setAvailability(Entity\Availability::from($command->availability));
         $entity->setSizes(array_map(function (string $size) {
-            return Entity\Size\Size::from($size);
+            return new Entity\Size\Size($size);
         }, $command->sizes));
         $entity->setColors(array_map(function (DTO\Color $color) {
             return Entity\Color\ColorTypeMapper::makeByType($color->type, $color->color);
