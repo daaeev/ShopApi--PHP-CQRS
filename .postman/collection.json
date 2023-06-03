@@ -65,7 +65,6 @@
 								{
 									"key": "sizes[]",
 									"value": "l",
-									"description": "xs|s|m|l|xl|xll",
 									"type": "text",
 									"disabled": true
 								}
@@ -258,8 +257,7 @@
 								},
 								{
 									"key": "sizes[]",
-									"value": "l",
-									"description": "xs|s|m|l|xl|xll",
+									"value": "Size",
 									"type": "text",
 									"disabled": true
 								}
