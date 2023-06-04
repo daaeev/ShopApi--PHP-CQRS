@@ -2,4 +2,3 @@
 Administrators
 
 Tests:
-  - Collections

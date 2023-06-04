@@ -25,24 +25,28 @@ class Collection implements Arrayable, \Iterator
         return $items;
     }
 
-    protected function hydrateValue(mixed $value, int $position): string|array
+    protected function hydrateValue(mixed $value, int $position)
     {
-        if (is_scalar($value) || method_exists($value, '__toString')) {
-            return (string) $value;
+        if (is_array($value)) {
+            $items = [];
+
+            foreach ($value as $key => $item) {
+                $items[$key] = $this->hydrateValue($item, $key);
+            }
+
+            return $items;
+        }
+
+        if (is_scalar($value)) {
+            return $value;
+        }
+
+        if (method_exists($value, '__toString')) {
+            return $value->__toString();
         }
 
         if ($value instanceof Arrayable) {
             return $value->toArray();
-        }
-
-        if (is_array($value)) {
-            $items = [];
-
-            foreach ($value as $position => $item) {
-                $items[] = $this->hydrateValue($item, $position);
-            }
-
-            return $items;
         }
 
         return 'Item #' . $position;
