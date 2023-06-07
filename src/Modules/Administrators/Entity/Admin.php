@@ -7,6 +7,7 @@ use Webmozart\Assert\Assert;
 use Project\Common\Administrators\Role;
 use Project\Modules\Administrators\Api\Events\AdminLoginChanged;
 use Project\Modules\Administrators\Api\Events\AdminRolesChanged;
+use Project\Modules\Administrators\Api\Events\AdminDeleted;
 use Project\Modules\Administrators\Api\Events\AdminPasswordChanged;
 
 class Admin implements Events\EventRoot
@@ -78,6 +79,11 @@ class Admin implements Events\EventRoot
         }
 
         return true;
+    }
+
+    public function delete(): void
+    {
+        $this->addEvent(new AdminDeleted($this));
     }
 
     public function getId(): AdminId

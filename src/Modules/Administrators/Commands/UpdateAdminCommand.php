@@ -8,7 +8,7 @@ class UpdateAdminCommand
         public readonly int $id,
         public readonly string $name,
         public readonly string $login,
-        public readonly string $password,
+        public readonly ?string $password,
         public readonly array $roles,
     ) {}
 }

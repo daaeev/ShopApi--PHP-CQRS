@@ -12,5 +12,5 @@ interface AdminRepositoryInterface
 
     public function delete(Entity\Admin $admin): void;
 
-    public function get(Entity\AdminId $id): void;
+    public function get(Entity\AdminId $id): Entity\Admin;
 }
