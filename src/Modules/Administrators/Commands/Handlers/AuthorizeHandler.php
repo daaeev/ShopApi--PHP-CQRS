@@ -17,8 +17,8 @@ class AuthorizeHandler implements DispatchEventsInterface
 
     public function __invoke(AuthorizeCommand $command): void
     {
-        if ($this->auth->logged()) {
-            throw new \DomainException('Already logged in');
+        if ($logged = $this->auth->logged()) {
+            throw new \DomainException('Already logged in as ' . $logged->getName());
         }
 
         $this->auth->login($command->login, $command->password);
