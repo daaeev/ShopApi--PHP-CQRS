@@ -5,12 +5,12 @@ namespace Project\Tests\Unit\Modules\Product\Entity\Update;
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Product\Api\Events\ProductUpdated;
-use Project\Tests\Unit\Modules\Helpers\AssertEventsTrait;
+use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Modules\Product\Api\Events\ProductCodeChanged;
 
 class UpdateCodeTest extends \PHPUnit\Framework\TestCase
 {
-    use ProductFactory, AssertEventsTrait;
+    use ProductFactory, AssertEvents;
 
     public function testUpdate()
     {

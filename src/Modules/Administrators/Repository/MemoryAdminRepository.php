@@ -35,7 +35,7 @@ class MemoryAdminRepository implements AdminRepositoryInterface
     {
         foreach ($this->items as $item) {
             if ($entity->getLogin() === $item->getLogin()) {
-                throw new \DomainException('Admin with same login already exists');
+                throw new DuplicateKeyException('Admin with same login already exists');
             }
         }
     }

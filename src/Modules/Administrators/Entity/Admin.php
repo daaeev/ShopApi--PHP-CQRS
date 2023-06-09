@@ -5,6 +5,7 @@ namespace Project\Modules\Administrators\Entity;
 use Project\Common\Events;
 use Webmozart\Assert\Assert;
 use Project\Common\Administrators\Role;
+use Project\Modules\Administrators\Api\Events\AdminCreated;
 use Project\Modules\Administrators\Api\Events\AdminLoginChanged;
 use Project\Modules\Administrators\Api\Events\AdminRolesChanged;
 use Project\Modules\Administrators\Api\Events\AdminDeleted;
@@ -28,15 +29,19 @@ class Admin implements Events\EventRoot
         Assert::notEmpty($name && $login && $password && $roles);
         Assert::allIsInstanceOf($roles, Role::class);
         $this->password = $password;
+        $this->addEvent(new AdminCreated($this));
     }
 
     public function setName(string $name): void
     {
+        Assert::notEmpty($name);
         $this->name = $name;
     }
 
     public function setPassword(string $password): void
     {
+        Assert::notEmpty($password);
+
         if ($this->password === $password) {
             return;
         }
@@ -47,6 +52,8 @@ class Admin implements Events\EventRoot
 
     public function setLogin(string $login): void
     {
+        Assert::notEmpty($login);
+
         if ($this->login === $login) {
             return;
         }
@@ -57,7 +64,9 @@ class Admin implements Events\EventRoot
 
     public function setRoles(array $roles): void
     {
+        Assert::notEmpty($roles);
         Assert::allIsInstanceOf($roles, Role::class);
+
         if ($this->sameRoles($roles)) {
             return;
         }
@@ -99,6 +108,11 @@ class Admin implements Events\EventRoot
     public function getLogin(): string
     {
         return $this->login;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
     }
 
     public function getRoles(): array

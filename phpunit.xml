@@ -45,6 +45,10 @@
         <testsuite name="ProjectUnitProduct">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>
         </testsuite>
+        <!--Administrators-->
+        <testsuite name="ProjectUnitAdmins">
+            <directory suffix="Test.php">./src/Tests/Unit/Modules/Administrators</directory>
+        </testsuite>
 
         <!--END-SECTION-->
         <!--SECTION LARAVEL-->

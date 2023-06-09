@@ -7,11 +7,11 @@ use Project\Modules\Product\Entity\Size\Size;
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Product\Api\Events\ProductUpdated;
-use Project\Tests\Unit\Modules\Helpers\AssertEventsTrait;
+use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 
 class UpdateSizesTest extends \PHPUnit\Framework\TestCase
 {
-    use ProductFactory, AssertEventsTrait;
+    use ProductFactory, AssertEvents;
 
     public function testUpdate()
     {

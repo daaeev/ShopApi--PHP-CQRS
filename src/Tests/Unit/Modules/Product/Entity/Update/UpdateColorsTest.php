@@ -5,13 +5,13 @@ namespace Project\Tests\Unit\Modules\Product\Entity\Update;
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Product\Api\Events\ProductUpdated;
-use Project\Tests\Unit\Modules\Helpers\AssertEventsTrait;
+use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Product\Entity\Color\TestColor;
 use Project\Tests\Unit\Modules\Product\Entity\Color\OtherTestColor;
 
 class UpdateColorsTest extends \PHPUnit\Framework\TestCase
 {
-    use ProductFactory, AssertEventsTrait;
+    use ProductFactory, AssertEvents;
 
     public function testUpdate()
     {

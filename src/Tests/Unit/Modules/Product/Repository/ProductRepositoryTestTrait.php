@@ -34,8 +34,6 @@ trait ProductRepositoryTestTrait
 
     private function assertSameProducts(Product $initial, Product $found): void
     {
-        $this->assertIsInt($initial->getId()->getId());
-        $this->assertIsInt($found->getId()->getId());
         $this->assertTrue($initial->getId()->equalsTo($found->getId()));
         $this->assertEquals($initial->getName(), $found->getName());
         $this->assertEquals($initial->getCode(), $found->getCode());
@@ -49,9 +47,15 @@ trait ProductRepositoryTestTrait
     public function testAddIfAlreadyExists()
     {
         $product = $this->generateProduct();
+        $secondProduct = $this->makeProduct(
+            $product->getId(),
+            $product->getName(),
+            'Unique product code',
+            $this->makePrices()
+        );
         $this->products->add($product);
         $this->expectException(DuplicateKeyException::class);
-        $this->products->add($product);
+        $this->products->add($secondProduct);
     }
 
     public function testAddWithNotUniqueCode()

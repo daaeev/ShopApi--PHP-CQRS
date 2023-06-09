@@ -8,11 +8,11 @@ use Project\Modules\Product\Entity\ProductId;
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Modules\Product\Entity\Availability;
 use Project\Modules\Product\Api\Events\ProductCreated;
-use Project\Tests\Unit\Modules\Helpers\AssertEventsTrait;
+use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 
 class CreateTest extends \PHPUnit\Framework\TestCase
 {
-    use ProductFactory, AssertEventsTrait;
+    use ProductFactory, AssertEvents;
 
     public function testCreate()
     {
