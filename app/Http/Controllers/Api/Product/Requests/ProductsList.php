@@ -22,7 +22,6 @@ class ProductsList extends ApiRequest
         return new ProductsListQuery(
             $validated['page'] ?? 1,
             $validated['limit'] ?? 15,
-            []
         );
     }
 }
