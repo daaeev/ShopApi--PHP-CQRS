@@ -44,7 +44,6 @@ class ProductRepository implements ProductRepositoryInterface
         $this->persistSizes($entity, $record);
         $this->persistColors($entity, $record);
         $this->persistPrices($entity, $record);
-
     }
 
     private function guardCodeIsUnique(Entity\Product $entity): void

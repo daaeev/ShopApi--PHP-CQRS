@@ -17,7 +17,7 @@ class Admin implements Events\EventRoot
 
     // Used only for save password!
     // Repository does not retrieve password
-    private ?string $password;
+    private ?string $password = null;
 
     public function __construct(
         private AdminId $id,

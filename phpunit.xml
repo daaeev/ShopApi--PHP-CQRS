@@ -64,6 +64,10 @@
         <testsuite name="ProjectLaravelProduct">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Product</directory>
         </testsuite>
+        <!--Administrators-->
+        <testsuite name="ProjectLaravelAdmins">
+            <directory suffix="Test.php">./src/Tests/Laravel/Modules/Administrator</directory>
+        </testsuite>
 
         <!--END-SECTION-->
     </testsuites>
