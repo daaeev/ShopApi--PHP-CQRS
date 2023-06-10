@@ -2,6 +2,3 @@
 
 Administrators:
     - Мидлвар hasRole
-    
-Tests:
-    - AuthManager
