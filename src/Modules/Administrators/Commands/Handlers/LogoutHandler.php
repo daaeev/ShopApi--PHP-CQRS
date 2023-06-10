@@ -4,7 +4,7 @@ namespace Project\Modules\Administrators\Commands\Handlers;
 
 use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
-use Project\Modules\Administrators\Commands\AuthorizeCommand;
+use Project\Modules\Administrators\Commands\LogoutCommand;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 
 class LogoutHandler implements DispatchEventsInterface
@@ -15,7 +15,7 @@ class LogoutHandler implements DispatchEventsInterface
         private AuthManagerInterface $auth
     ) {}
 
-    public function __invoke(AuthorizeCommand $command): void
+    public function __invoke(LogoutCommand $command): void
     {
         if (!$this->auth->logged()) {
             throw new \DomainException('You are not logged in');
