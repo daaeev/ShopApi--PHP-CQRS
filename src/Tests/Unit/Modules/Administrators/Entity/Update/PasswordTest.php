@@ -33,4 +33,16 @@ class PasswordTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->generateAdmin()->setPassword('');
     }
+
+    public function testPasswordLengthValidation()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->generateAdmin()->setPassword('pass');
+    }
+
+    public function testPasswordWhitespacesValidation()
+    {
+        $this->expectException(\DomainException::class);
+        $this->generateAdmin()->setPassword('Correct password');
+    }
 }

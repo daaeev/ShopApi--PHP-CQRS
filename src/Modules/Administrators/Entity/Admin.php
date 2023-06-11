@@ -67,6 +67,7 @@ class Admin implements Events\EventRoot
         }
 
         $this->password = $password;
+        $this->guardCorrectPassword();
         $this->addEvent(new AdminPasswordChanged($this));
     }
 
@@ -79,6 +80,7 @@ class Admin implements Events\EventRoot
         }
 
         $this->login = $login;
+        $this->guardCorrectLogin();
         $this->addEvent(new AdminLoginChanged($this));
     }
 

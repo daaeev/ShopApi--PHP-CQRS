@@ -55,6 +55,30 @@ class CreateTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function testCreateWithIncorrectLoginLength()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->makeAdmin(
+            AdminId::next(),
+            md5(rand()),
+            'login',
+            md5(rand()),
+            [Role::ADMIN, Role::MANAGER],
+        );
+    }
+
+    public function testCreateWithLoginWithWhitespace()
+    {
+        $this->expectException(\DomainException::class);
+        $this->makeAdmin(
+            AdminId::next(),
+            md5(rand()),
+            'Correct login',
+            md5(rand()),
+            [Role::ADMIN, Role::MANAGER],
+        );
+    }
+
     public function testCreateWithEmptyPassword()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -63,6 +87,30 @@ class CreateTest extends \PHPUnit\Framework\TestCase
             md5(rand()),
             md5(rand()),
             '',
+            [Role::ADMIN, Role::MANAGER],
+        );
+    }
+
+    public function testCreateWithIncorrectPasswordLength()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->makeAdmin(
+            AdminId::next(),
+            md5(rand()),
+            md5(rand()),
+            'pass',
+            [Role::ADMIN, Role::MANAGER],
+        );
+    }
+
+    public function testCreateWithPasswordWithWhitespaces()
+    {
+        $this->expectException(\DomainException::class);
+        $this->makeAdmin(
+            AdminId::next(),
+            md5(rand()),
+            md5(rand()),
+            'Correct password',
             [Role::ADMIN, Role::MANAGER],
         );
     }

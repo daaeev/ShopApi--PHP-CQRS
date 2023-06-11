@@ -3,6 +3,7 @@
 namespace Administrators\Entity\Update;
 
 use Webmozart\Assert\InvalidArgumentException;
+use Project\Modules\Administrators\Entity\AdminId;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Modules\Administrators\Api\Events\AdminLoginChanged;
@@ -32,5 +33,17 @@ class LoginTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->generateAdmin()->setLogin('');
+    }
+
+    public function testLoginLengthValidation()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->generateAdmin()->setLogin('login');
+    }
+
+    public function testLoginWhitespacesValidation()
+    {
+        $this->expectException(\DomainException::class);
+        $this->generateAdmin()->setLogin('Correct login');
     }
 }
