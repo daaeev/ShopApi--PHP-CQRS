@@ -11,9 +11,4 @@ enum Role : string
     {
         return array_column(self::cases(), 'value');
     }
-
-    public function hasAccess(self $role): bool
-    {
-        // TODO
-    }
 }

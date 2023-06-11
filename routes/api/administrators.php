@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Administrators\AdminsController;
+use Project\Common\Administrators\Role;
 
-Route::group(['middleware' => 'auth:admin', 'prefix' => 'administrators'], function () {
+Route::middleware(['auth:admin', 'hasAccess:' . Role::ADMIN->value])->prefix('administrators')->group(function () {
     Route::post('', [AdminsController::class, 'create']);
     Route::put('{id}', [AdminsController::class, 'update']);
     Route::delete('{id}', [AdminsController::class, 'delete']);
