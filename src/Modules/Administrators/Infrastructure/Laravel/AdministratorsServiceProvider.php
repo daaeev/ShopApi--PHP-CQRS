@@ -9,8 +9,10 @@ use Project\Modules\Administrators\Queries;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 use Project\Modules\Administrators\Repository\AdminRepositoryInterface;
 use Project\Modules\Administrators\Infrastructure\Laravel\Console;
+use Project\Modules\Administrators\Repository\QueryAdminRepositoryInterface;
 use Project\Modules\Administrators\Infrastructure\Laravel\Repository\AdminsRepository;
 use Project\Modules\Administrators\Infrastructure\Laravel\AuthManager\GuardAuthManager;
+use Project\Modules\Administrators\Infrastructure\Laravel\Repository\QueryAdminsRepository;
 
 class AdministratorsServiceProvider extends ServiceProvider
 {
@@ -31,7 +33,8 @@ class AdministratorsServiceProvider extends ServiceProvider
 
     public array $singletons = [
         AdminRepositoryInterface::class => AdminsRepository::class,
-        AuthManagerInterface::class => GuardAuthManager::class
+        QueryAdminRepositoryInterface::class => QueryAdminsRepository::class,
+        AuthManagerInterface::class => GuardAuthManager::class,
     ];
 
     public function boot()
