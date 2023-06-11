@@ -4,12 +4,15 @@ namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Modules\Administrators\Entity\Admin;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Modules\Administrators\Commands\AuthorizeCommand;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 use Project\Modules\Administrators\Commands\Handlers\AuthorizeHandler;
 
 class AuthorizeHandlerTest extends \PHPUnit\Framework\TestCase
 {
+    use AdminFactory;
+
     private AuthManagerInterface $auth;
     private EventDispatcherInterface $dispatcher;
 
@@ -26,18 +29,21 @@ class AuthorizeHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testAuthorize()
     {
-        $login = 'login';
-        $password = 'password';
-
         $this->auth->expects($this->once())
             ->method('logged')
             ->willReturn(null);
 
         $this->auth->expects($this->once())
             ->method('login')
-            ->with($login, $password);
+            ->with(
+                $this->correctAdminLogin,
+                $this->correctAdminPassword
+            );
 
-        $command = new AuthorizeCommand($login, $password);
+        $command = new AuthorizeCommand(
+            $this->correctAdminLogin,
+            $this->correctAdminPassword
+        );
         $handler = new AuthorizeHandler($this->auth);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
@@ -53,7 +59,10 @@ class AuthorizeHandlerTest extends \PHPUnit\Framework\TestCase
             ->method('logged')
             ->willReturn($loggedAdmin);
 
-        $command = new AuthorizeCommand('login', 'password');
+        $command = new AuthorizeCommand(
+            $this->correctAdminLogin,
+            $this->correctAdminPassword
+        );
         $handler = new AuthorizeHandler($this->auth);
         $this->expectException(\DomainException::class);
         call_user_func($handler, $command);

@@ -29,7 +29,27 @@ class Admin implements Events\EventRoot
         Assert::notEmpty($name && $login && $password && $roles);
         Assert::allIsInstanceOf($roles, Role::class);
         $this->password = $password;
+        $this->guardCorrectPassword();
+        $this->guardCorrectLogin();
         $this->addEvent(new AdminCreated($this));
+    }
+
+    private function guardCorrectLogin(): void
+    {
+        Assert::greaterThan(mb_strlen($this->login), 6, 'Login length must be greater than 6 characters');
+
+        if (str_contains($this->login, ' ')) {
+            throw new \DomainException('Login must not contains whitespaces');
+        }
+    }
+
+    private function guardCorrectPassword(): void
+    {
+        Assert::greaterThan(mb_strlen($this->password), 6, 'Password length must be greater than 6 characters');
+
+        if (str_contains($this->password, ' ')) {
+            throw new \DomainException('Password must not contains whitespaces');
+        }
     }
 
     public function setName(string $name): void

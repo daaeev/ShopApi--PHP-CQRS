@@ -34,8 +34,8 @@ class UpdateAdminHandlerTest extends \PHPUnit\Framework\TestCase
         $command = new UpdateAdminCommand(
             $initial->getId()->getId(),
             $name = 'Updated admin name',
-            $login = 'Updated admin login',
-            'Updated admin password',
+            $login = $this->correctAdminLogin,
+            $this->correctAdminPassword,
             [Role::MANAGER->value],
         );
         $handler = new UpdateAdminHandler($repository);

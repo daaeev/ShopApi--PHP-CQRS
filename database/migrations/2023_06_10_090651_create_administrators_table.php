@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('login')->nullable(false);
             $table->string('password')->nullable(false);
             $table->json('roles')->nullable(false);
+            $table->rememberToken();
             $table->timestamps();
         });
     }

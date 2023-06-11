@@ -10,7 +10,7 @@ class AuthorizeAdmin extends ApiRequest
     public function rules()
     {
         return [
-            'login' => 'required|string',
+            'login' => 'required|string|min:6',
             'password' => 'required|string|min:6',
         ];
     }

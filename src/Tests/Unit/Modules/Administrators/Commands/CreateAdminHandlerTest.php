@@ -6,12 +6,15 @@ use Project\Common\Administrators\Role;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Modules\Administrators\Entity\AdminId;
+use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Modules\Administrators\Commands\CreateAdminCommand;
 use Project\Modules\Administrators\Repository\MemoryAdminRepository;
 use Project\Modules\Administrators\Commands\Handlers\CreateAdminHandler;
 
 class CreateAdminHandlerTest extends \PHPUnit\Framework\TestCase
 {
+    use AdminFactory;
+
     private EventDispatcherInterface $dispatcher;
 
     protected function setUp(): void
@@ -27,9 +30,9 @@ class CreateAdminHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $repository = new MemoryAdminRepository(new Hydrator);
         $command = new CreateAdminCommand(
-            $name = 'Admin name',
-            $login = 'Admin login',
-            'Admin password',
+            $name = 'admin',
+            $login = $this->correctAdminLogin,
+            $this->correctAdminPassword,
             [Role::ADMIN->value],
         );
         $handler = new CreateAdminHandler($repository);

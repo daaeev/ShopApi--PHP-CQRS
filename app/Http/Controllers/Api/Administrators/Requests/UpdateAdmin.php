@@ -16,7 +16,8 @@ class UpdateAdmin extends ApiRequest
             'name' => 'required|string',
             'login' => 'required|string',
             'password' => 'required|string|min:6',
-            'roles' => ['required', Rule::in(Role::values())]
+            'roles' => 'required|array',
+            'roles.*' => Rule::in(Role::values())
         ];
     }
 

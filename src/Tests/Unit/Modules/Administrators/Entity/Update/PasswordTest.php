@@ -14,7 +14,7 @@ class PasswordTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $admin = $this->generateAdmin();
-        $newPassword = 'New password for test update';
+        $newPassword = $this->correctAdminPassword;
         $this->assertNotSame($admin->getPassword(), $newPassword);
         $admin->setPassword($newPassword);
         $this->assertEvents($admin, [new AdminPasswordChanged($admin)]);

@@ -14,7 +14,7 @@ class LoginTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $admin = $this->generateAdmin();
-        $newLogin = 'New login for test update';
+        $newLogin = $this->correctAdminLogin;
         $this->assertNotSame($admin->getLogin(), $newLogin);
         $admin->setLogin($newLogin);
         $this->assertEvents($admin, [new AdminLoginChanged($admin)]);

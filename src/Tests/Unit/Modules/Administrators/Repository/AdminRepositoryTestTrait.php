@@ -38,7 +38,7 @@ trait AdminRepositoryTestTrait
         $secondAdmin = $this->makeAdmin(
             $admin->getId(),
             $admin->getName(),
-            'Unique admin login',
+            $this->correctAdminLogin,
             $admin->getPassword(),
             $admin->getRoles()
         );
@@ -63,7 +63,7 @@ trait AdminRepositoryTestTrait
         $this->admins->add($initial);
         $added = $this->admins->get($initial->getId());
         $added->setName('Updated admin name for test update');
-        $added->setLogin('Updated admin login for test update');
+        $added->setLogin($this->correctAdminLogin);
         $added->setRoles([Role::MANAGER]);
         $this->admins->update($added);
         $updated = $this->admins->get($initial->getId());

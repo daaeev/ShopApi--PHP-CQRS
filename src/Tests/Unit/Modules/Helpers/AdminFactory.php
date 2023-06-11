@@ -8,6 +8,9 @@ use Project\Modules\Administrators\Entity\AdminId;
 
 trait AdminFactory
 {
+    protected string $correctAdminPassword = 'AdminPassword';
+    protected string $correctAdminLogin = 'AdminLogin';
+
     public function generateAdmin(): Admin
     {
         $admin = new Admin(
