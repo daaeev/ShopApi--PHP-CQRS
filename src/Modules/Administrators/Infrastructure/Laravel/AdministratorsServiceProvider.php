@@ -8,6 +8,7 @@ use Project\Modules\Administrators\Commands;
 use Project\Modules\Administrators\Queries;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 use Project\Modules\Administrators\Repository\AdminRepositoryInterface;
+use Project\Modules\Administrators\Infrastructure\Laravel\Console;
 use Project\Modules\Administrators\Infrastructure\Laravel\Repository\AdminsRepository;
 use Project\Modules\Administrators\Infrastructure\Laravel\AuthManager\GuardAuthManager;
 
@@ -35,6 +36,11 @@ class AdministratorsServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Console\MakeAdmin::class
+            ]);
+        }
         $this->app->get('CommandBus')->registerBus(new RequestBus($this->commandsMapping, $this->app));
         $this->app->get('QueryBus')->registerBus(new RequestBus($this->queriesMapping, $this->app));
     }
