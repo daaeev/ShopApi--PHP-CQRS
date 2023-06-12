@@ -35,6 +35,7 @@ class QueryProductRepository implements QueryProductRepositoryInterface
             array_map(function (Eloquent\Color $color) {
                 return new DTO\Color(
                     $color->color,
+                    $color->name,
                     $color->type,
                 );
             }, $product->colors->all()),

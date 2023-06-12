@@ -37,7 +37,11 @@ class UpdateProductHandler implements DispatchEventsInterface
             return new Entity\Size\Size($size);
         }, $command->sizes));
         $entity->setColors(array_map(function (DTO\Color $color) {
-            return Entity\Color\ColorTypeMapper::makeByType($color->type, $color->color);
+            return Entity\Color\ColorTypeMapper::makeByType(
+                $color->type,
+                $color->name,
+                $color->color
+            );
         }, $command->colors));
 
         $this->products->update($entity);

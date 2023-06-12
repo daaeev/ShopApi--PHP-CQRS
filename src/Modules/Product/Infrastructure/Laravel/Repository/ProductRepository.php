@@ -78,6 +78,7 @@ class ProductRepository implements ProductRepositoryInterface
         foreach ($entity->getColors() as $color) {
             $record->colors()->create([
                 'color' => $color->getColor(),
+                'name' => $color->getName(),
                 'type' => Entity\Color\ColorTypeMapper::getType($color)
             ]);
         }
@@ -147,6 +148,7 @@ class ProductRepository implements ProductRepositoryInterface
         foreach ($record->colors as $color) {
             $hydratedColors[$color->color] = Entity\Color\ColorTypeMapper::makeByType(
                 $color->type,
+                $color->name,
                 $color->color
             );
         }

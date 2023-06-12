@@ -8,6 +8,7 @@ class Color implements Arrayable
 {
     public function __construct(
         public readonly string $color,
+        public readonly string $name,
         public readonly string $type
     ) {}
 
@@ -15,6 +16,7 @@ class Color implements Arrayable
     {
         return [
             'color' => $this->color,
+            'name' => $this->name,
             'type' => $this->type
         ];
     }

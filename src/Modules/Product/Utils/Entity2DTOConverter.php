@@ -18,11 +18,12 @@ class Entity2DTOConverter
             array_map(function (Entity\Color\Color $color) {
                 return new DTO\Color(
                     $color->getColor(),
+                    $color->getName(),
                     Entity\Color\ColorTypeMapper::getType($color)
                 );
             }, $entity->getColors()),
-            array_map(function (Entity\Size\ClotheSize $size) {
-                return $size->value;
+            array_map(function (Entity\Size\Size $size) {
+                return $size->getSize();
             }, $entity->getSizes()),
             array_map(function (Entity\Price\Price $price) {
                 return [

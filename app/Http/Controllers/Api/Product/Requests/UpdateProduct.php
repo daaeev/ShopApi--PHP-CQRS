@@ -25,6 +25,7 @@ class UpdateProduct extends ApiRequest
             'colors' => 'nullable|array',
             'colors.*' => 'array',
             'colors.*.color' => 'required|string',
+            'colors.*.name' => 'required|string',
             'colors.*.type' => ['required', Rule::in(ColorTypeMapper::getTypes())],
 
             'sizes' => 'nullable|array',
@@ -50,6 +51,7 @@ class UpdateProduct extends ApiRequest
             array_map(function (array $color) {
                 return new DTO\Color(
                     $color['color'],
+                    $color['name'],
                     $color['type'],
                 );
             }, $validated['colors'] ?? []),
