@@ -21,8 +21,8 @@ trait ProductRepositoryTestTrait
     {
         $initial = $this->generateProduct();
         $initial->setColors([
-            new HexColor(md5(rand())),
-            new HexColor(md5(rand())),
+            new HexColor(md5(rand()), md5(rand())),
+            new HexColor(md5(rand()), md5(rand())),
         ]);
         $initial->setSizes([
             new Size(md5(rand()))
@@ -70,9 +70,9 @@ trait ProductRepositoryTestTrait
         $this->products->add($initial);
         $added = $this->products->get($initial->getId());
         $added->setColors([
-            new HexColor(md5(rand())),
-            new HexColor(md5(rand())),
-            new HexColor(md5(rand())),
+            new HexColor(md5(rand()), md5(rand())),
+            new HexColor(md5(rand()), md5(rand())),
+            new HexColor(md5(rand()), md5(rand())),
         ]);
         $added->setCode(md5(rand()));
         $added->setName(md5(rand()));

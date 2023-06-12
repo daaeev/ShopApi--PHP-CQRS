@@ -18,8 +18,8 @@ class UpdateColorsTest extends \PHPUnit\Framework\TestCase
         $product = $this->generateProduct();
         $this->assertEmpty($product->getColors());
         $colors = [
-            new TestColor(md5(rand())),
-            new TestColor(md5(rand()))
+            new TestColor(md5(rand()), md5(rand())),
+            new TestColor(md5(rand()), md5(rand()))
         ];
         $this->assertFalse($product->sameColors($colors));
         $product->setColors($colors);
@@ -39,8 +39,8 @@ class UpdateColorsTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->generateProduct();
         $colors = [
-            new TestColor(md5(rand())),
-            new TestColor(md5(rand()))
+            new TestColor(md5(rand()), md5(rand())),
+            new TestColor(md5(rand()), md5(rand()))
         ];
         $product->setColors($colors);
         $product->flushEvents();
@@ -58,11 +58,11 @@ class UpdateColorsTest extends \PHPUnit\Framework\TestCase
     public function testUpdateWithRepeatingColors()
     {
         $product = $this->generateProduct();
-        $clonedColor = new TestColor(md5(rand()));
+        $clonedColor = new TestColor(md5(rand()), md5(rand()));
         $colors = [
             $clonedColor,
             clone $clonedColor,
-            new TestColor(md5(rand())),
+            new TestColor(md5(rand()), md5(rand())),
         ];
         $product->setColors($colors);
 
@@ -88,15 +88,15 @@ class UpdateColorsTest extends \PHPUnit\Framework\TestCase
 
     public function testEqualsColors()
     {
-        $color = new TestColor(md5(rand()));
-        $equalColor = new TestColor($color->getColor());
+        $color = new TestColor(md5(rand()), md5(rand()));
+        $equalColor = new TestColor(md5(rand()), $color->getColor());
         $this->assertTrue($color->equalsTo($equalColor));
     }
 
     public function testDoesNotEqualsColors()
     {
-        $color = new TestColor(md5(rand()));
-        $this->assertFalse($color->equalsTo(new TestColor(md5(rand()))));
-        $this->assertFalse($color->equalsTo(new OtherTestColor($color->getColor())));
+        $color = new TestColor(md5(rand()), md5(rand()));
+        $this->assertFalse($color->equalsTo(new TestColor(md5(rand()), md5(rand()))));
+        $this->assertFalse($color->equalsTo(new OtherTestColor(md5(rand()), $color->getColor())));
     }
 }

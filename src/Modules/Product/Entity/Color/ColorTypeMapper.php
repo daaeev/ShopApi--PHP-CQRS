@@ -10,13 +10,13 @@ class ColorTypeMapper
         'hex' => HexColor::class
     ];
 
-    public static function makeByType(string $type, mixed $color): Color
+    public static function makeByType(string $type, string $name, string $color): Color
     {
         if (!isset(self::$types[$type])) {
             throw new DomainException('Color type does not exists');
         }
 
-        return new self::$types[$type]($color);
+        return new self::$types[$type]($name, $color);
     }
 
     public static function getType(Color $color): string

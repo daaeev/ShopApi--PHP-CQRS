@@ -5,6 +5,7 @@ namespace Project\Modules\Product\Entity\Color;
 abstract class Color
 {
     final public function __construct(
+        protected string $name,
         protected string $color
     ) {}
 
@@ -19,5 +20,10 @@ abstract class Color
     public function getColor(): string
     {
         return $this->color;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

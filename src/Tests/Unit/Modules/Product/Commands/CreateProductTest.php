@@ -43,6 +43,7 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
             colors: [
                 new Color(
                     md5(rand()),
+                    md5(rand()),
                     'hex'
                 ),
             ],
@@ -71,7 +72,7 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($command->availability, $product->getAvailability()->value);
         $this->assertSame($command->active, $product->isActive());
         $this->assertCount(1, $product->getColors());
-        $this->assertTrue((new HexColor($command->colors[0]->color))->equalsTo($product->getColors()[$command->colors[0]->color]));
+        $this->assertTrue((new HexColor(md5(rand()), $command->colors[0]->color))->equalsTo($product->getColors()[$command->colors[0]->color]));
         $this->assertCount(1, $product->getSizes());
         $this->assertTrue((new Size($command->sizes[0]))->equalsTo($product->getSizes()[$command->sizes[0]]));
         $this->assertCount(1, $product->getPrices());
