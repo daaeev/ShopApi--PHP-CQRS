@@ -5,6 +5,8 @@ namespace Project\Infrastructure\Laravel;
 use Project\Common\CQRS\Buses\CompositeBus;
 use Project\Common\CQRS\Buses\CompositeEventBus;
 use Project\Common\Events\DispatchEventsInterface;
+use Project\Common\Environment\EnvironmentInterface;
+use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Modules\Product\Infrastructure\Laravel\ProductServiceProvider;
 use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionCompositeBus;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
@@ -19,6 +21,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->registerProviders();
+        $this->registerEnvironment();
         $this->registerBuses();
     }
 
@@ -27,6 +30,13 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         foreach ($this->providers as $provider) {
             $this->app->register($provider);
         }
+    }
+
+    private function registerEnvironment()
+    {
+        $this->app->singleton(EnvironmentInterface::class, function ($app) {
+            return new EnvironmentService();
+        });
     }
 
     private function registerBuses()
