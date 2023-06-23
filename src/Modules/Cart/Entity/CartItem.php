@@ -12,7 +12,7 @@ class CartItem
         private float $price,
         private int $quantity,
         private ?string $size = null,
-        private ?ItemColor $color = null,
+        private ?string $color = null,
     ) {
         $this->guardQuantityGreaterThanZero();
         $this->guardPriceGreaterThanZero();
@@ -28,18 +28,6 @@ class CartItem
         Assert::greaterThan($this->price, 0);
     }
 
-    public function updateQuantity(int $quantity): void
-    {
-        $this->quantity = $quantity;
-        $this->guardQuantityGreaterThanZero();
-    }
-
-    public function updatePrice(float $price): void
-    {
-        $this->price = $price;
-        $this->guardPriceGreaterThanZero();
-    }
-
     public function equalsTo(self $other): bool
     {
         return (
@@ -48,7 +36,7 @@ class CartItem
             && ($this->getPrice() === $other->getPrice())
             && ($this->getQuantity() === $other->getQuantity())
             && ($this->getSize() === $other->getSize())
-            && ($this->getColor()?->getColor() === $other->getColor()?->getColor())
+            && ($this->getColor() === $other->getColor())
         );
     }
 
@@ -77,7 +65,7 @@ class CartItem
         return $this->size;
     }
 
-    public function getColor(): ?ItemColor
+    public function getColor(): ?string
     {
         return $this->color;
     }
