@@ -2,9 +2,10 @@
 
 namespace Project\Modules\Product\Commands\Handlers;
 
-use Project\Common\Currency;
 use Project\Modules\Product\Entity;
+use Project\Common\Product\Currency;
 use Project\Modules\Product\Api\DTO;
+use Project\Common\Product\Availability;
 use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Product\Commands\UpdateProductCommand;
@@ -32,7 +33,7 @@ class UpdateProductHandler implements DispatchEventsInterface
         $command->active
             ? $entity->activate()
             : $entity->deactivate();
-        $entity->setAvailability(Entity\Availability::from($command->availability));
+        $entity->setAvailability(Availability::from($command->availability));
         $entity->setSizes($command->sizes);
         $entity->setColors($command->colors);
 

@@ -7,7 +7,8 @@ use Project\Common\Utils\Arrayable;
 class CartItem implements Arrayable
 {
     public function __construct(
-        public readonly int|string $product,
+        public readonly int $id,
+        public readonly int $product,
         public readonly string $name,
         public readonly float $price,
         public readonly int $quantity,
@@ -18,6 +19,7 @@ class CartItem implements Arrayable
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'product' => $this->product,
             'name' => $this->name,
             'price' => $this->price,

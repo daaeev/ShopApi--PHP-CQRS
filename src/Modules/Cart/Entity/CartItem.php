@@ -7,7 +7,8 @@ use Webmozart\Assert\Assert;
 class CartItem
 {
     public function __construct(
-        private int|string $product,
+        private CartItemId $id,
+        private int $product,
         private string $name,
         private float $price,
         private int $quantity,
@@ -34,13 +35,17 @@ class CartItem
             ($this->getProduct() === $other->getProduct())
             && ($this->getName() === $other->getName())
             && ($this->getPrice() === $other->getPrice())
-            && ($this->getQuantity() === $other->getQuantity())
             && ($this->getSize() === $other->getSize())
             && ($this->getColor() === $other->getColor())
         );
     }
 
-    public function getProduct(): int|string
+    public function getId(): CartItemId
+    {
+        return $this->id;
+    }
+
+    public function getProduct(): int
     {
         return $this->product;
     }

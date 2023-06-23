@@ -2,11 +2,10 @@
 
 namespace Project\Tests\Unit\Modules\Product\Entity\Update;
 
-use Project\Modules\Product\Entity\Availability;
-use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Product\Api\Events\ProductUpdated;
+use Project\Common\Product\Availability;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Product\Api\Events\ProductCodeChanged;
+use Project\Modules\Product\Api\Events\ProductUpdated;
+use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Product\Api\Events\ProductAvailabilityChanged;
 
 class UpdateAvailabilityTest extends \PHPUnit\Framework\TestCase

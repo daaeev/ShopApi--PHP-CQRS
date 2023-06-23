@@ -2,9 +2,10 @@
 
 namespace Project\Modules\Product\Infrastructure\Laravel\Repository;
 
-use Project\Common\Currency;
 use Project\Modules\Product\Entity;
+use Project\Common\Product\Currency;
 use Project\Common\Entity\Hydrator\Hydrator;
+use Project\Common\Product\Availability;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Modules\Product\Repository\ProductRepositoryInterface;
@@ -132,7 +133,7 @@ class ProductRepository implements ProductRepositoryInterface
             'name' => $record->name,
             'code' => $record->code,
             'active' => $record->active,
-            'availability' => Entity\Availability::from($record->availability),
+            'availability' => Availability::from($record->availability),
             'colors' => $this->hydrateColors($record),
             'sizes' => $this->hydrateSizes($record),
             'prices' => $this->hydratePrices($record),

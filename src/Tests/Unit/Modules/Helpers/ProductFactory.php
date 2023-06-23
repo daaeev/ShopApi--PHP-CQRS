@@ -2,7 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Helpers;
 
-use Project\Common\Currency;
+use Project\Common\Product\Currency;
 use Project\Modules\Product\Entity\Product;
 use Project\Modules\Product\Entity\ProductId;
 use Project\Modules\Product\Entity\Price\Price;

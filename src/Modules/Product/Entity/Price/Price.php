@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Product\Entity\Price;
 
-use Project\Common\Currency;
+use Project\Common\Product\Currency;
 
 class Price
 {

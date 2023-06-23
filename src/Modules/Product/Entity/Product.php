@@ -5,7 +5,8 @@ namespace Project\Modules\Product\Entity;
 use DomainException;
 use Project\Common\Events;
 use Webmozart\Assert\Assert;
-use Project\Common\Currency;
+use Project\Common\Product\Currency;
+use Project\Common\Product\Availability;
 use Project\Modules\Product\Api\Events as ProductEvents;
 
 class Product implements Events\EventRoot

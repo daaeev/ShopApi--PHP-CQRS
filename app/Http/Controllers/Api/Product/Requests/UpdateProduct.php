@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\Product\Requests;
 
-use Project\Common\Currency;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
+use Project\Common\Product\Currency;
 use Project\Modules\Product\Api\DTO;
-use Project\Modules\Product\Entity\Availability;
+use Project\Common\Product\Availability;
 use Project\Modules\Product\Commands\UpdateProductCommand;
 
 class UpdateProduct extends ApiRequest

@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Product\Entity;
+namespace Project\Common\Product;
 
 enum Availability : string
 {
@@ -11,5 +11,13 @@ enum Availability : string
     public static function values()
     {
         return array_column(self::cases(), 'value');
+    }
+
+    public static function available()
+    {
+        return [
+            self::IN_STOCK,
+            self::PREORDER,
+        ];
     }
 }

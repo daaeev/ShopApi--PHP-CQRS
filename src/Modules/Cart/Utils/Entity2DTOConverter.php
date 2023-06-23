@@ -18,9 +18,10 @@ class Entity2DTOConverter
         );
     }
 
-    private static function convertCartItem(Entity\CartItem $item): DTO\CartItem
+    public static function convertCartItem(Entity\CartItem $item): DTO\CartItem
     {
         return new DTO\CartItem(
+            $item->getId()->getId(),
             $item->getProduct(),
             $item->getName(),
             $item->getPrice(),

@@ -2,13 +2,13 @@
 
 namespace Project\Tests\Unit\Modules\Product\Commands;
 
-use Project\Common\Currency;
-use Project\Modules\Product\Api\DTO\Price;
 use Project\Modules\Product\Entity;
+use Project\Common\Product\Currency;
+use Project\Common\Product\Availability;
+use Project\Modules\Product\Api\DTO\Price;
 use Project\Modules\Product\Entity\Product;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Product\Entity\ProductId;
-use Project\Modules\Product\Entity\Availability;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Modules\Product\Commands\CreateProductCommand;
 use Project\Modules\Product\Repository\MemoryProductRepository;

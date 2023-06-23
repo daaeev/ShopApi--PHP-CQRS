@@ -4,13 +4,14 @@ namespace Project\Modules\Cart\Entity;
 
 use Project\Common\Events;
 use Webmozart\Assert\Assert;
-use Project\Common\Currency;
+use Project\Common\Product\Currency;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Cart\Api\Events\CartItemAdded;
 use Project\Modules\Cart\Api\Events\CartItemRemoved;
 use Project\Modules\Cart\Api\Events\CartDeactivated;
 use Project\Modules\Cart\Api\Events\CartInstantiated;
 use Project\Modules\Cart\Api\Events\CartCurrencyChanged;
+use Project\Modules\Cart\Api\Events\CartItemQuantityChanged;
 
 class Cart implements Events\EventRoot
 {
@@ -37,29 +38,30 @@ class Cart implements Events\EventRoot
         Assert::allIsInstanceOf($this->items, CartItem::class);
     }
 
-    public function addItem(CartItem $item): void
+    public function addItem(CartItem $newItem): void
     {
-        if (!$this->itemExists($item->getProduct())) {
-            $this->items[] = $item;
+        if (!$this->sameItemExists($newItem)) {
+            $this->items[] = $newItem;
+            $this->addEvent(new CartItemAdded($this, $newItem));
             $this->updated();
-            $this->addEvent(new CartItemAdded($this));
             return;
         }
 
-        if ($this->getItem($item->getProduct())->equalsTo($item)) {
+        $sameItem = $this->getSameItem($newItem);
+
+        if ($sameItem->getQuantity() === $newItem->getQuantity()) {
             return;
         }
 
-        $this->removeItem($item->getProduct());
-        $this->items[] = $item;
-        $this->addEvent(new CartItemAdded($this));
+        $this->replaceItem($sameItem, $newItem);
         $this->updated();
+        $this->addEvent(new CartItemQuantityChanged($this, $newItem));
     }
 
-    private function itemExists(int|string $product): bool
+    private function sameItemExists(CartItem $item): bool
     {
         foreach ($this->items as $currentItem) {
-            if ($currentItem->getProduct() === $product) {
+            if ($currentItem->equalsTo($item)) {
                 return true;
             }
         }
@@ -67,10 +69,10 @@ class Cart implements Events\EventRoot
         return false;
     }
 
-    public function getItem(int|string $product): CartItem
+    private function getSameItem(CartItem $item): CartItem
     {
         foreach ($this->items as $currentItem) {
-            if ($currentItem->getProduct() === $product) {
+            if ($currentItem->equalsTo($item)) {
                 return $currentItem;
             }
         }
@@ -78,13 +80,33 @@ class Cart implements Events\EventRoot
         throw new \DomainException('Cart item not found');
     }
 
-    public function removeItem(int|string $product): void
+    private function replaceItem(CartItem $old, CartItem $new): void
     {
         foreach ($this->items as $index => $currentItem) {
-            if ($currentItem->getProduct() === $product) {
+            if ($currentItem->equalsTo($old)) {
+                $this->items[$index] = $new;
+            }
+        }
+    }
+
+    public function getItem(CartItemId $itemId): CartItem
+    {
+        foreach ($this->items as $currentItem) {
+            if ($currentItem->getId()->equalsTo($itemId)) {
+                return $currentItem;
+            }
+        }
+
+        throw new \DomainException('Cart item not found');
+    }
+
+    public function removeItem(CartItemId $itemId): void
+    {
+        foreach ($this->items as $index => $currentItem) {
+            if ($currentItem->getId()->equalsTo($itemId)) {
                 unset($this->items[$index]);
                 $this->updated();
-                $this->addEvent(new CartItemRemoved($this));
+                $this->addEvent(new CartItemRemoved($this, $currentItem));
                 return;
             }
         }
@@ -127,6 +149,13 @@ class Cart implements Events\EventRoot
         );
     }
 
+    public function getTotal(): float
+    {
+        return array_reduce($this->items, function ($totalPrice, $item) {
+            return $totalPrice + ($item->getPrice() * $item->getQuantity);
+        }, 0);
+    }
+
     public function getId(): CartId
     {
         return $this->id;
@@ -140,6 +169,11 @@ class Cart implements Events\EventRoot
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    public function getCurrency(): Currency
+    {
+        return $this->currentCurrency;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

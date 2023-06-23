@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Cart\Api\Events;
 
-class CartItemRemoved extends AbstractCartEvent
+class CartItemRemoved extends AbstractCartItemEvent
 {
 
 }
