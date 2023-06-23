@@ -5,6 +5,9 @@ namespace Project\Modules\Cart\Entity;
 use Project\Common\Events;
 use Webmozart\Assert\Assert;
 use Project\Common\Environment\Client\Client;
+use Project\Modules\Cart\Api\Events\CartItemAdded;
+use Project\Modules\Cart\Api\Events\CartItemRemoved;
+use Project\Modules\Cart\Api\Events\CartInstantiated;
 
 class Cart implements Events\EventRoot
 {
@@ -20,6 +23,7 @@ class Cart implements Events\EventRoot
     ) {
         $this->createdAt = new \DateTimeImmutable;
         $this->guardValidItems();
+        $this->addEvent(new CartInstantiated($this));
     }
 
     private function guardValidItems()
@@ -32,6 +36,7 @@ class Cart implements Events\EventRoot
         if (!$this->itemExists($item->getProduct())) {
             $this->items[] = $item;
             $this->updated();
+            $this->addEvent(new CartItemAdded($this));
             return;
         }
 
@@ -41,6 +46,7 @@ class Cart implements Events\EventRoot
 
         $this->removeItem($item->getProduct());
         $this->items[] = $item;
+        $this->addEvent(new CartItemAdded($this));
         $this->updated();
     }
 
@@ -72,6 +78,7 @@ class Cart implements Events\EventRoot
             if ($currentItem->getProduct() === $product) {
                 unset($this->items[$index]);
                 $this->updated();
+                $this->addEvent(new CartItemRemoved($this));
                 return;
             }
         }

@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Cart\Api\DTO;
 
+use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;
 use Project\Common\Utils\DateTimeFormat;
 
@@ -13,7 +14,9 @@ class Cart implements DTO
         public readonly array $items,
         public readonly \DateTimeImmutable $createdAt,
         public readonly ?\DateTimeImmutable $updatedAt,
-    ) {}
+    ) {
+        Assert::allIsInstanceOf($items, CartItem::class);
+    }
 
     public function toArray(): array
     {
