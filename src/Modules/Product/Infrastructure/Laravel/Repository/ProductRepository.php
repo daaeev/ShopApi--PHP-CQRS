@@ -66,7 +66,7 @@ class ProductRepository implements ProductRepositoryInterface
 
         foreach ($entity->getSizes() as $size) {
             $record->sizes()->create([
-                'size' => $size->getSize()
+                'size' => $size
             ]);
         }
     }
@@ -77,8 +77,7 @@ class ProductRepository implements ProductRepositoryInterface
 
         foreach ($entity->getColors() as $color) {
             $record->colors()->create([
-                'color' => $color->getColor(),
-                'type' => Entity\Color\ColorTypeMapper::getType($color)
+                'color' => $color,
             ]);
         }
     }
@@ -142,27 +141,12 @@ class ProductRepository implements ProductRepositoryInterface
 
     private function hydrateColors(Eloquent\Product $record): array
     {
-        $hydratedColors = [];
-
-        foreach ($record->colors as $color) {
-            $hydratedColors[$color->color] = Entity\Color\ColorTypeMapper::makeByType(
-                $color->type,
-                $color->color
-            );
-        }
-
-        return $hydratedColors;
+        return array_column($record->colors->all(), 'color');
     }
 
     private function hydrateSizes(Eloquent\Product $record): array
     {
-        $hydratedSizes = [];
-
-        foreach ($record->sizes as $size) {
-            $hydratedSizes[$size->size] = new Entity\Size\Size($size->size);
-        }
-
-        return $hydratedSizes;
+        return array_column($record->sizes->all(), 'size');
     }
 
     private function hydratePrices(Eloquent\Product $record): array

@@ -108,23 +108,14 @@
 									"type": "text"
 								},
 								{
-									"key": "colors[0][color]",
-									"value": "#000000",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "colors[0][type]",
-									"value": "hex",
-									"description": "hex",
-									"type": "text",
-									"disabled": true
+									"key": "colors[]",
+									"value": "Blue",
+									"type": "text"
 								},
 								{
 									"key": "sizes[]",
-									"value": "l",
-									"type": "text",
-									"disabled": true
+									"value": "45",
+									"type": "text"
 								}
 							]
 						},
@@ -301,21 +292,13 @@
 									"type": "text"
 								},
 								{
-									"key": "colors[0][color]",
-									"value": "#000000",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "colors[0][type]",
-									"value": "hex",
-									"description": "hex",
-									"type": "text",
-									"disabled": true
+									"key": "colors[]",
+									"value": "Blue",
+									"type": "text"
 								},
 								{
 									"key": "sizes[]",
-									"value": "Size",
+									"value": "45",
 									"type": "text",
 									"disabled": true
 								}
