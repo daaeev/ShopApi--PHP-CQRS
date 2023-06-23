@@ -6,9 +6,7 @@ use Project\Common\Currency;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
 use Project\Modules\Product\Api\DTO;
-use Project\Modules\Product\Entity\Size\ClotheSize;
 use Project\Modules\Product\Entity\Availability;
-use Project\Modules\Product\Entity\Color\ColorTypeMapper;
 use Project\Modules\Product\Commands\UpdateProductCommand;
 
 class UpdateProduct extends ApiRequest
@@ -23,10 +21,7 @@ class UpdateProduct extends ApiRequest
             'availability' => ['required', Rule::in(Availability::values())],
 
             'colors' => 'nullable|array',
-            'colors.*' => 'array',
-            'colors.*.color' => 'required|string',
-            'colors.*.name' => 'required|string',
-            'colors.*.type' => ['required', Rule::in(ColorTypeMapper::getTypes())],
+            'colors.*' => 'required|string',
 
             'sizes' => 'nullable|array',
             'sizes.*' => 'required|string',
@@ -48,13 +43,7 @@ class UpdateProduct extends ApiRequest
             $validated['code'],
             $validated['active'],
             $validated['availability'],
-            array_map(function (array $color) {
-                return new DTO\Color(
-                    $color['color'],
-                    $color['name'],
-                    $color['type'],
-                );
-            }, $validated['colors'] ?? []),
+            $validated['colors'] ?? [],
             $validated['sizes'] ?? [],
             array_map(function (array $price) {
                 return new DTO\Price(

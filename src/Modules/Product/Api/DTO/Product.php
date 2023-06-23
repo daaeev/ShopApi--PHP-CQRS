@@ -28,9 +28,7 @@ class Product implements Utils\DTO
             'prices' => array_map(function (Price $price) {
                 return $price->toArray();
             }, $this->prices),
-            'colors' => array_map(function (Color $color) {
-                return $color->toArray();
-            }, $this->colors),
+            'colors' => $this->colors,
             'sizes' => $this->sizes,
         ];
     }

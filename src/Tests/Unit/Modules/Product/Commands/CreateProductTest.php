@@ -3,16 +3,13 @@
 namespace Project\Tests\Unit\Modules\Product\Commands;
 
 use Project\Common\Currency;
-use Project\Modules\Product\Api\DTO\Color;
 use Project\Modules\Product\Api\DTO\Price;
 use Project\Modules\Product\Entity;
 use Project\Modules\Product\Entity\Product;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Product\Entity\ProductId;
-use Project\Modules\Product\Entity\Size\Size;
 use Project\Modules\Product\Entity\Availability;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Project\Modules\Product\Entity\Color\HexColor;
 use Project\Modules\Product\Commands\CreateProductCommand;
 use Project\Modules\Product\Repository\MemoryProductRepository;
 use Project\Modules\Product\Repository\ProductRepositoryInterface;
@@ -41,11 +38,7 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
             active: true,
             availability: Availability::IN_STOCK->value,
             colors: [
-                new Color(
-                    md5(rand()),
-                    md5(rand()),
-                    'hex'
-                ),
+                md5(rand()),
             ],
             sizes: [
                 md5(rand()),
@@ -72,9 +65,9 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($command->availability, $product->getAvailability()->value);
         $this->assertSame($command->active, $product->isActive());
         $this->assertCount(1, $product->getColors());
-        $this->assertTrue((new HexColor(md5(rand()), $command->colors[0]->color))->equalsTo($product->getColors()[$command->colors[0]->color]));
+        $this->assertTrue(in_array($command->colors[0], $product->getColors()));
         $this->assertCount(1, $product->getSizes());
-        $this->assertTrue((new Size($command->sizes[0]))->equalsTo($product->getSizes()[$command->sizes[0]]));
+        $this->assertTrue(in_array($command->sizes[0], $product->getSizes()));
         $this->assertCount(1, $product->getPrices());
         $this->assertTrue((new Entity\Price\Price(
             Currency::from($command->prices[0]->currency),

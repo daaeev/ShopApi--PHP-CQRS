@@ -207,12 +207,6 @@ class Product implements Events\EventRoot
 
     public function setColors(array $colors): void
     {
-        Assert::allIsInstanceOf(
-            $colors,
-            Color\Color::class,
-            'Product colors must be instances if ' . Color\Color::class
-        );
-
         if ($this->sameColors($colors)) {
             return;
         }
@@ -229,7 +223,7 @@ class Product implements Events\EventRoot
         }
 
         foreach ($colors as $color) {
-            if (empty($this->colors[$color->getColor()])) {
+            if (!in_array($color, $this->colors)) {
                 return false;
             }
         }
@@ -239,23 +233,11 @@ class Product implements Events\EventRoot
 
     private function keepColorsUnique(): void
     {
-        $colors = [];
-
-        foreach ($this->colors as $color) {
-            $colors[$color->getColor()] = $color;
-        }
-
-        $this->colors = $colors;
+        $this->colors = array_unique($this->colors);
     }
 
     public function setSizes(array $sizes): void
     {
-        Assert::allIsInstanceOf(
-            $sizes,
-            Size\Size::class,
-            'Product sizes must be instances if ' . Size\Size::class
-        );
-
         if ($this->sameSizes($sizes)) {
             return;
         }
@@ -272,7 +254,7 @@ class Product implements Events\EventRoot
         }
 
         foreach ($sizes as $size) {
-            if (empty($this->sizes[$size->getSize()])) {
+            if (!in_array($size, $this->sizes)) {
                 return false;
             }
         }
@@ -282,13 +264,7 @@ class Product implements Events\EventRoot
 
     private function keepSizesUnique(): void
     {
-        $sizes = [];
-
-        foreach ($this->sizes as $size) {
-            $sizes[$size->getSize()] = $size;
-        }
-
-        $this->sizes = $sizes;
+        $this->sizes = array_unique($this->sizes);
     }
 
     public function getId(): ProductId

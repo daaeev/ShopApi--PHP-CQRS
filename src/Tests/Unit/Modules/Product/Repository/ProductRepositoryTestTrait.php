@@ -21,11 +21,11 @@ trait ProductRepositoryTestTrait
     {
         $initial = $this->generateProduct();
         $initial->setColors([
-            new HexColor(md5(rand()), md5(rand())),
-            new HexColor(md5(rand()), md5(rand())),
+            md5(rand()),
+            md5(rand()),
         ]);
         $initial->setSizes([
-            new Size(md5(rand()))
+            md5(rand())
         ]);
         $this->products->add($initial);
         $found = $this->products->get($initial->getId());
@@ -41,7 +41,9 @@ trait ProductRepositoryTestTrait
         $this->assertEquals($initial->getAvailability(), $found->getAvailability());
         $this->assertTrue($initial->samePrices($found->getPrices()));
         $this->assertTrue($initial->sameColors($found->getColors()));
+        $this->assertSame($initial->getColors(), $found->getColors());
         $this->assertTrue($initial->sameSizes($found->getSizes()));
+        $this->assertSame($initial->getSizes(), $found->getSizes());
     }
 
     public function testAddIfAlreadyExists()
@@ -74,9 +76,9 @@ trait ProductRepositoryTestTrait
         $this->products->add($initial);
         $added = $this->products->get($initial->getId());
         $added->setColors([
-            new HexColor(md5(rand()), md5(rand())),
-            new HexColor(md5(rand()), md5(rand())),
-            new HexColor(md5(rand()), md5(rand())),
+            md5(rand()),
+            md5(rand()),
+            md5(rand()),
         ]);
         $added->setCode(md5(rand()));
         $added->setName(md5(rand()));
