@@ -38,14 +38,11 @@
         <testsuite name="ProjectUnitEvents">
             <directory suffix="Test.php">./src/Tests/Unit/Events</directory>
         </testsuite>
-
-        <!-- MODULES -->
-
-        <!--Product-->
+        <!--Modules/Product-->
         <testsuite name="ProjectUnitProduct">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>
         </testsuite>
-        <!--Administrators-->
+        <!--Modules/Administrators-->
         <testsuite name="ProjectUnitAdmins">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Administrators</directory>
         </testsuite>
@@ -57,14 +54,11 @@
         <testsuite name="ProjectLaravelCQRS">
             <directory suffix="Test.php">./src/Tests/Laravel/CQRS</directory>
         </testsuite>
-
-        <!-- MODULES -->
-
-        <!--Product-->
+        <!--Modules/Product-->
         <testsuite name="ProjectLaravelProduct">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Product</directory>
         </testsuite>
-        <!--Administrators-->
+        <!--Modules/Administrators-->
         <testsuite name="ProjectLaravelAdmins">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Administrator</directory>
         </testsuite>
