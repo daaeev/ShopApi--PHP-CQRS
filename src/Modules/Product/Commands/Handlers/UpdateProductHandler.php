@@ -33,16 +33,8 @@ class UpdateProductHandler implements DispatchEventsInterface
             ? $entity->activate()
             : $entity->deactivate();
         $entity->setAvailability(Entity\Availability::from($command->availability));
-        $entity->setSizes(array_map(function (string $size) {
-            return new Entity\Size\Size($size);
-        }, $command->sizes));
-        $entity->setColors(array_map(function (DTO\Color $color) {
-            return Entity\Color\ColorTypeMapper::makeByType(
-                $color->type,
-                $color->name,
-                $color->color
-            );
-        }, $command->colors));
+        $entity->setSizes($command->sizes);
+        $entity->setColors($command->colors);
 
         $this->products->update($entity);
         $this->dispatchEvents($entity->flushEvents());
