@@ -7,12 +7,14 @@ use Webmozart\Assert\Assert;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Cart\Api\Events\CartItemAdded;
 use Project\Modules\Cart\Api\Events\CartItemRemoved;
+use Project\Modules\Cart\Api\Events\CartDeactivated;
 use Project\Modules\Cart\Api\Events\CartInstantiated;
 
 class Cart implements Events\EventRoot
 {
     use Events\EventTrait;
 
+    private bool $active = true;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -89,6 +91,17 @@ class Cart implements Events\EventRoot
     private function updated(): void
     {
         $this->updatedAt = new \DateTimeImmutable;
+    }
+
+    public function deactivate(): void
+    {
+        if (false === $this->active) {
+            throw new \DomainException('Cart already deactivated');
+        }
+
+        $this->active = false;
+        $this->addEvent(new CartDeactivated($this));
+        $this->updated();
     }
 
     public static function instantiate(Client $client): self
