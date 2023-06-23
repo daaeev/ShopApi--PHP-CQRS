@@ -4,16 +4,19 @@ namespace Project\Modules\Cart\Entity;
 
 use Project\Common\Events;
 use Webmozart\Assert\Assert;
+use Project\Common\Currency;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Cart\Api\Events\CartItemAdded;
 use Project\Modules\Cart\Api\Events\CartItemRemoved;
 use Project\Modules\Cart\Api\Events\CartDeactivated;
 use Project\Modules\Cart\Api\Events\CartInstantiated;
+use Project\Modules\Cart\Api\Events\CartCurrencyChanged;
 
 class Cart implements Events\EventRoot
 {
     use Events\EventTrait;
 
+    private Currency $currentCurrency;
     private bool $active = true;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
@@ -23,6 +26,7 @@ class Cart implements Events\EventRoot
         private Client $client,
         private array $items = []
     ) {
+        $this->currentCurrency = Currency::default();
         $this->createdAt = new \DateTimeImmutable;
         $this->guardValidItems();
         $this->addEvent(new CartInstantiated($this));
@@ -102,6 +106,17 @@ class Cart implements Events\EventRoot
         $this->active = false;
         $this->addEvent(new CartDeactivated($this));
         $this->updated();
+    }
+
+    public function changeCurrency(Currency $currency): void
+    {
+        if ($currency === $this->currentCurrency) {
+            return;
+        }
+
+        $this->currentCurrency = $currency;
+        $this->updated();
+        $this->addEvent(new CartCurrencyChanged($this));
     }
 
     public static function instantiate(Client $client): self
