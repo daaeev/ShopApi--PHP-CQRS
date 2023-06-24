@@ -1,6 +1,6 @@
 <?php
 
-namespace Commands;
+namespace Project\Tests\Unit\Modules\Product\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;

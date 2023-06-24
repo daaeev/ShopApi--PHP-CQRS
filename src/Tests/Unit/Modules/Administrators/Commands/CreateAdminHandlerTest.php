@@ -1,6 +1,6 @@
 <?php
 
-namespace Administrators\Commands;
+namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Common\Administrators\Role;
 use Project\Common\Entity\Hydrator\Hydrator;

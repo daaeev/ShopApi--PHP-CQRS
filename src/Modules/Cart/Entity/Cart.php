@@ -6,12 +6,10 @@ use Project\Common\Events;
 use Webmozart\Assert\Assert;
 use Project\Common\Product\Currency;
 use Project\Common\Environment\Client\Client;
-use Project\Modules\Cart\Api\Events\CartItemAdded;
-use Project\Modules\Cart\Api\Events\CartItemRemoved;
+use Project\Modules\Cart\Api\Events\CartUpdated;
 use Project\Modules\Cart\Api\Events\CartDeactivated;
 use Project\Modules\Cart\Api\Events\CartInstantiated;
 use Project\Modules\Cart\Api\Events\CartCurrencyChanged;
-use Project\Modules\Cart\Api\Events\CartItemQuantityChanged;
 
 class Cart implements Events\EventRoot
 {
@@ -42,7 +40,6 @@ class Cart implements Events\EventRoot
     {
         if (!$this->sameItemExists($newItem)) {
             $this->items[] = $newItem;
-            $this->addEvent(new CartItemAdded($this, $newItem));
             $this->updated();
             return;
         }
@@ -55,7 +52,6 @@ class Cart implements Events\EventRoot
 
         $this->replaceItem($sameItem, $newItem);
         $this->updated();
-        $this->addEvent(new CartItemQuantityChanged($this, $newItem));
     }
 
     private function sameItemExists(CartItem $item): bool
@@ -106,7 +102,6 @@ class Cart implements Events\EventRoot
             if ($currentItem->getId()->equalsTo($itemId)) {
                 unset($this->items[$index]);
                 $this->updated();
-                $this->addEvent(new CartItemRemoved($this, $currentItem));
                 return;
             }
         }
@@ -114,8 +109,12 @@ class Cart implements Events\EventRoot
         throw new \DomainException('Cart item not found');
     }
 
-    private function updated(): void
+    private function updated(bool $addEvent = true): void
     {
+        if ($addEvent) {
+            $this->addEvent(new CartUpdated($this));
+        }
+
         $this->updatedAt = new \DateTimeImmutable;
     }
 
@@ -125,9 +124,13 @@ class Cart implements Events\EventRoot
             throw new \DomainException('Cart already deactivated');
         }
 
+        if (empty($this->items)) {
+            throw new \DomainException('Cant deactivate empty cart');
+        }
+
         $this->active = false;
         $this->addEvent(new CartDeactivated($this));
-        $this->updated();
+        $this->updated(false);
     }
 
     public function changeCurrency(Currency $currency): void
@@ -137,8 +140,8 @@ class Cart implements Events\EventRoot
         }
 
         $this->currentCurrency = $currency;
-        $this->updated();
         $this->addEvent(new CartCurrencyChanged($this));
+        $this->updated(false);
     }
 
     public static function instantiate(Client $client): self
@@ -149,10 +152,10 @@ class Cart implements Events\EventRoot
         );
     }
 
-    public function getTotal(): float
+    public function getTotalPrice(): float
     {
         return array_reduce($this->items, function ($totalPrice, $item) {
-            return $totalPrice + ($item->getPrice() * $item->getQuantity);
+            return $totalPrice + ($item->getPrice() * $item->getQuantity());
         }, 0);
     }
 
@@ -164,6 +167,11 @@ class Cart implements Events\EventRoot
     public function getClient(): Client
     {
         return $this->client;
+    }
+
+    public function active(): bool
+    {
+        return $this->active;
     }
 
     public function getItems(): array

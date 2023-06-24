@@ -26,7 +26,7 @@ class CartItem
 
     private function guardPriceGreaterThanZero(): void
     {
-        Assert::greaterThan($this->price, 0);
+        Assert::greaterThanEq($this->price, 0);
     }
 
     public function equalsTo(self $other): bool

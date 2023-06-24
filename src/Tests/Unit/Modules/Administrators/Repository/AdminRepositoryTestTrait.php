@@ -32,6 +32,20 @@ trait AdminRepositoryTestTrait
         $this->assertEquals($initial->getRoles(), $found->getRoles());
     }
 
+    public function testAddIncrementIds()
+    {
+        $admin = $this->makeAdmin(
+            AdminId::next(),
+            md5(rand()),
+            $this->correctAdminLogin,
+            $this->correctAdminPassword,
+            [Role::ADMIN]
+        );
+        $this->assertNull($admin->getId()->getId());
+        $this->admins->add($admin);
+        $this->assertNotNull($admin->getId()->getId());
+    }
+
     public function testAddIfAlreadyExists()
     {
         $admin = $this->generateAdmin();

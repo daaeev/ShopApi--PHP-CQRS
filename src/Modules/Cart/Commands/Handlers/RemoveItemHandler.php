@@ -9,7 +9,7 @@ use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Cart\Commands\RemoveItemCommand;
 use Project\Modules\Cart\Repository\CartRepositoryInterface;
 
-class DeleteItemHandler implements DispatchEventsInterface
+class RemoveItemHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 

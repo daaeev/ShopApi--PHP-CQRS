@@ -1,9 +1,8 @@
 <?php
 
-namespace Administrators\Entity\Update;
+namespace Project\Tests\Unit\Modules\Administrators\Entity\Update;
 
 use Webmozart\Assert\InvalidArgumentException;
-use Project\Modules\Administrators\Entity\AdminId;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Modules\Administrators\Api\Events\AdminLoginChanged;

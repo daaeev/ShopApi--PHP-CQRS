@@ -46,6 +46,20 @@ trait ProductRepositoryTestTrait
         $this->assertSame($initial->getSizes(), $found->getSizes());
     }
 
+    public function testAddIncrementIds()
+    {
+        $product = $this->makeProduct(
+            ProductId::next(),
+            md5(rand()),
+            md5(rand()),
+            $this->makePrices()
+        );
+
+        $this->assertNull($product->getId()->getId());
+        $this->products->add($product);
+        $this->assertNotNull($product->getId()->getId());
+    }
+
     public function testAddIfAlreadyExists()
     {
         $product = $this->generateProduct();

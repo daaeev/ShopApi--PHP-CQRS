@@ -5,6 +5,7 @@ namespace Project\Common\Product;
 enum Currency : string
 {
     case UAH = 'uah';
+    case USD = 'usd';
 
     public static function values()
     {
@@ -26,7 +27,7 @@ enum Currency : string
     public function isActive(): bool
     {
         return in_array($this, [
-            self::UAH
+            self::UAH,
         ]);
     }
 }

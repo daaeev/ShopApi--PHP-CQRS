@@ -1,6 +1,6 @@
 <?php
 
-namespace Administrators\Commands;
+namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
