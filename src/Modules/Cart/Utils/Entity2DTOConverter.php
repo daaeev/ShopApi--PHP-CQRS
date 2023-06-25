@@ -12,6 +12,8 @@ class Entity2DTOConverter
         return new DTO\Cart(
             $entity->getId()->getId(),
             $entity->getClient()->getHash(),
+            $entity->getCurrency()->value,
+            $entity->active(),
             array_map('self::convertCartItem', $entity->getItems()),
             $entity->getCreatedAt(),
             $entity->getUpdatedAt(),

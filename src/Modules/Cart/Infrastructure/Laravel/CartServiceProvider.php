@@ -7,7 +7,9 @@ use Project\Modules\Cart\Commands;
 use Project\Modules\Cart\Queries;
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Cart\Repository\QueryCartRepositoryInterface;
 use Project\Modules\Cart\Infrastructure\Laravel\Repository\CartRepository;
+use Project\Modules\Cart\Infrastructure\Laravel\Repository\QueryCartRepository;
 
 class CartServiceProvider extends ServiceProvider
 {
@@ -24,7 +26,8 @@ class CartServiceProvider extends ServiceProvider
     private array $eventsMapping = [];
 
     public array $singletons = [
-        CartRepositoryInterface::class => CartRepository::class
+        CartRepositoryInterface::class => CartRepository::class,
+        QueryCartRepositoryInterface::class => QueryCartRepository::class
     ];
 
     public function boot()

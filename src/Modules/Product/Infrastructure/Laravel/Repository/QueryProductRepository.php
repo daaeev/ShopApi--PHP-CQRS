@@ -14,6 +14,7 @@ class QueryProductRepository implements QueryProductRepositoryInterface
     public function get(int $id): DTO\Product
     {
         $record = Eloquent\Product::query()
+            ->with('prices', 'sizes', 'colors')
             ->where('id', $id)
             ->first();
 
@@ -46,6 +47,7 @@ class QueryProductRepository implements QueryProductRepositoryInterface
     public function list(int $page, int $limit, array $params = []): PaginatedCollection
     {
         $query = Eloquent\Product::query()
+            ->with('prices', 'sizes', 'colors')
             ->paginate(
                 $limit,
                 ['*'],
