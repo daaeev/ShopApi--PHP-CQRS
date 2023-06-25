@@ -21,11 +21,6 @@ class ChangeCurrencyHandler implements DispatchEventsInterface
     public function __invoke(ChangeCurrencyCommand $command): void
     {
         $currency = Currency::from($command->currency);
-
-        if (!$currency->isActive()) {
-            throw new \DomainException('Currency inactive');
-        }
-
         $client = $this->environment->getClient();
         $cart = $this->carts->getActiveCart($client);
         $cart->changeCurrency($currency);

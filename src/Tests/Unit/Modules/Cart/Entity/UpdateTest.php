@@ -23,6 +23,13 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
         $this->assertEvents($cart, [new CartCurrencyChanged($cart)]);
     }
 
+    public function testChangeCurrencyToInactiveCurrency()
+    {
+        $cart = $this->generateCart();
+        $this->expectException(\DomainException::class);
+        $cart->changeCurrency(Currency::INACTIVE);
+    }
+
     public function testDeactivate()
     {
         $cart = $this->generateCart();

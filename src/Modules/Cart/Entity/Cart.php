@@ -139,6 +139,10 @@ class Cart implements Events\EventRoot
             return;
         }
 
+        if (!$currency->isActive()) {
+            throw new \DomainException('Cant update cart currency to inactive currency ');
+        }
+
         $this->currentCurrency = $currency;
         $this->addEvent(new CartCurrencyChanged($this));
         $this->updated(false);

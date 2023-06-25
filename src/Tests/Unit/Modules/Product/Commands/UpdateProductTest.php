@@ -50,12 +50,12 @@ class UpdateProductTest extends \PHPUnit\Framework\TestCase
             sizes: [
                 md5(rand()),
             ],
-            prices: [
-                new Price(
-                    Currency::default()->value,
-                    $product->getPrices()[Currency::default()->value]->getPrice() + rand(1, 100)
-                ),
-            ]
+            prices: array_map(function (Entity\Price\Price $price) {
+                return new Price(
+                    $price->getCurrency()->value,
+                    $price->getPrice(),
+                );
+            }, $this->makePrices())
         );
         $handler = new UpdateProductHandler($this->products);
         $handler->setDispatcher($this->dispatcher);
@@ -72,14 +72,23 @@ class UpdateProductTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($command->code, $product->getCode());
         $this->assertSame($command->availability, $product->getAvailability()->value);
         $this->assertSame($command->active, $product->isActive());
-        $this->assertCount(1, $product->getColors());
-        $this->assertTrue(in_array($command->colors[0], $product->getColors()));
-        $this->assertCount(1, $product->getSizes());
-        $this->assertTrue(in_array($command->sizes[0], $product->getSizes()));
-        $this->assertCount(1, $product->getPrices());
-        $this->assertTrue((new Entity\Price\Price(
-            Currency::from($command->prices[0]->currency),
-            $command->prices[0]->price,
-        ))->equalsTo($product->getPrices()[$command->prices[0]->currency]));
+
+        $this->assertCount(count($command->colors), $product->getColors());
+        foreach ($command->colors as $color) {
+            $this->assertTrue(in_array($color, $product->getColors()));
+        }
+
+        $this->assertCount(count($command->sizes), $product->getSizes());
+        foreach ($command->sizes as $size) {
+            $this->assertTrue(in_array($size, $product->getSizes()));
+        }
+
+        $this->assertCount(count($command->prices), $product->getPrices());
+        foreach ($command->prices as $price) {
+            $this->assertTrue((new Entity\Price\Price(
+                Currency::from($price->currency),
+                $price->price,
+            ))->equalsTo($product->getPrices()[$price->currency]));
+        }
     }
 }

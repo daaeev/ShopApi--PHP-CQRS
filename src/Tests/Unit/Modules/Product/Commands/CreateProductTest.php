@@ -10,6 +10,7 @@ use Project\Modules\Product\Entity\Product;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Product\Entity\ProductId;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Product\Commands\CreateProductCommand;
 use Project\Modules\Product\Repository\MemoryProductRepository;
 use Project\Modules\Product\Repository\ProductRepositoryInterface;
@@ -17,6 +18,8 @@ use Project\Modules\Product\Commands\Handlers\CreateProductHandler;
 
 class CreateProductTest extends \PHPUnit\Framework\TestCase
 {
+    use ProductFactory;
+
     private ProductRepositoryInterface $products;
     private EventDispatcherInterface $dispatcher;
 
@@ -43,12 +46,12 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
             sizes: [
                 md5(rand()),
             ],
-            prices: [
-                new Price(
-                    Currency::default()->value,
-                    rand()
-                ),
-            ]
+            prices: array_map(function (Entity\Price\Price $price) {
+                return new Price(
+                    $price->getCurrency()->value,
+                    $price->getPrice(),
+                );
+            }, $this->makePrices())
         );
         $handler = new CreateProductHandler($this->products);
         $handler->setDispatcher($this->dispatcher);
@@ -64,14 +67,23 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($command->code, $product->getCode());
         $this->assertSame($command->availability, $product->getAvailability()->value);
         $this->assertSame($command->active, $product->isActive());
-        $this->assertCount(1, $product->getColors());
-        $this->assertTrue(in_array($command->colors[0], $product->getColors()));
-        $this->assertCount(1, $product->getSizes());
-        $this->assertTrue(in_array($command->sizes[0], $product->getSizes()));
-        $this->assertCount(1, $product->getPrices());
-        $this->assertTrue((new Entity\Price\Price(
-            Currency::from($command->prices[0]->currency),
-            $command->prices[0]->price,
-        ))->equalsTo($product->getPrices()[$command->prices[0]->currency]));
+
+        $this->assertCount(count($command->colors), $product->getColors());
+        foreach ($command->colors as $color) {
+            $this->assertTrue(in_array($color, $product->getColors()));
+        }
+
+        $this->assertCount(count($command->sizes), $product->getSizes());
+        foreach ($command->sizes as $size) {
+            $this->assertTrue(in_array($size, $product->getSizes()));
+        }
+
+        $this->assertCount(count($command->prices), $product->getPrices());
+        foreach ($command->prices as $price) {
+            $this->assertTrue((new Entity\Price\Price(
+                Currency::from($price->currency),
+                $price->price,
+            ))->equalsTo($product->getPrices()[$price->currency]));
+        }
     }
 }
