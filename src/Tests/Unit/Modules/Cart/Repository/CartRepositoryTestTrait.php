@@ -4,6 +4,7 @@ namespace Project\Tests\Unit\Modules\Cart\Repository;
 
 use Project\Modules\Cart\Entity\Cart;
 use Project\Modules\Cart\Entity\CartId;
+use Project\Common\Utils\DateTimeFormat;
 use Project\Modules\Cart\Entity\CartItemId;
 use Project\Common\Environment\Client\Client;
 use Project\Common\Repository\NotFoundException;
@@ -32,9 +33,22 @@ trait CartRepositoryTestTrait
         $this->assertSame($initial->getClient()->getHash(), $other->getClient()->getHash());
         $this->assertSame($initial->getClient()->getHash(), $other->getClient()->getHash());
         $this->assertSame($initial->active(), $other->active());
-        $this->assertSame($initial->getCreatedAt(), $other->getCreatedAt());
-        $this->assertSame($initial->getUpdatedAt(), $other->getUpdatedAt());
-        $this->assertSame($initial->getItems(), $other->getItems());
+        $this->assertSame(
+            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE),
+            $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE)
+        );
+        $this->assertSame(
+            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE),
+            $other->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE)
+        );
+
+        $this->assertSame(count($initial->getItems()), count($other->getItems()));
+        foreach ($initial->getItems() as $index => $initialItem) {
+            $otherItem = $other->getItems()[$index];
+            $this->assertTrue($initialItem->getId()->equalsTo($otherItem->getId()));
+            $this->assertSame($initialItem->getQuantity(), $otherItem->getQuantity());
+            $this->assertTrue($initialItem->equalsTo($otherItem));
+        }
     }
 
     public function testGetIfDoesNotExists()
