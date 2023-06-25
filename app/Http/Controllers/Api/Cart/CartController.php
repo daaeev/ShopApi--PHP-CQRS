@@ -8,7 +8,7 @@ class CartController extends BaseApiController
 {
     public function addItem(Requests\AddItem $request)
     {
-        $id = $this->dispatchCommand($request->getCommand());
+        $this->dispatchCommand($request->getCommand());
         return $this->success([], 'Cart item added');
     }
 
@@ -32,7 +32,6 @@ class CartController extends BaseApiController
 
     public function getActiveCart(Requests\GetActiveCart $request)
     {
-        $data = $this->dispatchQuery($request->getQuery());
-        return $this->success($data);
+        return $this->success($this->dispatchQuery($request->getQuery()));
     }
 }

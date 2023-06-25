@@ -9,11 +9,17 @@ class RemoveItem extends ApiRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'id' => 'bail|numeric|integer|exists:carts_items,id'
+        ];
     }
 
     public function getCommand(): RemoveItemCommand
     {
         $validated = $this->validated();
+
+        return new RemoveItemCommand(
+            $validated['id']
+        );
     }
 }

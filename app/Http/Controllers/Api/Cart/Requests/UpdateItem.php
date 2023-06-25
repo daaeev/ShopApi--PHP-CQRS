@@ -9,11 +9,19 @@ class UpdateItem extends ApiRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'id' => 'bail|numeric|integer|exists:carts_items,id',
+            'quantity' => 'numeric|integer|min:1'
+        ];
     }
 
     public function getCommand(): UpdateItemCommand
     {
         $validated = $this->validated();
+
+        return new UpdateItemCommand(
+            $validated['id'],
+            $validated['quantity'],
+        );
     }
 }
