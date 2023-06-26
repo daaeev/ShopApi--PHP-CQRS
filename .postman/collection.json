@@ -10,7 +10,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "administrator/login",
+					"name": "admin/login",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -44,7 +44,7 @@
 					"response": []
 				},
 				{
-					"name": "administrator/logout",
+					"name": "admin/logout",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -68,7 +68,7 @@
 			"name": "Product",
 			"item": [
 				{
-					"name": "products",
+					"name": "admin/products",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -120,12 +120,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{domain}}/api/products",
+							"raw": "{{domain}}/api/admin/products",
 							"host": [
 								"{{domain}}"
 							],
 							"path": [
 								"api",
+								"admin",
 								"products"
 							]
 						}
@@ -191,12 +192,13 @@
 									]
 								},
 								"url": {
-									"raw": "{{domain}}/api/products",
+									"raw": "{{domain}}/api/admin/products",
 									"host": [
 										"{{domain}}"
 									],
 									"path": [
 										"api",
+										"admin",
 										"products"
 									]
 								}
@@ -252,7 +254,7 @@
 					]
 				},
 				{
-					"name": "products/{id}",
+					"name": "admin/products/{id}",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -305,12 +307,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{domain}}/api/products/2",
+							"raw": "{{domain}}/api/admin/products/2",
 							"host": [
 								"{{domain}}"
 							],
 							"path": [
 								"api",
+								"admin",
 								"products",
 								"2"
 							]
@@ -377,12 +380,13 @@
 									]
 								},
 								"url": {
-									"raw": "{{domain}}/api/products/1",
+									"raw": "{{domain}}/api/admin/products/1",
 									"host": [
 										"{{domain}}"
 									],
 									"path": [
 										"api",
+										"admin",
 										"products",
 										"1"
 									]
@@ -434,22 +438,23 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"dataset\": {\n        \"id\": \"1\"\n    }\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
 						}
 					]
 				},
 				{
-					"name": "products/{id}",
+					"name": "admin/products/{id}",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{domain}}/api/products/1",
+							"raw": "{{domain}}/api/admin/products/1",
 							"host": [
 								"{{domain}}"
 							],
 							"path": [
 								"api",
+								"admin",
 								"products",
 								"1"
 							]
@@ -462,12 +467,13 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{domain}}/api/products/1",
+									"raw": "{{domain}}/api/admin/products/1",
 									"host": [
 										"{{domain}}"
 									],
 									"path": [
 										"api",
+										"admin",
 										"products",
 										"1"
 									]
@@ -519,22 +525,23 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"dataset\": {\n        \"id\": \"1\"\n    }\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
 						}
 					]
 				},
 				{
-					"name": "products/{id}",
+					"name": "admin/products/{id}",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{domain}}/api/products/2",
+							"raw": "{{domain}}/api/admin/products/2",
 							"host": [
 								"{{domain}}"
 							],
 							"path": [
 								"api",
+								"admin",
 								"products",
 								"2"
 							]
@@ -547,12 +554,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{domain}}/api/products/2",
+									"raw": "{{domain}}/api/admin/products/2",
 									"host": [
 										"{{domain}}"
 									],
 									"path": [
 										"api",
+										"admin",
 										"products",
 										"2"
 									]
@@ -609,17 +617,18 @@
 					]
 				},
 				{
-					"name": "products",
+					"name": "admin/products",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{domain}}/api/products",
+							"raw": "{{domain}}/api/admin/products",
 							"host": [
 								"{{domain}}"
 							],
 							"path": [
 								"api",
+								"admin",
 								"products"
 							],
 							"query": [
@@ -643,12 +652,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{domain}}/api/products?page=1&limit=2",
+									"raw": "{{domain}}/api/admin/products?page=1&limit=2",
 									"host": [
 										"{{domain}}"
 									],
 									"path": [
 										"api",
+										"admin",
 										"products"
 									],
 									"query": [
@@ -1240,6 +1250,506 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 3,\n        \"name\": \"Admin\",\n        \"login\": \"AdminLogin\",\n        \"roles\": [\n            \"admin\"\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "size",
+									"value": "45",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "color",
+									"value": "Blue",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/cart",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cart"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Add item",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "product",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "size",
+											"value": "45",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "color",
+											"value": "Blue",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/cart",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"cart"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 26 Jun 2023 10:07:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=ZpZragQRXuQEmKbyHPNtVZt4z6s5P1i8PhTnWviv; expires=Mon, 26 Jun 2023 12:07:05 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=1000"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Cart item added\",\n    \"dataset\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "cart/{id}",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "quantity",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/cart/4",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Update item",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "quantity",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/cart/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"cart",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 26 Jun 2023 10:14:15 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=ZpZragQRXuQEmKbyHPNtVZt4z6s5P1i8PhTnWviv; expires=Mon, 26 Jun 2023 12:14:16 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=999"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Cart item updated\",\n    \"dataset\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "cart/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/cart/4",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Remove item",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/cart/2",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"cart",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 26 Jun 2023 10:15:47 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=ZpZragQRXuQEmKbyHPNtVZt4z6s5P1i8PhTnWviv; expires=Mon, 26 Jun 2023 12:15:47 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=998"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Cart item removed\",\n    \"dataset\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "cart/currency",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "currency",
+									"value": "uah",
+									"description": "uah|usd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/cart/currency",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"currency"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Change cart currency",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/cart/currency",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"cart",
+										"currency"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 26 Jun 2023 10:35:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=ZpZragQRXuQEmKbyHPNtVZt4z6s5P1i8PhTnWviv; expires=Mon, 26 Jun 2023 12:35:51 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=1000"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Currency changed\",\n    \"dataset\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/cart",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cart"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Get cart",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/cart",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"cart"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 26 Jun 2023 10:38:47 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=ZpZragQRXuQEmKbyHPNtVZt4z6s5P1i8PhTnWviv; expires=Mon, 26 Jun 2023 12:38:47 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=996"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 8,\n        \"clientHash\": \"3DKdo3YpBS8kiAgj\",\n        \"currency\": \"uah\",\n        \"active\": true,\n        \"items\": [\n            {\n                \"id\": 5,\n                \"product\": 2,\n                \"name\": \"Test update product\",\n                \"price\": 425,\n                \"quantity\": 1,\n                \"size\": null,\n                \"color\": null\n            }\n        ],\n        \"createdAt\": \"2023-06-26 10:07:05\",\n        \"updatedAt\": \"2023-06-26 10:38:44\"\n    }\n}"
 						}
 					]
 				}
