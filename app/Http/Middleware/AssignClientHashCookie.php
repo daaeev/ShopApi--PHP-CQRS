@@ -12,7 +12,8 @@ class AssignClientHashCookie
 {
     public function __construct(
         private string $cookieName = 'clientHash',
-        private int $cookieLifeTimeInMinutes = 1440
+        private int $cookieLifeTimeInMinutes = 1440,
+        private int $hashLegth = 40
     ) {}
 
     /**
@@ -22,10 +23,10 @@ class AssignClientHashCookie
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$this->hashAssigned()) {
+        if (!$this->hashAssigned() || !$this->hashIsValid()) {
             Cookie::queue(
                 $this->cookieName,
-                Str::random(),
+                $this->generateHash(),
                 $this->cookieLifeTimeInMinutes
             );
         }
@@ -36,5 +37,20 @@ class AssignClientHashCookie
     private function hashAssigned(): bool
     {
         return Cookie::has($this->cookieName);
+    }
+
+    private function hashIsValid(): bool
+    {
+        $hash = Cookie::get($this->cookieName);
+
+        return (
+            is_string($hash)
+            && (mb_strlen($hash) === $this->hashLegth)
+        );
+    }
+
+    private function generateHash(): string
+    {
+        return Str::random($this->hashLegth);
     }
 }
