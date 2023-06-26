@@ -50,12 +50,12 @@ class ProductsService
             throw new \DomainException('Cant add unavailable product');
         }
 
-        if (!in_array($size, $product->sizes)) {
-            throw new \DomainException('Product does not has "' . $size . '" size');
+        if (!empty($size) && !in_array($size, $product->sizes)) {
+            throw new \DomainException('Product id:' . $product->id . ' does not has "' . $size . '" size');
         }
 
-        if (!in_array($color, $product->colors)) {
-            throw new \DomainException('Product does not has "' . $color . '" color');
+        if (!empty($color) && !in_array($color, $product->colors)) {
+            throw new \DomainException('Product id:' . $product->id . ' does not has "' . $color . '" color');
         }
     }
 
@@ -70,7 +70,7 @@ class ProductsService
         }
 
         if (null === $itemPrice) {
-            throw new \DomainException('Product does not have price in ' . $currency->value);
+            throw new \DomainException('Product id:' . $product->id . ' does not have price in ' . $currency->value);
         }
 
         return $itemPrice;

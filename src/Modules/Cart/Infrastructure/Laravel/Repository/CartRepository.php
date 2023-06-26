@@ -80,11 +80,9 @@ class CartRepository implements CartRepositoryInterface
 
     private function persist(Entity\Cart $cart): void
     {
-        $record = new Eloquent\Cart;
-
-        if (!empty($cart->getId()->getId())) {
-            $record->id = $cart->getId()->getId();
-        }
+        $record = Eloquent\Cart::firstOrNew([
+            'id' => $cart->getId()->getId()
+        ]);
 
         $record->client_hash = $cart->getClient()->getHash();
         $record->active = $cart->active();

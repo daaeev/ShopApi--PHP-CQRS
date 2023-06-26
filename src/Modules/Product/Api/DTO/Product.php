@@ -3,6 +3,7 @@
 namespace Project\Modules\Product\Api\DTO;
 
 use Project\Common\Utils;
+use Webmozart\Assert\Assert;
 
 class Product implements Utils\DTO
 {
@@ -15,7 +16,9 @@ class Product implements Utils\DTO
         public readonly array $colors,
         public readonly array $sizes,
         public readonly array $prices,
-    ) {}
+    ) {
+        Assert::allIsInstanceOf($this->prices, Price::class);
+    }
 
     public function toArray(): array
     {

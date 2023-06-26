@@ -18,10 +18,10 @@ class Entity2DTOConverter
             $entity->getColors(),
             $entity->getSizes(),
             array_map(function (Entity\Price\Price $price) {
-                return [
-                    'currency' => $price->getCurrency()->value,
-                    'value' => $price->getPrice()
-                ];
+                return new DTO\Price(
+                    $price->getCurrency()->value,
+                    $price->getPrice()
+                );
             }, $entity->getPrices()),
         );
     }
