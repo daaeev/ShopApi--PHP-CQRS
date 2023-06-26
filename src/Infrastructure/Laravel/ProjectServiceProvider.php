@@ -3,6 +3,7 @@
 namespace Project\Infrastructure\Laravel;
 
 use Project\Common\CQRS\Buses\CompositeBus;
+use App\Http\Middleware\AssignClientHashCookie;
 use Project\Common\CQRS\Buses\CompositeEventBus;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
@@ -22,6 +23,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->registerProviders();
         $this->registerEnvironment();
+        $this->registerAssignClientHashMiddleware();
         $this->registerBuses();
     }
 
@@ -35,7 +37,19 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerEnvironment()
     {
         $this->app->singleton(EnvironmentInterface::class, function ($app) {
-            return new EnvironmentService();
+            return new EnvironmentService(
+                config('project.application.client-hash-cookie-name')
+            );
+        });
+    }
+
+    private function registerAssignClientHashMiddleware()
+    {
+        $this->app->singleton(AssignClientHashCookie::class, function ($app) {
+            return new AssignClientHashCookie(
+                config('project.application.client-hash-cookie-name'),
+                config('project.application.client-hash-cookie-lifetime-in-minutes'),
+            );
         });
     }
 

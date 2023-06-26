@@ -1,5 +1,5 @@
 Переработать интерфейсы шин???
 
 Cart:
-    Assign client hash middleware
     Api
+    CSRF validation
