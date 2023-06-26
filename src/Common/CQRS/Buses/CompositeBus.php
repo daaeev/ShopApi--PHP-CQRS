@@ -2,13 +2,8 @@
 
 namespace Project\Common\CQRS\Buses;
 
-use DomainException;
-use Project\Common\CQRS\Buses\Interfaces\RequestBus;
-
-class CompositeBus implements Interfaces\ChainBus
+class CompositeBus extends Interfaces\AbstractCompositeBus
 {
-    private array $buses = [];
-
     public function dispatch(object $command): mixed
     {
         foreach ($this->buses as $bus) {
@@ -17,11 +12,6 @@ class CompositeBus implements Interfaces\ChainBus
             }
         }
 
-        throw new DomainException('Cant dispatch command ' . $command::class);
-    }
-
-    public function registerBus(RequestBus $bus): void
-    {
-        $this->buses[] = $bus;
+        throw new \DomainException('Cant dispatch command ' . $command::class);
     }
 }

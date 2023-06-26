@@ -2,7 +2,6 @@
 
 namespace Project\Common\CQRS\Buses;
 
-use DomainException;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -20,7 +19,7 @@ class EventBus implements Interfaces\RequestBus, EventDispatcherInterface
     public function dispatch(object $event): void
     {
         if (!$this->canDispatch($event)) {
-            throw new DomainException('Cant dispatch event ' . $event::class);
+            throw new \DomainException('Cant dispatch event ' . $event::class);
         }
 
         if (is_array($this->bindings[$event::class])) {
@@ -52,7 +51,7 @@ class EventBus implements Interfaces\RequestBus, EventDispatcherInterface
         if (is_callable($handler)) {
             call_user_func($handler, $event);
         } else {
-            throw new DomainException('Cant execute ' . $handler::class . ' event handler');
+            throw new \DomainException('Cant execute ' . $handler::class . ' event handler');
         }
     }
 }

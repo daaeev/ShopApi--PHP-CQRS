@@ -4,13 +4,12 @@ namespace Project\Infrastructure\Laravel\CQRS\Buses\Decorators;
 
 use Illuminate\Support\Facades\DB;
 use Project\Common\CQRS\Buses\Interfaces;
-use Project\Common\CQRS\Buses\Interfaces\RequestBus;
 
-class TransactionCompositeBus implements Interfaces\ChainBus
+class TransactionCompositeBus extends Interfaces\AbstractCompositeBus
 {
-    private Interfaces\ChainBus $decorated;
+    private Interfaces\AbstractCompositeBus $decorated;
 
-    public function __construct(Interfaces\ChainBus $decorated)
+    public function __construct(Interfaces\AbstractCompositeBus $decorated)
     {
         $this->decorated = $decorated;
     }
@@ -30,7 +29,12 @@ class TransactionCompositeBus implements Interfaces\ChainBus
         return $result;
     }
 
-    public function registerBus(RequestBus $bus): void
+    public function canDispatch($command): bool
+    {
+        return $this->decorated->canDispatch($command);
+    }
+
+    public function registerBus(Interfaces\RequestBus $bus): void
     {
         $this->decorated->registerBus($bus);
     }

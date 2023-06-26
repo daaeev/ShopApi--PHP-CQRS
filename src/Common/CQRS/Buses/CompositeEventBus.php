@@ -3,23 +3,15 @@
 namespace Project\Common\CQRS\Buses;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Project\Common\CQRS\Buses\Interfaces\RequestBus;
 
-class CompositeEventBus implements Interfaces\ChainBus, EventDispatcherInterface
+class CompositeEventBus extends Interfaces\AbstractCompositeBus implements EventDispatcherInterface
 {
-    private array $buses = [];
-
-    public function dispatch(object $command): void
+    public function dispatch(object $event): void
     {
         foreach ($this->buses as $bus) {
-            if ($bus->canDispatch($command)) {
-                $bus->dispatch($command);
+            if ($bus->canDispatch($event)) {
+                $bus->dispatch($event);
             }
         }
-    }
-
-    public function registerBus(RequestBus $bus): void
-    {
-        $this->buses[] = $bus;
     }
 }
