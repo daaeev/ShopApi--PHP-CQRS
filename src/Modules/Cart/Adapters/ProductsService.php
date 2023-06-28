@@ -5,7 +5,7 @@ namespace Project\Modules\Cart\Adapters;
 use Project\Modules\Cart\Entity;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
-use Project\Modules\Catalogue\Product\Api\ProductApi;
+use Project\Modules\Catalogue\Api\ProductApi;
 use Project\Modules\Catalogue\Product\Api\DTO\Product as ProductDTO;
 
 class ProductsService

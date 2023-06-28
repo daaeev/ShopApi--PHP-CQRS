@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Catalogue\Product\Api;
+namespace Project\Modules\Catalogue\Api;
 
 use Project\Modules\Catalogue\Product\Api\DTO;
 use Project\Modules\Catalogue\Product\Entity\ProductId;
