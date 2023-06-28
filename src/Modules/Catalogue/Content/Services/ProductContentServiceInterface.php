@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Catalogue\Content\Services;
 
-use Project\Common\Language;
+use Project\Modules\Catalogue\Content\Commands\UpdateProductContentCommand;
 
 interface ProductContentServiceInterface
 {
-    public function update(int $product, Language $language, array $fields): void;
+    public function update(UpdateProductContentCommand $command): void;
 }

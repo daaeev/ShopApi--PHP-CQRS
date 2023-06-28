@@ -9,14 +9,14 @@ use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Modules\Cart\Infrastructure\Laravel\CartServiceProvider;
+use Project\Modules\Catalogue\Infrastructure\CatalogueServiceProvider;
 use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionCompositeBus;
-use Project\Modules\Catalogue\Product\Infrastructure\Laravel\ProductServiceProvider;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
 
 class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     private array $providers = [
-        ProductServiceProvider::class,
+        CatalogueServiceProvider::class,
         AdministratorsServiceProvider::class,
         CartServiceProvider::class,
     ];
