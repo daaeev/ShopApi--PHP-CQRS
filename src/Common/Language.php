@@ -2,7 +2,7 @@
 
 namespace Project\Common;
 
-enum Language : string
+enum Language: string
 {
     case UA = 'ua';
     case EN = 'en';

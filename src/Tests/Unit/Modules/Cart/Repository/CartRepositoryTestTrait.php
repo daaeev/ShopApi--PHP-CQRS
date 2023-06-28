@@ -34,12 +34,12 @@ trait CartRepositoryTestTrait
         $this->assertSame($initial->getClient()->getHash(), $other->getClient()->getHash());
         $this->assertSame($initial->active(), $other->active());
         $this->assertSame(
-            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE),
-            $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE)
+            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
+            $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value)
         );
         $this->assertSame(
-            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE),
-            $other->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE)
+            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value),
+            $other->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value)
         );
 
         $this->assertSame(count($initial->getItems()), count($other->getItems()));

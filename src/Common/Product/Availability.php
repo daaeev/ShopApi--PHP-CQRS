@@ -2,7 +2,7 @@
 
 namespace Project\Common\Product;
 
-enum Availability : string
+enum Availability: string
 {
     case IN_STOCK = 'in_stock';
     case PREORDER = 'preorder';
