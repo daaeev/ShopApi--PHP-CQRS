@@ -7,18 +7,16 @@ use Project\Common\CQRS\Buses\EventBus;
 
 class CompositeEventBusTest extends \PHPUnit\Framework\TestCase
 {
-    public function testDiscpatch()
+    public function testDispatchEvent()
     {
         $command = new Commands\TestCommand;
         $busMock = $this->getMockBuilder(EventBus::class)
             ->disableOriginalConstructor()
             ->getMock();
-
         $busMock->expects($this->once())
             ->method('canDispatch')
             ->with($command)
             ->willReturn(true);
-
         $busMock->expects($this->once())
             ->method('dispatch')
             ->with($command);
@@ -28,26 +26,35 @@ class CompositeEventBusTest extends \PHPUnit\Framework\TestCase
         $bus->dispatch($command);
     }
 
-    public function testCantDispatchWithoutRegisteredBuses()
+    public function testDispatchEventWithoutAnyHandlers()
     {
+        $this->expectNotToPerformAssertions();
         $bus = new CompositeEventBus;
-
-        try {
-            $bus->dispatch(new Commands\TestCommand);
-            $this->assertTrue(true);
-        } catch (\Throwable) {
-            $this->fail('Exception thrown');
-        }
+        $bus->dispatch(new Commands\TestCommand);
     }
 
-    public function testCantDispatchWithRegisteredBuses()
+    public function testCanDispatch()
     {
         $command = new Commands\TestCommand;
-
         $busMock = $this->getMockBuilder(EventBus::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $busMock->expects($this->once())
+            ->method('canDispatch')
+            ->with($command)
+            ->willReturn(true);
 
+        $bus = new CompositeEventBus;
+        $bus->registerBus($busMock);
+        $this->assertTrue($bus->canDispatch($command));
+    }
+
+    public function testCantDispatch()
+    {
+        $command = new Commands\TestCommand;
+        $busMock = $this->getMockBuilder(EventBus::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $busMock->expects($this->once())
             ->method('canDispatch')
             ->with($command)
@@ -55,12 +62,13 @@ class CompositeEventBusTest extends \PHPUnit\Framework\TestCase
 
         $bus = new CompositeEventBus;
         $bus->registerBus($busMock);
+        $this->assertFalse($bus->canDispatch($command));
+    }
 
-        try {
-            $bus->dispatch(new Commands\TestCommand);
-            $this->assertTrue(true);
-        } catch (\Throwable) {
-            $this->fail('Exception thrown');
-        }
+    public function testCantDispatchWithoutAnyRegisteredBuses()
+    {
+        $command = new Commands\TestCommand;
+        $bus = new CompositeEventBus;
+        $this->assertFalse($bus->canDispatch($command));
     }
 }
