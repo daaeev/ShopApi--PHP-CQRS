@@ -3,10 +3,10 @@
 namespace Project\Tests\Unit\Modules\Product\Entity\Update;
 
 use DomainException;
-use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Product\Api\Events\ProductUpdated;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Product\Api\Events\ProductActivityChanged;
+use Project\Tests\Unit\Modules\Helpers\ProductFactory;
+use Project\Modules\Catalogue\Product\Api\Events\ProductUpdated;
+use Project\Modules\Catalogue\Product\Api\Events\ProductActivityChanged;
 
 class UpdateActivityTest extends \PHPUnit\Framework\TestCase
 {

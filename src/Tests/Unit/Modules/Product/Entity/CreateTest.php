@@ -4,11 +4,11 @@ namespace Project\Tests\Unit\Modules\Product\Entity;
 
 use DomainException;
 use Project\Common\Product\Availability;
-use Project\Modules\Product\Entity\ProductId;
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Product\Api\Events\ProductCreated;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
+use Project\Modules\Catalogue\Product\Entity\ProductId;
+use Project\Modules\Catalogue\Product\Api\Events\ProductCreated;
 
 class CreateTest extends \PHPUnit\Framework\TestCase
 {

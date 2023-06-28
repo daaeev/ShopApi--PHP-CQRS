@@ -6,10 +6,10 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Product\Commands\DeleteProductCommand;
-use Project\Modules\Product\Repository\MemoryProductRepository;
-use Project\Modules\Product\Repository\ProductRepositoryInterface;
-use Project\Modules\Product\Commands\Handlers\DeleteProductHandler;
+use Project\Modules\Catalogue\Product\Commands\DeleteProductCommand;
+use Project\Modules\Catalogue\Product\Repository\MemoryProductRepository;
+use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Commands\Handlers\DeleteProductHandler;
 
 class DeleteProductTest extends \PHPUnit\Framework\TestCase
 {

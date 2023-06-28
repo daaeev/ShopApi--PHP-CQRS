@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Product\Requests;
 
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Product\Queries\ProductsListQuery;
+use Project\Modules\Catalogue\Product\Queries\ProductsListQuery;
 
 class ProductsList extends ApiRequest
 {

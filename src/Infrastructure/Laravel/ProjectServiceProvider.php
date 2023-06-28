@@ -9,8 +9,8 @@ use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Modules\Cart\Infrastructure\Laravel\CartServiceProvider;
-use Project\Modules\Product\Infrastructure\Laravel\ProductServiceProvider;
 use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionCompositeBus;
+use Project\Modules\Catalogue\Product\Infrastructure\Laravel\ProductServiceProvider;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
 
 class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider

@@ -2,19 +2,19 @@
 
 namespace Project\Tests\Unit\Modules\Product\Commands;
 
-use Project\Modules\Product\Entity;
+use Project\Modules\Catalogue\Product\Entity;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
-use Project\Modules\Product\Api\DTO\Price;
-use Project\Modules\Product\Entity\Product;
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Modules\Product\Entity\ProductId;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Modules\Catalogue\Product\Api\DTO\Price;
+use Project\Modules\Catalogue\Product\Entity\Product;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Product\Commands\UpdateProductCommand;
-use Project\Modules\Product\Repository\MemoryProductRepository;
-use Project\Modules\Product\Repository\ProductRepositoryInterface;
-use Project\Modules\Product\Commands\Handlers\UpdateProductHandler;
+use Project\Modules\Catalogue\Product\Entity\ProductId;
+use Project\Modules\Catalogue\Product\Commands\UpdateProductCommand;
+use Project\Modules\Catalogue\Product\Repository\MemoryProductRepository;
+use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Commands\Handlers\UpdateProductHandler;
 
 class UpdateProductTest extends \PHPUnit\Framework\TestCase
 {

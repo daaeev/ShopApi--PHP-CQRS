@@ -2,9 +2,9 @@
 
 namespace Project\Tests\Unit\Modules\Product\Entity\Update;
 
-use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Product\Api\Events\ProductUpdated;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
+use Project\Tests\Unit\Modules\Helpers\ProductFactory;
+use Project\Modules\Catalogue\Product\Api\Events\ProductUpdated;
 
 class UpdateColorsTest extends \PHPUnit\Framework\TestCase
 {

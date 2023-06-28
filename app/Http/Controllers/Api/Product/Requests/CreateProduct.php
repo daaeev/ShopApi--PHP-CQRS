@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api\Product\Requests;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
 use Project\Common\Product\Currency;
-use Project\Modules\Product\Api\DTO;
+use Project\Modules\Catalogue\Product\Api\DTO;
 use Project\Common\Product\Availability;
-use Project\Modules\Product\Commands\CreateProductCommand;
+use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;
 
 class CreateProduct extends ApiRequest
 {

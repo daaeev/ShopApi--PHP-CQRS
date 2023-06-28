@@ -5,7 +5,7 @@ namespace Project\Tests\Laravel\Modules\Product\Repository;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Product\Repository\ProductRepositoryTestTrait;
-use Project\Modules\Product\Infrastructure\Laravel\Repository\ProductRepository;
+use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository\ProductRepository;
 
 class ProductRepositoryTest extends \Tests\TestCase
 {
