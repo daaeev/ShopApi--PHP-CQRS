@@ -3,16 +3,14 @@
 namespace Project\Modules\Catalogue\Api;
 
 use Project\Modules\Catalogue\Product\Api\DTO;
-use Project\Modules\Catalogue\Product\Entity\ProductId;
-use Project\Modules\Catalogue\Product\Utils\Entity2DTOConverter;
-use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\ProductApiRepositoryInterface;
 
 class ProductApi
 {
     private array $productsDTO = [];
 
     public function __construct(
-        private ProductRepositoryInterface $products
+        private ProductApiRepositoryInterface $products
     ) {}
 
     public function get(int $product): DTO\Product
@@ -26,10 +24,7 @@ class ProductApi
 
     private function fetchProduct(int $product): void
     {
-        $productDTO = Entity2DTOConverter::convert(
-            $this->products->get(new ProductId($product))
-        );
-
+        $productDTO = $this->products->get($product);
         $this->productsDTO[$productDTO->id] = $productDTO;
     }
 }
