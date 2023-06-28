@@ -7,6 +7,8 @@ use App\Http\Middleware\AssignClientHashCookie;
 use Project\Common\CQRS\Buses\CompositeEventBus;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Infrastructure\Laravel\Services\FileManager;
+use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Modules\Cart\Infrastructure\Laravel\CartServiceProvider;
 use Project\Modules\Catalogue\Infrastructure\CatalogueServiceProvider;
@@ -19,6 +21,10 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         CatalogueServiceProvider::class,
         AdministratorsServiceProvider::class,
         CartServiceProvider::class,
+    ];
+
+    public $singletons = [
+        FileManagerInterface::class => FileManager::class
     ];
 
     public function register()

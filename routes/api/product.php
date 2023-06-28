@@ -10,7 +10,8 @@ Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])->prefix('
     Route::put('{id}', [ProductController::class, 'update']);
     Route::delete('{id}', [ProductController::class, 'delete']);
 
-    Route::patch('content/{id}', [ContentController::class, 'update']);
+    Route::patch('content/{id}', [ContentController::class, 'updateContent']);
+    Route::post('preview/{id}', [ContentController::class, 'updatePreview']);
 
     Route::get('{id}', [ProductController::class, 'get']);
     Route::get('', [ProductController::class, 'list']);

@@ -11,7 +11,8 @@ use Project\Modules\Catalogue\Content\Infrastructure\Laravel\Services\ProductCon
 class ProductContentServiceProvider extends ServiceProvider
 {
     private array $commandsMapping = [
-        Commands\UpdateProductContentCommand::class => [ProductContentServiceInterface::class, 'update']
+        Commands\UpdateProductContentCommand::class => [ProductContentServiceInterface::class, 'updateContent'],
+        Commands\UpdateProductPreviewCommand::class => [ProductContentServiceInterface::class, 'updatePreview'],
     ];
 
     private array $queriesMapping = [];
