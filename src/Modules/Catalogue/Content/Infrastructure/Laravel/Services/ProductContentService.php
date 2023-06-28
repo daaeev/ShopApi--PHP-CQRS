@@ -22,7 +22,7 @@ class ProductContentService implements ProductContentServiceInterface
 
         EloquentContent::updateOrCreate(
             [
-                'id' => $command->product,
+                'product' => $command->product,
                 'language' => $command->language
             ],
             $command->fields

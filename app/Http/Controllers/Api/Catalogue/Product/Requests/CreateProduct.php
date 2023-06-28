@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api\Product\Requests;
+namespace App\Http\Controllers\Api\Catalogue\Product\Requests;
 
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
 use Project\Common\Product\Currency;
-use Project\Modules\Catalogue\Product\Api\DTO;
 use Project\Common\Product\Availability;
-use Project\Modules\Catalogue\Product\Commands\UpdateProductCommand;
+use Project\Modules\Catalogue\Product\Api\DTO;
+use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;
 
-class UpdateProduct extends ApiRequest
+class CreateProduct extends ApiRequest
 {
     public function rules()
     {
         return [
-            'id' => 'bail|required|numeric|integer|exists:products,id',
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
             'active' => 'required|boolean',
@@ -33,12 +32,11 @@ class UpdateProduct extends ApiRequest
         ];
     }
 
-    public function getCommand(): UpdateProductCommand
+    public function getCommand(): CreateProductCommand
     {
         $validated = $this->validated();
 
-        return new UpdateProductCommand(
-            $validated['id'],
+        return new CreateProductCommand(
             $validated['name'],
             $validated['code'],
             $validated['active'],

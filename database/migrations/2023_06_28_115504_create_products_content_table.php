@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product')->nullable(false);
             $table->string('language', 10)->nullable(false);
             $table->string('name')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
 
             $table->index('product', 'idx-products_content-product');

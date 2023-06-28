@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Product\Requests;
+namespace App\Http\Controllers\Api\Catalogue\Product\Requests;
 
 use App\Http\Requests\ApiRequest;
 use Project\Modules\Catalogue\Product\Queries\GetProductQuery;
