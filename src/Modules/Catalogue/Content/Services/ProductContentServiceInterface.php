@@ -3,6 +3,7 @@
 namespace Project\Modules\Catalogue\Content\Services;
 
 use Project\Modules\Catalogue\Content\Commands\AddProductImageCommand;
+use Project\Modules\Catalogue\Content\Commands\DeleteProductImageCommand;
 use Project\Modules\Catalogue\Content\Commands\UpdateProductContentCommand;
 use Project\Modules\Catalogue\Content\Commands\UpdateProductPreviewCommand;
 
@@ -13,4 +14,6 @@ interface ProductContentServiceInterface
     public function updatePreview(UpdateProductPreviewCommand $command): void;
 
     public function addImage(AddProductImageCommand $command): void;
+
+    public function deleteImage(DeleteProductImageCommand $command): void;
 }

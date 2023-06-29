@@ -13,6 +13,7 @@ Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])->prefix('
     Route::patch('{id}/content', [ContentController::class, 'updateContent']);
     Route::post('{id}/preview', [ContentController::class, 'updatePreview']);
     Route::post('{id}/image', [ContentController::class, 'addImage']);
+    Route::delete('image/{id}', [ContentController::class, 'deleteImage']);
 
     Route::get('{id}', [ProductController::class, 'get']);
     Route::get('', [ProductController::class, 'list']);

@@ -14,6 +14,7 @@ class ProductContentServiceProvider extends ServiceProvider
         Commands\UpdateProductContentCommand::class => [ProductContentServiceInterface::class, 'updateContent'],
         Commands\UpdateProductPreviewCommand::class => [ProductContentServiceInterface::class, 'updatePreview'],
         Commands\AddProductImageCommand::class => [ProductContentServiceInterface::class, 'addImage'],
+        Commands\DeleteProductImageCommand::class => [ProductContentServiceInterface::class, 'deleteImage'],
     ];
 
     private array $queriesMapping = [];

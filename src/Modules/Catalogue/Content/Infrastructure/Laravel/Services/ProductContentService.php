@@ -7,6 +7,7 @@ use Project\Common\Services\FileManager\File;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Modules\Catalogue\Content\Commands\AddProductImageCommand;
+use Project\Modules\Catalogue\Content\Commands\DeleteProductImageCommand;
 use Project\Modules\Catalogue\Content\Commands\UpdateProductContentCommand;
 use Project\Modules\Catalogue\Content\Commands\UpdateProductPreviewCommand;
 use Project\Modules\Catalogue\Content\Services\ProductContentServiceInterface;
@@ -83,5 +84,22 @@ class ProductContentService implements ProductContentServiceInterface
     {
         $newImage = $this->saveImage($command->image);
         $this->saveProductImage($command->product, $newImage, false);
+    }
+
+    public function deleteImage(DeleteProductImageCommand $command): void
+    {
+        $image = Eloquent\Image::find($command->id);
+
+        if (empty($image)) {
+            throw new NotFoundException('Image does not exists');
+        }
+
+        $this->fileManager->delete(
+            self::IMAGES_DIR
+            . DIRECTORY_SEPARATOR
+            . $image->image,
+            Disk::from($image->disk)
+        );
+        $image->delete();
     }
 }
