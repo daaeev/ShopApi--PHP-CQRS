@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Catalogue\Api;
 
-use Project\Modules\Catalogue\Product\Api\DTO;
+use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 use Project\Modules\Catalogue\Product\Repository\ProductApiRepositoryInterface;
 
 class ProductApi

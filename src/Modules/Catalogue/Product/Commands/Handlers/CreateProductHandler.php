@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Catalogue\Product\Commands\Handlers;
 
-use Project\Modules\Catalogue\Product\Entity;
 use Project\Common\Product\Currency;
-use Project\Modules\Catalogue\Product\Api\DTO;
 use Project\Common\Product\Availability;
+use Project\Modules\Catalogue\Product\Entity;
+use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;

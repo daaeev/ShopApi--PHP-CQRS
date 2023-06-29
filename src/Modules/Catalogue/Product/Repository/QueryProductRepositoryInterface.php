@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Catalogue\Product\Repository;
 
-use Project\Modules\Catalogue\Product\Api\DTO;
+use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 use Project\Common\Entity\Collections\PaginatedCollection;
 
 interface QueryProductRepositoryInterface

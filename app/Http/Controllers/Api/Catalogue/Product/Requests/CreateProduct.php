@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
-use Project\Modules\Catalogue\Product\Api\DTO;
+use Project\Modules\Catalogue\Api\DTO;
 use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;
 
 class CreateProduct extends ApiRequest
@@ -44,7 +44,7 @@ class CreateProduct extends ApiRequest
             $validated['colors'] ?? [],
             $validated['sizes'] ?? [],
             array_map(function (array $price) {
-                return new DTO\Price(
+                return new DTO\Product\Price(
                     $price['currency'],
                     $price['price'],
                 );

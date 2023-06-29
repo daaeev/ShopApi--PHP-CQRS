@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Catalogue\Product\Api\DTO;
+namespace Project\Modules\Catalogue\Api\DTO\Product;
 
 use Project\Common\Utils;
 use Webmozart\Assert\Assert;
