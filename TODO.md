@@ -1,5 +1,5 @@
 Catalog content:
-    - Added product additional images
+    - Remove image
 Catalog categories
 Catalog settings
 Catalog queries

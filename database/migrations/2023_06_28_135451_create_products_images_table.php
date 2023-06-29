@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('products_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product')
-                ->unique('unique-products_images-product')
-                ->nullable(false);
+            $table->unsignedBigInteger('product')->nullable(false);
             $table->string('image')->nullable(false);
             $table->string('disk')->nullable(false);
             $table->boolean('is_preview')->default(false);

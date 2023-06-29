@@ -13,6 +13,7 @@ class ProductContentServiceProvider extends ServiceProvider
     private array $commandsMapping = [
         Commands\UpdateProductContentCommand::class => [ProductContentServiceInterface::class, 'updateContent'],
         Commands\UpdateProductPreviewCommand::class => [ProductContentServiceInterface::class, 'updatePreview'],
+        Commands\AddProductImageCommand::class => [ProductContentServiceInterface::class, 'addImage'],
     ];
 
     private array $queriesMapping = [];

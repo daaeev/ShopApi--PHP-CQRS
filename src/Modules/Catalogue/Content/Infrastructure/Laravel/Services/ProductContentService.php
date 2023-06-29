@@ -3,8 +3,10 @@
 namespace Project\Modules\Catalogue\Content\Infrastructure\Laravel\Services;
 
 use Project\Common\Services\FileManager\Disk;
+use Project\Common\Services\FileManager\File;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Services\FileManager\FileManagerInterface;
+use Project\Modules\Catalogue\Content\Commands\AddProductImageCommand;
 use Project\Modules\Catalogue\Content\Commands\UpdateProductContentCommand;
 use Project\Modules\Catalogue\Content\Commands\UpdateProductPreviewCommand;
 use Project\Modules\Catalogue\Content\Services\ProductContentServiceInterface;
@@ -55,15 +57,31 @@ class ProductContentService implements ProductContentServiceInterface
             $currentImage->delete();
         }
 
-        $newImage = $this->fileManager->save(
-            $command->image,
+        $newImage = $this->saveImage($command->image);
+        $this->saveProductImage($command->product, $newImage, true);
+    }
+
+    private function saveImage(mixed $image): File
+    {
+        return $this->fileManager->save(
+            $image,
             self::IMAGES_DIR,
         );
+    }
+
+    private function saveProductImage(int $product, File $image, bool $isPreview): void
+    {
         Eloquent\Image::create([
-            'product' => $command->product,
-            'image' => $newImage->getFileName(),
-            'disk' => $newImage->getDisk(),
-            'is_preview' => true,
+            'product' => $product,
+            'image' => $image->getFileName(),
+            'disk' => $image->getDisk(),
+            'is_preview' => $isPreview,
         ]);
+    }
+
+    public function addImage(AddProductImageCommand $command): void
+    {
+        $newImage = $this->saveImage($command->image);
+        $this->saveProductImage($command->product, $newImage, false);
     }
 }
