@@ -6,7 +6,7 @@ use Project\Common\Events;
 use Webmozart\Assert\Assert;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
-use Project\Modules\Catalogue\Product\Api\Events as ProductEvents;
+use Project\Modules\Catalogue\Api\Events\Product as ProductEvents;
 
 class Product implements Events\EventRoot
 {

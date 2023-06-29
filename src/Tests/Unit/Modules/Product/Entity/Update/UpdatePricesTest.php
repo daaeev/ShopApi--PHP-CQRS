@@ -8,8 +8,8 @@ use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Product\Entity\Price\Price;
-use Project\Modules\Catalogue\Product\Api\Events\ProductUpdated;
-use Project\Modules\Catalogue\Product\Api\Events\ProductPricesChanged;
+use Project\Modules\Catalogue\Api\Events\Product\ProductUpdated;
+use Project\Modules\Catalogue\Api\Events\Product\ProductPricesChanged;
 
 class UpdatePricesTest extends \PHPUnit\Framework\TestCase
 {

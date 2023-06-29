@@ -5,8 +5,8 @@ namespace Project\Tests\Unit\Modules\Product\Entity\Update;
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Catalogue\Product\Api\Events\ProductUpdated;
-use Project\Modules\Catalogue\Product\Api\Events\ProductCodeChanged;
+use Project\Modules\Catalogue\Api\Events\Product\ProductUpdated;
+use Project\Modules\Catalogue\Api\Events\Product\ProductCodeChanged;
 
 class UpdateCodeTest extends \PHPUnit\Framework\TestCase
 {

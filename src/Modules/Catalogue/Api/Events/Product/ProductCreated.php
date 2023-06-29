@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Catalogue\Product\Api\Events;
+namespace Project\Modules\Catalogue\Api\Events\Product;
 
 class ProductCreated extends AbstractProductEvent
 {

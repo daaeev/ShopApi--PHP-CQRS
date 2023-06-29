@@ -5,7 +5,7 @@ namespace Project\Tests\Unit\Modules\Product\Entity;
 use DomainException;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Catalogue\Product\Api\Events\ProductDeleted;
+use Project\Modules\Catalogue\Api\Events\Product\ProductDeleted;
 
 class DeleteTest extends \PHPUnit\Framework\TestCase
 {

@@ -8,7 +8,7 @@ use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Product\Entity\ProductId;
-use Project\Modules\Catalogue\Product\Api\Events\ProductCreated;
+use Project\Modules\Catalogue\Api\Events\Product\ProductCreated;
 
 class CreateTest extends \PHPUnit\Framework\TestCase
 {
