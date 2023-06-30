@@ -10,7 +10,7 @@ class DeleteProduct extends ApiRequest
     public function rules()
     {
         return [
-            'id' => 'bail|required|numeric|integer|exists:products,id'
+            'id' => 'bail|required|numeric|integer|exists:catalogue_products,id'
         ];
     }
 

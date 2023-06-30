@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Catalogue\Content\Product\Infrastructure;
+namespace Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 use Project\Common\CQRS\Buses\RequestBus;

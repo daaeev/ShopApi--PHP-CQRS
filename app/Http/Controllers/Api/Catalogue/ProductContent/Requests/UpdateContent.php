@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Catalogue\Content\Requests;
+namespace App\Http\Controllers\Api\Catalogue\ProductContent\Requests;
 
 use Project\Common\Language;
 use Illuminate\Validation\Rule;
@@ -12,7 +12,7 @@ class UpdateContent extends ApiRequest
     public function rules()
     {
         return [
-            'id' => 'bail|required|numeric|integer|exists:products,id',
+            'id' => 'bail|required|numeric|integer|exists:catalogue_products,id',
             'language' => ['required', Rule::in(Language::values())],
             'fields' => 'required|array',
             'fields.name' => 'nullable|string|max:255',

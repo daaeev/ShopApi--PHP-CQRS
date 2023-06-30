@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Catalogue\Content\Requests;
+namespace App\Http\Controllers\Api\Catalogue\ProductContent\Requests;
 
 use App\Http\Requests\ApiRequest;
 use Project\Modules\Catalogue\Content\Product\Commands\UpdateProductPreviewCommand;
@@ -10,7 +10,7 @@ class UpdatePreview extends ApiRequest
     public function rules()
     {
         return [
-            'id' => 'bail|required|numeric|integer|exists:products,id',
+            'id' => 'bail|required|numeric|integer|exists:catalogue_products,id',
             'preview' => 'required|image',
         ];
     }

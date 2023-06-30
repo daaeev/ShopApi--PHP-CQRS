@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\Catalogue;
+namespace App\Http\Controllers\Api\Catalogue\ProductContent;
 
 use App\Http\Controllers\BaseApiController;
-use App\Http\Controllers\Api\Catalogue\Content\Requests;
+use App\Http\Controllers\Api\Catalogue\ProductContent\Requests;
 
 class ContentController extends BaseApiController
 {

@@ -14,7 +14,7 @@ class UpdateProduct extends ApiRequest
     public function rules()
     {
         return [
-            'id' => 'bail|required|numeric|integer|exists:products,id',
+            'id' => 'bail|required|numeric|integer|exists:catalogue_products,id',
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
             'active' => 'required|boolean',

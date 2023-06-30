@@ -4,7 +4,7 @@ namespace Project\Modules\Catalogue\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\ProductServiceProvider;
-use Project\Modules\Catalogue\Content\Product\Infrastructure\ProductContentServiceProvider;
+use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\ProductContentServiceProvider;
 
 class CatalogueServiceProvider extends ServiceProvider
 {

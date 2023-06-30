@@ -15,7 +15,7 @@ class CreateProduct extends ApiRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255',
+            'code' => 'bail|required|string|max:255|unique:catalogue_products,code',
             'active' => 'required|boolean',
             'availability' => ['required', Rule::in(Availability::values())],
 

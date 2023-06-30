@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Catalogue\Content\Requests;
+namespace App\Http\Controllers\Api\Catalogue\ProductContent\Requests;
 
 use App\Http\Requests\ApiRequest;
 use Project\Modules\Catalogue\Content\Product\Commands\DeleteProductImageCommand;
@@ -10,7 +10,7 @@ class DeleteImage extends ApiRequest
     public function rules()
     {
         return [
-            'id' => 'bail|required|numeric|integer|exists:products_images,id',
+            'id' => 'bail|required|numeric|integer|exists:catalogue_products_images,id',
         ];
     }
 

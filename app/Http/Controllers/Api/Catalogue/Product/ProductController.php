@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Catalogue;
+namespace App\Http\Controllers\Api\Catalogue\Product;
 
 use App\Http\Controllers\BaseApiController;
 use App\Http\Controllers\Api\Catalogue\Product\Requests;
