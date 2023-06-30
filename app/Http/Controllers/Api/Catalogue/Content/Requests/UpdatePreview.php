@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Catalogue\Content\Requests;
 
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Catalogue\Content\Commands\UpdateProductPreviewCommand;
+use Project\Modules\Catalogue\Content\Product\Commands\UpdateProductPreviewCommand;
 
 class UpdatePreview extends ApiRequest
 {

@@ -1,8 +1,6 @@
 <?php
 
-namespace Project\Modules\Catalogue\Content\Commands;
-
-use Project\Common\Language;
+namespace Project\Modules\Catalogue\Content\Product\Commands;
 
 class UpdateProductContentCommand
 {

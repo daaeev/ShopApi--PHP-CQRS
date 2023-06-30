@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Catalogue\Content\Requests;
 
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Catalogue\Content\Commands\AddProductImageCommand;
+use Project\Modules\Catalogue\Content\Product\Commands\AddProductImageCommand;
 
 class AddImage extends ApiRequest
 {

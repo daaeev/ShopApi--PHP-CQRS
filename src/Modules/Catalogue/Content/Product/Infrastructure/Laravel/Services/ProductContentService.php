@@ -1,18 +1,15 @@
 <?php
 
-namespace Project\Modules\Catalogue\Content\Infrastructure\Laravel\Services;
+namespace Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Services;
 
 use Project\Common\Services\FileManager\Disk;
 use Project\Common\Services\FileManager\File;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Services\FileManager\FileManagerInterface;
-use Project\Modules\Catalogue\Content\Commands\AddProductImageCommand;
-use Project\Modules\Catalogue\Content\Commands\DeleteProductImageCommand;
-use Project\Modules\Catalogue\Content\Commands\UpdateProductContentCommand;
-use Project\Modules\Catalogue\Content\Commands\UpdateProductPreviewCommand;
-use Project\Modules\Catalogue\Content\Services\ProductContentServiceInterface;
+use Project\Modules\Catalogue\Content\Product\Commands;
+use Project\Modules\Catalogue\Content\Product\Services\ProductContentServiceInterface;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Models\Product as EloquentProduct;
-use Project\Modules\Catalogue\Content\Infrastructure\Laravel\Models as Eloquent;
+use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models as Eloquent;
 
 class ProductContentService implements ProductContentServiceInterface
 {
@@ -22,7 +19,7 @@ class ProductContentService implements ProductContentServiceInterface
         private FileManagerInterface $fileManager
     ) {}
 
-    public function updateContent(UpdateProductContentCommand $command): void
+    public function updateContent(Commands\UpdateProductContentCommand $command): void
     {
         $productExists = EloquentProduct::query()
             ->where('id', $command->product)
@@ -41,7 +38,7 @@ class ProductContentService implements ProductContentServiceInterface
         );
     }
 
-    public function updatePreview(UpdateProductPreviewCommand $command): void
+    public function updatePreview(Commands\UpdateProductPreviewCommand $command): void
     {
         $currentImage = Eloquent\Image::query()
             ->where('product', $command->product)
@@ -80,13 +77,13 @@ class ProductContentService implements ProductContentServiceInterface
         ]);
     }
 
-    public function addImage(AddProductImageCommand $command): void
+    public function addImage(Commands\AddProductImageCommand $command): void
     {
         $newImage = $this->saveImage($command->image);
         $this->saveProductImage($command->product, $newImage, false);
     }
 
-    public function deleteImage(DeleteProductImageCommand $command): void
+    public function deleteImage(Commands\DeleteProductImageCommand $command): void
     {
         $image = Eloquent\Image::find($command->id);
 

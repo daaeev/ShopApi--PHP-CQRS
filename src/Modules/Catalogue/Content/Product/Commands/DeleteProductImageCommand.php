@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Catalogue\Content\Commands;
+namespace Project\Modules\Catalogue\Content\Product\Commands;
 
 class DeleteProductImageCommand
 {

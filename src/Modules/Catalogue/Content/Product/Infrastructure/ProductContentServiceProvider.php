@@ -1,12 +1,12 @@
 <?php
 
-namespace Project\Modules\Catalogue\Content\Infrastructure;
+namespace Project\Modules\Catalogue\Content\Product\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
 use Project\Common\CQRS\Buses\RequestBus;
-use Project\Modules\Catalogue\Content\Commands;
-use Project\Modules\Catalogue\Content\Services\ProductContentServiceInterface;
-use Project\Modules\Catalogue\Content\Infrastructure\Laravel\Services\ProductContentService;
+use Project\Modules\Catalogue\Content\Product\Commands;
+use Project\Modules\Catalogue\Content\Product\Services\ProductContentServiceInterface;
+use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Services\ProductContentService;
 
 class ProductContentServiceProvider extends ServiceProvider
 {

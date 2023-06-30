@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Catalogue\Content\Requests;
 use Project\Common\Language;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Catalogue\Content\Commands\UpdateProductContentCommand;
+use Project\Modules\Catalogue\Content\Product\Commands\UpdateProductContentCommand;
 
 class UpdateContent extends ApiRequest
 {

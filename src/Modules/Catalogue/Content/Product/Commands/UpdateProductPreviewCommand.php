@@ -1,8 +1,8 @@
 <?php
 
-namespace Project\Modules\Catalogue\Content\Commands;
+namespace Project\Modules\Catalogue\Content\Product\Commands;
 
-class AddProductImageCommand
+class UpdateProductPreviewCommand
 {
     public function __construct(
         public readonly int $product,

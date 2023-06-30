@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Catalogue\Content\Infrastructure\Laravel\Models;
+namespace Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
