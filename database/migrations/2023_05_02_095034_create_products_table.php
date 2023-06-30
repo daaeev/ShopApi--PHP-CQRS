@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('catalogue_products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable(false);
             $table->string('code')->nullable(false)->unique();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('catalogue_products');
     }
 };

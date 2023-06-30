@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Size extends Model
 {
     public $timestamps = false;
-    protected $table = 'products_sizes';
+    protected $table = 'catalogue_products_sizes';
 
     protected $fillable = [
         'product_id',

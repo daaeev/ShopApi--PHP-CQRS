@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_content', function (Blueprint $table) {
+        Schema::create('catalogue_products_content', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product')->nullable(false);
             $table->string('language', 10)->nullable(false);
@@ -19,10 +19,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamps();
 
-            $table->index('product', 'idx-products_content-product');
-            $table->foreign('product', 'fk-products_content-product')
+            $table->index('product', 'idx-catalogue_products_content-product');
+            $table->foreign('product', 'fk-catalogue_products_content-product')
                 ->references('id')
-                ->on('products')
+                ->on('catalogue_products')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
         });
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products_content');
+        Schema::dropIfExists('catalogue_products_content');
     }
 };

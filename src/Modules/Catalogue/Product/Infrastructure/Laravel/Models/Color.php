@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Color extends Model
 {
     public $timestamps = false;
-    protected $table = 'products_colors';
+    protected $table = 'catalogue_products_colors';
 
     protected $fillable = [
         'product_id',
