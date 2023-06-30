@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Catalogue\Categories\Queries;
 
-class GetCategoriesQuery
+class CategoriesListQuery
 {
     public function __construct(
         public readonly int $page,

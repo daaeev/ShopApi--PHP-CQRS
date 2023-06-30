@@ -2,16 +2,16 @@
 
 namespace Project\Modules\Catalogue\Categories\Queries\Handlers;
 
-use Project\Modules\Catalogue\Categories\Queries\GetCategoriesQuery;
+use Project\Modules\Catalogue\Categories\Queries\CategoriesListQuery;
 use Project\Modules\Catalogue\Categories\Repository\QueryCategoryRepositoryInterface;
 
-class GetCategoriesHandler
+class CategoriesListHandler
 {
     public function __construct(
         private QueryCategoryRepositoryInterface $categories
     ) {}
 
-    public function __invoke(GetCategoriesQuery $query): array
+    public function __invoke(CategoriesListQuery $query): array
     {
         return $this->categories->list(
             $query->page,
