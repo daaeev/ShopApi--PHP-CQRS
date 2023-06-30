@@ -1,7 +1,8 @@
 Catalog categories
-    - Repository
-    - Commands/Queries
+    - Query repository
     - Tests
+    - Eloquent repository
+    - Content
 Catalog settings
-Catalog queries
+Catalog queries or another view module
     

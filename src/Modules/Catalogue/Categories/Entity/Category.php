@@ -63,6 +63,16 @@ class Category implements Events\EventRoot
         $this->updated();
     }
 
+    public function detachProducts(): void
+    {
+        if (empty($this->products)) {
+            return;
+        }
+
+        $this->products = [];
+        $this->updated();
+    }
+
     public function attachParent(CategoryId $parent): void
     {
         if (!empty($this->parent) && $parent->equalsTo($this->parent)) {
