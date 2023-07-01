@@ -43,7 +43,7 @@ class UpdateCategoryHandler implements DispatchEventsInterface
             }
         }
 
-        $this->categories->add($category);
+        $this->categories->update($category);
         $this->dispatchEvents($category->flushEvents());
     }
 }

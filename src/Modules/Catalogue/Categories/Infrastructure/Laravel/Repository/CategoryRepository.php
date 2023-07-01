@@ -36,8 +36,8 @@ class CategoryRepository implements CategoryRepositoryInterface
         }
 
         $record->name = $entity->getName();
-        $record->sluyg = $entity->getSlug();
-        $record->parent_id = $entity->getParent()->getId();
+        $record->slug = $entity->getSlug();
+        $record->parent_id = $entity->getParent()?->getId();
         $record->created_at = $entity->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value);
         $record->updated_at = $entity->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value);
         $record->save();
@@ -104,7 +104,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     private function hydrate(Eloquent\Category $record): Entity\Category
     {
         return $this->hydrator->hydrate(Entity\Category::class, [
-            'id' => new Entity\Category($record->id),
+            'id' => new Entity\CategoryId($record->id),
             'name' => $record->name,
             'slug' => $record->slug,
             'parent' => $record->parent_id

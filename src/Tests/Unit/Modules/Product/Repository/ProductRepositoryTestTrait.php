@@ -2,9 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Product\Repository;
 
-use Project\Modules\Catalogue\Product\Entity\Size\Size;
 use Project\Common\Repository\NotFoundException;
-use Project\Modules\Catalogue\Product\Entity\Color\HexColor;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Modules\Catalogue\Product\Entity\Product;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
