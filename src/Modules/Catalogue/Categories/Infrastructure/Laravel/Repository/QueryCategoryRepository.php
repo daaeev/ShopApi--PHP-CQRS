@@ -18,7 +18,7 @@ class QueryCategoryRepository implements QueryCategoryRepositoryInterface
             ->where('id', $id)
             ->first();
 
-        if (empty($category)) {
+        if (empty($record)) {
             throw new NotFoundException('Category does not exists');
         }
 

@@ -8,7 +8,7 @@ class ContentController extends BaseApiController
 {
     public function updateContent(Requests\UpdateContent $request)
     {
-        $id = $this->dispatchCommand($request->getCommand());
-        return $this->success(['id' => (int) $id], 'Content updated');
+        $this->dispatchCommand($request->getCommand());
+        return $this->success(['id' => (int) $request->get('id')], 'Content updated');
     }
 }

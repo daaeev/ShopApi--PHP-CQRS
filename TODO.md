@@ -1,5 +1,2 @@
-Catalog categories
-    - Postman api
-Catalog settings
+Catalog content settings
 Catalog queries or another view module
-    

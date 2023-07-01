@@ -12,7 +12,7 @@ class Category implements DTO
         public readonly string $name,
         public readonly string $slug,
         public readonly array $products,
-        public readonly int $parent,
+        public readonly ?int $parent,
         public readonly \DateTimeImmutable $createdAt,
         public readonly ?\DateTimeImmutable $updatedAt,
     ) {}
