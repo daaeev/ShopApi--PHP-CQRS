@@ -3,10 +3,10 @@
 namespace Project\Tests\Unit\CQRS;
 
 use Project\Common\CQRS\Buses\RequestBus;
-use Project\Common\CQRS\Buses\CompositeBus;
+use Project\Common\CQRS\Buses\CompositeRequestBus;
 use Project\Tests\Unit\CQRS\Commands\CommandsTrait;
 
-class CompositeBusTest extends \PHPUnit\Framework\TestCase
+class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
 {
     use CommandsTrait;
 
@@ -25,7 +25,7 @@ class CompositeBusTest extends \PHPUnit\Framework\TestCase
             ->with($command)
             ->willReturn('Success');
 
-        $bus = new CompositeBus;
+        $bus = new CompositeRequestBus;
         $bus->registerBus($busMock);
         $this->assertEquals('Success', $bus->dispatch($command));
     }
@@ -33,7 +33,7 @@ class CompositeBusTest extends \PHPUnit\Framework\TestCase
     public function testDispatchCommandWithoutAnyHandlers()
     {
         $this->expectException(\DomainException::class);
-        $bus = new CompositeBus;
+        $bus = new CompositeRequestBus;
         $bus->dispatch(new Commands\TestCommand);
     }
 
@@ -49,7 +49,7 @@ class CompositeBusTest extends \PHPUnit\Framework\TestCase
             ->with($command)
             ->willReturn(true);
 
-        $bus = new CompositeBus;
+        $bus = new CompositeRequestBus;
         $bus->registerBus($busMock);
         $this->assertTrue($bus->canDispatch($command));
     }
@@ -65,7 +65,7 @@ class CompositeBusTest extends \PHPUnit\Framework\TestCase
             ->with($command)
             ->willReturn(false);
 
-        $bus = new CompositeBus;
+        $bus = new CompositeRequestBus;
         $bus->registerBus($busMock);
         $this->assertFalse($bus->canDispatch($command));
     }
@@ -73,7 +73,7 @@ class CompositeBusTest extends \PHPUnit\Framework\TestCase
     public function testCantDispatchWithoutAnyRegisteredBuses()
     {
         $command = new Commands\TestCommand;
-        $bus = new CompositeBus;
+        $bus = new CompositeRequestBus;
         $this->assertFalse($bus->canDispatch($command));
     }
 }

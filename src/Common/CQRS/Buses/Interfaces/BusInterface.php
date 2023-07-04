@@ -2,9 +2,9 @@
 
 namespace Project\Common\CQRS\Buses\Interfaces;
 
-interface RequestBus
+interface BusInterface
 {
     public function dispatch(object $command);
 
-    public function canDispatch($command): bool;
+    public function canDispatch(object $command): bool;
 }

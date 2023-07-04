@@ -2,7 +2,7 @@
 
 namespace Project\Infrastructure\Laravel;
 
-use Project\Common\CQRS\Buses\CompositeBus;
+use Project\Common\CQRS\Buses\CompositeRequestBus;
 use App\Http\Middleware\AssignClientHashCookie;
 use Project\Common\CQRS\Buses\CompositeEventBus;
 use Project\Common\Events\DispatchEventsInterface;
@@ -12,7 +12,7 @@ use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Modules\Cart\Infrastructure\Laravel\CartServiceProvider;
 use Project\Modules\Catalogue\Infrastructure\CatalogueServiceProvider;
-use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionCompositeBus;
+use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBus;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
 
 class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -64,11 +64,11 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerBuses()
     {
         $this->app->singleton('CommandBus', function () {
-            return new TransactionCompositeBus(new CompositeBus);
+            return new TransactionBus(new CompositeRequestBus);
         });
 
         $this->app->singleton('QueryBus', function () {
-            return new TransactionCompositeBus(new CompositeBus);
+            return new TransactionBus(new CompositeRequestBus);
         });
 
         $this->app->singleton('EventBus', function () {

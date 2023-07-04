@@ -5,7 +5,7 @@ namespace Project\Common\CQRS\Buses;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-class EventBus implements Interfaces\RequestBus, EventDispatcherInterface
+class EventBus implements Interfaces\BusInterface, EventDispatcherInterface
 {
     private array $bindings;
     private ContainerInterface $container;
@@ -29,7 +29,7 @@ class EventBus implements Interfaces\RequestBus, EventDispatcherInterface
         }
     }
 
-    public function canDispatch($event): bool
+    public function canDispatch(object $event): bool
     {
         return isset($this->bindings[$event::class]);
     }

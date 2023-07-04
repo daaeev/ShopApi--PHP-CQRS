@@ -4,7 +4,7 @@ namespace Project\Common\CQRS\Buses;
 
 use Psr\Container\ContainerInterface;
 
-class RequestBus implements Interfaces\RequestBus
+class RequestBus implements Interfaces\BusInterface
 {
     private array $bindings;
     private ContainerInterface $container;
@@ -34,7 +34,7 @@ class RequestBus implements Interfaces\RequestBus
         throw new \DomainException('Cant execute ' . $command::class . ' command handler');
     }
 
-    public function canDispatch($command): bool
+    public function canDispatch(object $command): bool
     {
         return isset($this->bindings[$command::class]);
     }
