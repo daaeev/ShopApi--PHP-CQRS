@@ -47,7 +47,7 @@ class ProductsService
                 Availability::available()
             )
         ) {
-            throw new \DomainException('Cant add unavailable product');
+            throw new \DomainException('Cant resolve unavailable product');
         }
 
         if (!empty($size) && !in_array($size, $product->sizes)) {
