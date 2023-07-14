@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Catalogue\Product;
 
 use App\Http\Controllers\BaseApiController;
-use App\Http\Controllers\Api\Catalogue\Product\Requests;
 
 class ProductController extends BaseApiController
 {

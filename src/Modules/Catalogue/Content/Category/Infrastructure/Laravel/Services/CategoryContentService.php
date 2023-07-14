@@ -12,14 +12,7 @@ class CategoryContentService implements CategoryContentServiceInterface
 {
     public function updateContent(Commands\UpdateCategoryContentCommand $command): void
     {
-        $categoryExists = EloquentCategory::query()
-            ->where('id', $command->category)
-            ->exists();
-
-        if (!$categoryExists) {
-            throw new NotFoundException('Category does not exists');
-        }
-
+        $this->guardCategoryExists($command->category);
         Eloquent\Content::updateOrCreate(
             [
                 'category' => $command->category,
@@ -27,5 +20,16 @@ class CategoryContentService implements CategoryContentServiceInterface
             ],
             $command->fields
         );
+    }
+
+    private function guardCategoryExists(int $category): void
+    {
+        $categoryExists = EloquentCategory::query()
+            ->where('id', $category)
+            ->exists();
+
+        if (!$categoryExists) {
+            throw new NotFoundException('Category does not exists');
+        }
     }
 }

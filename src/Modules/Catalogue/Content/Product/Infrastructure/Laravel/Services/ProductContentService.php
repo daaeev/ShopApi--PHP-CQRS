@@ -21,14 +21,7 @@ class ProductContentService implements ProductContentServiceInterface
 
     public function updateContent(Commands\UpdateProductContentCommand $command): void
     {
-        $productExists = EloquentProduct::query()
-            ->where('id', $command->product)
-            ->exists();
-
-        if (!$productExists) {
-            throw new NotFoundException('Product does not exists');
-        }
-
+        $this->guardProductExists();
         Eloquent\Content::updateOrCreate(
             [
                 'product' => $command->product,
@@ -38,8 +31,20 @@ class ProductContentService implements ProductContentServiceInterface
         );
     }
 
+    private function guardProductExists(int $product): void
+    {
+        $productExists = EloquentProduct::query()
+            ->where('id', $product)
+            ->exists();
+
+        if (!$productExists) {
+            throw new NotFoundException('Product does not exists');
+        }
+    }
+
     public function updatePreview(Commands\UpdateProductPreviewCommand $command): void
     {
+        $this->guardProductExists($command->product);
         $currentImage = Eloquent\Image::query()
             ->where('product', $command->product)
             ->where('is_preview', true)
@@ -79,6 +84,7 @@ class ProductContentService implements ProductContentServiceInterface
 
     public function addImage(Commands\AddProductImageCommand $command): void
     {
+        $this->guardProductExists($command->product);
         $newImage = $this->saveImage($command->image);
         $this->saveProductImage($command->product, $newImage, false);
     }
