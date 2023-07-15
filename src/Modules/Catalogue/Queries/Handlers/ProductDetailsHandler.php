@@ -16,7 +16,6 @@ class ProductDetailsHandler
         return $this->catalogue->getByCode($query->code, [
             ...$query->options,
             'active' => true,
-            'displayed' => true,
         ])->toArray();
     }
 }

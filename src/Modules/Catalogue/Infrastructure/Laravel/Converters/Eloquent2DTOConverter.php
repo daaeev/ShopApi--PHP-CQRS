@@ -3,13 +3,20 @@
 namespace Project\Modules\Catalogue\Infrastructure\Laravel\Converters;
 
 use Project\Modules\Catalogue\Api\DTO;
+use Project\Common\Services\FileManager\Disk;
+use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Models as Eloquent;
+use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models\Image;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Models\Price as EloquentPrice;
 use Project\Modules\Catalogue\Api\DTO\Product\Price as DTOPrice;
 
 class Eloquent2DTOConverter
 {
-    public static function convert(Eloquent\CatalogueProduct $product): DTO\CatalogueProduct
+    public function __construct(
+        private FileManagerInterface $fileManager
+    ) {}
+
+    public function convert(Eloquent\CatalogueProduct $product): DTO\CatalogueProduct
     {
         return new DTO\CatalogueProduct(
             new DTO\Product\Product(
@@ -32,8 +39,22 @@ class Eloquent2DTOConverter
                 $product->content?->name ?? '',
                 $product->content?->description ?? '',
             ),
-            $product->preview ?? null,
-            array_column($product->images->all(), 'image'),
+            $product->preview?->image
+                ? $this->fileManager->fullPath(
+                config('project.storage.products-images')
+                . DIRECTORY_SEPARATOR
+                . $product->preview->image,
+                Disk::from($product->preview->disk)
+                )
+                : null,
+            array_map(function (Image $image) {
+                return $this->fileManager->fullPath(
+                    config('project.storage.products-images')
+                    . DIRECTORY_SEPARATOR
+                    . $image->image,
+                    Disk::from($image->disk)
+                );
+            }, $product->images->all()),
             new DTO\Product\Settings(
                 $product->settings?->displayed ?? false
             ),

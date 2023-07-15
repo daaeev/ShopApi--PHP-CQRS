@@ -12,6 +12,10 @@ use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\Eloquent2DTOConv
 
 class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
 {
+    public function __construct(
+        private Eloquent2DTOConverter $converter
+    ) {}
+
     public function get(int $id, array $options = []): DTO\CatalogueProduct
     {
         $record = Eloquent\CatalogueProduct::query()
@@ -23,7 +27,7 @@ class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
             throw new NotFoundException('Catalogue product does not exists');
         }
 
-        return Eloquent2DTOConverter::convert($record);
+        return $this->converter->convert($record);
     }
 
     public function getByCode(string $code, array $options = []): DTO\CatalogueProduct
@@ -37,7 +41,7 @@ class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
             throw new NotFoundException('Catalogue product does not exists');
         }
 
-        return Eloquent2DTOConverter::convert($record);
+        return $this->converter->convert($record);
     }
 
     public function list(int $page, int $limit, array $options = []): PaginatedCollection
@@ -49,8 +53,8 @@ class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
                 page: $page
             );
 
-        $items = array_map(function (Eloquent\CatalogueProduct $product) {
-            return Eloquent2DTOConverter::convert($product);
+        $items = array_map(function (Eloquent\CatalogueProduct $record) {
+            return $this->converter->convert($record);
         }, $query->items());
         return new PaginatedCollection($items, new Pagination(
             $query->currentPage(),

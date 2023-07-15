@@ -13,15 +13,13 @@ use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models as E
 
 class ProductContentService implements ProductContentServiceInterface
 {
-    const IMAGES_DIR = 'products_images';
-
     public function __construct(
         private FileManagerInterface $fileManager
     ) {}
 
     public function updateContent(Commands\UpdateProductContentCommand $command): void
     {
-        $this->guardProductExists();
+        $this->guardProductExists($command->product);
         Eloquent\Content::updateOrCreate(
             [
                 'product' => $command->product,
@@ -52,7 +50,7 @@ class ProductContentService implements ProductContentServiceInterface
 
         if (!empty($currentImage)) {
             $this->fileManager->delete(
-                self::IMAGES_DIR
+                config('project.storage.products-images')
                 . DIRECTORY_SEPARATOR
                 . $currentImage->image,
                 Disk::from($currentImage->disk)
@@ -68,7 +66,7 @@ class ProductContentService implements ProductContentServiceInterface
     {
         return $this->fileManager->save(
             $image,
-            self::IMAGES_DIR,
+            config('project.storage.products-images'),
         );
     }
 
@@ -98,7 +96,7 @@ class ProductContentService implements ProductContentServiceInterface
         }
 
         $this->fileManager->delete(
-            self::IMAGES_DIR
+            config('project.storage.products-images')
             . DIRECTORY_SEPARATOR
             . $image->image,
             Disk::from($image->disk)

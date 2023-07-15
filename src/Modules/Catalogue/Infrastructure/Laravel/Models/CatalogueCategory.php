@@ -16,7 +16,7 @@ class CatalogueCategory extends Category
     public function scopeWithContent(Builder $query, string $language)
     {
         $query->with([
-            'content' => function (Builder $query) use ($language) {
+            'content' => function ($query) use ($language) {
                 $query->where('language', $language);
             }
         ]);
