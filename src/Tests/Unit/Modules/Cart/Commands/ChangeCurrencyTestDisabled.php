@@ -15,6 +15,7 @@ use Project\Modules\Cart\Repository\MemoryCartRepository;
 use Project\Modules\Cart\Repository\CartRepositoryInterface;
 use Project\Modules\Cart\Commands\Handlers\ChangeCurrencyHandler;
 
+// Cant mock enums for test
 class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
 {
     use CartFactory;

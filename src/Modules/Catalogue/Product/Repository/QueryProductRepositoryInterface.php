@@ -7,7 +7,7 @@ use Project\Common\Entity\Collections\PaginatedCollection;
 
 interface QueryProductRepositoryInterface
 {
-    public function get(int $id): DTO\Product;
+    public function get(int $id, array $options = []): DTO\Product;
 
-    public function list(int $page, int $limit, array $params = []): PaginatedCollection;
+    public function list(int $page, int $limit, array $options = []): PaginatedCollection;
 }

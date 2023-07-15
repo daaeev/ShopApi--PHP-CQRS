@@ -57,7 +57,6 @@ class UpdateItemTest extends \PHPUnit\Framework\TestCase
             $this->client,
             [$initialCartItem = $this->generateCartItem()]
         );
-        $initialCart->changeCurrency(Currency::USD);
         $initialCart->flushEvents();
         $this->carts->save($initialCart);
 

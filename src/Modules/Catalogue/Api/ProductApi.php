@@ -3,14 +3,14 @@
 namespace Project\Modules\Catalogue\Api;
 
 use Project\Modules\Catalogue\Api\DTO\Product as DTO;
-use Project\Modules\Catalogue\Product\Repository\ProductApiRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\QueryProductRepositoryInterface;
 
 class ProductApi
 {
     private array $productsDTO = [];
 
     public function __construct(
-        private ProductApiRepositoryInterface $products
+        private QueryProductRepositoryInterface $products
     ) {}
 
     public function get(int $product): DTO\Product

@@ -11,7 +11,7 @@ use Project\Modules\Catalogue\Product\Repository\QueryProductRepositoryInterface
 
 class QueryProductRepository implements QueryProductRepositoryInterface
 {
-    public function get(int $id): DTO\Product
+    public function get(int $id, array $options = []): DTO\Product
     {
         $record = Eloquent\Product::query()
             ->with('prices', 'sizes', 'colors')
@@ -44,7 +44,7 @@ class QueryProductRepository implements QueryProductRepositoryInterface
         );
     }
 
-    public function list(int $page, int $limit, array $params = []): PaginatedCollection
+    public function list(int $page, int $limit, array $options = []): PaginatedCollection
     {
         $query = Eloquent\Product::query()
             ->with('prices', 'sizes', 'colors')
@@ -56,7 +56,6 @@ class QueryProductRepository implements QueryProductRepositoryInterface
             );
 
         $items = array_map([$this, 'hydrate'], $query->items());
-
         return new PaginatedCollection($items, new Pagination(
             $query->currentPage(),
             $query->perPage(),

@@ -7,10 +7,8 @@ use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Catalogue\Product\Queries;
 use Project\Modules\Catalogue\Product\Commands;
 use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
-use Project\Modules\Catalogue\Product\Repository\ProductApiRepositoryInterface;
 use Project\Modules\Catalogue\Product\Repository\QueryProductRepositoryInterface;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository\ProductRepository;
-use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository\ProductApiRepository;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository\QueryProductRepository;
 
 class ProductServiceProvider extends ServiceProvider
@@ -30,7 +28,6 @@ class ProductServiceProvider extends ServiceProvider
 
     public array $singletons = [
         ProductRepositoryInterface::class => ProductRepository::class,
-        ProductApiRepositoryInterface::class => ProductApiRepository::class,
         QueryProductRepositoryInterface::class => QueryProductRepository::class,
     ];
 

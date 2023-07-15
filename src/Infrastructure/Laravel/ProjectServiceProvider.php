@@ -2,17 +2,17 @@
 
 namespace Project\Infrastructure\Laravel;
 
-use Project\Common\CQRS\Buses\CompositeRequestBus;
 use App\Http\Middleware\AssignClientHashCookie;
 use Project\Common\CQRS\Buses\CompositeEventBus;
+use Project\Common\CQRS\Buses\CompositeRequestBus;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Infrastructure\Laravel\Services\FileManager;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Modules\Cart\Infrastructure\Laravel\CartServiceProvider;
-use Project\Modules\Catalogue\Infrastructure\CatalogueServiceProvider;
 use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBus;
+use Project\Modules\Catalogue\Infrastructure\Laravel\CatalogueServiceProvider;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
 
 class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
