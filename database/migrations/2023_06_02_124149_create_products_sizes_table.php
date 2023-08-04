@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_sizes', function (Blueprint $table) {
+        Schema::create('catalogue_products_sizes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id')->nullable(false);
             $table->string('size', 15)->nullable(false);
 
-            $table->foreign('product_id', 'fk-products_sizes-product_id')
+            $table->index('product_id', 'idx-catalogue_products_sizes-product_id');
+            $table->foreign('product_id', 'fk-catalogue_products_sizes-product_id')
                 ->references('id')
-                ->on('products')
+                ->on('catalogue_products')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products_sizes');
+        Schema::dropIfExists('catalogue_products_sizes');
     }
 };

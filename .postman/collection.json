@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0bf4862a-044d-434d-a954-bc5a307b15cc",
-		"name": "Project-ShopApi",
+		"_postman_id": "445332be-85f7-4fbd-a517-88288bb4bc15",
+		"name": "ShopApi",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25995983"
+		"_exporter_id": "23881418"
 	},
 	"item": [
 		{
@@ -84,667 +84,6 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Product",
-			"item": [
-				{
-					"name": "admin/products",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "Test product",
-									"type": "text"
-								},
-								{
-									"key": "code",
-									"value": "test",
-									"type": "text"
-								},
-								{
-									"key": "active",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "availability",
-									"value": "in_stock",
-									"description": "in_stock|preorder|out_stock",
-									"type": "text"
-								},
-								{
-									"key": "prices[0][currency]",
-									"value": "uah",
-									"description": "uah",
-									"type": "text"
-								},
-								{
-									"key": "prices[0][price]",
-									"value": "420",
-									"type": "text"
-								},
-								{
-									"key": "colors[]",
-									"value": "Blue",
-									"type": "text"
-								},
-								{
-									"key": "sizes[]",
-									"value": "45",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{domain}}/api/admin/products",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"products"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Created",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "name",
-											"value": "Test product",
-											"type": "text"
-										},
-										{
-											"key": "code",
-											"value": "test",
-											"type": "text"
-										},
-										{
-											"key": "active",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "availability",
-											"value": "in_stock",
-											"description": "in_stock|preorder|out_stock",
-											"type": "text"
-										},
-										{
-											"key": "colors[0][color]",
-											"value": "#000000",
-											"type": "text"
-										},
-										{
-											"key": "colors[0][type]",
-											"value": "hex",
-											"description": "hex",
-											"type": "text"
-										},
-										{
-											"key": "sizes[]",
-											"value": "l",
-											"description": "xs|s|m|l|xl|xll",
-											"type": "text"
-										},
-										{
-											"key": "prices[0][currency]",
-											"value": "uah",
-											"description": "uah",
-											"type": "text"
-										},
-										{
-											"key": "prices[0][price]",
-											"value": "420",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{domain}}/api/admin/products",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"products"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Fri, 02 Jun 2023 13:53:27 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "X-RateLimit-Limit",
-									"value": "60"
-								},
-								{
-									"key": "X-RateLimit-Remaining",
-									"value": "58"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=1000"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Product created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/products/{id}",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Test update product",
-									"type": "text"
-								},
-								{
-									"key": "code",
-									"value": "test-update",
-									"type": "text"
-								},
-								{
-									"key": "active",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "availability",
-									"value": "in_stock",
-									"description": "in_stock|preorder|out_stock",
-									"type": "text"
-								},
-								{
-									"key": "prices[0][currency]",
-									"value": "uah",
-									"description": "uah",
-									"type": "text"
-								},
-								{
-									"key": "prices[0][price]",
-									"value": "425",
-									"type": "text"
-								},
-								{
-									"key": "colors[]",
-									"value": "Blue",
-									"type": "text"
-								},
-								{
-									"key": "sizes[]",
-									"value": "45",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "{{domain}}/api/admin/products/2",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"products",
-								"2"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Updated",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "name",
-											"value": "Test update product",
-											"type": "text"
-										},
-										{
-											"key": "code",
-											"value": "test-update",
-											"type": "text"
-										},
-										{
-											"key": "active",
-											"value": "0",
-											"type": "text"
-										},
-										{
-											"key": "availability",
-											"value": "in_stock",
-											"description": "in_stock|preorder|out_stock",
-											"type": "text"
-										},
-										{
-											"key": "colors[0][color]",
-											"value": "#000000",
-											"type": "text"
-										},
-										{
-											"key": "colors[0][type]",
-											"value": "hex",
-											"description": "hex",
-											"type": "text"
-										},
-										{
-											"key": "sizes[]",
-											"value": "l",
-											"description": "xs|s|m|l|xl|xll",
-											"type": "text"
-										},
-										{
-											"key": "prices[0][currency]",
-											"value": "uah",
-											"description": "uah",
-											"type": "text"
-										},
-										{
-											"key": "prices[0][price]",
-											"value": "425",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{domain}}/api/admin/products/1",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"products",
-										"1"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Fri, 02 Jun 2023 14:22:48 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "X-RateLimit-Limit",
-									"value": "60"
-								},
-								{
-									"key": "X-RateLimit-Remaining",
-									"value": "58"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=996"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/products/{id}",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/products/1",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"products",
-								"1"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Deleted",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/products/1",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"products",
-										"1"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Fri, 02 Jun 2023 14:22:50 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "X-RateLimit-Limit",
-									"value": "60"
-								},
-								{
-									"key": "X-RateLimit-Remaining",
-									"value": "57"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=995"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/products/{id}",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/products/2",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"products",
-								"2"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Product",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/products/2",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"products",
-										"2"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Fri, 02 Jun 2023 14:28:18 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "X-RateLimit-Limit",
-									"value": "60"
-								},
-								{
-									"key": "X-RateLimit-Remaining",
-									"value": "56"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=997"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test update product\",\n        \"code\": \"test-update\",\n        \"active\": true,\n        \"availability\": \"in_stock\",\n        \"prices\": [\n            {\n                \"currency\": \"uah\",\n                \"price\": 425\n            }\n        ],\n        \"colors\": [\n            {\n                \"color\": \"#000000\",\n                \"type\": \"hex\"\n            }\n        ],\n        \"sizes\": []\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/products",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/products",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"products"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "limit",
-									"value": "2",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Products",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/products?page=1&limit=2",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"products"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "1"
-										},
-										{
-											"key": "limit",
-											"value": "2"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Fri, 02 Jun 2023 14:30:14 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "X-RateLimit-Limit",
-									"value": "60"
-								},
-								{
-									"key": "X-RateLimit-Remaining",
-									"value": "56"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=993"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test update product\",\n                \"code\": \"test-update\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 425\n                    }\n                ],\n                \"colors\": [\n                    {\n                        \"color\": \"#000000\",\n                        \"type\": \"hex\"\n                    }\n                ],\n                \"sizes\": []\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Test product\",\n                \"code\": \"test2\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 420\n                    }\n                ],\n                \"colors\": [\n                    {\n                        \"color\": \"#000000\",\n                        \"type\": \"hex\"\n                    }\n                ],\n                \"sizes\": [\n                    \"l\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 2,\n            \"total\": 4\n        }\n    }\n}"
-						}
-					]
 				}
 			]
 		},
@@ -1773,6 +1112,1833 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 8,\n        \"clientHash\": \"3DKdo3YpBS8kiAgj\",\n        \"currency\": \"uah\",\n        \"active\": true,\n        \"items\": [\n            {\n                \"id\": 5,\n                \"product\": 2,\n                \"name\": \"Test update product\",\n                \"price\": 425,\n                \"quantity\": 1,\n                \"size\": null,\n                \"color\": null\n            }\n        ],\n        \"createdAt\": \"2023-06-26 10:07:05\",\n        \"updatedAt\": \"2023-06-26 10:38:44\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Catalogue",
+			"item": [
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Content",
+							"item": [
+								{
+									"name": "admin/products/{id}/content",
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "language",
+													"value": "ua",
+													"description": "ua|en",
+													"type": "text"
+												},
+												{
+													"key": "fields[name]",
+													"value": "Test product name",
+													"type": "text"
+												},
+												{
+													"key": "fields[description]",
+													"value": "Test product description",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products/2/content",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products",
+												"2",
+												"content"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Example: Update content",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "language",
+															"value": "ua",
+															"description": "ua|en",
+															"type": "text"
+														},
+														{
+															"key": "fields[name]",
+															"value": "Test product name",
+															"type": "text"
+														},
+														{
+															"key": "fields[description]",
+															"value": "Test product description",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{domain}}/api/admin/catalogue/products/2/content",
+													"host": [
+														"{{domain}}"
+													],
+													"path": [
+														"api",
+														"admin",
+														"catalogue",
+														"products",
+														"2",
+														"content"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Date",
+													"value": "Wed, 28 Jun 2023 13:30:06 GMT"
+												},
+												{
+													"key": "Server",
+													"value": "Apache"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "XSRF-TOKEN=eyJpdiI6IlVxaVNCTGdKZVJ3K3F1b1pxQ0JoRHc9PSIsInZhbHVlIjoiWE0rSkdKVlNDdnlmUXFsZURVbENGS3NhVHh4cllydHhoN2lVL2c1R1M1SmxGU1Y3eTVUbDZ1TzVEekl0REhzeDJFRzJGaFgranBTY1h3b1pXVVNUTXRoMmtvdzhJUFI2aGxDbjhHVE1mdnpKc3BROHR3akliWnJ1Z2hISnI3bXUiLCJtYWMiOiI2MGFlYTIwODU5Njg1ODdjMDI2MTVkYWMxZTk5ODQ0NWIxNzc5Zjk3YTIzNjNlMGE5ZGYxMWY2ZDc3ODAxMTVhIiwidGFnIjoiIn0%3D; expires=Wed, 28 Jun 2023 15:30:06 GMT; Max-Age=7200; path=/; samesite=lax"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "laravel_session=eyJpdiI6ImlIeTA2VW1iL1llNnhlcnExaG8yc0E9PSIsInZhbHVlIjoiQ201aUFQdGpTL043bVhWRnUxQjF6OGp6SFRhdVNLOTlJY0xESFRIUFZqd3k0UmZ3U2s0b24vSU9nZGsvZlNONkNiUWNTWUpqc1duNjJ3bWpqYm5Uc1RSb2VRZzRrcnVCNFNCbUxBOXF6U3YrUlkycUsxQUM0Zm1maVlOTFB3bzgiLCJtYWMiOiI1MjMxZWExM2ZmNTBjNTk5MTI3MDgzOGRiZDM1OGQ5MGJjMDM5ZDkwMjRlZDEyY2YxNjA0ZWNhOTQyMzdhYjAxIiwidGFnIjoiIn0%3D; expires=Wed, 28 Jun 2023 15:30:06 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=120, max=985"
+												},
+												{
+													"key": "Connection",
+													"value": "Keep-Alive"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": 200,\n    \"message\": \"Content updated\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "admin/products/{id}/preview",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "preview",
+													"type": "file",
+													"src": []
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products/2/preview",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products",
+												"2",
+												"preview"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Example: Update preview",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "preview",
+															"type": "file",
+															"src": []
+														}
+													]
+												},
+												"url": {
+													"raw": "{{domain}}/api/admin/catalogue/products/2/preview",
+													"host": [
+														"{{domain}}"
+													],
+													"path": [
+														"api",
+														"admin",
+														"catalogue",
+														"products",
+														"2",
+														"preview"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Date",
+													"value": "Wed, 28 Jun 2023 15:57:12 GMT"
+												},
+												{
+													"key": "Server",
+													"value": "Apache"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "XSRF-TOKEN=eyJpdiI6Ik05MEQ1dmxMcWdyWUJxV3k4a3VBNXc9PSIsInZhbHVlIjoiSTFFbUltc09URExGTGw3RWJ5ZW42a3RIOS9WSlhrWitQUFlXWjlrUy9TMTYwZnNYeFQzZllEanJjQVlYRElWZXE4cjJweElDUDI2dUd4a2V3VU50Zm1qUTAzTTJGSE1OSnQxNTZOdHYvSDVmSnVLQnNxa0NHdFNnYVRyTWs0S3YiLCJtYWMiOiJhOTAxZGY4NGExODkwMzE0YWIwOTk5NjlhNjk2YjE5MjI3YTg4NTdkYTk1YTZmYzIyNmY0ODVmYjU2NmNjYWVkIiwidGFnIjoiIn0%3D; expires=Wed, 28 Jun 2023 17:57:13 GMT; Max-Age=7200; path=/; samesite=lax"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "laravel_session=eyJpdiI6Ikl2MUNnOWVhemtEUFNFZjh0WGNjWGc9PSIsInZhbHVlIjoiMEI3b1NKZHFpK1JydklEZUVXSVYzS1pwbTdmbWw1dVpzc1hLdUZOQTFqSVdFNlI5LzVMQkY1d2JIMFlYRTRCL25uZW45RHZRN3JuNURwOXZJZ1dzZjFocWhUdjNMazk1b05Rcm1UVGgzWXlva0YrdFRPMzdrTlFqT0J6Z0xkaXEiLCJtYWMiOiIyNTZkNjNlMDkwNzhkZjg0NTlkYTQyMWFkM2RkZDMxZmYyM2E0OTk5NTIzMGUyYjU0MGNkMGZlZmY5ODlkNzdmIiwidGFnIjoiIn0%3D; expires=Wed, 28 Jun 2023 17:57:13 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=120, max=995"
+												},
+												{
+													"key": "Connection",
+													"value": "Keep-Alive"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": 200,\n    \"message\": \"Preview updated\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "admin/products/{id}/image",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "image",
+													"type": "file",
+													"src": []
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products/2/image",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products",
+												"2",
+												"image"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Example: Image added",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "image",
+															"type": "file",
+															"src": []
+														}
+													]
+												},
+												"url": {
+													"raw": "{{domain}}/api/admin/catalogue/products/2/image",
+													"host": [
+														"{{domain}}"
+													],
+													"path": [
+														"api",
+														"admin",
+														"catalogue",
+														"products",
+														"2",
+														"image"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Date",
+													"value": "Thu, 29 Jun 2023 07:58:30 GMT"
+												},
+												{
+													"key": "Server",
+													"value": "Apache"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "XSRF-TOKEN=eyJpdiI6Imd6QXdZZmZqbGxIYld2UmNsa202dlE9PSIsInZhbHVlIjoicW9hc3cwVkhXc3Q3cndmOVlVWlJPZGJnM01kU09WeFRBRGlrdnhkL05rajBtZ2tYZnJPc3pNY05rS0R3YUttTXJyeXJSeVRZM1ZzS2tURUJpWGhvaldvM3F3VUdBTDMyOG9ETU5pZFBKN0JydzkzZm1WWUlLR3dYZkNiWktUZ28iLCJtYWMiOiJlNDIxNmM2NWJmYmE2OWNmOTgxNjI0NzZlMDQ3ZTMxZjFiYjVkNjlhMzdjNTZmMDU0YmE5NmUzM2Y5ZWUwYzUyIiwidGFnIjoiIn0%3D; expires=Thu, 29 Jun 2023 09:58:30 GMT; Max-Age=7200; path=/; samesite=lax"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "laravel_session=eyJpdiI6Inp6TFRXeDRhalp4RUNCQXJTRDNrY3c9PSIsInZhbHVlIjoiMnk4YzhnRmNxZjFCMzZ1dGQ3d0hreUphVkgvSit2bkVlcHNJZUxvWjRpMzlUV21pdXo4NERGYmpMMm1VbDJrM3dkdEVxQSsrOWZVSUZGRzlmd2t3QWdPcy9BNVN1UUtXdFlkeEhaMHlzekRBS0pqUVJZbkU2NXpqU2ZuT2w4T2UiLCJtYWMiOiJhNmE3N2JiZWIyMjRiMDI0NjJiYjViNzIyNDM3MzgyZmFlMWFiNzdmN2RjMWFlZGU2OWQ4NTEwNGZmMDJhMDdlIiwidGFnIjoiIn0%3D; expires=Thu, 29 Jun 2023 09:58:30 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=120, max=991"
+												},
+												{
+													"key": "Connection",
+													"value": "Keep-Alive"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": 200,\n    \"message\": \"Image added\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "admin/products/image/{id}",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products/image/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products",
+												"image",
+												"1"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Example: Image deleted",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{domain}}/api/admin/catalogue/products/image/1",
+													"host": [
+														"{{domain}}"
+													],
+													"path": [
+														"api",
+														"admin",
+														"catalogue",
+														"products",
+														"image",
+														"1"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Date",
+													"value": "Thu, 29 Jun 2023 15:12:18 GMT"
+												},
+												{
+													"key": "Server",
+													"value": "Apache"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "XSRF-TOKEN=eyJpdiI6InZuYkhlRHJrcDdmTDd1ZENuR1NSWkE9PSIsInZhbHVlIjoiZGY0ZmtHY2ZFNDhMR1hSU21aelZ2ZTZJVVQ4bUw5SS9nd3J0SkRkRWVXTGJ6RXlab1JCRzVCZG1USW1wNGRYZUp1Y21kMXFtbTBUQlRwVXZwOGU1ZzZ6Vk5jWHpJQXk0NFBsNjBMVngxZGRNRXBzWnlTOFlMdkhxT1dCQllpcVUiLCJtYWMiOiIyMTBmMTM2ZTgwYjQ5Zjg4MGE0ZWYyNTAwNWY2Y2QyZGU2ZmRiYzFhOGI4MTdiMGFmZDc4MjNjMTVlMDkwNTVmIiwidGFnIjoiIn0%3D; expires=Thu, 29 Jun 2023 17:12:18 GMT; Max-Age=7200; path=/; samesite=lax"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "laravel_session=eyJpdiI6IkYrVzY2dE1WMTNqVGtvYS9UR2cvZmc9PSIsInZhbHVlIjoiLy9oaCtxRHlCOFRWVjQzM0RzeUlMUDJCbFZTTDEyTXQ4NlpTQ1c1UjV1NXFjT0RycEluTDBQcENhK1djRlBUOWoxbFg2WG9rdGVLMkJlUFljd2l3NUVNQ29keFlrZE1ucmdWZlgzTjJYYTdiamVWTHdBaDM1bFhZVERzK3I1SisiLCJtYWMiOiJjNzQxYjQ5N2JkMzg1NWVlYTkyYzg0ZjE3ZDQ4MzgyNTBlMDRjM2I4ZTYzNDMyZmMyNzVlZGFlNWMxNmJmYTdlIiwidGFnIjoiIn0%3D; expires=Thu, 29 Jun 2023 17:12:18 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=120, max=999"
+												},
+												{
+													"key": "Connection",
+													"value": "Keep-Alive"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": 200,\n    \"message\": \"Image deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "admin/products",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test product",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "active",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "availability",
+											"value": "in_stock",
+											"description": "in_stock|preorder|out_stock",
+											"type": "text"
+										},
+										{
+											"key": "prices[0][currency]",
+											"value": "uah",
+											"description": "uah",
+											"type": "text"
+										},
+										{
+											"key": "prices[0][price]",
+											"value": "420",
+											"type": "text"
+										},
+										{
+											"key": "colors[]",
+											"value": "Blue",
+											"type": "text"
+										},
+										{
+											"key": "sizes[]",
+											"value": "45",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/products",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"products"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test product",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "test",
+													"type": "text"
+												},
+												{
+													"key": "active",
+													"value": "1",
+													"type": "text"
+												},
+												{
+													"key": "availability",
+													"value": "in_stock",
+													"description": "in_stock|preorder|out_stock",
+													"type": "text"
+												},
+												{
+													"key": "colors[0][color]",
+													"value": "#000000",
+													"type": "text"
+												},
+												{
+													"key": "colors[0][type]",
+													"value": "hex",
+													"description": "hex",
+													"type": "text"
+												},
+												{
+													"key": "sizes[]",
+													"value": "l",
+													"description": "xs|s|m|l|xl|xll",
+													"type": "text"
+												},
+												{
+													"key": "prices[0][currency]",
+													"value": "uah",
+													"description": "uah",
+													"type": "text"
+												},
+												{
+													"key": "prices[0][price]",
+													"value": "420",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Fri, 02 Jun 2023 13:53:27 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=1000"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Product created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/products/{id}",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Test update product",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "test-update",
+											"type": "text"
+										},
+										{
+											"key": "active",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "availability",
+											"value": "in_stock",
+											"description": "in_stock|preorder|out_stock",
+											"type": "text"
+										},
+										{
+											"key": "prices[0][currency]",
+											"value": "uah",
+											"description": "uah",
+											"type": "text"
+										},
+										{
+											"key": "prices[0][price]",
+											"value": "425",
+											"type": "text"
+										},
+										{
+											"key": "colors[]",
+											"value": "Blue",
+											"type": "text"
+										},
+										{
+											"key": "sizes[]",
+											"value": "45",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/products/2",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"products",
+										"2"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Updated",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "Test update product",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "test-update",
+													"type": "text"
+												},
+												{
+													"key": "active",
+													"value": "0",
+													"type": "text"
+												},
+												{
+													"key": "availability",
+													"value": "in_stock",
+													"description": "in_stock|preorder|out_stock",
+													"type": "text"
+												},
+												{
+													"key": "colors[0][color]",
+													"value": "#000000",
+													"type": "text"
+												},
+												{
+													"key": "colors[0][type]",
+													"value": "hex",
+													"description": "hex",
+													"type": "text"
+												},
+												{
+													"key": "sizes[]",
+													"value": "l",
+													"description": "xs|s|m|l|xl|xll",
+													"type": "text"
+												},
+												{
+													"key": "prices[0][currency]",
+													"value": "uah",
+													"description": "uah",
+													"type": "text"
+												},
+												{
+													"key": "prices[0][price]",
+													"value": "425",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Fri, 02 Jun 2023 14:22:48 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=996"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/products/{id}",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/products/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Fri, 02 Jun 2023 14:22:50 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "57"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=995"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/products/{id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/products/2",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"products",
+										"2"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Product",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products/2",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products",
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Fri, 02 Jun 2023 14:28:18 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "56"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=997"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test update product\",\n        \"code\": \"test-update\",\n        \"active\": true,\n        \"availability\": \"in_stock\",\n        \"prices\": [\n            {\n                \"currency\": \"uah\",\n                \"price\": 425\n            }\n        ],\n        \"colors\": [\n            {\n                \"color\": \"#000000\",\n                \"type\": \"hex\"\n            }\n        ],\n        \"sizes\": []\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/products",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"products"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "2",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Products",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/products?page=1&limit=2",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"products"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Fri, 02 Jun 2023 14:30:14 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "56"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=993"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test update product\",\n                \"code\": \"test-update\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 425\n                    }\n                ],\n                \"colors\": [\n                    {\n                        \"color\": \"#000000\",\n                        \"type\": \"hex\"\n                    }\n                ],\n                \"sizes\": []\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Test product\",\n                \"code\": \"test2\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 420\n                    }\n                ],\n                \"colors\": [\n                    {\n                        \"color\": \"#000000\",\n                        \"type\": \"hex\"\n                    }\n                ],\n                \"sizes\": [\n                    \"l\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 2,\n            \"total\": 4\n        }\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Content",
+							"item": [
+								{
+									"name": "admin/catalogue/categories/{id}/content",
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "language",
+													"value": "ua",
+													"type": "text"
+												},
+												{
+													"key": "fields[name]",
+													"value": "Test category",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/categories/2/content",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"categories",
+												"2",
+												"content"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Example: Content updated",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "language",
+															"value": "ua",
+															"type": "text"
+														},
+														{
+															"key": "fields[name]",
+															"value": "Test category",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{domain}}/api/admin/catalogue/categories/2/content",
+													"host": [
+														"{{domain}}"
+													],
+													"path": [
+														"api",
+														"admin",
+														"catalogue",
+														"categories",
+														"2",
+														"content"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Date",
+													"value": "Sat, 01 Jul 2023 14:31:05 GMT"
+												},
+												{
+													"key": "Server",
+													"value": "Apache"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "XSRF-TOKEN=eyJpdiI6IkpyaHV5Qkcrb2g3bE5LU3hrajFrVXc9PSIsInZhbHVlIjoiZUIycTRzZHR1bTFtVHg4SFdabW9Sdm5vM0U5K0NxWEZEMWVpeC91eGdVTFFqb2svZS9OMmhhSlZDTDBCa0RNVkJWaFcrWlp6YmErVjF1MjBldVRjWUpLTE9Ga0MrdnU5ekcrVi91WFExckM3R0Z3b2hxSldjZ1h5VlVzbHNoZEMiLCJtYWMiOiJiNWZkYzE3ZTU5OGNiZmMzZTg4YTgzOGJiMWVjYWJlMDk4MWZiODhmZGNjMDgyZjQ4NDkxYzZkZTk2ZTQyYzRjIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:31:05 GMT; Max-Age=7200; path=/; samesite=lax"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "laravel_session=eyJpdiI6Imthd2xGSTZYUkhRbjNyT1lSdmM2Wnc9PSIsInZhbHVlIjoibjNaZXp4cW5XdlJRWXQzb2dDOTI5dGJ3aENLS1Ntck9KLzRwNWdLd2pQcEs3RmdLSzhCMWVXTTJaNHlXMDMrckZQQk5DemllTmtxYzNwTkhFWTJvZXZyZzFJSzRVMGVSTklVd1BhVitRaUhiREtQbHIyS3NBMmpDZTMycllwVEoiLCJtYWMiOiI1ZDBiNDc4OTk4NDcwN2RiZjgwNmVmZjIyNmY3YzkzOTNkOTM4Nzk4OTU0N2YzYzM0ZmQ3Y2NmN2NlYmI3ZThhIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:31:05 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=120, max=999"
+												},
+												{
+													"key": "Connection",
+													"value": "Keep-Alive"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": 200,\n    \"message\": \"Content updated\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "admin/catalogue/categories",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test category",
+											"type": "text"
+										},
+										{
+											"key": "slug",
+											"value": "test-category",
+											"type": "text"
+										},
+										{
+											"key": "parent",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "products[]",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/categories",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"categories"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Category created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test category",
+													"type": "text"
+												},
+												{
+													"key": "slug",
+													"value": "test-category",
+													"type": "text"
+												},
+												{
+													"key": "parent",
+													"value": "",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "products[]",
+													"value": "",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/categories",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"categories"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 01 Jul 2023 14:24:14 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IlMzMWg4R1pWbXplbWNzUFJVNjJXWFE9PSIsInZhbHVlIjoiZmdYRG14MjFHdDNMTitGOFFTRGRVNU1ZSVBVRURJTnFISHBNbHNnaW5CUytMOEhXVThwbmdib2lDSy9CZXdwQ0tFeDd2M05peWJWWGsrYW81MDdvSHNycXFKakhVaGMrVEhGcGUyeGI1NmVkNlpDWEFPRGZxNGFTbGpncDNmY1EiLCJtYWMiOiJjNzgyYWJhNDAxMzdiZjEwOWFhNDlhODcxYjBhOWU3Y2EyMGY2ZTA5N2U3Y2I0ZDkzZWM3YzUxN2IzMTc4Zjk3IiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:24:14 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6ImhWYTRtd09NMjdSOXFpclVUaVhta2c9PSIsInZhbHVlIjoiUzhPYXpuTlA5VVdubkJ6dVlBaGpNb0NVTUFpb0tuUmlFMEx1TTlNbytoaktrajZBZ2E5UjhwSVBQV01vQWhvL1BPYkVUbW1GRGlEamJ1QnorMGx4NlVwcERsajYwRE9XZHQ3aGlxM0FtT1o5ZC9YRy9OQzIzOXdKR0NUUXVhdmYiLCJtYWMiOiJkMDQ3ZDE1ODQ4NjZjYzQyYzNmZDljOTU4OTYxNDZiNGYzY2E1ZjI1NWU1NDBkZjZmYzM0MTJlMGE0OTRhOWJkIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:24:14 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=997"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Category created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/catalogue/categories/{id}",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Test category",
+											"type": "text"
+										},
+										{
+											"key": "slug",
+											"value": "test-category",
+											"type": "text"
+										},
+										{
+											"key": "parent",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "products[]",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/categories/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"categories",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Category updated",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "Test category",
+													"type": "text"
+												},
+												{
+													"key": "slug",
+													"value": "test-category",
+													"type": "text"
+												},
+												{
+													"key": "parent",
+													"value": "",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "products[]",
+													"value": "",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/categories/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"categories",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 01 Jul 2023 14:25:26 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6Ii9xZ2ROUnpMdjRKYzlsZUN0STZXRFE9PSIsInZhbHVlIjoiQ0RNbjhGeE04MXBubStNZk9qbjM3bjFZV0M4U0tHUmFTWVZ3R1oxZDViUWkzYm9HRTZUcDRlMXhSa0pjUU1PZndnNzRPQiswVjFoMWVPT29GOU9peFhZR2w2dmJ6bnVkK3Z1TUQxY1lUcnRHdFRRZ2FSQnNaTld5cnhUeUFuaEIiLCJtYWMiOiJmYmU4ZDlmZjMwZGEzZjVhZjgzMjRiNGM1Y2ZjMTAxMGZiZGIxMzllYzg1N2MwZjgyMjgzMDVhODJjNmNhNDAzIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:25:27 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6Ik5sOUJtdUJUd2RjUTBXQ051Sm1IMGc9PSIsInZhbHVlIjoiVmh0b0J1UjhvTjFRK1lmbytRRUFKMVpZTXRCb3ZJTUdOaVk5SHA1N05sWlBldXRRYTltZWdQcnFqbVpyYUdORHA0YmUrSko4MURNZ3B2dXFxL3IvRXhwd29XeXd3ZXJlT2pOK0E0ZzRxSG1HM29kQmo1YjVSaS80RGVFdGpMVkciLCJtYWMiOiJkOWRmNzU0YzUzZTFiNzlhYzgzYzYzNzdhOGRmNzEzOTNhOTBjZDg3ZTY4NTgxNDEzMDNkODRmY2Y5YjdkYTFlIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:25:27 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=995"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Category updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/catalogue/categories/{id}",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/categories/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"categories",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Category deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/categories/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"categories",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 01 Jul 2023 14:26:05 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IlVuWDkrUGJORDQ3MXViNUtxUkY1OHc9PSIsInZhbHVlIjoiYWt0YWtsYis1OStjdG1yTzM4dGdRV005R3JBSE5zbmwrZ0Q4Z28yOHZ5RmpiUGVXVTE4WkVwbjcvVTFEdjlsSlVUeFk5VjlDVHRaK29RYTNqdXZNYVl5RWNYZVhJbWtza0o5aEFTWWNDY1ZtTEhxYTY5aE0yNEpDS2NlNFVrZHUiLCJtYWMiOiJlMmEwODMxYjYwYjNhZDY0YmM5ZTY3MDliMjFjNjliMDMwYTE1N2YzOTJmZGYyYTA5ZWE3YzhhOTQyNzE1ZmUyIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:26:05 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IkwvLzVJbjdXbkJqN2Z5YzRRaHp5SWc9PSIsInZhbHVlIjoidUwyMkI2Tnc4NjNzR0FJT1BBR0ZqOEJzL0IrOWcrNWhGYlcrcU5rL0QzMzRKQklrQkQyQldueHlsSzRvaTg5K21JS2xtd3EzdjR4L3R1MHhZOEVwVEZtMWpURndZL1IzUFA5NTg1SWp0NXFLaDB0NkY3SGZRTFdpUzdIVjhYbXciLCJtYWMiOiI3ODU2YzYwNGI4MGMwMWM1M2U5OWQzOTU3N2YxNjI1NjFjYzNlYmE0ODlmOTU1NGE0ZDc4ZGFjZjJkNWRiNzJkIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:26:05 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=993"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Category deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/catalogue/categories/{id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/categories/2",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"categories",
+										"2"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Get category",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/categories/2",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"categories",
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 01 Jul 2023 14:28:10 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IkdwdTBVdkJhQjB5dWdHbnh1SDl2Wnc9PSIsInZhbHVlIjoidjZBNkV4WFZLd3F3ZmV4ekJqSlVTVCtKaHl2TFpvQ1l1djd4ODhnNGxJbTFYWnFjQms1VDE4cXNzcGkyNWRiTUlsV1V3N05Pc3pxZmxEOUErdzdQVkpHQUNZbGlBY3V0L0tRVjhpbm8zbFdzN0drTUR3elA2Z0JTdmxOV2RFelQiLCJtYWMiOiI0N2Y4ZGVmMzMwOGFlMTcxMDU5ZDNjZWFlNzY0ODdkZWM3MWVhZmI0ZDJmZWEwYzZlYzY2OGMzM2Y0N2U1MjkyIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:28:11 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IlA5SHYxY1R5amVzbGFTNWQ3Z09ubGc9PSIsInZhbHVlIjoiTkdRcGlUTkt3aVR3aHdwK3Q3RDYyOFBZMDJTRHMzLzIzUUpXVmR5c2F6ZEQ5QS9Fb0MyREhBcjlyV01kdWVWcmNNR3BLSUhWNmJwRXNJOTNXSU1QOTZ0M1QvcHdvNkVHSldqbitsdEk2Sm5lMlFpYzV0Z2hEK1dMYm9Fa3FyZGkiLCJtYWMiOiJiZjBhOGRjYjZiYWFjZjQ2YTg5NTU1NDAzZjAyYWRkYzI2NGNiYWNkMDdhYzM3ZDMzM2Q1Mjg1YmVlNWRlMzRiIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:28:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=1000"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test category\",\n        \"slug\": \"test-category\",\n        \"products\": [],\n        \"parent\": null,\n        \"createdAt\": \"2023-07-01 14:26:22\",\n        \"updatedAt\": null\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/catalogue/categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/catalogue/categories?page=1&limit=15",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"catalogue",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "15"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Categories list",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/catalogue/categories?page=1&limit=15",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"catalogue",
+												"categories"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 01 Jul 2023 14:29:02 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IjA2OXJnTmJtbW5zSW5CeHpKcjR0YXc9PSIsInZhbHVlIjoidzBDZG5USG5iNVVoUE4vUXZVK1pPOVdOZDNEUjREMDE0elNicTh2ckE5RkF4UjY5UGJtUk1XWWtvN1FSdE9Icmp1VnMzZmc5UkhJUlRXNXhZSlFKN2tGQ3ZQdndXcXd2ajNWMHJnMGRHZUljZmcrMVIvamFrTjhLSU1CVmQ4bE4iLCJtYWMiOiJiZWRmOTc5OTM4ZWFmMzRkNDYxMTZiYjI5M2M2ODQ0MzdiMDEzYmU5ODNjYWRlMWQ0NDA2NTQxNzkwNjY4MzIyIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:29:02 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6InVkR1U2a3lLT0dBanY5YSsvWVRWbmc9PSIsInZhbHVlIjoiaEJrd2Z3VTFZQm9yRXRMd3FaeHBJN2RvU1JXMVphWkhIT2g5bk90TFFGNUE0dzFURCs4MjZZUXE1ZUZLaThVZXRJa2NJenhxMG1TTnJWQk5adGoyZDUxMTVvL3Y5NlBiSXQ0N251RkVLL0FWZTV0bnd1QjgxQkxMU29BMzhReXYiLCJtYWMiOiJkN2FhMWUwZjBlMjA5M2I0NTQzMzFlNDk0N2E2MmVmMDFmZjIxZDAyN2MxMGFlNjgxNzA2ZWI2YzBkZWI3YTEyIiwidGFnIjoiIn0%3D; expires=Sat, 01 Jul 2023 16:29:02 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=997"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test category\",\n                \"slug\": \"test-category\",\n                \"products\": [],\n                \"parent\": null,\n                \"createdAt\": \"2023-07-01 14:26:22\",\n                \"updatedAt\": null\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Test category\",\n                \"slug\": \"test-categor2\",\n                \"products\": [],\n                \"parent\": null,\n                \"createdAt\": \"2023-07-01 14:26:26\",\n                \"updatedAt\": null\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 2\n        }\n    }\n}"
+								}
+							]
 						}
 					]
 				}

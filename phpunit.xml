@@ -42,6 +42,10 @@
         <testsuite name="ProjectUnitProduct">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>
         </testsuite>
+        <!--Modules/Categories-->
+        <testsuite name="ProjectUnitCategories">
+            <directory suffix="Test.php">./src/Tests/Unit/Modules/Categories</directory>
+        </testsuite>
         <!--Modules/Administrators-->
         <testsuite name="ProjectUnitAdmins">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Administrators</directory>
@@ -61,6 +65,10 @@
         <!--Modules/Product-->
         <testsuite name="ProjectLaravelProduct">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Product</directory>
+        </testsuite>
+        <!--Modules/Category-->
+        <testsuite name="ProjectLaravelCategory">
+            <directory suffix="Test.php">./src/Tests/Laravel/Modules/Category</directory>
         </testsuite>
         <!--Modules/Administrators-->
         <testsuite name="ProjectLaravelAdmins">

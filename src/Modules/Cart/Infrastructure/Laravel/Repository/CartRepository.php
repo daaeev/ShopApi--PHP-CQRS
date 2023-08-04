@@ -87,8 +87,8 @@ class CartRepository implements CartRepositoryInterface
         $record->client_hash = $cart->getClient()->getHash();
         $record->active = $cart->active();
         $record->currency = $cart->getCurrency()->value;
-        $record->created_at = $cart->getCreatedAt()->format(DateTimeFormat::FULL_DATE);
-        $record->updated_at = $cart->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE);
+        $record->created_at = $cart->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value);
+        $record->updated_at = $cart->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value);
         $record->save();
         $this->hydrator->hydrate($cart->getId(), ['id' => $record->id]);
         $this->persistCartItems($cart, $record);

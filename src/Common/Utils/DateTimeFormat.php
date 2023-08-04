@@ -2,7 +2,7 @@
 
 namespace Project\Common\Utils;
 
-class DateTimeFormat
+enum DateTimeFormat: string
 {
-    const FULL_DATE = 'Y-m-d H:i:s';
+    case FULL_DATE = 'Y-m-d H:i:s';
 }

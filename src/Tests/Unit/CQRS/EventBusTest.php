@@ -2,7 +2,6 @@
 
 namespace Project\Tests\Unit\CQRS;
 
-use DomainException;
 use Project\Common\CQRS\Buses\EventBus;
 use Project\Tests\Unit\CQRS\Commands\CommandsTrait;
 use Project\Tests\Unit\CQRS\Commands\Handlers\CallableCommandHandler;
@@ -14,12 +13,11 @@ class EventBusTest extends \PHPUnit\Framework\TestCase
 {
     use CommandsTrait;
 
-    public function testDispatchOneHandler()
+    public function testDispatchEventWithOneHandler()
     {
         $command = new TestCommand;
         $eventMock = $this->getMockBuilder(CallableCommandHandler::class)
             ->getMock();
-
         $eventMock->expects($this->once())
             ->method('__invoke')
             ->with($command);
@@ -30,20 +28,18 @@ class EventBusTest extends \PHPUnit\Framework\TestCase
                 CallableCommandHandler::class => $eventMock
             ])
         );
-
         $bus->dispatch($command);
     }
 
-    public function testDispatchManyHandlers()
+    public function testDispatchEventWithManyHandlers()
     {
         $command = new TestCommand;
         $eventMock = $this->getMockBuilder(CallableCommandHandler::class)
             ->getMock();
-
         $eventMock->expects($this->exactly(2))
             ->method('__invoke')
             ->with($command);
-
+        
         $bus = new EventBus(
             [
                 TestCommand::class => [
@@ -55,44 +51,38 @@ class EventBusTest extends \PHPUnit\Framework\TestCase
                 CallableCommandHandler::class => $eventMock
             ])
         );
-
         $bus->dispatch($command);
     }
 
-    public function testCantDispatch()
+    public function testDispatchEventWithoutHandlers()
     {
-        $this->expectException(DomainException::class);
-
+        $this->expectException(\DomainException::class);
         $bus = new EventBus(
             [],
             new Container\TestContainer([])
         );
-
         $bus->dispatch(new TestCommand());
     }
 
-    public function testContainerDoesNotExistsHandler()
+    public function testContainerDoesNotHasHandler()
     {
         $this->expectException(NotFoundException::class);
         $bus = new EventBus(
             $this->getCommandBindings(),
             new Container\TestContainer([])
         );
-
         $bus->dispatch(new TestCommand);
     }
 
-    public function testNonCallableHandler()
+    public function testDispatchEventWithNonCallableHandler()
     {
-        $this->expectException(DomainException::class);
-
+        $this->expectException(\DomainException::class);
         $bus = new EventBus(
             [
                 TestCommand::class => NonCallableCommandHandler::class
             ],
             new Container\TestContainer([NonCallableCommandHandler::class => new NonCallableCommandHandler])
         );
-
         $bus->dispatch(new TestCommand);
     }
 }

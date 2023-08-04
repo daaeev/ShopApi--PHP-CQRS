@@ -2,19 +2,17 @@
 
 namespace Project\Tests\Unit\Modules\Product\Commands;
 
-use Project\Modules\Product\Entity;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
-use Project\Modules\Product\Api\DTO\Price;
-use Project\Modules\Product\Entity\Product;
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Modules\Product\Entity\ProductId;
+use Project\Modules\Catalogue\Product\Entity;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Modules\Catalogue\Api\DTO\Product\Price;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Product\Commands\CreateProductCommand;
-use Project\Modules\Product\Repository\MemoryProductRepository;
-use Project\Modules\Product\Repository\ProductRepositoryInterface;
-use Project\Modules\Product\Commands\Handlers\CreateProductHandler;
+use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;
+use Project\Modules\Catalogue\Product\Repository\MemoryProductRepository;
+use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Commands\Handlers\CreateProductHandler;
 
 class CreateProductTest extends \PHPUnit\Framework\TestCase
 {
@@ -57,11 +55,11 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
         $handler->setDispatcher($this->dispatcher);
 
         $productId = call_user_func($handler, $command);
-        $product = $this->products->get(new ProductId($productId));
+        $product = $this->products->get(new Entity\ProductId($productId));
         $this->assertSameProduct($product, $command);
     }
 
-    private function assertSameProduct(Product $product, CreateProductCommand $command): void
+    private function assertSameProduct(Entity\Product $product, CreateProductCommand $command): void
     {
         $this->assertSame($command->name, $product->getName());
         $this->assertSame($command->code, $product->getCode());

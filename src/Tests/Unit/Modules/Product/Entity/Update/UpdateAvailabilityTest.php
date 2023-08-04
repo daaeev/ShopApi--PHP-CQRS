@@ -4,9 +4,9 @@ namespace Project\Tests\Unit\Modules\Product\Entity\Update;
 
 use Project\Common\Product\Availability;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Product\Api\Events\ProductUpdated;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Product\Api\Events\ProductAvailabilityChanged;
+use Project\Modules\Catalogue\Api\Events\Product\ProductUpdated;
+use Project\Modules\Catalogue\Api\Events\Product\ProductAvailabilityChanged;
 
 class UpdateAvailabilityTest extends \PHPUnit\Framework\TestCase
 {

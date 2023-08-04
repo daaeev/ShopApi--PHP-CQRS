@@ -30,8 +30,8 @@ class Cart implements DTO
             'items' => array_map(function (CartItem $item) {
                 return $item->toArray();
             }, $this->items),
-            'createdAt' => $this->createdAt->format(DateTimeFormat::FULL_DATE),
-            'updatedAt' => $this->updatedAt?->format(DateTimeFormat::FULL_DATE),
+            'createdAt' => $this->createdAt->format(DateTimeFormat::FULL_DATE->value),
+            'updatedAt' => $this->updatedAt?->format(DateTimeFormat::FULL_DATE->value),
         ];
     }
 }

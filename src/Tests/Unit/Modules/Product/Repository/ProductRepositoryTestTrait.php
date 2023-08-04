@@ -2,14 +2,12 @@
 
 namespace Project\Tests\Unit\Modules\Product\Repository;
 
-use Project\Modules\Product\Entity\Product;
-use Project\Modules\Product\Entity\Size\Size;
-use Project\Modules\Product\Entity\ProductId;
 use Project\Common\Repository\NotFoundException;
-use Project\Modules\Product\Entity\Color\HexColor;
 use Project\Common\Repository\DuplicateKeyException;
+use Project\Modules\Catalogue\Product\Entity\Product;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
-use Project\Modules\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Entity\ProductId;
+use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
 
 trait ProductRepositoryTestTrait
 {

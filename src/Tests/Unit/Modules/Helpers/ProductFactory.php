@@ -3,9 +3,9 @@
 namespace Project\Tests\Unit\Modules\Helpers;
 
 use Project\Common\Product\Currency;
-use Project\Modules\Product\Entity\Product;
-use Project\Modules\Product\Entity\ProductId;
-use Project\Modules\Product\Entity\Price\Price;
+use Project\Modules\Catalogue\Product\Entity\Product;
+use Project\Modules\Catalogue\Product\Entity\ProductId;
+use Project\Modules\Catalogue\Product\Entity\Price\Price;
 
 trait ProductFactory
 {

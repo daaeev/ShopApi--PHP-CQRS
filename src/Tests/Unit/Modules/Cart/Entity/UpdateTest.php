@@ -12,23 +12,23 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
 {
     use CartFactory, AssertEvents;
 
-    public function testChangeCurrency()
-    {
-        $cart = $this->generateCart();
-        $this->assertEmpty($cart->getUpdatedAt());
-        $this->assertNotSame(Currency::USD, $cart->getCurrency());
-        $cart->changeCurrency(Currency::USD);
-        $this->assertSame(Currency::USD, $cart->getCurrency());
-        $this->assertNotEmpty($cart->getUpdatedAt());
-        $this->assertEvents($cart, [new CartCurrencyChanged($cart)]);
-    }
+    //public function testChangeCurrency()
+    //{
+    //    $cart = $this->generateCart();
+    //    $this->assertEmpty($cart->getUpdatedAt());
+    //    $this->assertNotSame(Currency::USD, $cart->getCurrency());
+    //    $cart->changeCurrency(Currency::USD);
+    //    $this->assertSame(Currency::USD, $cart->getCurrency());
+    //    $this->assertNotEmpty($cart->getUpdatedAt());
+    //    $this->assertEvents($cart, [new CartCurrencyChanged($cart)]);
+    //}
 
-    public function testChangeCurrencyToInactiveCurrency()
-    {
-        $cart = $this->generateCart();
-        $this->expectException(\DomainException::class);
-        $cart->changeCurrency(Currency::INACTIVE);
-    }
+    //public function testChangeCurrencyToInactiveCurrency()
+    //{
+    //    $cart = $this->generateCart();
+    //    $this->expectException(\DomainException::class);
+    //    $cart->changeCurrency(Currency::INACTIVE);
+    //}
 
     public function testDeactivate()
     {

@@ -2,11 +2,9 @@
 
 namespace Project\Common\Product;
 
-enum Currency : string
+enum Currency: string
 {
     case UAH = 'uah';
-    case USD = 'usd';
-    case INACTIVE = 'inactive'; // for tests
 
     public static function values()
     {
@@ -29,7 +27,6 @@ enum Currency : string
     {
         return in_array($this, [
             self::UAH,
-            self::USD,
         ]);
     }
 }
