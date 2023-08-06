@@ -10,7 +10,7 @@ class AddItem extends ApiRequest
     public function rules()
     {
         return [
-            'product' => 'bail|numeric|integer|exists:products,id',
+            'product' => 'bail|numeric|integer|exists:catalogue_products,id',
             'quantity' => 'numeric|integer|min:1',
             'size' => 'nullable|string',
             'color' => 'nullable|string',

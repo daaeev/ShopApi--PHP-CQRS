@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Project\Modules\Cart\Commands;
 use Project\Modules\Cart\Queries;
 use Project\Common\CQRS\Buses\RequestBus;
+use Project\Modules\Cart\Presenters\CartPresenter;
+use Project\Modules\Cart\Presenters\CartPresenterInterface;
 use Project\Modules\Cart\Repository\CartRepositoryInterface;
 use Project\Modules\Cart\Repository\QueryCartRepositoryInterface;
 use Project\Modules\Cart\Infrastructure\Laravel\Repository\CartRepository;
@@ -28,7 +30,8 @@ class CartServiceProvider extends ServiceProvider
 
     public array $singletons = [
         CartRepositoryInterface::class => CartRepository::class,
-        QueryCartRepositoryInterface::class => QueryCartRepository::class
+        QueryCartRepositoryInterface::class => QueryCartRepository::class,
+        CartPresenterInterface::class => CartPresenter::class
     ];
 
     public function boot()
