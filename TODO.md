@@ -1,3 +1,4 @@
-Put all content for soma products and test catalogue queries in postman
 Cart:
-    - Update cart items after product updated
+    - Guard product active before add cart item
+    - If product disabled or deleted remove them from active carts
+    - Add item content to cart query
