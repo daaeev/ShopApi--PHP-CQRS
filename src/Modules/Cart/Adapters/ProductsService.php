@@ -40,6 +40,13 @@ class ProductsService
         ?string $size,
         ?string $color
     ): void {
+        $this->guardProductAvailable($product);
+        $this->guardProductHasSize($product, $size);
+        $this->guardProductHasColor($product, $color);
+    }
+
+    private function guardProductAvailable(ProductDTO $product): void
+    {
         if (
             !$product->active
             || !in_array(
@@ -49,11 +56,17 @@ class ProductsService
         ) {
             throw new \DomainException('Cant resolve unavailable product');
         }
+    }
 
+    private function guardProductHasSize(ProductDTO $product, ?string $size): void
+    {
         if (!empty($size) && !in_array($size, $product->sizes)) {
             throw new \DomainException('Product id:' . $product->id . ' does not has "' . $size . '" size');
         }
+    }
 
+    private function guardProductHasColor(ProductDTO $product, ?string $color): void
+    {
         if (!empty($color) && !in_array($color, $product->colors)) {
             throw new \DomainException('Product id:' . $product->id . ' does not has "' . $color . '" color');
         }
