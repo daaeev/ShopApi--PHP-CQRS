@@ -14,7 +14,6 @@ class CatalogueList extends ApiRequest
         return [
             'page' => 'nullable|numeric|integer|min:0',
             'limit' => 'nullable|numeric|integer|min:0',
-            'language' => ['nullable', Rule::in(array_column(Language::active(), 'value'))],
         ];
     }
 
@@ -25,9 +24,6 @@ class CatalogueList extends ApiRequest
         return new ProductsListQuery(
             $validated['page'] ?? 1,
             $validated['limit'] ?? 15,
-            [
-                'language' => $validated['language'] ?? Language::default()->value
-            ],
         );
     }
 }

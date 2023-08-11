@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Catalogue\Infrastructure\Laravel\Models;
 
+use Project\Common\Language;
 use Illuminate\Database\Eloquent\Builder;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Models\Product;
 use Project\Modules\Catalogue\Settings\Infrastructure\Laravel\Models\Settings;
@@ -44,17 +45,17 @@ class CatalogueProduct extends Product
         return $this->hasOne(Content::class, 'product', 'id');
     }
 
-    public function scopeIncludeContent(Builder $query, string $language)
+    public function scopeIncludeContent(Builder $query, Language $language)
     {
         $query->with([
             'preview',
             'images',
             'settings',
             'content' => function ($query) use ($language) {
-                $query->where('language', $language);
+                $query->where('language', $language->value);
             },
             'categories' => function ($query) use ($language) {
-                $query->withContent($language);
+                $query->withContent($language->value);
             },
         ]);
     }

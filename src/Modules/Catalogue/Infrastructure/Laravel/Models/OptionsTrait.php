@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Catalogue\Infrastructure\Laravel\Models;
 
-use Project\Common\Language;
 use Illuminate\Database\Eloquent\Builder;
 
 trait OptionsTrait
@@ -10,13 +9,11 @@ trait OptionsTrait
     private array $options = [
         'active' => null,
         'displayed' => null,
-        'language' => null
     ];
 
     public function scopeOptions(Builder $query, array $options)
     {
         $mergedOptions = array_merge($this->options, $options);
-        $query->includeContent($mergedOptions['language'] ?? Language::default()->value);
 
         if (!empty($mergedOptions['active'])) {
             $query->where('active', $mergedOptions['active']);

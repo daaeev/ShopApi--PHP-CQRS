@@ -4,6 +4,7 @@ namespace Project\Modules\Catalogue\Infrastructure\Laravel\Converters;
 
 use Project\Modules\Catalogue\Api\DTO;
 use Project\Common\Services\FileManager\Disk;
+use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Models as Eloquent;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models\Image;
@@ -13,7 +14,8 @@ use Project\Modules\Catalogue\Api\DTO\Product\Price as DTOPrice;
 class Eloquent2DTOConverter
 {
     public function __construct(
-        private FileManagerInterface $fileManager
+        private FileManagerInterface $fileManager,
+        private EnvironmentInterface $environment
     ) {}
 
     public function convert(Eloquent\CatalogueProduct $product): DTO\CatalogueProduct
@@ -35,7 +37,7 @@ class Eloquent2DTOConverter
                 }, $product->prices->all())
             ),
             new DTO\Product\Content(
-                $product->content?->language ?? '',
+                $product->content?->language ?? $this->environment->getLanguage()->value,
                 $product->content?->name ?? '',
                 $product->content?->description ?? '',
             ),
@@ -72,7 +74,7 @@ class Eloquent2DTOConverter
                             : null
                     ),
                     new DTO\Category\Content(
-                        $category->content?->language ?? '',
+                        $category->content?->language ?? $this->environment->getLanguage()->value,
                         $category->content?->name ?? '',
                     )
                 );

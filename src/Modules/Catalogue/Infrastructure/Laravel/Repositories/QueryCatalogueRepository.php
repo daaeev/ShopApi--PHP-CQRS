@@ -5,6 +5,7 @@ namespace Project\Modules\Catalogue\Infrastructure\Laravel\Repositories;
 use Project\Modules\Catalogue\Api\DTO;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Entity\Collections\Pagination;
+use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\Entity\Collections\PaginatedCollection;
 use Project\Modules\Catalogue\Repositories\QueryCatalogueRepositoryInterface;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Models as Eloquent;
@@ -13,7 +14,8 @@ use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\Eloquent2DTOConv
 class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
 {
     public function __construct(
-        private Eloquent2DTOConverter $converter
+        private Eloquent2DTOConverter $converter,
+        private EnvironmentInterface $environment
     ) {}
 
     public function get(int $id, array $options = []): DTO\CatalogueProduct
@@ -21,6 +23,7 @@ class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
         $record = Eloquent\CatalogueProduct::query()
             ->where('id', $id)
             ->options($options)
+            ->includeContent($this->environment->getLanguage())
             ->first();
 
         if (empty($record)) {
@@ -35,6 +38,7 @@ class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
         $record = Eloquent\CatalogueProduct::query()
             ->where('code', $code)
             ->options($options)
+            ->includeContent($this->environment->getLanguage())
             ->first();
 
         if (empty($record)) {
@@ -48,6 +52,7 @@ class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
     {
         $query = Eloquent\CatalogueProduct::query()
             ->options($options)
+            ->includeContent($this->environment->getLanguage())
             ->paginate(
                 perPage: $limit,
                 page: $page
