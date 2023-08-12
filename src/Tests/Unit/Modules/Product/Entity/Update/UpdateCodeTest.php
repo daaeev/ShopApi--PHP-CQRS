@@ -20,6 +20,7 @@ class UpdateCodeTest extends \PHPUnit\Framework\TestCase
         $product->setCode($updatedCode);
         $this->assertEquals($updatedCode, $product->getCode());
         $this->assertNotEquals($initialCode, $product->getCode());
+        $this->assertNotEmpty($product->getUpdatedAt());
         $this->assertEvents($product, [
             new ProductCodeChanged($product),
             new ProductUpdated($product)
@@ -30,6 +31,7 @@ class UpdateCodeTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->generateProduct();
         $product->setCode($product->getCode());
+        $this->assertNull($product->getUpdatedAt());
         $this->assertEmpty($product->flushEvents());
     }
 

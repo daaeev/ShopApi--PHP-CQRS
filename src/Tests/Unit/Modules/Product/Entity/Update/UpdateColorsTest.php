@@ -24,6 +24,7 @@ class UpdateColorsTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(2, $product->getColors());
         $this->assertTrue($product->sameColors($colors));
         $this->assertSame($colors, $product->getColors());
+        $this->assertNotEmpty($product->getUpdatedAt());
         $this->assertEvents($product, [
             new ProductUpdated($product)
         ]);
@@ -43,6 +44,7 @@ class UpdateColorsTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(2, $product->getColors());
         $this->assertTrue($product->sameColors($colors));
         $this->assertSame($colors, $product->getColors());
+        $this->assertNotEmpty($product->getUpdatedAt());
         $this->assertEmpty($product->flushEvents());
     }
 

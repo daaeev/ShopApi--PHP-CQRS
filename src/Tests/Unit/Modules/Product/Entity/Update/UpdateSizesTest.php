@@ -24,6 +24,7 @@ class UpdateSizesTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($product->sameSizes($sizes));
         $this->assertCount(2, $product->getSizes());
         $this->assertSame($sizes, $product->getSizes());
+        $this->assertNotEmpty($product->getUpdatedAt());
         $this->assertEvents($product, [new ProductUpdated($product)]);
     }
 

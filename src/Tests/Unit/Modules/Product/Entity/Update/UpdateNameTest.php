@@ -18,6 +18,7 @@ class UpdateNameTest extends \PHPUnit\Framework\TestCase
         $product->setName('Updated name');
         $this->assertEquals('Updated name', $product->getName());
         $this->assertNotEquals($initialName, $product->getName());
+        $this->assertNotEmpty($product->getUpdatedAt());
         $this->assertEvents($product, [new ProductUpdated($product)]);
     }
 
@@ -26,6 +27,7 @@ class UpdateNameTest extends \PHPUnit\Framework\TestCase
         $product = $this->generateProduct();
         $product->setName($product->getName());
         $this->assertEmpty($product->flushEvents());
+        $this->assertNull($product->getUpdatedAt());
     }
 
     public function testUpdateToEmpty()

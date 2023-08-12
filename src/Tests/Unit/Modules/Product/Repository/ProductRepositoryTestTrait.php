@@ -42,6 +42,8 @@ trait ProductRepositoryTestTrait
         $this->assertSame($initial->getColors(), $found->getColors());
         $this->assertTrue($initial->sameSizes($found->getSizes()));
         $this->assertSame($initial->getSizes(), $found->getSizes());
+        $this->assertSame($initial->getCreatedAt()->format('U'), $found->getCreatedAt()->format('U'));
+        $this->assertSame($initial->getUpdatedAt()?->format('U'), $found->getUpdatedAt()?->format('U'));
     }
 
     public function testAddIncrementIds()

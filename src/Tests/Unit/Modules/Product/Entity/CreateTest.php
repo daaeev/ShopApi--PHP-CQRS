@@ -30,6 +30,8 @@ class CreateTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(Availability::IN_STOCK, $product->getAvailability());
         $this->assertEmpty($product->getColors());
         $this->assertEmpty($product->getSizes());
+        $this->assertNotEmpty($product->getCreatedAt());
+        $this->assertNull($product->getUpdatedAt());
         $this->assertEvents($product, [new ProductCreated($product)]);
 
         $this->assertTrue($product->samePrices($prices));

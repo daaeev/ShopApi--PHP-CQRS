@@ -30,6 +30,7 @@ class UpdatePricesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($product->samePrices($updatedPrices));
         $product->setPrices($updatedPrices);
         $this->assertTrue($product->samePrices($updatedPrices));
+        $this->assertNotEmpty($product->getUpdatedAt());
 
         foreach ($updatedPrices as $updatedPrice) {
             $this->assertArrayHasKey($updatedPrice->getCurrency()->value, $product->getPrices());
@@ -57,6 +58,7 @@ class UpdatePricesTest extends \PHPUnit\Framework\TestCase
         $prices = $product->getPrices();
         $product->setPrices($prices);
         $product->samePrices($prices);
+        $this->assertNull($product->getUpdatedAt());
         $this->assertEmpty($product->flushEvents());
     }
 
