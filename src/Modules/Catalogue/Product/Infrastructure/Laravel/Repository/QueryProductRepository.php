@@ -41,6 +41,10 @@ class QueryProductRepository implements QueryProductRepositoryInterface
                     $price->price,
                 );
             }, $product->prices->all()),
+            new \DateTimeImmutable($product->created_at),
+            $product->updated_at
+                ? new \DateTimeImmutable($product->updated_at)
+                : null,
         );
     }
 

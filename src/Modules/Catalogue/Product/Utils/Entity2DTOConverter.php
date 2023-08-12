@@ -23,6 +23,8 @@ class Entity2DTOConverter
                     $price->getPrice()
                 );
             }, $entity->getPrices()),
+            $entity->getCreatedAt(),
+            $entity->getUpdatedAt()
         );
     }
 }

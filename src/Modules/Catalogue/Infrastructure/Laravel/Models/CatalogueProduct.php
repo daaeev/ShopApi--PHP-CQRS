@@ -45,6 +45,11 @@ class CatalogueProduct extends Product
         return $this->hasOne(Content::class, 'product', 'id');
     }
 
+    public function contents()
+    {
+        return $this->hasMany(Content::class, 'product', 'id');
+    }
+
     public function scopeIncludeContent(Builder $query, Language $language)
     {
         $query->with([
@@ -57,6 +62,17 @@ class CatalogueProduct extends Product
             'categories' => function ($query) use ($language) {
                 $query->withContent($language->value);
             },
+        ]);
+    }
+
+    public function scopeIncludeAllContents(Builder $query)
+    {
+        $query->with([
+            'preview',
+            'images',
+            'settings',
+            'contents',
+            'categories.contents'
         ]);
     }
 }

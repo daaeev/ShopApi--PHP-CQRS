@@ -26,6 +26,7 @@ class CatalogueServiceProvider extends ServiceProvider
     private array $queriesMapping = [
         Queries\ProductDetailsQuery::class => Queries\Handlers\ProductDetailsHandler::class,
         Queries\ProductsListQuery::class => Queries\Handlers\ProductsListHandler::class,
+        Queries\AllProductContentsQuery::class => Queries\Handlers\AllProductContentsHandler::class,
     ];
 
     public array $singletons = [

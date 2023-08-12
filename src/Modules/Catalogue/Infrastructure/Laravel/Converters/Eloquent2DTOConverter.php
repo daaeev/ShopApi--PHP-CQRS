@@ -34,7 +34,11 @@ class Eloquent2DTOConverter
                         $price->currency,
                         $price->price,
                     );
-                }, $product->prices->all())
+                }, $product->prices->all()),
+                new \DateTimeImmutable($product->created_at),
+                $product->updated_at
+                    ? new \DateTimeImmutable($product->updated_at)
+                    : null,
             ),
             new DTO\Product\Content(
                 $product->content?->language ?? $this->environment->getLanguage()->value,

@@ -20,6 +20,8 @@ class Product implements Events\EventRoot
     private array $colors;
     private array $sizes;
     private array $prices;
+    private \DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $updatedAt;
 
     public function __construct(
         ProductId $id,
@@ -35,6 +37,8 @@ class Product implements Events\EventRoot
         $this->availability = Availability::IN_STOCK;
         $this->colors = [];
         $this->sizes = [];
+        $this->createdAt = new \DateTimeImmutable;
+        $this->updatedAt = null;
         $this->guardCorrectConstructData();
         $this->keepPricesUnique();
         $this->addEvent(new ProductEvents\ProductCreated($this));
@@ -132,6 +136,7 @@ class Product implements Events\EventRoot
     private function updated()
     {
         $this->addEvent(new ProductEvents\ProductUpdated($this));
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     public function activate()
@@ -305,5 +310,15 @@ class Product implements Events\EventRoot
     public function getPrices(): array
     {
         return $this->prices;
+    }
+
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }

@@ -13,6 +13,11 @@ class CatalogueCategory extends Category
         return $this->hasOne(Content::class, 'category', 'id');
     }
 
+    public function contents()
+    {
+        return $this->hasMany(Content::class, 'category', 'id');
+    }
+
     public function scopeWithContent(Builder $query, string $language)
     {
         $query->with([

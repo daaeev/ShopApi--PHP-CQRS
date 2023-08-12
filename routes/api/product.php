@@ -26,3 +26,7 @@ Route::prefix('catalogue')->group(function () {
     Route::get('{code}', [CatalogueController::class, 'details']);
     Route::get('', [CatalogueController::class, 'list']);
 });
+
+Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])->prefix('admin/catalogue')->group(function () {
+    Route::get('{id}', [CatalogueController::class, 'allProductContents']);
+});

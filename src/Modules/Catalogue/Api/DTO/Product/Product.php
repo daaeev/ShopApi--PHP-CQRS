@@ -16,6 +16,8 @@ class Product implements Utils\DTO
         public readonly array $colors,
         public readonly array $sizes,
         public readonly array $prices,
+        public readonly \DateTimeImmutable $createdAt,
+        public readonly ?\DateTimeImmutable $updatedAt,
     ) {
         Assert::allIsInstanceOf($this->prices, Price::class);
     }
@@ -33,6 +35,8 @@ class Product implements Utils\DTO
             }, $this->prices),
             'colors' => $this->colors,
             'sizes' => $this->sizes,
+            'createdAt' => $this->createdAt->format(Utils\DateTimeFormat::FULL_DATE->value),
+            'updatedAt' => $this->updatedAt?->format(Utils\DateTimeFormat::FULL_DATE->value),
         ];
     }
 }
