@@ -71,7 +71,8 @@ class UpdateItemTest extends \PHPUnit\Framework\TestCase
                 $initialCartItem->getQuantity() + 1,
                 $initialCart->getCurrency(),
                 $initialCartItem->getSize(),
-                $initialCartItem->getColor()
+                $initialCartItem->getColor(),
+                false
             )
             ->willReturn($updatedCartItem = $this->makeCartItem(
                 CartItemId::next(),

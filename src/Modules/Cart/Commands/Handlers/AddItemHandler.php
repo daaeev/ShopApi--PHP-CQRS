@@ -29,6 +29,7 @@ class AddItemHandler implements DispatchEventsInterface
             $cart->getCurrency(),
             $command->size,
             $command->color,
+            guardProductAvailable: true
         ));
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());

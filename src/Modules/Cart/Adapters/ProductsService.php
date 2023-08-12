@@ -20,9 +20,10 @@ class ProductsService
         Currency $currency,
         ?string $size = null,
         ?string $color = null,
+        bool $guardProductAvailable = false
     ): Entity\CartItem {
         $product = $this->products->get($product);
-        $this->validateProduct($product, $size, $color);
+        $this->validateProduct($product, $size, $color, $guardProductAvailable);
 
         return new Entity\CartItem(
             Entity\CartItemId::next(),
@@ -38,9 +39,12 @@ class ProductsService
     private function validateProduct(
         ProductDTO $product,
         ?string $size,
-        ?string $color
+        ?string $color,
+        bool $guardProductAvailable
     ): void {
-        $this->guardProductAvailable($product);
+        if ($guardProductAvailable) {
+            $this->guardProductAvailable($product);
+        }
         $this->guardProductHasSize($product, $size);
         $this->guardProductHasColor($product, $color);
     }

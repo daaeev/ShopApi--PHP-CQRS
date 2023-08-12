@@ -59,7 +59,7 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
         );
         $this->productsService->expects($this->once())
             ->method('resolveCartItem')
-            ->with($product, $quantity, Currency::default(), $size, $color)
+            ->with($product, $quantity, Currency::default(), $size, $color, true)
             ->willReturn($cartItem = $this->generateCartItem());
         $handler = new AddItemHandler(
             $this->carts,
@@ -98,7 +98,7 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
         );
         $this->productsService->expects($this->once())
             ->method('resolveCartItem')
-            ->with($product, $quantity, $initialCart->getCurrency(), $size, $color)
+            ->with($product, $quantity, $initialCart->getCurrency(), $size, $color, true)
             ->willReturn($addedCartItem = $this->generateCartItem());
         $handler = new AddItemHandler(
             $this->carts,
