@@ -2,13 +2,16 @@
 
 namespace Project\Modules\Cart\Infrastructure\Laravel;
 
-use Illuminate\Support\ServiceProvider;
-use Project\Modules\Cart\Commands;
 use Project\Modules\Cart\Queries;
+use Project\Modules\Cart\Commands;
+use Project\Modules\Cart\Consumers;
+use Illuminate\Support\ServiceProvider;
+use Project\Common\CQRS\Buses\EventBus;
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Cart\Presenters\CartPresenter;
 use Project\Modules\Cart\Presenters\CartPresenterInterface;
 use Project\Modules\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Catalogue\Api\Events\Product as ProductEvents;
 use Project\Modules\Cart\Repository\QueryCartRepositoryInterface;
 use Project\Modules\Cart\Infrastructure\Laravel\Repository\CartRepository;
 use Project\Modules\Cart\Infrastructure\Laravel\Repository\QueryCartRepository;
@@ -26,17 +29,21 @@ class CartServiceProvider extends ServiceProvider
         Queries\GetActiveCartQuery::class => Queries\Handlers\GetActiveCartHandler::class,
     ];
 
-    private array $eventsMapping = [];
+    private array $eventsMapping = [
+        ProductEvents\ProductActivityChanged::class => Consumers\ProductDeactivatedConsumer::class,
+        ProductEvents\ProductAvailabilityChanged::class => Consumers\ProductDeactivatedConsumer::class,
+    ];
 
     public array $singletons = [
         CartRepositoryInterface::class => CartRepository::class,
         QueryCartRepositoryInterface::class => QueryCartRepository::class,
-        CartPresenterInterface::class => CartPresenter::class
+        CartPresenterInterface::class => CartPresenter::class,
     ];
 
     public function boot()
     {
         $this->app->get('CommandBus')->registerBus(new RequestBus($this->commandsMapping, $this->app));
         $this->app->get('QueryBus')->registerBus(new RequestBus($this->queriesMapping, $this->app));
+        $this->app->get('EventBus')->registerBus(new EventBus($this->eventsMapping, $this->app));
     }
 }

@@ -109,12 +109,18 @@ class Cart implements Events\EventRoot
         throw new \DomainException('Cart item not found');
     }
 
-    private function updated(bool $addEvent = true): void
+    public function removeItemsByProduct(int $product): void
     {
-        if ($addEvent) {
-            $this->addEvent(new CartUpdated($this));
+        foreach ($this->items as $cartItem) {
+            if ($cartItem->getProduct() === $product) {
+                $this->removeItem($cartItem->getId());
+            }
         }
+    }
 
+    private function updated(): void
+    {
+        $this->addEvent(new CartUpdated($this));
         $this->updatedAt = new \DateTimeImmutable;
     }
 
@@ -130,7 +136,7 @@ class Cart implements Events\EventRoot
 
         $this->active = false;
         $this->addEvent(new CartDeactivated($this));
-        $this->updated(false);
+        $this->updated();
     }
 
     public function changeCurrency(Currency $currency): void
@@ -145,7 +151,7 @@ class Cart implements Events\EventRoot
 
         $this->currentCurrency = $currency;
         $this->addEvent(new CartCurrencyChanged($this));
-        $this->updated(false);
+        $this->updated();
     }
 
     public static function instantiate(Client $client): self

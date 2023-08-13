@@ -72,6 +72,18 @@ class CartRepository implements CartRepositoryInterface
         return $this->hydrate($record);
     }
 
+    public function getActiveCartsWithProduct(int $product): array
+    {
+        $record = Eloquent\Cart::query()
+            ->whereRelation('items', 'product', '=', $product)
+            ->where([
+                'active' => true
+            ])
+            ->get();
+
+        return array_map([$this, 'hydrate'], $record->all());
+    }
+
     public function save(Entity\Cart $cart): void
     {
         $this->guardClientDoesNotHasAnotherActiveCart($cart);

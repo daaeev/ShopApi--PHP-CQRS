@@ -11,5 +11,10 @@ interface CartRepositoryInterface
 
     public function getActiveCart(Client $client): Entity\Cart;
 
+    /**
+     * @return Entity\Cart[]
+     */
+    public function getActiveCartsWithProduct(int $product): array;
+
     public function save(Entity\Cart $cart): void;
 }
