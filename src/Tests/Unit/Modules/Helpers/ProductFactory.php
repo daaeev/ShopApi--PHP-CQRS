@@ -16,7 +16,7 @@ trait ProductFactory
         foreach (Currency::active() as $activeCurrency) {
             $prices[] = new Price(
                 $activeCurrency,
-                rand(100, 500)
+                rand(1, 9999)
             );
         }
 

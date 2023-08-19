@@ -51,10 +51,10 @@ trait CartFactory
     {
         return new Entity\CartItem(
             Entity\CartItemId::random(),
-            rand(1, 10),
+            rand(1, 9999),
             md5(rand()),
             rand(100, 500),
-            rand(1, 10),
+            rand(1, 9999),
             md5(rand()),
             md5(rand()),
         );
