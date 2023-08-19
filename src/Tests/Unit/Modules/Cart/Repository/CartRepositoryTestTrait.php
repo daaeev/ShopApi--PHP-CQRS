@@ -67,7 +67,7 @@ trait CartRepositoryTestTrait
         $this->assertSameCarts($initial, $found);
     }
 
-    public function testGetActiveCartIfDotsNotExists()
+    public function testGetActiveCartIfDoesNotExists()
     {
         $clientHash = 'test';
         $newCart = $this->carts->getActiveCart(new Client($clientHash));
@@ -75,6 +75,51 @@ trait CartRepositoryTestTrait
         $this->assertSame($newCart->getClient()->getHash(), $clientHash);
         $this->assertEmpty($newCart->getItems());
     }
+
+    public function testGetActiveCartsWithProduct()
+    {
+        $cartItemToFound1 = $this->generateCartItem();
+        $cartItemToFound2 = $this->makeCartItem(
+            CartItemId::next(),
+            $cartItemToFound1->getProduct(),
+            $cartItemToFound1->getName(),
+            $cartItemToFound1->getPrice(),
+            $cartItemToFound1->getQuantity(),
+        );
+        $cartItemToFound3 = $this->makeCartItem(
+            CartItemId::next(),
+            $cartItemToFound1->getProduct(),
+            $cartItemToFound1->getName(),
+            $cartItemToFound1->getPrice(),
+            $cartItemToFound1->getQuantity(),
+        );
+
+        $cartWithProduct1 = $this->generateCart();
+        $cartWithProduct1->addItem($cartItemToFound1);
+        $cartWithProduct2 = $this->generateCart();
+        $cartWithProduct2->addItem($cartItemToFound2);
+        $cartWithoutProduct = $this->generateCart();
+        $deactivatedCartWithProduct = $this->generateCart();
+        $deactivatedCartWithProduct->addItem($cartItemToFound3);
+        $deactivatedCartWithProduct->deactivate();
+
+        $this->carts->save($cartWithProduct1);
+        $this->carts->save($cartWithProduct2);
+        $this->carts->save($cartWithoutProduct);
+        $this->carts->save($deactivatedCartWithProduct);
+
+        $carts = $this->carts->getActiveCartsWithProduct($cartItemToFound1->getProduct());
+        $this->assertCount(2, $carts);
+        $this->assertSameCarts($cartWithProduct1, $carts[0]);
+        $this->assertSameCarts($cartWithProduct2, $carts[1]);
+    }
+
+    public function testGetActiveCartsWithProductIfDoesNotExists()
+    {
+        $carts = $this->carts->getActiveCartsWithProduct(rand(1, 10));
+        $this->assertEmpty($carts);
+    }
+
 
     public function testSave()
     {

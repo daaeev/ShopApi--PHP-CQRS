@@ -42,6 +42,25 @@ class MemoryCartRepository implements CartRepositoryInterface
         return clone $cart;
     }
 
+    public function getActiveCartsWithProduct(int $product): array
+    {
+        $carts = [];
+
+        foreach ($this->items as $cart) {
+            if (!$cart->active()) {
+                continue;
+            }
+
+            foreach ($cart->getItems() as $cartItem) {
+                if ($cartItem->getProduct() === $product) {
+                    $carts[] = $cart;
+                }
+            }
+        }
+
+        return $carts;
+    }
+
     public function save(Entity\Cart $cart): void
     {
         $this->guardClientDoesNotHasAnotherActiveCart($cart);
