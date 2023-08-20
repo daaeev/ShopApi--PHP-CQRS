@@ -3,13 +3,13 @@
 namespace Project\Tests\Unit\Modules\Cart\Entity;
 
 use Project\Common\Product\Currency;
-use Project\Modules\Cart\Entity\Cart;
-use Project\Modules\Cart\Entity\CartId;
 use Project\Common\Environment\Client\Client;
+use Project\Modules\Shopping\Cart\Entity\Cart;
 use Webmozart\Assert\InvalidArgumentException;
+use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Cart\Api\Events\CartInstantiated;
+use Project\Modules\Shopping\Cart\Api\Events\CartInstantiated;
 
 class CreateTest extends \PHPUnit\Framework\TestCase
 {

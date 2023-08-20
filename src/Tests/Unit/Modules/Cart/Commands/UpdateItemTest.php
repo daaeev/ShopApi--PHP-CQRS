@@ -2,19 +2,18 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
-use Project\Common\Product\Currency;
-use Project\Modules\Cart\Entity\CartId;
-use Project\Modules\Cart\Entity\CartItemId;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
+use Project\Modules\Shopping\Cart\Entity\CartId;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Project\Modules\Cart\Adapters\ProductsService;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Cart\Commands\UpdateItemCommand;
-use Project\Modules\Cart\Repository\MemoryCartRepository;
-use Project\Modules\Cart\Repository\CartRepositoryInterface;
-use Project\Modules\Cart\Commands\Handlers\UpdateItemHandler;
+use Project\Modules\Shopping\Cart\Adapters\ProductsService;
+use Project\Modules\Shopping\Cart\Commands\UpdateItemCommand;
+use Project\Modules\Shopping\Cart\Repository\MemoryCartRepository;
+use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Commands\Handlers\UpdateItemHandler;
 
 class UpdateItemTest extends \PHPUnit\Framework\TestCase
 {

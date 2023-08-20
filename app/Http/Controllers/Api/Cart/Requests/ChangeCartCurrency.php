@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Cart\Requests;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
 use Project\Common\Product\Currency;
-use Project\Modules\Cart\Commands\ChangeCurrencyCommand;
+use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
 
 class ChangeCartCurrency extends ApiRequest
 {

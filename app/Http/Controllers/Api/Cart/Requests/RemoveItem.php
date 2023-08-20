@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Cart\Requests;
 
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Cart\Commands\RemoveItemCommand;
+use Project\Modules\Shopping\Cart\Commands\RemoveItemCommand;
 
 class RemoveItem extends ApiRequest
 {

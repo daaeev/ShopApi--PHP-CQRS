@@ -2,14 +2,14 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Repository;
 
-use Project\Modules\Cart\Entity\Cart;
-use Project\Modules\Cart\Entity\CartId;
 use Project\Common\Utils\DateTimeFormat;
-use Project\Modules\Cart\Entity\CartItemId;
 use Project\Common\Environment\Client\Client;
+use Project\Modules\Shopping\Cart\Entity\Cart;
+use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Common\Repository\NotFoundException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
-use Project\Modules\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Entity\CartItemId;
+use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
 
 trait CartRepositoryTestTrait
 {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Cart\Requests;
 
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Cart\Queries\GetActiveCartQuery;
+use Project\Modules\Shopping\Cart\Queries\GetActiveCartQuery;
 
 class GetActiveCart extends ApiRequest
 {

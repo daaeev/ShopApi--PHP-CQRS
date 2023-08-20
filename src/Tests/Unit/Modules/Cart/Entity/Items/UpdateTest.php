@@ -2,11 +2,11 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Entity\Items;
 
-use Project\Modules\Cart\Entity\CartItemId;
 use Project\Modules\Cart\Api\Events\CartItemAdded;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Cart\Api\Events\CartUpdated;
+use Project\Modules\Shopping\Cart\Api\Events\CartUpdated;
 
 class UpdateTest extends \PHPUnit\Framework\TestCase
 {

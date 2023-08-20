@@ -2,9 +2,9 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Entity\Items;
 
-use Project\Modules\Cart\Entity\CartItemId;
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Modules\Shopping\Cart\Entity\CartItemId;
 
 class CreateTest extends \PHPUnit\Framework\TestCase
 {

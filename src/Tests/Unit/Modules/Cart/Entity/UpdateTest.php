@@ -3,13 +3,11 @@
 namespace Project\Tests\Unit\Modules\Cart\Entity;
 
 use DomainException;
-use Project\Common\Product\Currency;
-use Project\Modules\Cart\Entity\CartItemId;
-use Project\Modules\Cart\Api\Events\CartUpdated;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Cart\Api\Events\CartDeactivated;
-use Project\Modules\Cart\Api\Events\CartCurrencyChanged;
+use Project\Modules\Shopping\Cart\Api\Events\CartUpdated;
+use Project\Modules\Shopping\Cart\Api\Events\CartDeactivated;
 
 class UpdateTest extends \PHPUnit\Framework\TestCase
 {

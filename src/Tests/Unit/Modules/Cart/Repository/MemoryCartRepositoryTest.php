@@ -3,7 +3,7 @@
 namespace Project\Tests\Unit\Modules\Cart\Repository;
 
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Modules\Cart\Repository\MemoryCartRepository;
+use Project\Modules\Shopping\Cart\Repository\MemoryCartRepository;
 
 class MemoryCartRepositoryTest extends \PHPUnit\Framework\TestCase
 {

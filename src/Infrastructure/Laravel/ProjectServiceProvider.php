@@ -10,8 +10,8 @@ use Project\Common\Environment\EnvironmentInterface;
 use Project\Infrastructure\Laravel\Services\FileManager;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
-use Project\Modules\Cart\Infrastructure\Laravel\CartServiceProvider;
 use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBus;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\CartServiceProvider;
 use Project\Modules\Catalogue\Infrastructure\Laravel\CatalogueServiceProvider;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
 

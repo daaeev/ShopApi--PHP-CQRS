@@ -2,8 +2,8 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Entity\Items;
 
-use Project\Modules\Cart\Entity\CartItemId;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Modules\Shopping\Cart\Entity\CartItemId;
 
 class GetTest extends \PHPUnit\Framework\TestCase
 {

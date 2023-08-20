@@ -3,19 +3,19 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Product\Currency;
-use Project\Modules\Cart\Entity\CartId;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
+use Project\Modules\Shopping\Cart\Entity\CartId;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Project\Modules\Cart\Adapters\ProductsService;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Cart\Commands\ChangeCurrencyCommand;
-use Project\Modules\Cart\Repository\MemoryCartRepository;
-use Project\Modules\Cart\Repository\CartRepositoryInterface;
-use Project\Modules\Cart\Commands\Handlers\ChangeCurrencyHandler;
+use Project\Modules\Shopping\Cart\Adapters\ProductsService;
+use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
+use Project\Modules\Shopping\Cart\Repository\MemoryCartRepository;
+use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Commands\Handlers\ChangeCurrencyHandler;
 
-// Cant mock enums for test
+// Test disabled because cant mock Currency enum for test currency
 class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
 {
     use CartFactory;

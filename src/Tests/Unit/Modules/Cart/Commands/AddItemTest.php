@@ -3,17 +3,17 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Product\Currency;
-use Project\Modules\Cart\Entity\CartId;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
+use Project\Modules\Shopping\Cart\Entity\CartId;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Project\Modules\Cart\Commands\AddItemCommand;
-use Project\Modules\Cart\Adapters\ProductsService;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Cart\Repository\MemoryCartRepository;
-use Project\Modules\Cart\Commands\Handlers\AddItemHandler;
-use Project\Modules\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Commands\AddItemCommand;
+use Project\Modules\Shopping\Cart\Adapters\ProductsService;
+use Project\Modules\Shopping\Cart\Repository\MemoryCartRepository;
+use Project\Modules\Shopping\Cart\Commands\Handlers\AddItemHandler;
+use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
 
 class AddItemTest extends \PHPUnit\Framework\TestCase
 {

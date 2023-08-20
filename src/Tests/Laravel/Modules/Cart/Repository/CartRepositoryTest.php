@@ -5,7 +5,7 @@ namespace Project\Tests\Laravel\Modules\Cart\Repository;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Cart\Repository\CartRepositoryTestTrait;
-use Project\Modules\Cart\Infrastructure\Laravel\Repository\CartRepository;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository\CartRepository;
 
 class CartRepositoryTest extends \Tests\TestCase
 {
