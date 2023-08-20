@@ -11,7 +11,7 @@ use Project\Infrastructure\Laravel\Services\FileManager;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBus;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\CartServiceProvider;
+use Project\Modules\Shopping\Infrastructure\Laravel\ShoppingServiceProvider;
 use Project\Modules\Catalogue\Infrastructure\Laravel\CatalogueServiceProvider;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
 
@@ -20,7 +20,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     private array $providers = [
         CatalogueServiceProvider::class,
         AdministratorsServiceProvider::class,
-        CartServiceProvider::class,
+        ShoppingServiceProvider::class,
     ];
 
     public $singletons = [
