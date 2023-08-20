@@ -9,7 +9,7 @@ use Webmozart\Assert\InvalidArgumentException;
 use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Shopping\Cart\Api\Events\CartInstantiated;
+use Project\Modules\Shopping\Api\Events\Cart\CartInstantiated;
 
 class CreateTest extends \PHPUnit\Framework\TestCase
 {

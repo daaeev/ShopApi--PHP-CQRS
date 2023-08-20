@@ -6,10 +6,10 @@ use Project\Common\Events;
 use Webmozart\Assert\Assert;
 use Project\Common\Product\Currency;
 use Project\Common\Environment\Client\Client;
-use Project\Modules\Shopping\Cart\Api\Events\CartUpdated;
-use Project\Modules\Shopping\Cart\Api\Events\CartDeactivated;
-use Project\Modules\Shopping\Cart\Api\Events\CartInstantiated;
-use Project\Modules\Shopping\Cart\Api\Events\CartCurrencyChanged;
+use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
+use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
+use Project\Modules\Shopping\Api\Events\Cart\CartInstantiated;
+use Project\Modules\Shopping\Api\Events\Cart\CartCurrencyChanged;
 
 class Cart implements Events\EventRoot
 {

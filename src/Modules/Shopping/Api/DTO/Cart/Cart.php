@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Shopping\Cart\Api\DTO;
+namespace Project\Modules\Shopping\Api\DTO\Cart;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Shopping\Cart\Api\DTO;
+namespace Project\Modules\Shopping\Api\DTO\Cart;
 
 use Project\Common\Utils\Arrayable;
 

@@ -6,13 +6,14 @@ use DomainException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Shopping\Cart\Api\Events\CartUpdated;
-use Project\Modules\Shopping\Cart\Api\Events\CartDeactivated;
+use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
+use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
 
 class UpdateTest extends \PHPUnit\Framework\TestCase
 {
     use CartFactory, AssertEvents;
 
+    // Cant mock Currency enum for test
     //public function testChangeCurrency()
     //{
     //    $cart = $this->generateCart();

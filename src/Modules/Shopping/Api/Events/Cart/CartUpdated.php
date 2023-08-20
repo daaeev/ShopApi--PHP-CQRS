@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Shopping\Cart\Api\Events;
+namespace Project\Modules\Shopping\Api\Events\Cart;
 
 class CartUpdated extends AbstractCartEvent
 {

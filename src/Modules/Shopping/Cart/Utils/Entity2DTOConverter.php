@@ -3,7 +3,7 @@
 namespace Project\Modules\Shopping\Cart\Utils;
 
 use Project\Modules\Shopping\Cart\Entity;
-use Project\Modules\Shopping\Cart\Api\DTO;
+use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 
 class Entity2DTOConverter
 {
