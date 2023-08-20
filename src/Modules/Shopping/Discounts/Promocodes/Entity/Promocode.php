@@ -89,28 +89,6 @@ class Promocode implements Events\EventRoot
         $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function setCode(string $code): void
-    {
-        if ($code === $this->code) {
-            return;
-        }
-
-        $this->code = $code;
-        $this->guardCodeDoesNotEmpty();
-        $this->updated();
-    }
-
-    public function setDiscountPercent(int $percent): void
-    {
-        if ($percent === $this->discountPercent) {
-            return;
-        }
-
-        $this->discountPercent = $percent;
-        $this->guardDiscountLessThanOneHundred();
-        $this->updated();
-    }
-
     public function setStartDate(\DateTimeImmutable $date): void
     {
         if ($date == $this->startDate) {
@@ -130,6 +108,26 @@ class Promocode implements Events\EventRoot
 
         $this->endDate = $date;
         $this->guardValidActiveDates();
+        $this->updated();
+    }
+
+    public function activate(): void
+    {
+        if (true === $this->active) {
+            throw new \DomainException('Promo-code already activated');
+        }
+
+        $this->active = true;
+        $this->updated();
+    }
+
+    public function deactivate(): void
+    {
+        if (false === $this->active) {
+            throw new \DomainException('Promo-code already deactivated');
+        }
+
+        $this->active = false;
         $this->updated();
     }
 
