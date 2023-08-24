@@ -23,6 +23,9 @@ class CartServiceProvider extends ServiceProvider
         Commands\UpdateItemCommand::class => Commands\Handlers\UpdateItemHandler::class,
         Commands\RemoveItemCommand::class => Commands\Handlers\RemoveItemHandler::class,
         Commands\ChangeCurrencyCommand::class => Commands\Handlers\ChangeCurrencyHandler::class,
+
+        Commands\UsePromocodeCommand::class => Commands\Handlers\UsePromocodeHandler::class,
+        Commands\RemovePromocodeCommand::class => Commands\Handlers\RemovePromocodeHandler::class,
     ];
 
     private array $queriesMapping = [

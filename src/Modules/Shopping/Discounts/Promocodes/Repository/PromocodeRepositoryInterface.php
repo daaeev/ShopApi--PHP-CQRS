@@ -13,4 +13,6 @@ interface PromocodeRepositoryInterface
     public function delete(Entity\Promocode $promocode): void;
 
     public function get(Entity\PromocodeId $id): Entity\Promocode;
+
+    public function getByCode(string $code): Entity\Promocode;
 }

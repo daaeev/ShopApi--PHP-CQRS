@@ -10,6 +10,7 @@ use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
 use Project\Modules\Shopping\Api\Events\Cart\CartInstantiated;
 use Project\Modules\Shopping\Api\Events\Cart\CartCurrencyChanged;
+use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
 
 class Cart implements Events\EventRoot
 {
@@ -17,6 +18,7 @@ class Cart implements Events\EventRoot
 
     private Currency $currentCurrency;
     private bool $active = true;
+    private ?Promocode $promocode = null;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -154,6 +156,30 @@ class Cart implements Events\EventRoot
         $this->updated();
     }
 
+    public function usePromocode(Promocode $promocode): void
+    {
+        if (null !== $this->promocode) {
+            throw new \DomainException('Other promocode already used');
+        }
+
+        if (!$promocode->isActive()) {
+            throw new \DomainException('Cant use not active promo-code');
+        }
+
+        $this->promocode = $promocode;
+        $this->updated();
+    }
+
+    public function removePromocode(): void
+    {
+        if (null === $this->promocode) {
+            throw new \DomainException('Cart does not have promo-code');
+        }
+
+        $this->promocode = null;
+        $this->updated();
+    }
+
     public static function instantiate(Client $client): self
     {
         return new self(
@@ -164,9 +190,16 @@ class Cart implements Events\EventRoot
 
     public function getTotalPrice(): float
     {
-        return array_reduce($this->items, function ($totalPrice, $item) {
+        $totalPrice = array_reduce($this->items, function ($totalPrice, $item) {
             return $totalPrice + ($item->getPrice() * $item->getQuantity());
         }, 0);
+
+        if (null !== $this->promocode) {
+            $discountPrice = ($totalPrice / 100) * $this->promocode->getDiscountPercent();
+            $totalPrice -= $discountPrice;
+        }
+
+        return $totalPrice;
     }
 
     public function getId(): CartId
@@ -192,6 +225,11 @@ class Cart implements Events\EventRoot
     public function getCurrency(): Currency
     {
         return $this->currentCurrency;
+    }
+
+    public function getPromocode(): ?Promocode
+    {
+        return $this->promocode;
     }
 
     public function getCreatedAt(): \DateTimeImmutable
