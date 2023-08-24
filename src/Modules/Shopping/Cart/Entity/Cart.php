@@ -10,7 +10,9 @@ use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
 use Project\Modules\Shopping\Api\Events\Cart\CartInstantiated;
 use Project\Modules\Shopping\Api\Events\Cart\CartCurrencyChanged;
+use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
+use Project\Modules\Shopping\Api\Events\Cart\PromocodeRemovedFromCart;
 
 class Cart implements Events\EventRoot
 {
@@ -167,6 +169,7 @@ class Cart implements Events\EventRoot
         }
 
         $this->promocode = $promocode;
+        $this->addEvent(new PromocodeAddedToCart($this));
         $this->updated();
     }
 
@@ -177,6 +180,7 @@ class Cart implements Events\EventRoot
         }
 
         $this->promocode = null;
+        $this->addEvent(new PromocodeRemovedFromCart($this));
         $this->updated();
     }
 
