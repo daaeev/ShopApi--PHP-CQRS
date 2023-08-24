@@ -4,6 +4,7 @@ namespace Project\Modules\Shopping\Cart\Utils;
 
 use Project\Modules\Shopping\Cart\Entity;
 use Project\Modules\Shopping\Api\DTO\Cart as DTO;
+use Project\Modules\Shopping\Discounts\Promocodes\Utils\Entity2DTOConverter as PromocodeEntityConverter;
 
 class Entity2DTOConverter
 {
@@ -15,6 +16,10 @@ class Entity2DTOConverter
             $entity->getCurrency()->value,
             $entity->active(),
             array_map('self::convertCartItem', $entity->getItems()),
+            $entity->getTotalPrice(),
+            $entity->getPromocode()
+                ? PromocodeEntityConverter::convert($entity->getPromocode())
+                : null,
             $entity->getCreatedAt(),
             $entity->getUpdatedAt(),
         );
