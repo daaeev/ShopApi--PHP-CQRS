@@ -54,6 +54,10 @@
         <testsuite name="ProjectUnitCart">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Cart</directory>
         </testsuite>
+        <!--Modules/Promocodes-->
+        <testsuite name="ProjectUnitPromocodes">
+            <directory suffix="Test.php">./src/Tests/Unit/Modules/Promocodes</directory>
+        </testsuite>
 
         <!--END-SECTION-->
         <!--SECTION LARAVEL-->

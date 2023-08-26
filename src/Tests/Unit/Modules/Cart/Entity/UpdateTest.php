@@ -6,12 +6,15 @@ use DomainException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
+use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
+use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
+use Project\Modules\Shopping\Api\Events\Cart\PromocodeRemovedFromCart;
 
 class UpdateTest extends \PHPUnit\Framework\TestCase
 {
-    use CartFactory, AssertEvents;
+    use CartFactory, PromocodeFactory, AssertEvents;
 
     // Cant mock Currency enum for test
     //public function testChangeCurrency()
@@ -96,5 +99,69 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
         ));
         $this->expectException(\DomainException::class);
         $cart->removeItemsByProduct($product);
+    }
+
+    public function testUsePromocode()
+    {
+        $cart = $this->generateCart();
+        $promocode = $this->generatePromocode();
+        $cart->usePromocode($promocode);
+
+        $this->assertSame($promocode, $cart->getPromocode());
+        $this->assertEvents($cart, [new PromocodeAddedToCart($cart), new CartUpdated($cart)]);
+    }
+
+    public function testUsePromocodeIfCartHasPromo()
+    {
+        $cart = $this->generateCart();
+        $promocode = $this->generatePromocode();
+        $cart->usePromocode($promocode);
+        $this->expectException(\DomainException::class);
+        $cart->usePromocode($promocode);
+    }
+
+    public function testUseInactivePromocode()
+    {
+        $cart = $this->generateCart();
+        $promocode = $this->generatePromocode();
+        $promocode->deactivate();
+
+        $this->expectException(\DomainException::class);
+        $cart->usePromocode($promocode);
+    }
+
+    public function testRemovePromocode()
+    {
+        $cart = $this->generateCart();
+        $promocode = $this->generatePromocode();
+        $cart->usePromocode($promocode);
+        $cart->flushEvents();
+        $cart->removePromocode();
+
+        $this->assertNull($cart->getPromocode());
+        $this->assertEvents($cart, [new PromocodeRemovedFromCart($cart), new CartUpdated($cart)]);
+    }
+
+    public function testRemovePromocodeIfCartDoesNotHavePromocode()
+    {
+        $this->expectException(\DomainException::class);
+        $cart = $this->generateCart();
+        $cart->removePromocode();
+    }
+
+    public function testCalculateTotalPriceWithPromocode()
+    {
+        $cart = $this->generateCart();
+        $cart->addItem($this->generateCartItem());
+        $cart->addItem($this->generateCartItem());
+        $cart->addItem($this->generateCartItem());
+        $cart->usePromocode($this->generatePromocode());
+
+        $totalPrice = array_reduce($cart->getItems(), function ($totalPrice, $item) {
+            return $totalPrice + ($item->getPrice() * $item->getQuantity());
+        }, 0);
+        $totalPrice -= ($totalPrice / 100) * $cart->getPromocode()->getDiscountPercent();
+
+        $this->assertSame($totalPrice, $cart->getTotalPrice());
     }
 }

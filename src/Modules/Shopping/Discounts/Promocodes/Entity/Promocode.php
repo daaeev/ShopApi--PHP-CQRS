@@ -22,15 +22,22 @@ class Promocode implements Events\EventRoot
         private string $code,
         private int $discountPercent,
         private \DateTimeImmutable $startDate,
-        private ?\DateTimeImmutable $endDate,
+        private ?\DateTimeImmutable $endDate = null,
     ) {
         $this->active = true;
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = null;
+        $this->guardNameDoesNotEmpty();
         $this->guardCodeDoesNotEmpty();
         $this->guardDiscountLessThanOneHundred();
+        $this->guardDiscountGreaterThanZero();
         $this->guardValidActiveDates();
         $this->addEvent(new PromocodeCreated($this));
+    }
+
+    private function guardNameDoesNotEmpty(): void
+    {
+        Assert::notEmpty($this->name, 'Promo-code name cant be an empty string');
     }
 
     private function guardCodeDoesNotEmpty(): void
@@ -44,6 +51,15 @@ class Promocode implements Events\EventRoot
             $this->discountPercent,
             100,
             'Promo-code discount percent must be less or equal than 100'
+        );
+    }
+
+    private function guardDiscountGreaterThanZero(): void
+    {
+        Assert::greaterThan(
+            $this->discountPercent,
+            0,
+            'Promo-code discount percent must be greater than 0'
         );
     }
 
@@ -80,6 +96,7 @@ class Promocode implements Events\EventRoot
         }
 
         $this->name = $name;
+        $this->guardNameDoesNotEmpty();
         $this->updated();
     }
 

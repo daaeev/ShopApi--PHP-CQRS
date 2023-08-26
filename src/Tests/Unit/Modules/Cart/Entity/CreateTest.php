@@ -32,6 +32,7 @@ class CreateTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($cart->getCreatedAt());
         $this->assertEmpty($cart->getUpdatedAt());
         $this->assertTrue($cart->active());
+        $this->assertNull($cart->getPromocode());
         $this->assertEvents($cart, [new CartInstantiated($cart)]);
 
         foreach ($cart->getItems() as $index => $cartItem) {
@@ -53,6 +54,7 @@ class CreateTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($cart->getId()->getId());
         $this->assertEmpty($cart->getItems());
         $this->assertTrue($cart->active());
+        $this->assertNull($cart->getPromocode());
         $this->assertSame($client->getHash(), $cart->getClient()->getHash());
         $this->assertSame(Currency::default(), $cart->getCurrency());
         $this->assertNotEmpty($cart->getCreatedAt());
