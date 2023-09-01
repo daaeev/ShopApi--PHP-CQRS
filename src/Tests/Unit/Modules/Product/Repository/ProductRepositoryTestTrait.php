@@ -60,7 +60,7 @@ trait ProductRepositoryTestTrait
         $this->assertNotNull($product->getId()->getId());
     }
 
-    public function testAddIfAlreadyExists()
+    public function testAddWithDuplicatedId()
     {
         $product = $this->generateProduct();
         $secondProduct = $this->makeProduct(

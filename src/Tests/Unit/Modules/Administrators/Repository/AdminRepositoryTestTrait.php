@@ -46,7 +46,7 @@ trait AdminRepositoryTestTrait
         $this->assertNotNull($admin->getId()->getId());
     }
 
-    public function testAddIfAlreadyExists()
+    public function testAddWithDuplicatedId()
     {
         $admin = $this->generateAdmin();
         $secondAdmin = $this->makeAdmin(

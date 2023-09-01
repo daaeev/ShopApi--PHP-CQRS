@@ -65,7 +65,7 @@ trait CategoryRepositoryTestTrait
         $this->assertNotNull($category->getId()->getId());
     }
 
-    public function testAddIfAlreadyExists()
+    public function testAddWithDuplicatedId()
     {
         $category = $this->generateCategory();
         $secondProduct = $this->makeCategory(
