@@ -7,9 +7,15 @@ use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Repository\QueryCartRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
+use Project\Modules\Shopping\Discounts\Promocodes\Utils\Entity2DTOConverter as PromocodeEntityConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\Eloquent2EntityConverter as PromocodeEloquentConverter;
 
 class QueryCartRepository implements QueryCartRepositoryInterface
 {
+    public function __construct(
+        private PromocodeEloquentConverter $promocodeEloquentConverter,
+    ) {}
+
     public function getActiveCart(Client $client): DTO\Cart
     {
         $record = Eloquent\Cart::query()
@@ -25,6 +31,8 @@ class QueryCartRepository implements QueryCartRepositoryInterface
                 Currency::default()->value,
                 true,
                 [],
+                0,
+                null,
                 new \DateTimeImmutable,
             );
         }
@@ -50,6 +58,12 @@ class QueryCartRepository implements QueryCartRepositoryInterface
                     $item->color,
                 );
             }, $record->items->all()),
+            0,
+            !empty($record->promocode_id)
+                ? PromocodeEntityConverter::convert(
+                    $this->promocodeEloquentConverter->convert($record->promocode)
+                 )
+                : null,
             new \DateTimeImmutable($record->created_at),
             $record->updated_at
                 ? new \DateTimeImmutable($record->updated_at)

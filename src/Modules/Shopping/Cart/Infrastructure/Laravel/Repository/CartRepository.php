@@ -10,11 +10,13 @@ use Project\Common\Environment\Client\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\Eloquent2EntityConverter as PromocodeEloquentConverter;
 
 class CartRepository implements CartRepositoryInterface
 {
     public function __construct(
-        private Hydrator $hydrator
+        private Hydrator $hydrator,
+        private PromocodeEloquentConverter $promocodeConverter
     ) {}
 
     public function get(Entity\CartId $id): Entity\Cart
@@ -32,6 +34,9 @@ class CartRepository implements CartRepositoryInterface
             'id' => new Entity\CartId($record->id),
             'client' => new Client($record->client_hash),
             'currentCurrency' => Currency::from($record->currency),
+            'promocode' => !empty($record->promocode_id)
+                ? $this->promocodeConverter->convert($record->promocode)
+                : null,
             'active' => $record->active,
             'items' => array_map([$this, 'hydrateCartItem'], $record->items->all()),
             'createdAt' => new \DateTimeImmutable($record->created_at),
@@ -99,6 +104,7 @@ class CartRepository implements CartRepositoryInterface
         $record->client_hash = $cart->getClient()->getHash();
         $record->active = $cart->active();
         $record->currency = $cart->getCurrency()->value;
+        $record->promocode_id = $cart->getPromocode()?->getId()->getId();
         $record->created_at = $cart->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value);
         $record->updated_at = $cart->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value);
         $record->save();

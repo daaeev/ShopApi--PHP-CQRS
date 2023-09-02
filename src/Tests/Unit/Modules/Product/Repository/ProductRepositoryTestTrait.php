@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Product\Repository;
 
+use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Modules\Catalogue\Product\Entity\Product;
@@ -30,20 +31,26 @@ trait ProductRepositoryTestTrait
         $this->assertSameProducts($initial, $found);
     }
 
-    private function assertSameProducts(Product $initial, Product $found): void
+    private function assertSameProducts(Product $initial, Product $other): void
     {
-        $this->assertTrue($initial->getId()->equalsTo($found->getId()));
-        $this->assertEquals($initial->getName(), $found->getName());
-        $this->assertEquals($initial->getCode(), $found->getCode());
-        $this->assertEquals($initial->isActive(), $found->isActive());
-        $this->assertEquals($initial->getAvailability(), $found->getAvailability());
-        $this->assertTrue($initial->samePrices($found->getPrices()));
-        $this->assertTrue($initial->sameColors($found->getColors()));
-        $this->assertSame($initial->getColors(), $found->getColors());
-        $this->assertTrue($initial->sameSizes($found->getSizes()));
-        $this->assertSame($initial->getSizes(), $found->getSizes());
-        $this->assertSame($initial->getCreatedAt()->format('U'), $found->getCreatedAt()->format('U'));
-        $this->assertSame($initial->getUpdatedAt()?->format('U'), $found->getUpdatedAt()?->format('U'));
+        $this->assertTrue($initial->getId()->equalsTo($other->getId()));
+        $this->assertEquals($initial->getName(), $other->getName());
+        $this->assertEquals($initial->getCode(), $other->getCode());
+        $this->assertEquals($initial->isActive(), $other->isActive());
+        $this->assertEquals($initial->getAvailability(), $other->getAvailability());
+        $this->assertTrue($initial->samePrices($other->getPrices()));
+        $this->assertTrue($initial->sameColors($other->getColors()));
+        $this->assertSame($initial->getColors(), $other->getColors());
+        $this->assertTrue($initial->sameSizes($other->getSizes()));
+        $this->assertSame($initial->getSizes(), $other->getSizes());
+        $this->assertSame(
+            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
+            $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value)
+        );
+        $this->assertSame(
+            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value),
+            $other->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value)
+        );
     }
 
     public function testAddIncrementIds()

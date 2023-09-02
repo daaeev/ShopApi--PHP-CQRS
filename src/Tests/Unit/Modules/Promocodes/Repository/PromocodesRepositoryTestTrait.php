@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Promocodes\Repository;
 
+use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
@@ -23,17 +24,29 @@ trait PromocodesRepositoryTestTrait
         $this->assertSamePromocodes($initial, $found);
     }
 
-    private function assertSamePromocodes(Promocode $initial, Promocode $found): void
+    private function assertSamePromocodes(Promocode $initial, Promocode $other): void
     {
-        $this->assertTrue($initial->getId()->equalsTo($found->getId()));
-        $this->assertSame($initial->getName(), $found->getName());
-        $this->assertSame($initial->getCode(), $found->getCode());
-        $this->assertSame($initial->getDiscountPercent(), $found->getDiscountPercent());
-        $this->assertSame($initial->isActive(), $found->isActive());
-        $this->assertEquals($initial->getStartDate(), $found->getStartDate());
-        $this->assertEquals($initial->getEndDate(), $found->getEndDate());
-        $this->assertEquals($initial->getCreatedAt(), $found->getCreatedAt());
-        $this->assertEquals($initial->getUpdatedAt(), $found->getUpdatedAt());
+        $this->assertTrue($initial->getId()->equalsTo($other->getId()));
+        $this->assertSame($initial->getName(), $other->getName());
+        $this->assertSame($initial->getCode(), $other->getCode());
+        $this->assertSame($initial->getDiscountPercent(), $other->getDiscountPercent());
+        $this->assertSame($initial->isActive(), $other->isActive());
+        $this->assertSame(
+            $initial->getStartDate()->format(DateTimeFormat::FULL_DATE->value),
+            $other->getStartDate()->format(DateTimeFormat::FULL_DATE->value)
+        );
+        $this->assertSame(
+            $initial->getEndDate()?->format(DateTimeFormat::FULL_DATE->value),
+            $other->getEndDate()?->format(DateTimeFormat::FULL_DATE->value)
+        );
+        $this->assertSame(
+            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
+            $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value)
+        );
+        $this->assertSame(
+            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value),
+            $other->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value)
+        );
     }
 
     public function testAddIncrementIds()

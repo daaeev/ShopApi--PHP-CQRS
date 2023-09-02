@@ -177,6 +177,11 @@ class Promocode implements Events\EventRoot
         return $this->discountPercent;
     }
 
+    public function getActive(): bool
+    {
+        return $this->active;
+    }
+
     public function getStartDate(): \DateTimeImmutable
     {
         return $this->startDate;

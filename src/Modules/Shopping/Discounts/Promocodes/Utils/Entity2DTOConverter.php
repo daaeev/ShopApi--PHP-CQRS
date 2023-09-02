@@ -14,7 +14,7 @@ class Entity2DTOConverter
             $entity->getName(),
             $entity->getCode(),
             $entity->getDiscountPercent(),
-            $entity->isActive(),
+            $entity->getActive(),
             $entity->getStartDate(),
             $entity->getEndDate(),
             $entity->getCreatedAt(),

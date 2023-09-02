@@ -38,11 +38,11 @@
         <testsuite name="ProjectUnitEvents">
             <directory suffix="Test.php">./src/Tests/Unit/Events</directory>
         </testsuite>
-        <!--Modules/Product-->
+        <!--Modules/Catalogue/Product-->
         <testsuite name="ProjectUnitProduct">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>
         </testsuite>
-        <!--Modules/Categories-->
+        <!--Modules/Catalogue/Categories-->
         <testsuite name="ProjectUnitCategories">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Categories</directory>
         </testsuite>
@@ -50,11 +50,11 @@
         <testsuite name="ProjectUnitAdmins">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Administrators</directory>
         </testsuite>
-        <!--Modules/Cart-->
+        <!--Modules/Shopping/Cart-->
         <testsuite name="ProjectUnitCart">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Cart</directory>
         </testsuite>
-        <!--Modules/Promocodes-->
+        <!--Modules/Shopping/Discounts/Promocodes-->
         <testsuite name="ProjectUnitPromocodes">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Promocodes</directory>
         </testsuite>
@@ -66,11 +66,11 @@
         <testsuite name="ProjectLaravelCQRS">
             <directory suffix="Test.php">./src/Tests/Laravel/CQRS</directory>
         </testsuite>
-        <!--Modules/Product-->
+        <!--Modules/Catalogue/Product-->
         <testsuite name="ProjectLaravelProduct">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Product</directory>
         </testsuite>
-        <!--Modules/Category-->
+        <!--Modules/Catalogue/Categories-->
         <testsuite name="ProjectLaravelCategory">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Category</directory>
         </testsuite>
@@ -78,9 +78,13 @@
         <testsuite name="ProjectLaravelAdmins">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Administrator</directory>
         </testsuite>
-        <!--Modules/Cart-->
+        <!--Modules/Shopping/Cart-->
         <testsuite name="ProjectLaravelCart">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Cart</directory>
+        </testsuite>
+        <!--Modules/Shopping/Discounts/Promocodes-->
+        <testsuite name="ProjectLaravelPromocodes">
+            <directory suffix="Test.php">./src/Tests/Laravel/Modules/Promocodes</directory>
         </testsuite>
 
         <!--END-SECTION-->

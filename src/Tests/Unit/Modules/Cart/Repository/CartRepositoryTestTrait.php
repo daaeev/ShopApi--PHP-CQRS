@@ -9,19 +9,24 @@ use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Common\Repository\NotFoundException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Modules\Shopping\Cart\Entity\CartItemId;
+use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodeRepositoryInterface;
 
 trait CartRepositoryTestTrait
 {
-    use CartFactory;
+    use CartFactory, PromocodeFactory;
 
     protected CartRepositoryInterface $carts;
+    protected PromocodeRepositoryInterface $promocodes;
 
     public function testGet()
     {
         $initial = $this->generateCart();
         $initial->addItem($this->generateCartItem());
         $initial->addItem($this->generateCartItem());
+        $initial->usePromocode($this->generatePromocode());
+        $this->promocodes->add($initial->getPromocode());
         $this->carts->save($initial);
         $found = $this->carts->get($initial->getId());
         $this->assertSameCarts($initial, $found);
@@ -33,6 +38,13 @@ trait CartRepositoryTestTrait
         $this->assertSame($initial->getClient()->getHash(), $other->getClient()->getHash());
         $this->assertSame($initial->getClient()->getHash(), $other->getClient()->getHash());
         $this->assertSame($initial->active(), $other->active());
+        if ($initial->getPromocode()) {
+            $this->assertTrue(
+                $initial->getPromocode()
+                    ->getId()
+                    ->equalsTo($other->getPromocode()->getId())
+            );
+        }
         $this->assertSame(
             $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
             $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value)
@@ -152,7 +164,7 @@ trait CartRepositoryTestTrait
         $this->assertSameCarts($initial, $found);
     }
 
-    public function testSaveAnotherActiveCart()
+    public function testSaveAnotherActiveCartWithSameClient()
     {
         $activeCart = $this->generateCart();
         $anotherActiveCart = $this->makeCart(
@@ -164,7 +176,7 @@ trait CartRepositoryTestTrait
         $this->carts->save($anotherActiveCart);
     }
 
-    public function testSaveAnotherDeactivatedCart()
+    public function testSaveAnotherDeactivatedCartWithSameClient()
     {
         $this->expectNotToPerformAssertions();
         $activeCart = $this->generateCart();
