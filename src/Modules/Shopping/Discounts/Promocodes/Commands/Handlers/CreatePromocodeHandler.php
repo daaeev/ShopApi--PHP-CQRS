@@ -29,5 +29,6 @@ class CreatePromocodeHandler implements DispatchEventsInterface
         );
         $this->promocodes->add($promocode);
         $this->dispatchEvents($promocode->flushEvents());
+        return $promocode->getId()->getId();
     }
 }

@@ -16,7 +16,7 @@ class ActivatePromocodeHandler implements DispatchEventsInterface
         private PromocodeRepositoryInterface $promocodes
     ) {}
 
-    public function __invoke(ActivatePromocodeCommand $command): int
+    public function __invoke(ActivatePromocodeCommand $command): void
     {
         $promocode = $this->promocodes->get(new PromocodeId($command->id));
         $promocode->activate();

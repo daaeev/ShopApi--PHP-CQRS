@@ -23,13 +23,14 @@ class DeleteProductTest extends \PHPUnit\Framework\TestCase
         $this->products = new MemoryProductRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
-        $this->dispatcher->expects($this->exactly(1)) // product deleted
-        ->method('dispatch');
         parent::setUp();
     }
 
     public function testDelete()
     {
+        $this->dispatcher->expects($this->exactly(1)) // product deleted
+            ->method('dispatch');
+
         $product = $this->generateProduct();
         $product->deactivate();
         $product->flushEvents();
@@ -43,5 +44,20 @@ class DeleteProductTest extends \PHPUnit\Framework\TestCase
         call_user_func($handler, $command);
         $this->expectException(NotFoundException::class);
         $this->products->get($product->getId());
+    }
+
+    public function testDeleteActiveProduct()
+    {
+        $product = $this->generateProduct();
+        $product->deactivate();
+        $product->flushEvents();
+        $this->products->add($product);
+
+        $command = new DeleteProductCommand(
+            id: $product->getId()->getId(),
+        );
+        $handler = new DeleteProductHandler($this->products);
+        $this->expectException(\DomainException::class);
+        call_user_func($handler, $command);
     }
 }

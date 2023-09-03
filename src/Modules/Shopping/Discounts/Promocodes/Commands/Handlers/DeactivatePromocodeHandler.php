@@ -16,7 +16,7 @@ class DeactivatePromocodeHandler implements DispatchEventsInterface
         private PromocodeRepositoryInterface $promocodes
     ) {}
 
-    public function __invoke(DeactivatePromocodeCommand $command): int
+    public function __invoke(DeactivatePromocodeCommand $command): void
     {
         $promocode = $this->promocodes->get(new PromocodeId($command->id));
         $promocode->deactivate();

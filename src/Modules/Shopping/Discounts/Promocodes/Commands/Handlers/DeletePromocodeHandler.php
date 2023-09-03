@@ -16,7 +16,7 @@ class DeletePromocodeHandler implements DispatchEventsInterface
         private PromocodeRepositoryInterface $promocodes
     ) {}
 
-    public function __invoke(DeletePromocodeCommand $command): int
+    public function __invoke(DeletePromocodeCommand $command): void
     {
         $promocode = $this->promocodes->get(new PromocodeId($command->id));
         $promocode->delete();

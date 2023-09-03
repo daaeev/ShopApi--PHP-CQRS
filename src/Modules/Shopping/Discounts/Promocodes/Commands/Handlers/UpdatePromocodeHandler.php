@@ -16,7 +16,7 @@ class UpdatePromocodeHandler implements DispatchEventsInterface
         private PromocodeRepositoryInterface $promocodes
     ) {}
 
-    public function __invoke(UpdatePromocodeCommand $command): int
+    public function __invoke(UpdatePromocodeCommand $command): void
     {
         $promocode = $this->promocodes->get(new PromocodeId($command->id));
         $promocode->setName($command->name);
