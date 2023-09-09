@@ -22,7 +22,6 @@ class UpdateContent extends ApiRequest
     public function getCommand(): UpdateCategoryContentCommand
     {
         $validated = $this->validated();
-
         return new UpdateCategoryContentCommand(
             $validated['id'],
             $validated['language'],

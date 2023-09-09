@@ -18,7 +18,6 @@ class UpdateSettings extends ApiRequest
     public function getCommand(): UpdateProductSettingsCommand
     {
         $validated = $this->validated();
-
         return new UpdateProductSettingsCommand(
             $validated['id'],
             $validated['displayed'],

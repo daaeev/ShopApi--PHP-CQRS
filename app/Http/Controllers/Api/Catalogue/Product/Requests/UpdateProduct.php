@@ -36,7 +36,6 @@ class UpdateProduct extends ApiRequest
     public function getCommand(): UpdateProductCommand
     {
         $validated = $this->validated();
-
         return new UpdateProductCommand(
             $validated['id'],
             $validated['name'],

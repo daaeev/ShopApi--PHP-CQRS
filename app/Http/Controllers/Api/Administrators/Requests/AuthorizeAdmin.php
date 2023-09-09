@@ -18,7 +18,6 @@ class AuthorizeAdmin extends ApiRequest
     public function getCommand(): AuthorizeCommand
     {
         $validated = $this->validated();
-
         return new AuthorizeCommand(
             $validated['login'],
             $validated['password'],

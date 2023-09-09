@@ -18,7 +18,6 @@ class CategoriesList extends ApiRequest
     public function getQuery(): CategoriesListQuery
     {
         $validated = $this->validated();
-
         return new CategoriesListQuery(
             $validated['page'] ?? 1,
             $validated['limit'] ?? 15,

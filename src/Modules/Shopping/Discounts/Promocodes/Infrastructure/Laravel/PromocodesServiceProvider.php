@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Shopping\Discounts\Promocodes\Commands;
 use Project\Modules\Shopping\Discounts\Promocodes\Queries;
+use Project\Modules\Shopping\Discounts\Promocodes\Repository;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodeRepository;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\QueryPromocodesRepository;
 
 class PromocodesServiceProvider extends ServiceProvider
 {
@@ -20,6 +23,11 @@ class PromocodesServiceProvider extends ServiceProvider
     private array $queriesMapping = [
         Queries\GetPromocodeQuery::class => Queries\Handlers\GetPromocodeHandler::class,
         Queries\GetPromocodesListQuery::class => Queries\Handlers\GetPromocodeListHandler::class,
+    ];
+
+    public array $singletons = [
+        Repository\PromocodeRepositoryInterface::class => PromocodeRepository::class,
+        Repository\QueryPromocodeRepositoryInterface::class => QueryPromocodesRepository::class,
     ];
 
     public function boot()

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Administrators\Requests;
+namespace App\Http\Controllers\Api\Promocodes\Requests;
 
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Administrators\Queries\AdminsListQuery;
+use Project\Modules\Shopping\Discounts\Promocodes\Queries\GetPromocodesListQuery;
 
-class AdminsList extends ApiRequest
+class GetPromocodesList extends ApiRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'page' => 'nullable|numeric|integer|min:0',
@@ -15,10 +15,10 @@ class AdminsList extends ApiRequest
         ];
     }
 
-    public function getQuery(): AdminsListQuery
+    public function getQuery(): GetPromocodesListQuery
     {
         $validated = $this->validated();
-        return new AdminsListQuery(
+        return new GetPromocodesListQuery(
             $validated['page'] ?? 1,
             $validated['limit'] ?? 15,
         );

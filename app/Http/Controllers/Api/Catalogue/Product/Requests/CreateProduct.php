@@ -35,7 +35,6 @@ class CreateProduct extends ApiRequest
     public function getCommand(): CreateProductCommand
     {
         $validated = $this->validated();
-
         return new CreateProductCommand(
             $validated['name'],
             $validated['code'],

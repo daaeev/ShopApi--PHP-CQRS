@@ -20,7 +20,6 @@ class CatalogueList extends ApiRequest
     public function getQuery(): ProductsListQuery
     {
         $validated = $this->validated();
-
         return new ProductsListQuery(
             $validated['page'] ?? 1,
             $validated['limit'] ?? 15,

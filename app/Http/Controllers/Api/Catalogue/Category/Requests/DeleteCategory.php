@@ -17,7 +17,6 @@ class DeleteCategory extends ApiRequest
     public function getCommand(): DeleteCategoryCommand
     {
         $validated = $this->validated();
-
         return new DeleteCategoryCommand(
             $validated['id'],
         );

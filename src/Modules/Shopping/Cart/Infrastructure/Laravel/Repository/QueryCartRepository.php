@@ -7,13 +7,13 @@ use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Repository\QueryCartRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Discounts\Promocodes\Utils\Entity2DTOConverter as PromocodeEntityConverter;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\Eloquent2EntityConverter as PromocodeEloquentConverter;
+use Project\Modules\Shopping\Cart\Utils\Entity2DTOConverter;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\Eloquent2EntityConverter;
 
 class QueryCartRepository implements QueryCartRepositoryInterface
 {
     public function __construct(
-        private PromocodeEloquentConverter $promocodeEloquentConverter,
+        private Eloquent2EntityConverter $eloquentConverter,
     ) {}
 
     public function getActiveCart(Client $client): DTO\Cart
@@ -42,32 +42,8 @@ class QueryCartRepository implements QueryCartRepositoryInterface
 
     private function hydrate(Eloquent\Cart $record): DTO\Cart
     {
-        return new DTO\Cart(
-            $record->id,
-            $record->client_hash,
-            $record->currency,
-            $record->active,
-            array_map(function (Eloquent\CartItem $item) {
-                return new DTO\CartItem(
-                    $item->id,
-                    $item->product,
-                    $item->name,
-                    $item->price,
-                    $item->quantity,
-                    $item->size,
-                    $item->color,
-                );
-            }, $record->items->all()),
-            0,
-            !empty($record->promocode_id)
-                ? PromocodeEntityConverter::convert(
-                    $this->promocodeEloquentConverter->convert($record->promocode)
-                 )
-                : null,
-            new \DateTimeImmutable($record->created_at),
-            $record->updated_at
-                ? new \DateTimeImmutable($record->updated_at)
-                : null
+        return Entity2DTOConverter::convert(
+            $this->eloquentConverter->convert($record)
         );
     }
 }

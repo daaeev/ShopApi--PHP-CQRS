@@ -18,7 +18,6 @@ class AddImage extends ApiRequest
     public function getCommand(): AddProductImageCommand
     {
         $validated = $this->validated();
-
         return new AddProductImageCommand(
             $validated['id'],
             $validated['image'],

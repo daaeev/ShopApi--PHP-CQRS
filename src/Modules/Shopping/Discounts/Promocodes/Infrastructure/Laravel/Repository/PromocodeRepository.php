@@ -89,11 +89,6 @@ class PromocodeRepository implements PromocodeRepositoryInterface
             throw new NotFoundException('Promocode does not exists');
         }
 
-        return $this->hydrate($record);
-    }
-
-    private function hydrate(Eloquent\Promocode $record): Entity\Promocode
-    {
         return $this->converter->convert($record);
     }
 
@@ -107,6 +102,6 @@ class PromocodeRepository implements PromocodeRepositoryInterface
             throw new NotFoundException('Promocode does not exists');
         }
 
-        return $this->hydrate($record);
+        return $this->converter->convert($record);
     }
 }

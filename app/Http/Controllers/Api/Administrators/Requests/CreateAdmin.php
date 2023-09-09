@@ -23,7 +23,6 @@ class CreateAdmin extends ApiRequest
     public function getCommand(): CreateAdminCommand
     {
         $validated = $this->validated();
-
         return new CreateAdminCommand(
             $validated['name'],
             $validated['login'],

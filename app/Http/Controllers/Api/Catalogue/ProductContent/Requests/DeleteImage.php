@@ -17,7 +17,6 @@ class DeleteImage extends ApiRequest
     public function getCommand(): DeleteProductImageCommand
     {
         $validated = $this->validated();
-
         return new DeleteProductImageCommand(
             $validated['id'],
         );

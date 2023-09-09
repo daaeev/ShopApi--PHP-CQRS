@@ -3,20 +3,19 @@
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository;
 
 use Project\Modules\Shopping\Cart\Entity;
-use Project\Common\Product\Currency;
 use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\Eloquent2EntityConverter as PromocodeEloquentConverter;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\Eloquent2EntityConverter;
 
 class CartRepository implements CartRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
-        private PromocodeEloquentConverter $promocodeConverter
+        private Eloquent2EntityConverter $cartEloquentConverter
     ) {}
 
     public function get(Entity\CartId $id): Entity\Cart
@@ -25,38 +24,7 @@ class CartRepository implements CartRepositoryInterface
             throw new NotFoundException('Cart does not exists');
         }
 
-        return $this->hydrate($record);
-    }
-
-    private function hydrate(Eloquent\Cart $record): Entity\Cart
-    {
-        return $this->hydrator->hydrate(Entity\Cart::class, [
-            'id' => new Entity\CartId($record->id),
-            'client' => new Client($record->client_hash),
-            'currentCurrency' => Currency::from($record->currency),
-            'promocode' => !empty($record->promocode_id)
-                ? $this->promocodeConverter->convert($record->promocode)
-                : null,
-            'active' => $record->active,
-            'items' => array_map([$this, 'hydrateCartItem'], $record->items->all()),
-            'createdAt' => new \DateTimeImmutable($record->created_at),
-            'updatedAt' => $record->updated_at
-                ? new \DateTimeImmutable($record->updated_at)
-                : null,
-        ]);
-    }
-
-    private function hydrateCartItem(Eloquent\CartItem $record): Entity\CartItem
-    {
-        return $this->hydrator->hydrate(Entity\CartItem::class, [
-            'id' => new Entity\CartItemId($record->id),
-            'product' => $record->product,
-            'name' => $record->name,
-            'price' => $record->price,
-            'quantity' => $record->quantity,
-            'size' => $record->size,
-            'color' => $record->color,
-        ]);
+        return $this->cartEloquentConverter->convert($record);
     }
 
     public function getActiveCart(Client $client): Entity\Cart
@@ -74,7 +42,7 @@ class CartRepository implements CartRepositoryInterface
             return $cart;
         }
 
-        return $this->hydrate($record);
+        return $this->cartEloquentConverter->convert($record);
     }
 
     public function getActiveCartsWithProduct(int $product): array
@@ -86,7 +54,7 @@ class CartRepository implements CartRepositoryInterface
             ])
             ->get();
 
-        return array_map([$this, 'hydrate'], $record->all());
+        return array_map([$this->cartEloquentConverter, 'convert'], $record->all());
     }
 
     public function save(Entity\Cart $cart): void

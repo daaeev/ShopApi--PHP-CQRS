@@ -17,7 +17,6 @@ class RemoveItem extends ApiRequest
     public function getCommand(): RemoveItemCommand
     {
         $validated = $this->validated();
-
         return new RemoveItemCommand(
             $validated['id']
         );

@@ -24,7 +24,6 @@ class UpdateAdmin extends ApiRequest
     public function getCommand(): UpdateAdminCommand
     {
         $validated = $this->validated();
-
         return new UpdateAdminCommand(
             $validated['id'],
             $validated['name'],

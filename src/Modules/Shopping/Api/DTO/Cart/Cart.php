@@ -30,11 +30,11 @@ class Cart implements DTO
             'clientHash' => $this->clientHash,
             'currency' => $this->currency,
             'active' => $this->active,
+            'totalPrice' => $this->totalPrice,
+            'promocode' => $this->promocode?->toArray(),
             'items' => array_map(function (CartItem $item) {
                 return $item->toArray();
             }, $this->items),
-            'totalPrice' => $this->totalPrice,
-            'promocode' => $this->promocode?->toArray(),
             'createdAt' => $this->createdAt->format(DateTimeFormat::FULL_DATE->value),
             'updatedAt' => $this->updatedAt?->format(DateTimeFormat::FULL_DATE->value),
         ];

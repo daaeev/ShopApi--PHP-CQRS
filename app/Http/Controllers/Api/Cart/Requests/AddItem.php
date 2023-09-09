@@ -20,7 +20,6 @@ class AddItem extends ApiRequest
     public function getCommand(): AddItemCommand
     {
         $validated = $this->validated();
-
         return new AddItemCommand(
             $validated['product'],
             $validated['quantity'],

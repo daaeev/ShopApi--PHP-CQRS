@@ -18,7 +18,6 @@ class UpdateItem extends ApiRequest
     public function getCommand(): UpdateItemCommand
     {
         $validated = $this->validated();
-
         return new UpdateItemCommand(
             $validated['id'],
             $validated['quantity'],

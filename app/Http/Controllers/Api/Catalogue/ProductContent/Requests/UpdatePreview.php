@@ -18,7 +18,6 @@ class UpdatePreview extends ApiRequest
     public function getCommand(): UpdateProductPreviewCommand
     {
         $validated = $this->validated();
-
         return new UpdateProductPreviewCommand(
             $validated['id'],
             $validated['preview'],

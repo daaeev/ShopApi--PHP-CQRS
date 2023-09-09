@@ -30,6 +30,18 @@ class CartController extends BaseApiController
         return $this->success([], 'Currency changed');
     }
 
+    public function usePromocode(Requests\UsePromocode $request)
+    {
+        $this->dispatchCommand($request->getCommand());
+        return $this->success([], 'Promocode added');
+    }
+
+    public function removePromocode(Requests\RemovePromocode $request)
+    {
+        $this->dispatchCommand($request->getCommand());
+        return $this->success([], 'Promocode removed');
+    }
+
     public function getActiveCart(Requests\GetActiveCart $request)
     {
         return $this->success($this->dispatchQuery($request->getQuery()));

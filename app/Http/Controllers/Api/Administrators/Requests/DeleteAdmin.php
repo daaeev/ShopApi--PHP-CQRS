@@ -17,7 +17,6 @@ class DeleteAdmin extends ApiRequest
     public function getCommand(): DeleteAdminCommand
     {
         $validated = $this->validated();
-
         return new DeleteAdminCommand(
             $validated['id'],
         );

@@ -21,7 +21,6 @@ class CreateCategory extends ApiRequest
     public function getCommand(): CreateCategoryCommand
     {
         $validated = $this->validated();
-
         return new CreateCategoryCommand(
             $validated['name'],
             $validated['slug'],

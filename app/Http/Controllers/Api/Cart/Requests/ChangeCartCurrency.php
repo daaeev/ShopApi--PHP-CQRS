@@ -19,7 +19,6 @@ class ChangeCartCurrency extends ApiRequest
     public function getCommand(): ChangeCurrencyCommand
     {
         $validated = $this->validated();
-
         return new ChangeCurrencyCommand($validated['currency']);
     }
 }
