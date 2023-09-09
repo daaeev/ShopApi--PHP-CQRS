@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Entity;
 
-class AdminId extends \Project\Common\Entity\Id\IntegerId
+use Project\Common\Entity\Id\AutoIncrementId;
+
+class AdminId extends AutoIncrementId
 {
 
 }

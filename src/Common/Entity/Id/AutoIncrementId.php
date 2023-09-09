@@ -2,19 +2,19 @@
 
 namespace Project\Common\Entity\Id;
 
-class IntegerId extends Id
+class AutoIncrementId extends Id
 {
     public function __construct(int $id = null)
     {
         parent::__construct($id);
     }
 
-    public static function random(): IntegerId
+    public static function random(): AutoIncrementId
     {
         return new static(random_int(1, 9999));
     }
 
-    public static function next(): IntegerId
+    public static function next(): AutoIncrementId
     {
         return new static(null);
     }

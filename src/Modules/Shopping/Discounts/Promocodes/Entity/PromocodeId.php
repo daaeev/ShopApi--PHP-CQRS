@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Shopping\Discounts\Promocodes\Entity;
 
-use Project\Common\Entity\Id\IntegerId;
+use Project\Common\Entity\Id\AutoIncrementId;
 
-class PromocodeId extends IntegerId
+class PromocodeId extends AutoIncrementId
 {
 
 }

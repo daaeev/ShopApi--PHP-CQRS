@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Catalogue\Categories\Entity;
 
-use Project\Common\Entity\Id\IntegerId;
+use Project\Common\Entity\Id\AutoIncrementId;
 
-class CategoryId extends IntegerId
+class CategoryId extends AutoIncrementId
 {
 
 }

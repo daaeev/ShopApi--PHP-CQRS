@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Catalogue\Product\Entity;
 
-use Project\Common\Entity\Id\IntegerId;
+use Project\Common\Entity\Id\AutoIncrementId;
 
-class ProductId extends IntegerId
+class ProductId extends AutoIncrementId
 {
 
 }

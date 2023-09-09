@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Shopping\Cart\Entity;
 
-use Project\Common\Entity\Id\IntegerId;
+use Project\Common\Entity\Id\AutoIncrementId;
 
-class CartItemId extends IntegerId
+class CartItemId extends AutoIncrementId
 {
 
 }

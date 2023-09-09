@@ -27,5 +27,4 @@ abstract class Id
     }
 
     abstract public static function random(): self;
-    abstract public static function next(): self;
 }
