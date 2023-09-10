@@ -1,0 +1,46 @@
+version: '3'
+services:
+  php:
+    build:
+      context: ./../
+      dockerfile: .docker/php/Dockerfile
+    working_dir: /var/www/html
+    volumes:
+      - ./../:/var/www/html:rw
+  composer:
+    image: composer:latest
+    working_dir: /var/www/html
+    volumes:
+      - ./../:/var/www/html:rw
+    command: tail -f /dev/null
+  nginx:
+    image: nginx:latest
+    working_dir: /var/www/html
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./../:/var/www/html:rw
+    ports:
+      - 80:80
+    depends_on:
+      - php
+      - mysql
+  mysql:
+    image: mysql:latest
+    working_dir: /var/www/html
+    volumes:
+      - ./mysql/tmp:/var/lib/mysql:rw
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    working_dir: /var/www/html
+    ports:
+      - 8081:80
+    environment:
+      - PMA_HOST=mysql
+    depends_on:
+      - mysql
