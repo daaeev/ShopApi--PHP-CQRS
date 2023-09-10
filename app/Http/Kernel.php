@@ -14,12 +14,9 @@ class Kernel extends HttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
-        // Middlewares to work firstly
-        // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\EncryptCookies::class,
         \Illuminate\Session\Middleware\StartSession::class,
-
         \App\Http\Middleware\AssignQueryLocale::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
@@ -27,10 +24,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\VerifyCsrfToken::class,
-        \App\Http\Middleware\AssignClientHashCookie::class,
-
-        // Middlewares to work last
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+
+        \App\Http\Middleware\AssignClientHashCookie::class,
     ];
 
     /**

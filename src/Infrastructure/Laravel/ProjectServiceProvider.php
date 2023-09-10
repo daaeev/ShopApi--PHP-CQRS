@@ -46,7 +46,8 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->app->singleton(EnvironmentInterface::class, function ($app) {
             return new EnvironmentService(
-                config('project.application.client-hash-cookie-name')
+                config('project.application.client-hash-cookie-name'),
+                config('project.application.client-hash-cookie-length'),
             );
         });
     }
@@ -57,6 +58,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
             return new AssignClientHashCookie(
                 config('project.application.client-hash-cookie-name'),
                 config('project.application.client-hash-cookie-lifetime-in-minutes'),
+                config('project.application.client-hash-cookie-length'),
             );
         });
     }
