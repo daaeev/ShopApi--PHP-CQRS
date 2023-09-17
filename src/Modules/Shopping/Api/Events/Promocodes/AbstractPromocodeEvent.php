@@ -5,7 +5,7 @@ namespace Project\Modules\Shopping\Api\Events\Promocodes;
 use Project\Common\Events\Event;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity;
 use Project\Modules\Shopping\Api\DTO\Promocodes as DTO;
-use Project\Modules\Shopping\Discounts\Promocodes\Utils\Entity2DTOConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Utils\PromocodeEntity2DTOConverter;
 
 class AbstractPromocodeEvent extends Event
 {
@@ -15,6 +15,6 @@ class AbstractPromocodeEvent extends Event
 
     public function getDTO(): DTO\Promocode
     {
-        return Entity2DTOConverter::convert($this->promocode);
+        return PromocodeEntity2DTOConverter::convert($this->promocode);
     }
 }

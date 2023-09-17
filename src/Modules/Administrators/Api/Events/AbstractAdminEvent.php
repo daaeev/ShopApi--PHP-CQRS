@@ -5,7 +5,7 @@ namespace Project\Modules\Administrators\Api\Events;
 use Project\Common\Utils;
 use Project\Common\Events\Event;
 use Project\Modules\Administrators\Entity;
-use Project\Modules\Administrators\Utils\Entity2DTOConverter;
+use Project\Modules\Administrators\Utils\AdministratorEntity2DTOConverter;
 
 class AbstractAdminEvent extends Event
 {
@@ -15,6 +15,6 @@ class AbstractAdminEvent extends Event
 
     public function getDTO(): Utils\DTO
     {
-        return Entity2DTOConverter::convert($this->admin);
+        return AdministratorEntity2DTOConverter::convert($this->admin);
     }
 }

@@ -5,7 +5,7 @@ namespace Project\Modules\Catalogue\Product\Utils;
 use Project\Modules\Catalogue\Product\Entity;
 use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 
-class Entity2DTOConverter
+class ProductEntity2DTOConverter
 {
     public static function convert(Entity\Product $entity): DTO\Product
     {

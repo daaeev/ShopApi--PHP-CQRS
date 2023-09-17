@@ -5,7 +5,7 @@ namespace Project\Modules\Administrators\Utils;
 use Project\Modules\Administrators\Entity;
 use Project\Modules\Administrators\Api\DTO;
 
-class Entity2DTOConverter
+class AdministratorEntity2DTOConverter
 {
     public static function convert(Entity\Admin $entity): DTO\Admin
     {

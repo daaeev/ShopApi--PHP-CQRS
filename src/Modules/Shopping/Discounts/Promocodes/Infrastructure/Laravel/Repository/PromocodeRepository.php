@@ -9,13 +9,13 @@ use Project\Common\Repository\DuplicateKeyException;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodeRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\Eloquent2EntityConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquent2EntityConverter;
 
 class PromocodeRepository implements PromocodeRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
-        private Eloquent2EntityConverter $converter
+        private PromocodeEloquent2EntityConverter $converter
     ) {}
 
     public function add(Entity\Promocode $promocode): void

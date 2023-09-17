@@ -7,13 +7,13 @@ use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Repository\QueryCartRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Cart\Utils\Entity2DTOConverter;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\Eloquent2EntityConverter;
+use Project\Modules\Shopping\Cart\Utils\CartEntity2DTOConverter;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquent2EntityConverter;
 
 class QueryCartRepository implements QueryCartRepositoryInterface
 {
     public function __construct(
-        private Eloquent2EntityConverter $eloquentConverter,
+        private CartEloquent2EntityConverter $eloquentConverter,
     ) {}
 
     public function getActiveCart(Client $client): DTO\Cart
@@ -42,7 +42,7 @@ class QueryCartRepository implements QueryCartRepositoryInterface
 
     private function hydrate(Eloquent\Cart $record): DTO\Cart
     {
-        return Entity2DTOConverter::convert(
+        return CartEntity2DTOConverter::convert(
             $this->eloquentConverter->convert($record)
         );
     }
