@@ -133,7 +133,7 @@ class Product implements Events\EventRoot
         $this->updated();
     }
 
-    private function updated()
+    private function updated(): void
     {
         $this->addEvent(new ProductEvents\ProductUpdated($this));
         $this->updatedAt = new \DateTimeImmutable;
