@@ -12,6 +12,10 @@ class Client implements DTO
         public readonly string $hash,
         public readonly ?string $firstName,
         public readonly ?string $lastName,
+        public readonly ?string $phone,
+        public readonly ?string $email,
+        public readonly bool $phoneConfirmed,
+        public readonly bool $emailConfirmed,
         public readonly \DateTimeImmutable $createdAt,
         public readonly ?\DateTimeImmutable $updatedAt,
     ) {}
@@ -23,6 +27,10 @@ class Client implements DTO
             'hash' => $this->hash,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'phoneConfirmed' => $this->phoneConfirmed,
+            'emailConfirmed' => $this->emailConfirmed,
             'createdAt' => $this->createdAt->format(DateTimeFormat::FULL_DATE->value),
             'updatedAt' => $this->updatedAt?->format(DateTimeFormat::FULL_DATE->value)
         ];
