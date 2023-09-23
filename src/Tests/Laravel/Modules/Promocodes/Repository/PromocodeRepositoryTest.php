@@ -6,7 +6,7 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Promocodes\Repository\PromocodesRepositoryTestTrait;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodeRepository;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\Eloquent2EntityConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquent2EntityConverter;
 
 class PromocodeRepositoryTest extends \Tests\TestCase
 {
@@ -16,7 +16,7 @@ class PromocodeRepositoryTest extends \Tests\TestCase
     {
         $this->promocodes = new PromocodeRepository(
             new Hydrator,
-            new Eloquent2EntityConverter(new Hydrator)
+            new PromocodeEloquent2EntityConverter(new Hydrator)
         );
         parent::setUp();
     }

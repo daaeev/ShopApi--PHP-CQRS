@@ -9,13 +9,13 @@ use Project\Common\Environment\Client\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\Eloquent2EntityConverter;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquent2EntityConverter;
 
 class CartRepository implements CartRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
-        private Eloquent2EntityConverter $cartEloquentConverter
+        private CartEloquent2EntityConverter $cartEloquentConverter
     ) {}
 
     public function get(Entity\CartId $id): Entity\Cart

@@ -5,7 +5,7 @@ namespace Project\Modules\Shopping\Discounts\Promocodes\Utils;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity;
 use Project\Modules\Shopping\Api\DTO\Promocodes as DTO;
 
-class Entity2DTOConverter
+class PromocodeEntity2DTOConverter
 {
     public static function convert(Entity\Promocode $entity): DTO\Promocode
     {

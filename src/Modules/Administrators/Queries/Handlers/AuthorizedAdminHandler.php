@@ -3,7 +3,7 @@
 namespace Project\Modules\Administrators\Queries\Handlers;
 
 use Project\Modules\Administrators\Queries\GetAdminQuery;
-use Project\Modules\Administrators\Utils\Entity2DTOConverter;
+use Project\Modules\Administrators\Utils\AdministratorEntity2DTOConverter;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 
 class AuthorizedAdminHandler
@@ -18,6 +18,6 @@ class AuthorizedAdminHandler
             throw new \DomainException('You are not logged in');
         }
 
-        return Entity2DTOConverter::convert($admin)->toArray();
+        return AdministratorEntity2DTOConverter::convert($admin)->toArray();
     }
 }

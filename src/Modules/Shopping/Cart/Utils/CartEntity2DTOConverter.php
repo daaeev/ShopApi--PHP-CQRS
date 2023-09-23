@@ -4,9 +4,9 @@ namespace Project\Modules\Shopping\Cart\Utils;
 
 use Project\Modules\Shopping\Cart\Entity;
 use Project\Modules\Shopping\Api\DTO\Cart as DTO;
-use Project\Modules\Shopping\Discounts\Promocodes\Utils\Entity2DTOConverter as PromocodeEntityConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Utils\PromocodeEntity2DTOConverter as PromocodeEntityConverter;
 
-class Entity2DTOConverter
+class CartEntity2DTOConverter
 {
     public static function convert(Entity\Cart $entity): DTO\Cart
     {

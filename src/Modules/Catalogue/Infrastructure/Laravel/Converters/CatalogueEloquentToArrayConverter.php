@@ -11,7 +11,7 @@ use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Models\Price as Elo
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models\Content as EloquentProductContent;
 use Project\Modules\Catalogue\Content\Category\Infrastructure\Laravel\Models\Content as EloquentCategoryContent;
 
-class Eloquent2AllContentArrayConverter
+class CatalogueEloquentToArrayConverter
 {
     public function __construct(
         private FileManagerInterface $fileManager,

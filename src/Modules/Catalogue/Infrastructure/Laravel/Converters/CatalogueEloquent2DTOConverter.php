@@ -11,7 +11,7 @@ use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models\Imag
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Models\Price as EloquentPrice;
 use Project\Modules\Catalogue\Api\DTO\Product\Price as DTOPrice;
 
-class Eloquent2DTOConverter
+class CatalogueEloquent2DTOConverter
 {
     public function __construct(
         private FileManagerInterface $fileManager,

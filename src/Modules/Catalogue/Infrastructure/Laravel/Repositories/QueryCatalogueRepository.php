@@ -9,14 +9,14 @@ use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\Entity\Collections\PaginatedCollection;
 use Project\Modules\Catalogue\Repositories\QueryCatalogueRepositoryInterface;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\Eloquent2DTOConverter;
-use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\Eloquent2AllContentArrayConverter;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\CatalogueEloquent2DTOConverter;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\CatalogueEloquentToArrayConverter;
 
 class QueryCatalogueRepository implements QueryCatalogueRepositoryInterface
 {
     public function __construct(
-        private Eloquent2DTOConverter $dtoConverter,
-        private Eloquent2AllContentArrayConverter $allContentArrayConverter,
+        private CatalogueEloquent2DTOConverter $dtoConverter,
+        private CatalogueEloquentToArrayConverter $allContentArrayConverter,
         private EnvironmentInterface $environment
     ) {}
 

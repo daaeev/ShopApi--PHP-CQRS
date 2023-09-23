@@ -6,15 +6,15 @@ use Project\Common\Repository\NotFoundException;
 use Project\Common\Entity\Collections\Pagination;
 use Project\Modules\Shopping\Api\DTO\Promocodes as DTO;
 use Project\Common\Entity\Collections\PaginatedCollection;
-use Project\Modules\Shopping\Discounts\Promocodes\Utils\Entity2DTOConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Utils\PromocodeEntity2DTOConverter;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\QueryPromocodeRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\Eloquent2EntityConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquent2EntityConverter;
 
 class QueryPromocodesRepository implements QueryPromocodeRepositoryInterface
 {
     public function __construct(
-        private Eloquent2EntityConverter $eloquentConverter
+        private PromocodeEloquent2EntityConverter $eloquentConverter
     ) {}
 
     public function get(int $id, array $options = []): DTO\Promocode
@@ -30,7 +30,7 @@ class QueryPromocodesRepository implements QueryPromocodeRepositoryInterface
 
     private function hydrate(Eloquent\Promocode $record): DTO\Promocode
     {
-        return Entity2DTOConverter::convert(
+        return PromocodeEntity2DTOConverter::convert(
             $this->eloquentConverter->convert($record)
         );
     }
