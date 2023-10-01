@@ -16,7 +16,6 @@ class RolesTest extends \PHPUnit\Framework\TestCase
     {
         $admin = $this->generateAdmin();
         $newRoles = [Role::MANAGER];
-        $this->assertNotSame($admin->getRoles(), $newRoles);
         $admin->setRoles($newRoles);
         $this->assertEvents($admin, [new AdminRolesChanged($admin)]);
         $this->assertSame($admin->getRoles(), $newRoles);

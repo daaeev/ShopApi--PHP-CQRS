@@ -14,9 +14,7 @@ class SlugTest extends \PHPUnit\Framework\TestCase
     public function testUpdateSlug()
     {
         $category = $this->generateCategory();
-        $this->assertNull($category->getUpdatedAt());
         $updatedSlug = md5(rand());
-        $this->assertNotSame($updatedSlug, $category->getSlug());
         $category->updateSlug($updatedSlug);
         $this->assertNotNull($category->getUpdatedAt());
         $this->assertSame($updatedSlug, $category->getSlug());
@@ -26,9 +24,7 @@ class SlugTest extends \PHPUnit\Framework\TestCase
     public function testUpdateSlugToSame()
     {
         $category = $this->generateCategory();
-        $this->assertNull($category->getUpdatedAt());
         $updatedSlug = $category->getSlug();
-        $this->assertSame($updatedSlug, $category->getSlug());
         $category->updateSlug($updatedSlug);
         $this->assertNull($category->getUpdatedAt());
         $this->assertSame($updatedSlug, $category->getSlug());

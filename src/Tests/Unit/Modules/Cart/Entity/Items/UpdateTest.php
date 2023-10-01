@@ -14,10 +14,7 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
     public function testAddItem()
     {
         $cart = $this->generateCart();
-        $this->assertEmpty($cart->getItems());
-        $this->assertEmpty($cart->getUpdatedAt());
         $item = $this->generateCartItem();
-
         $cart->addItem($item);
         $this->assertCount(1, $cart->getItems());
         $this->assertTrue($item->equalsTo($cart->getItems()[0]));
@@ -28,9 +25,7 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
     public function testAddSameItem()
     {
         $cart = $this->generateCart();
-        $this->assertEmpty($cart->getItems());
         $item = $this->generateCartItem();
-
         $cart->addItem($item);
         $cart->flushEvents();
         $this->assertCount(1, $cart->getItems());
@@ -39,7 +34,6 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
         $updatedAt = $cart->getUpdatedAt();
         $cart->addItem($item);
         $this->assertCount(1, $cart->getItems());
-        $this->assertTrue($item->equalsTo($cart->getItems()[0]));
         $this->assertSame($updatedAt, $cart->getUpdatedAt());
         $this->assertEvents($cart, []);
     }
@@ -47,7 +41,6 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
     public function testUpdateItemQuantity()
     {
         $cart = $this->generateCart();
-        $this->assertEmpty($cart->getItems());
         $item = $this->generateCartItem();
         $updatedItem = $this->makeCartItem(
             CartItemId::random(),

@@ -17,6 +17,7 @@ class StartEndTest extends \PHPUnit\Framework\TestCase
             ->add(\DateInterval::createFromDateString('1 day'));
         $promocode->setEndDate($endDate);
         $this->assertSame($endDate, $promocode->getEndDate());
+        $this->assertNotEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, [new PromocodeUpdated($promocode)]);
     }
 
@@ -24,10 +25,7 @@ class StartEndTest extends \PHPUnit\Framework\TestCase
     {
         $promocode = $this->generatePromocode();
         $promocode->setEndDate($promocode->getEndDate());
-        $this->assertEvents($promocode, []);
-        $promocode->setEndDate(null);
-        $promocode->flushEvents();
-        $promocode->setEndDate(null);
+        $this->assertEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, []);
     }
 
@@ -36,6 +34,7 @@ class StartEndTest extends \PHPUnit\Framework\TestCase
         $promocode = $this->generatePromocode();
         $promocode->setEndDate(null);
         $this->assertNull($promocode->getEndDate());
+        $this->assertNotEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, [new PromocodeUpdated($promocode)]);
     }
 

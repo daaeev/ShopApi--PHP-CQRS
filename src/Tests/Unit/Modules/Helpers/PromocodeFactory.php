@@ -7,7 +7,7 @@ use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 
 trait PromocodeFactory
 {
-    public function makePromocode(
+    private function makePromocode(
         PromocodeId $id,
         string $name,
         string $code,
@@ -25,7 +25,7 @@ trait PromocodeFactory
         );
     }
 
-    public function generatePromocode(): Promocode
+    private function generatePromocode(): Promocode
     {
         $promocode = new Promocode(
             PromocodeId::random(),

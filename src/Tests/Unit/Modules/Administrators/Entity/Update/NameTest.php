@@ -13,7 +13,6 @@ class NameTest extends \PHPUnit\Framework\TestCase
     {
         $admin = $this->generateAdmin();
         $newName = 'New name for test update';
-        $this->assertNotSame($admin->getName(), $newName);
         $admin->setName($newName);
         $this->assertEmpty($admin->flushEvents());
         $this->assertSame($admin->getName(), $newName);

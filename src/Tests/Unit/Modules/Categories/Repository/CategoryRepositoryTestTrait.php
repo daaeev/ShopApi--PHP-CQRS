@@ -60,7 +60,6 @@ trait CategoryRepositoryTestTrait
             md5(rand()),
             md5(rand()),
         );
-        $this->assertNull($category->getId()->getId());
         $this->categories->add($category);
         $this->assertNotNull($category->getId()->getId());
     }
@@ -68,14 +67,14 @@ trait CategoryRepositoryTestTrait
     public function testAddWithDuplicatedId()
     {
         $category = $this->generateCategory();
-        $secondProduct = $this->makeCategory(
+        $categoryWithSameId = $this->makeCategory(
             $category->getId(),
             $category->getName(),
             'Unique category slug',
         );
         $this->categories->add($category);
         $this->expectException(DuplicateKeyException::class);
-        $this->categories->add($secondProduct);
+        $this->categories->add($categoryWithSameId);
     }
 
     public function testAddWithNotUniqueSlug()
@@ -128,6 +127,14 @@ trait CategoryRepositoryTestTrait
         $categoryWithNotUniqueCode->updateSlug($category->getSlug());
         $this->expectException(DuplicateKeyException::class);
         $this->categories->update($categoryWithNotUniqueCode);
+    }
+
+    public function testUpdateSameCategoryAndDoesNotChangeSlug()
+    {
+        $category = $this->generateCategory();
+        $this->categories->add($category);
+        $this->categories->update($category);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testDelete()

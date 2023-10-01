@@ -15,7 +15,6 @@ class UpdateAvailabilityTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $product = $this->generateProduct();
-        $this->assertEquals(Availability::IN_STOCK, $product->getAvailability());
         $product->setAvailability(Availability::PREORDER);
         $this->assertEquals(Availability::PREORDER, $product->getAvailability());
         $this->assertNotEmpty($product->getUpdatedAt());
@@ -28,7 +27,6 @@ class UpdateAvailabilityTest extends \PHPUnit\Framework\TestCase
     public function testUpdateToSame()
     {
         $product = $this->generateProduct();
-        $this->assertEquals(Availability::IN_STOCK, $product->getAvailability());
         $product->setAvailability(Availability::IN_STOCK);
         $this->assertNull($product->getUpdatedAt());
         $this->assertEquals(Availability::IN_STOCK, $product->getAvailability());

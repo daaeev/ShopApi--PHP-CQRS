@@ -7,7 +7,7 @@ use Project\Common\Entity\Id\StringId;
 
 class ClientHash extends StringId
 {
-    public function __construct(string $id = null)
+    public function __construct(string $id)
     {
         Assert::notEmpty($id, 'Client hash cant be empty');
         parent::__construct($id);

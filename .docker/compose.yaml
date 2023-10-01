@@ -1,4 +1,5 @@
 version: '3'
+name: 'shop_api'
 services:
   php:
     build:

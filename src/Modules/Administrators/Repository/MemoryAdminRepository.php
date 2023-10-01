@@ -34,6 +34,10 @@ class MemoryAdminRepository implements AdminRepositoryInterface
     private function guardLoginUnique(Entity\Admin $entity): void
     {
         foreach ($this->items as $item) {
+            if ($entity->getId()->equalsTo($item->getId())) {
+                continue;
+            }
+
             if ($entity->getLogin() === $item->getLogin()) {
                 throw new DuplicateKeyException('Admin with same login already exists');
             }
@@ -63,7 +67,7 @@ class MemoryAdminRepository implements AdminRepositoryInterface
     public function get(Entity\AdminId $id): Entity\Admin
     {
         if (empty($this->items[$id->getId()])) {
-            throw new NotFoundException('Product does not exists');
+            throw new NotFoundException('Admin does not exists');
         }
 
         $entity = clone $this->items[$id->getId()];

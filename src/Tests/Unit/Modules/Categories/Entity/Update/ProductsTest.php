@@ -13,14 +13,12 @@ class ProductsTest extends \PHPUnit\Framework\TestCase
     public function testAttachProduct()
     {
         $category = $this->generateCategory();
-        $this->assertNull($category->getUpdatedAt());
-        $this->assertEmpty($category->getProducts());
         $products = [1, 2, 3];
         $category->attachProduct($products[0]);
-        $this->assertNotEmpty($category->getUpdatedAt());
         $category->attachProduct($products[1]);
         $category->attachProduct($products[2]);
         $this->assertSame($products, $category->getProducts());
+        $this->assertNotEmpty($category->getUpdatedAt());
         $this->assertEvents($category, [new CategoryUpdated($category)]);
     }
 

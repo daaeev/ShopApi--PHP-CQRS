@@ -8,10 +8,10 @@ use Project\Modules\Administrators\Entity\AdminId;
 
 trait AdminFactory
 {
-    protected string $correctAdminPassword = 'AdminPassword';
-    protected string $correctAdminLogin = 'AdminLogin';
+    private string $correctAdminPassword = 'AdminPassword';
+    private string $correctAdminLogin = 'AdminLogin';
 
-    public function generateAdmin(): Admin
+    private function generateAdmin(): Admin
     {
         $admin = new Admin(
             AdminId::next(),
@@ -24,7 +24,7 @@ trait AdminFactory
         return $admin;
     }
 
-    public function makeAdmin(
+    private function makeAdmin(
         AdminId $id,
         string $name,
         string $login,

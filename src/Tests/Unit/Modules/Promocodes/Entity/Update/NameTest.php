@@ -15,6 +15,7 @@ class NameTest extends \PHPUnit\Framework\TestCase
         $promocode = $this->generatePromocode();
         $promocode->setName('Test update');
         $this->assertSame('Test update', $promocode->getName());
+        $this->assertNotEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, [new PromocodeUpdated($promocode)]);
     }
 
@@ -22,6 +23,7 @@ class NameTest extends \PHPUnit\Framework\TestCase
     {
         $promocode = $this->generatePromocode();
         $promocode->setName($promocode->getName());
+        $this->assertEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, []);
     }
 

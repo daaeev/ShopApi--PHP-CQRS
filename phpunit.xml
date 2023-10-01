@@ -58,6 +58,11 @@
         <testsuite name="ProjectUnitPromocodes">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Promocodes</directory>
         </testsuite>
+        <!--Modules/Client-->
+        <testsuite name="ProjectUnitClient">
+            <directory suffix="Test.php">./src/Tests/Unit/Modules/Client</directory>
+        </testsuite>
+
 
         <!--END-SECTION-->
         <!--SECTION LARAVEL-->

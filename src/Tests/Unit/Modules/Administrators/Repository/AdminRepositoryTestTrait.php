@@ -41,7 +41,6 @@ trait AdminRepositoryTestTrait
             $this->correctAdminPassword,
             [Role::ADMIN]
         );
-        $this->assertNull($admin->getId()->getId());
         $this->admins->add($admin);
         $this->assertNotNull($admin->getId()->getId());
     }
@@ -49,7 +48,7 @@ trait AdminRepositoryTestTrait
     public function testAddWithDuplicatedId()
     {
         $admin = $this->generateAdmin();
-        $secondAdmin = $this->makeAdmin(
+        $adminWithSameId = $this->makeAdmin(
             $admin->getId(),
             $admin->getName(),
             $this->correctAdminLogin,
@@ -58,17 +57,17 @@ trait AdminRepositoryTestTrait
         );
         $this->admins->add($admin);
         $this->expectException(DuplicateKeyException::class);
-        $this->admins->add($secondAdmin);
+        $this->admins->add($adminWithSameId);
     }
 
     public function testAddWithNotUniqueLogin()
     {
         $admin = $this->generateAdmin();
-        $adminWithNotUniqueCode = $this->generateAdmin();
-        $adminWithNotUniqueCode->setLogin($admin->getLogin());
+        $adminWithNotUniqueLogin = $this->generateAdmin();
+        $adminWithNotUniqueLogin->setLogin($admin->getLogin());
         $this->admins->add($admin);
         $this->expectException(DuplicateKeyException::class);
-        $this->admins->add($adminWithNotUniqueCode);
+        $this->admins->add($adminWithNotUniqueLogin);
     }
 
     public function testUpdate()
@@ -97,12 +96,20 @@ trait AdminRepositoryTestTrait
     public function testUpdateWithNotUniqueLogin()
     {
         $admin = $this->generateAdmin();
-        $adminWithNotUniqueCode = $this->generateAdmin();
+        $adminWithNotUniqueLogin = $this->generateAdmin();
         $this->admins->add($admin);
-        $this->admins->add($adminWithNotUniqueCode);
-        $adminWithNotUniqueCode->setLogin($admin->getLogin());
+        $this->admins->add($adminWithNotUniqueLogin);
+        $adminWithNotUniqueLogin->setLogin($admin->getLogin());
         $this->expectException(DuplicateKeyException::class);
-        $this->admins->update($adminWithNotUniqueCode);
+        $this->admins->update($adminWithNotUniqueLogin);
+    }
+
+    public function testUpdateSameAdminAndDoesChangeLogin()
+    {
+        $admin = $this->generateAdmin();
+        $this->admins->add($admin);
+        $this->admins->update($admin);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testDelete()

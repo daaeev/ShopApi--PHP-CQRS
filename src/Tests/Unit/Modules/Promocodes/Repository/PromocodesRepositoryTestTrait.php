@@ -58,8 +58,6 @@ trait PromocodesRepositoryTestTrait
             rand(1, 100),
             new \DateTimeImmutable('-1 day')
         );
-
-        $this->assertNull($promocode->getId()->getId());
         $this->promocodes->add($promocode);
         $this->assertNotNull($promocode->getId()->getId());
     }
@@ -67,7 +65,7 @@ trait PromocodesRepositoryTestTrait
     public function testAddWithDuplicatedId()
     {
         $promocode = $this->generatePromocode();
-        $duplicateIdPromocode = $this->makePromocode(
+        $promocodeWithSameId = $this->makePromocode(
             $promocode->getId(),
             $promocode->getName(),
             'Unique promo-code',
@@ -76,7 +74,7 @@ trait PromocodesRepositoryTestTrait
         );
         $this->promocodes->add($promocode);
         $this->expectException(DuplicateKeyException::class);
-        $this->promocodes->add($duplicateIdPromocode);
+        $this->promocodes->add($promocodeWithSameId);
     }
 
     public function testAddWithNotUniqueCode()

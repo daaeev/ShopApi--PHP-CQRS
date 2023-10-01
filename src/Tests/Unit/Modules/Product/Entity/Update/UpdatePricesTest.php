@@ -30,13 +30,12 @@ class UpdatePricesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($product->samePrices($updatedPrices));
         $product->setPrices($updatedPrices);
         $this->assertTrue($product->samePrices($updatedPrices));
-        $this->assertNotEmpty($product->getUpdatedAt());
 
+        $this->assertNotEmpty($product->getUpdatedAt());
         foreach ($updatedPrices as $updatedPrice) {
             $this->assertArrayHasKey($updatedPrice->getCurrency()->value, $product->getPrices());
             $this->assertTrue($updatedPrice->equalsTo($product->getPrices()[$updatedPrice->getCurrency()->value]));
         }
-
         $this->assertEvents($product, [
             new ProductPricesChanged($product),
             new ProductUpdated($product),

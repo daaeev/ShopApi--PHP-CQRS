@@ -13,15 +13,15 @@ class UpdateSizesTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $product = $this->generateProduct();
-        $this->assertEmpty($product->getSizes());
         $sizes = [
             md5(rand()),
             md5(rand()),
         ];
+
         $this->assertFalse($product->sameSizes($sizes));
         $product->setSizes($sizes);
-
         $this->assertTrue($product->sameSizes($sizes));
+
         $this->assertCount(2, $product->getSizes());
         $this->assertSame($sizes, $product->getSizes());
         $this->assertNotEmpty($product->getUpdatedAt());

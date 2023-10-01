@@ -8,7 +8,7 @@ use Project\Modules\Shopping\Cart\Entity\CartItemId;
 
 trait CartFactory
 {
-    public function makeCart(
+    private function makeCart(
         Entity\CartId $id,
         Client $client,
         array $items = []
@@ -20,14 +20,14 @@ trait CartFactory
         );
     }
 
-    public function generateCart(): Entity\Cart
+    private function generateCart(): Entity\Cart
     {
         $cart = Entity\Cart::instantiate(new Client(md5(rand())));
         $cart->flushEvents();
         return $cart;
     }
 
-    public function makeCartItem(
+    private function makeCartItem(
         CartItemId $id,
         int $product,
         string $name,
@@ -47,7 +47,7 @@ trait CartFactory
         );
     }
 
-    public function generateCartItem(): Entity\CartItem
+    private function generateCartItem(): Entity\CartItem
     {
         return new Entity\CartItem(
             Entity\CartItemId::random(),

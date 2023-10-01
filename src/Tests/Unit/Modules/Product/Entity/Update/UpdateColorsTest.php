@@ -13,16 +13,16 @@ class UpdateColorsTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $product = $this->generateProduct();
-        $this->assertEmpty($product->getColors());
         $colors = [
             md5(rand()),
             md5(rand()),
         ];
+
         $this->assertFalse($product->sameColors($colors));
         $product->setColors($colors);
+        $this->assertTrue($product->sameColors($colors));
 
         $this->assertCount(2, $product->getColors());
-        $this->assertTrue($product->sameColors($colors));
         $this->assertSame($colors, $product->getColors());
         $this->assertNotEmpty($product->getUpdatedAt());
         $this->assertEvents($product, [

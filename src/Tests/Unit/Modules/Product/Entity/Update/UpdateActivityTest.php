@@ -16,11 +16,10 @@ class UpdateActivityTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->generateProduct();
         $product->deactivate();
-        $this->assertFalse($product->isActive());
-        $this->assertNotEmpty($product->getUpdatedAt());
         $product->flushEvents();
         $product->activate();
         $this->assertTrue($product->isActive());
+        $this->assertNotEmpty($product->getUpdatedAt());
         $this->assertEvents($product, [
             new ProductActivityChanged($product),
             new ProductUpdated($product),
@@ -30,7 +29,6 @@ class UpdateActivityTest extends \PHPUnit\Framework\TestCase
     public function testActivateIfAlreadyActive()
     {
         $product = $this->generateProduct();
-        $this->assertTrue($product->isActive());
         $product->activate();
         $this->assertTrue($product->isActive());
         $this->assertNull($product->getUpdatedAt());
@@ -52,7 +50,6 @@ class UpdateActivityTest extends \PHPUnit\Framework\TestCase
     public function testDeactivate()
     {
         $product = $this->generateProduct();
-        $this->assertTrue($product->isActive());
         $product->deactivate();
         $this->assertFalse($product->isActive());
         $this->assertNotEmpty($product->getUpdatedAt());
@@ -65,7 +62,6 @@ class UpdateActivityTest extends \PHPUnit\Framework\TestCase
     public function testDeactivateIfAlreadyDeactivated()
     {
         $product = $this->generateProduct();
-        $this->assertTrue($product->isActive());
         $product->deactivate();
         $product->flushEvents();
         $product->deactivate();

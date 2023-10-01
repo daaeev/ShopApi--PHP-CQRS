@@ -9,7 +9,15 @@ class Contacts
         private ?string $email = null,
         private bool $phoneConfirmed = false,
         private bool $emailConfirmed = false,
-    ) {}
+    ) {
+        if ($this->phoneConfirmed && empty($this->phone)) {
+            throw new \DomainException('Empty phone cant be confirmed');
+        }
+
+        if ($this->emailConfirmed && empty($this->email)) {
+            throw new \DomainException('Empty email cant be confirmed');
+        }
+    }
 
     public function getPhone(): ?string
     {

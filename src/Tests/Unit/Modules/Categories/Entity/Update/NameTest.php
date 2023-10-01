@@ -14,9 +14,7 @@ class NameTest extends \PHPUnit\Framework\TestCase
     public function testUpdateName()
     {
         $category = $this->generateCategory();
-        $this->assertNull($category->getUpdatedAt());
         $updatedName = md5(rand());
-        $this->assertNotSame($updatedName, $category->getName());
         $category->updateName($updatedName);
         $this->assertNotNull($category->getUpdatedAt());
         $this->assertSame($updatedName, $category->getName());
@@ -26,9 +24,7 @@ class NameTest extends \PHPUnit\Framework\TestCase
     public function testUpdateNameToSame()
     {
         $category = $this->generateCategory();
-        $this->assertNull($category->getUpdatedAt());
         $updatedName = $category->getName();
-        $this->assertSame($updatedName, $category->getName());
         $category->updateName($updatedName);
         $this->assertNull($category->getUpdatedAt());
         $this->assertSame($updatedName, $category->getName());

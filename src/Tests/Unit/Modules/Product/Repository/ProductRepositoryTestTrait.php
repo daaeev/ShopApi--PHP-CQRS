@@ -61,8 +61,6 @@ trait ProductRepositoryTestTrait
             md5(rand()),
             $this->makePrices()
         );
-
-        $this->assertNull($product->getId()->getId());
         $this->products->add($product);
         $this->assertNotNull($product->getId()->getId());
     }
@@ -70,7 +68,7 @@ trait ProductRepositoryTestTrait
     public function testAddWithDuplicatedId()
     {
         $product = $this->generateProduct();
-        $secondProduct = $this->makeProduct(
+        $productWithSameId = $this->makeProduct(
             $product->getId(),
             $product->getName(),
             'Unique product code',
@@ -78,7 +76,7 @@ trait ProductRepositoryTestTrait
         );
         $this->products->add($product);
         $this->expectException(DuplicateKeyException::class);
-        $this->products->add($secondProduct);
+        $this->products->add($productWithSameId);
     }
 
     public function testAddWithNotUniqueCode()
@@ -127,6 +125,14 @@ trait ProductRepositoryTestTrait
         $productWithNotUniqueCode->setCode($product->getCode());
         $this->expectException(DuplicateKeyException::class);
         $this->products->update($productWithNotUniqueCode);
+    }
+
+    public function testUpdateSameProductAndDoesNotChangeCode()
+    {
+        $product = $this->generateProduct();
+        $this->products->add($product);
+        $this->products->update($product);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testDelete()

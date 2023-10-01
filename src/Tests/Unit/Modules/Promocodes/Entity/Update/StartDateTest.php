@@ -17,6 +17,7 @@ class StartDateTest extends \PHPUnit\Framework\TestCase
             ->add(\DateInterval::createFromDateString('1 day'));
         $promocode->setStartDate($startDate);
         $this->assertSame($startDate, $promocode->getStartDate());
+        $this->assertNotEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, [new PromocodeUpdated($promocode)]);
     }
 
@@ -24,6 +25,7 @@ class StartDateTest extends \PHPUnit\Framework\TestCase
     {
         $promocode = $this->generatePromocode();
         $promocode->setStartDate($promocode->getStartDate());
+        $this->assertNotEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, []);
     }
 

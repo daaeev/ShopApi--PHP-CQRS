@@ -16,6 +16,7 @@ class ActiveTest extends \PHPUnit\Framework\TestCase
         $promocode->deactivate();
         $promocode->flushEvents();
         $promocode->activate();
+        $this->assertNotEmpty($promocode->getUpdatedAt());
         $this->assertTrue($promocode->getActive());
         $this->assertTrue($promocode->isActive());
         $this->assertEvents($promocode, [new PromocodeUpdated($promocode)]);
@@ -26,6 +27,7 @@ class ActiveTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\DomainException::class);
         $promocode = $this->generatePromocode();
         $promocode->activate();
+        $this->assertEmpty($promocode->getUpdatedAt());
     }
 
     public function testDeactivate()
@@ -34,6 +36,7 @@ class ActiveTest extends \PHPUnit\Framework\TestCase
         $promocode->deactivate();
         $this->assertFalse($promocode->getActive());
         $this->assertFalse($promocode->isActive());
+        $this->assertNotEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, [new PromocodeUpdated($promocode)]);
     }
 
