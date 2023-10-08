@@ -7,19 +7,19 @@ services:
       dockerfile: .docker/php/Dockerfile
     working_dir: /var/www/html
     volumes:
-      - ./../:/var/www/html:rw
+      - ./../:/var/www/html
   composer:
     image: composer:latest
     working_dir: /var/www/html
     volumes:
-      - ./../:/var/www/html:rw
+      - ./../:/var/www/html
     command: tail -f /dev/null
   nginx:
     image: nginx:latest
     working_dir: /var/www/html
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./../:/var/www/html:rw
+      - ./../:/var/www/html
     ports:
       - 80:80
     depends_on:
@@ -29,7 +29,7 @@ services:
     image: mysql:latest
     working_dir: /var/www/html
     volumes:
-      - ./mysql/tmp:/var/lib/mysql:rw
+      - ./mysql/tmp:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes

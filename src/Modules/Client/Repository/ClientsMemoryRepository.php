@@ -7,7 +7,7 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 
-class MemoryClientsRepository implements ClientsRepositoryInterface
+class ClientsMemoryRepository implements ClientsRepositoryInterface
 {
     private array $items = [];
     private int $increment = 0;

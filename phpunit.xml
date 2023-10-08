@@ -91,6 +91,10 @@
         <testsuite name="ProjectLaravelPromocodes">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Promocodes</directory>
         </testsuite>
+        <!--Modules/Client-->
+        <testsuite name="ProjectLaravelClient">
+            <directory suffix="Test.php">./src/Tests/Laravel/Modules/Client</directory>
+        </testsuite>
 
         <!--END-SECTION-->
     </testsuites>
