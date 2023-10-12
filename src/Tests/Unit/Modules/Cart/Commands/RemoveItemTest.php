@@ -26,7 +26,7 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->client = new Client(md5(rand()));
+        $this->client = new Client(md5(rand()), rand(1, 100));
         $this->carts = new MemoryCartRepository(new Hydrator);
 
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)

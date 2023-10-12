@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreign('cart_id', 'fk-shopping_carts_items-cart_id')
                 ->references('id')
                 ->on('shopping_carts')
-                ->cascadeOnUpdate()
+                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
         });
     }

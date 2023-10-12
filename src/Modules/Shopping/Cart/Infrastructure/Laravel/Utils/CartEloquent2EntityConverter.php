@@ -20,7 +20,10 @@ class CartEloquent2EntityConverter
     {
         return $this->hydrator->hydrate(Entity\Cart::class, [
             'id' => new Entity\CartId($record->id),
-            'client' => new Client($record->client_hash),
+            'client' => new Client(
+                $record->client_hash,
+                $record->client_id,
+            ),
             'currentCurrency' => Currency::from($record->currency),
             'promocode' => !empty($record->promocode_id)
                 ? $this->promocodeConverter->convert($record->promocode)

@@ -31,7 +31,7 @@ class CartRepository implements CartRepositoryInterface
     {
         $record = Eloquent\Cart::query()
             ->where([
-                'client_hash' => $client->getHash(),
+                'client_id' => $client->getId(),
                 'active' => true
             ])
             ->first();
@@ -68,8 +68,8 @@ class CartRepository implements CartRepositoryInterface
         $record = Eloquent\Cart::firstOrNew([
             'id' => $cart->getId()->getId()
         ]);
-
         $record->client_hash = $cart->getClient()->getHash();
+        $record->client_id = $cart->getClient()->getId();
         $record->active = $cart->active();
         $record->currency = $cart->getCurrency()->value;
         $record->promocode_id = $cart->getPromocode()?->getId()->getId();
@@ -106,7 +106,7 @@ class CartRepository implements CartRepositoryInterface
 
         $anotherActiveCartExists = Eloquent\Cart::query()
             ->where('id', '!=', $cart->getId()->getId())
-            ->where('client_hash', $cart->getClient()->getHash())
+            ->where('client_id', $cart->getClient()->getId())
             ->where('active', true)
             ->exists();
 

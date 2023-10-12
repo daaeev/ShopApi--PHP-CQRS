@@ -12,7 +12,7 @@ class CartEntity2DTOConverter
     {
         return new DTO\Cart(
             $entity->getId()->getId(),
-            $entity->getClient()->getHash(),
+            $entity->getClient(),
             $entity->getCurrency()->value,
             $entity->active(),
             array_map('self::convertCartItem', $entity->getItems()),

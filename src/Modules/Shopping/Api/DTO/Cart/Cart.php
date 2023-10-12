@@ -5,13 +5,14 @@ namespace Project\Modules\Shopping\Api\DTO\Cart;
 use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;
 use Project\Common\Utils\DateTimeFormat;
+use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Api\DTO\Promocodes\Promocode;
 
 class Cart implements DTO
 {
     public function __construct(
         public readonly int $id,
-        public readonly string $clientHash,
+        public readonly Client $client,
         public readonly string $currency,
         public readonly bool $active,
         public readonly array $items,
@@ -27,7 +28,10 @@ class Cart implements DTO
     {
         return [
             'id' => $this->id,
-            'clientHash' => $this->clientHash,
+            'client' => [
+                'hash' => $this->client->getHash(),
+                'id' => $this->client->getId()
+            ],
             'currency' => $this->currency,
             'active' => $this->active,
             'totalPrice' => $this->totalPrice,

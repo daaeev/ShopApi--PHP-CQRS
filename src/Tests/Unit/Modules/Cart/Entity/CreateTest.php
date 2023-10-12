@@ -19,7 +19,7 @@ class CreateTest extends \PHPUnit\Framework\TestCase
     {
         $cart = $this->makeCart(
             $id = CartId::random(),
-            $client = new Client(md5(rand())),
+            $client = new Client(md5(rand()), rand(1, 100)),
             $cartItems = [
                 $this->generateCartItem(),
                 $this->generateCartItem(),
@@ -50,7 +50,7 @@ class CreateTest extends \PHPUnit\Framework\TestCase
 
     public function testInstantiateCart()
     {
-        $cart = Cart::instantiate($client = new Client(md5(rand())));
+        $cart = Cart::instantiate($client = new Client(md5(rand()), rand(1, 100)));
         $this->assertNull($cart->getId()->getId());
         $this->assertEmpty($cart->getItems());
         $this->assertTrue($cart->active());
@@ -67,7 +67,7 @@ class CreateTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->makeCart(
             CartId::random(),
-            new Client(md5(rand())),
+            new Client(md5(rand()), rand(1, 100)),
             ['Not cart item']
         );
     }

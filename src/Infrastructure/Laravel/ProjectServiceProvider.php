@@ -2,6 +2,7 @@
 
 namespace Project\Infrastructure\Laravel;
 
+use Project\Modules\Client\Api\ClientsApi;
 use App\Http\Middleware\AssignClientHashCookie;
 use Project\Common\CQRS\Buses\CompositeEventBus;
 use Project\Common\CQRS\Buses\CompositeRequestBus;
@@ -48,6 +49,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->app->singleton(EnvironmentInterface::class, function ($app) {
             return new EnvironmentService(
+                $app->make(ClientsApi::class),
                 config('project.application.client-hash-cookie-name'),
                 config('project.application.client-hash-cookie-length'),
             );

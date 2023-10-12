@@ -36,7 +36,7 @@ trait CartRepositoryTestTrait
     {
         $this->assertTrue($initial->getId()->equalsTo($other->getId()));
         $this->assertSame($initial->getClient()->getHash(), $other->getClient()->getHash());
-        $this->assertSame($initial->getClient()->getHash(), $other->getClient()->getHash());
+        $this->assertSame($initial->getClient()->getId(), $other->getClient()->getId());
         $this->assertSame($initial->active(), $other->active());
         if ($initial->getPromocode()) {
             $this->assertTrue(
@@ -82,7 +82,8 @@ trait CartRepositoryTestTrait
     public function testGetActiveCartIfDoesNotExists()
     {
         $clientHash = 'test';
-        $newCart = $this->carts->getActiveCart(new Client($clientHash));
+        $clientId = 1;
+        $newCart = $this->carts->getActiveCart(new Client($clientHash, $clientId) );
         $this->assertNotEmpty($newCart->getId()->getId());
         $this->assertSame($newCart->getClient()->getHash(), $clientHash);
         $this->assertEmpty($newCart->getItems());
@@ -132,12 +133,11 @@ trait CartRepositoryTestTrait
         $this->assertEmpty($carts);
     }
 
-
     public function testSave()
     {
         $initial = $this->makeCart(
             CartId::next(),
-            new Client('test'),
+            new Client('test', 1),
             [
                 $this->makeCartItem(
                     CartItemId::next(),

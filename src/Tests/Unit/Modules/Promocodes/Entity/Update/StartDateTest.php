@@ -25,7 +25,7 @@ class StartDateTest extends \PHPUnit\Framework\TestCase
     {
         $promocode = $this->generatePromocode();
         $promocode->setStartDate($promocode->getStartDate());
-        $this->assertNotEmpty($promocode->getUpdatedAt());
+        $this->assertEmpty($promocode->getUpdatedAt());
         $this->assertEvents($promocode, []);
     }
 

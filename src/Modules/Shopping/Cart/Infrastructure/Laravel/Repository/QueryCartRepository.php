@@ -20,14 +20,14 @@ class QueryCartRepository implements QueryCartRepositoryInterface
     {
         $record = Eloquent\Cart::query()
             ->with('items')
-            ->where('client_hash', $client->getHash())
+            ->where('client_id', $client->getId())
             ->where('active', true)
             ->first();
 
         if (empty($record)) {
             return new DTO\Cart(
                 0,
-                $client->getHash(),
+                $client,
                 Currency::default()->value,
                 true,
                 [],

@@ -10,6 +10,7 @@ class Cart extends Model
     protected $table = 'shopping_carts';
     protected $fillable = [
         'client_hash',
+        'client_id',
         'currency',
         'active',
         'promocode_id'
