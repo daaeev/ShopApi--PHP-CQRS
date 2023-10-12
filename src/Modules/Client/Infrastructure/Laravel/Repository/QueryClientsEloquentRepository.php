@@ -29,7 +29,10 @@ class QueryClientsEloquentRepository implements QueryClientsRepositoryInterface
                 page: $page,
             );
 
-        $dtos = array_map('ClientEloquent2DTOConverter::convert', $query->items());
+        $dtos = array_map(
+            '\Project\Modules\Client\Infrastructure\Laravel\Utils\ClientEloquent2DTOConverter::convert',
+            $query->items()
+        );
         return new PaginatedCollection(
             $dtos,
             new Pagination(

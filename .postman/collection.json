@@ -4281,6 +4281,217 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "admin/clients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/admin/clients",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"clients"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "15",
+									"disabled": true
+								},
+								{
+									"key": "hasNotEmptyCart",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Get clients",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/clients",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "15",
+											"disabled": true
+										},
+										{
+											"key": "hasNotEmptyCart",
+											"value": "0",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.2"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.24"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Oct 2023 11:19:18 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6Inoxbk5VQWZWaS93NmpTaCtXOWNqZlE9PSIsInZhbHVlIjoiL2VhV1Uwemd2Vmw1dWJjTTBLSi95ZmJIYUlwbkJ0eVlwRDM5QzB1NmxMN3lEdUFJZW1IS2E5dWduaXlqa1dBMFNrRGRyeXEzcjhWZURuK1QyZzF3MDJWUDM2aDZYcnVDMWtCcitEZjM4UVVoTnRQSy9maHR2cmVocE1hek5ub0kiLCJtYWMiOiJjYTA2NjYwN2VjYmI0MDEzODc1MGUwMTU5MWI1NjliZGIyMDVkNzcyMDdiYzIzYjkxZTkwYjAxNDk5ZTc5NmU0IiwidGFnIjoiIn0%3D; expires=Thu, 12 Oct 2023 13:19:18 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6Ik5DNXhad3l4cGxRK2pVYTgrZEVTRlE9PSIsInZhbHVlIjoiUE1mZHgvUk83d1BHU1NwcVdnY2VhVkpkUWZ2Y2o0Z3BEVE1wTE9BOXcyT05UbDRyY0QxRndraW83OS9RQVgxc0F3U0xVRGpBU2pwNVVrMWZRQkpiV2NCQWJUb2MyZ1RrbXd6UEhjb2VrcXNWT2NRRndDcDlyUFpabnJXKytySkEiLCJtYWMiOiIzNGI3MjI5YjU4MTEyZTI0YzlkZTQ0ODVmMjk0NmUyNjEyM2RiZTdhNDlkZGM0OGQxMTZjN2I5ZjExMmEyMWZjIiwidGFnIjoiIn0%3D; expires=Thu, 12 Oct 2023 13:19:18 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 1,\n                \"hash\": \"test-hash\",\n                \"firstName\": \"test1\",\n                \"lastName\": \"test2\",\n                \"phone\": \"+381234567890\",\n                \"email\": \"test@gmail.com\",\n                \"phoneConfirmed\": true,\n                \"emailConfirmed\": false,\n                \"createdAt\": \"2023-10-12 14:20:41\",\n                \"updatedAt\": null\n            },\n            {\n                \"id\": 2,\n                \"hash\": \"testhash2\",\n                \"firstName\": \"test3\",\n                \"lastName\": \"test3\",\n                \"phone\": \"+381234567890\",\n                \"email\": \"test2@gmail.com\",\n                \"phoneConfirmed\": true,\n                \"emailConfirmed\": true,\n                \"createdAt\": \"2023-10-12 14:21:18\",\n                \"updatedAt\": null\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 2\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/clients/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/admin/clients/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Get client",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/clients/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"clients",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.2"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.24"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Oct 2023 11:24:29 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6Ii93Vi9uQkIvSnJIckdIR2IwaGJ4cWc9PSIsInZhbHVlIjoibzFjUWczakZLSGQrTFNwYkpKcmJ2bzlYcDhHbVVYcXRxeFczNnYrQnJydjIxRTF4RXpMelZFbjkrcHpsTWdwM0lLWDE3cEtqU1JldkVzWU5MaklwRm1QWXJ1dVhXRmU3dFo3Tmxjc1YzZHZVblhkcEt1amhqbS9YVFg2bDhmdFEiLCJtYWMiOiIzYTk4YjQ4NjgyMjlmOGFjMTNlM2E3MTVmYzFjYjViMjY0M2JkZGNiZTlkYzZkMjQ2MGRkYWUxOWNhMjJlNmU4IiwidGFnIjoiIn0%3D; expires=Thu, 12 Oct 2023 13:24:29 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6InM0ZE8xWkE1SHdxWVVIckg4TFNsckE9PSIsInZhbHVlIjoiOHFRL29rclc3dmdKTXNPci9jU3NRREZSUWhURUd6YTljbC9Jd283ZjZrRjBJOHoxR3ZxNTRETDNwS29aREE2M1QyRU95VG9KV3J3VmZqWFR5NTZLNEYwS3JZdjZ6Q0txMlVETGg1cEJGeHhFUU1vWmt5Yys1bG5LeitpamlOY08iLCJtYWMiOiJjYWM4YTc0YjcxYTM5MzczNDkxMjEwYTIxY2MyMzU4MmMyYjFiY2Y1MDgyYTkxMmNiZWY0OTFiZmJmMGYzYWJmIiwidGFnIjoiIn0%3D; expires=Thu, 12 Oct 2023 13:24:29 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 1,\n        \"hash\": \"test-hash\",\n        \"firstName\": \"test1\",\n        \"lastName\": \"test2\",\n        \"phone\": \"+381234567890\",\n        \"email\": \"test@gmail.com\",\n        \"phoneConfirmed\": true,\n        \"emailConfirmed\": false,\n        \"createdAt\": \"2023-10-12 14:20:41\",\n        \"updatedAt\": null\n    }\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [

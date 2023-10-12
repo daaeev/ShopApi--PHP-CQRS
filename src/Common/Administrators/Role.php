@@ -2,7 +2,7 @@
 
 namespace Project\Common\Administrators;
 
-enum Role : string
+enum Role: string
 {
     case ADMIN = 'admin';
     case MANAGER = 'manager';

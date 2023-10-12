@@ -10,8 +10,8 @@ class AdminsList extends ApiRequest
     public function rules()
     {
         return [
-            'page' => 'nullable|numeric|integer|min:0',
-            'limit' => 'nullable|numeric|integer|min:0',
+            'page' => 'nullable|numeric|integer|min:1',
+            'limit' => 'nullable|numeric|integer|min:1',
         ];
     }
 

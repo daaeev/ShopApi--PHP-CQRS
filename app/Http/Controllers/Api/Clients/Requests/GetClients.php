@@ -1,28 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Api\Catalogue\Requests;
+namespace App\Http\Controllers\Api\Clients\Requests;
 
-use Project\Common\Language;
-use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Catalogue\Queries\ProductsListQuery;
+use Project\Modules\Client\Queries\GetClientsQuery;
 
-class CatalogueList extends ApiRequest
+class GetClients extends ApiRequest
 {
     public function rules()
     {
         return [
             'page' => 'nullable|numeric|integer|min:1',
             'limit' => 'nullable|numeric|integer|min:1',
+            'options' => 'nullable|array',
+            'options.hasNotEmptyCart' => 'boolean',
         ];
     }
 
-    public function getQuery(): ProductsListQuery
+    public function getQuery(): GetClientsQuery
     {
         $validated = $this->validated();
-        return new ProductsListQuery(
+        return new GetClientsQuery(
             $validated['page'] ?? 1,
             $validated['limit'] ?? 15,
+            $validated['options'] ?? []
         );
     }
 }
