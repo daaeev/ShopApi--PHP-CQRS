@@ -3,6 +3,7 @@
 namespace Project\Modules\Client\Infrastructure\Laravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Client extends Model
 {
@@ -20,4 +21,19 @@ class Client extends Model
         'phone_confirmed' => 'boolean',
         'email_confirmed' => 'boolean',
     ];
+
+    public function carts()
+    {
+        return $this->hasMany(ReadOnly\Cart::class, 'client_id');
+    }
+
+    public function scopeApplyOptions(Builder $query, array $options)
+    {
+        if (!empty($options['hasNotEmptyCart'])) {
+            $query->whereHas('carts', function (Builder $query) {
+                $query->where('active', true)
+                    ->has('items');
+            });
+        }
+    }
 }

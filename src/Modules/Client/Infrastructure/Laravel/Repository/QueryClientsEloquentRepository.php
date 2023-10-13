@@ -24,15 +24,16 @@ class QueryClientsEloquentRepository implements QueryClientsRepositoryInterface
     public function list(int $page, int $limit, array $options = []): PaginatedCollection
     {
         $query = Eloquent\Client::query()
+            ->applyOptions($options)
             ->paginate(
                 perPage: $limit,
                 page: $page,
             );
-
         $dtos = array_map(
             '\Project\Modules\Client\Infrastructure\Laravel\Utils\ClientEloquent2DTOConverter::convert',
             $query->items()
         );
+
         return new PaginatedCollection(
             $dtos,
             new Pagination(

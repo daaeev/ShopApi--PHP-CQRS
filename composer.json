@@ -9,6 +9,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/tinker": "^2.8",
+        "michaelachrisco/readonly": "^0.60.0",
         "propaganistas/laravel-phone": "^5.0",
         "webmozart/assert": "^1.11"
     },
