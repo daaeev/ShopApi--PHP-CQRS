@@ -5,12 +5,12 @@ namespace Project\Modules\Shopping\Cart\Queries\Handlers;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Queries\GetActiveCartQuery;
 use Project\Modules\Shopping\Cart\Presenters\CartPresenterInterface;
-use Project\Modules\Shopping\Cart\Repository\QueryCartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Repository\QueryCartsRepositoryInterface;
 
 class GetActiveCartHandler
 {
     public function __construct(
-        private QueryCartRepositoryInterface $carts,
+        private QueryCartsRepositoryInterface $carts,
         private CartPresenterInterface $presenter,
         private EnvironmentInterface $environment
     ) {}

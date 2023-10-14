@@ -3,12 +3,12 @@
 namespace Project\Modules\Administrators\Queries\Handlers;
 
 use Project\Modules\Administrators\Queries\AdminsListQuery;
-use Project\Modules\Administrators\Repository\QueryAdminRepositoryInterface;
+use Project\Modules\Administrators\Repository\QueryAdminsRepositoryInterface;
 
 class AdminsListHandler
 {
     public function __construct(
-        private QueryAdminRepositoryInterface $admins
+        private QueryAdminsRepositoryInterface $admins
     ) {}
 
     public function __invoke(AdminsListQuery $query): array

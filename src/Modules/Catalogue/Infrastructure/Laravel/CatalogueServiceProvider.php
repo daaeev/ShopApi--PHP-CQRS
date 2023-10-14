@@ -8,7 +8,7 @@ use Project\Modules\Catalogue\Queries;
 use Project\Modules\Catalogue\Repositories\QueryCatalogueRepositoryInterface;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\ProductServiceProvider;
 use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\CategoriesServiceProvider;
-use Project\Modules\Catalogue\Infrastructure\Laravel\Repositories\QueryCatalogueRepository;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Repositories\QueryCatalogueEloquentRepository;
 use Project\Modules\Catalogue\Settings\Infrastructure\Laravel\CatalogueSettingsServiceProvider;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\ProductContentServiceProvider;
 use Project\Modules\Catalogue\Content\Category\Infrastructure\Laravel\CategoryContentServiceProvider;
@@ -30,7 +30,7 @@ class CatalogueServiceProvider extends ServiceProvider
     ];
 
     public array $singletons = [
-        QueryCatalogueRepositoryInterface::class => QueryCatalogueRepository::class
+        QueryCatalogueRepositoryInterface::class => QueryCatalogueEloquentRepository::class
     ];
 
     public function register()

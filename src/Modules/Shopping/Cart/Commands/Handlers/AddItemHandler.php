@@ -7,14 +7,14 @@ use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Commands\AddItemCommand;
 use Project\Modules\Shopping\Cart\Adapters\ProductsService;
-use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
 class AddItemHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private CartRepositoryInterface $carts,
+        private CartsRepositoryInterface $carts,
         private ProductsService $productsService,
         private EnvironmentInterface $environment
     ) {}

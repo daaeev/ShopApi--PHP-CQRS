@@ -8,7 +8,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Modules\Administrators\Entity\AdminId;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Modules\Administrators\Commands\CreateAdminCommand;
-use Project\Modules\Administrators\Repository\MemoryAdminRepository;
+use Project\Modules\Administrators\Repository\AdminsMemoryRepository;
 use Project\Modules\Administrators\Commands\Handlers\CreateAdminHandler;
 
 class CreateAdminHandlerTest extends \PHPUnit\Framework\TestCase
@@ -28,7 +28,7 @@ class CreateAdminHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testCreate()
     {
-        $repository = new MemoryAdminRepository(new Hydrator);
+        $repository = new AdminsMemoryRepository(new Hydrator);
         $command = new CreateAdminCommand(
             $name = 'admin',
             $login = $this->correctAdminLogin,

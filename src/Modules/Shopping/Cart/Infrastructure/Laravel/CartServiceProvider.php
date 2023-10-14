@@ -11,10 +11,10 @@ use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Shopping\Cart\Presenters\CartPresenter;
 use Project\Modules\Catalogue\Api\Events\Product as ProductEvents;
 use Project\Modules\Shopping\Cart\Presenters\CartPresenterInterface;
-use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
-use Project\Modules\Shopping\Cart\Repository\QueryCartRepositoryInterface;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository\CartRepository;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository\QueryCartRepository;
+use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
+use Project\Modules\Shopping\Cart\Repository\QueryCartsRepositoryInterface;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository\CartsEloquentRepository;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository\QueryCartsEloquentRepository;
 
 class CartServiceProvider extends ServiceProvider
 {
@@ -38,8 +38,8 @@ class CartServiceProvider extends ServiceProvider
     ];
 
     public array $singletons = [
-        CartRepositoryInterface::class => CartRepository::class,
-        QueryCartRepositoryInterface::class => QueryCartRepository::class,
+        CartsRepositoryInterface::class => CartsEloquentRepository::class,
+        QueryCartsRepositoryInterface::class => QueryCartsEloquentRepository::class,
         CartPresenterInterface::class => CartPresenter::class,
     ];
 

@@ -12,20 +12,20 @@ use Project\Modules\Catalogue\Product\Entity\Product;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Product\Entity\ProductId;
 use Project\Modules\Catalogue\Product\Commands\UpdateProductCommand;
-use Project\Modules\Catalogue\Product\Repository\MemoryProductRepository;
-use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\ProductsMemoryRepository;
+use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 use Project\Modules\Catalogue\Product\Commands\Handlers\UpdateProductHandler;
 
 class UpdateProductTest extends \PHPUnit\Framework\TestCase
 {
     use ProductFactory;
 
-    private ProductRepositoryInterface $products;
+    private ProductsRepositoryInterface $products;
     private EventDispatcherInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->products = new MemoryProductRepository(new Hydrator);
+        $this->products = new ProductsMemoryRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
         $this->dispatcher->expects($this->exactly(5)) // product updated, code changed, prices changed, activity changed, availability changed

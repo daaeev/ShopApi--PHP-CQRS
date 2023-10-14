@@ -9,14 +9,14 @@ use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Product\Commands\UpdateProductCommand;
-use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 
 class UpdateProductHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private ProductRepositoryInterface $products,
+        private ProductsRepositoryInterface $products,
     ) {}
 
     public function __invoke(UpdateProductCommand $command): void

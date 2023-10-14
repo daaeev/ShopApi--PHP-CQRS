@@ -7,14 +7,14 @@ use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 use Project\Modules\Shopping\Discounts\Promocodes\Commands\CreatePromocodeCommand;
-use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodeRepositoryInterface;
+use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 
 class CreatePromocodeHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private PromocodeRepositoryInterface $promocodes
+        private PromocodesRepositoryInterface $promocodes
     ) {}
 
     public function __invoke(CreatePromocodeCommand $command): int

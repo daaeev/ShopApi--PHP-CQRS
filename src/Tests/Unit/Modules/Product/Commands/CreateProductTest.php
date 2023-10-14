@@ -10,20 +10,20 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Modules\Catalogue\Api\DTO\Product\Price;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;
-use Project\Modules\Catalogue\Product\Repository\MemoryProductRepository;
-use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\ProductsMemoryRepository;
+use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 use Project\Modules\Catalogue\Product\Commands\Handlers\CreateProductHandler;
 
 class CreateProductTest extends \PHPUnit\Framework\TestCase
 {
     use ProductFactory;
 
-    private ProductRepositoryInterface $products;
+    private ProductsRepositoryInterface $products;
     private EventDispatcherInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->products = new MemoryProductRepository(new Hydrator);
+        $this->products = new ProductsMemoryRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
         $this->dispatcher->expects($this->exactly(2)) // product created, product updated

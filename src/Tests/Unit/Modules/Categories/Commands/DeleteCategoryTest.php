@@ -8,20 +8,20 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
 use Project\Modules\Catalogue\Categories\Commands\DeleteCategoryCommand;
-use Project\Modules\Catalogue\Categories\Repository\MemoryCategoryRepository;
-use Project\Modules\Catalogue\Categories\Repository\CategoryRepositoryInterface;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesMemoryRepository;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Commands\Handlers\DeleteCategoryHandler;
 
 class DeleteCategoryTest extends \PHPUnit\Framework\TestCase
 {
     use ProductFactory, CategoryFactory;
 
-    private CategoryRepositoryInterface $categories;
+    private CategoriesRepositoryInterface $categories;
     private EventDispatcherInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->categories = new MemoryCategoryRepository(new Hydrator);
+        $this->categories = new CategoriesMemoryRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
         $this->dispatcher->expects($this->once()) // Category deleted

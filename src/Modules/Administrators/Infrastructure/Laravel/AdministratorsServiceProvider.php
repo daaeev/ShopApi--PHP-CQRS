@@ -7,12 +7,12 @@ use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Administrators\Commands;
 use Project\Modules\Administrators\Queries;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
-use Project\Modules\Administrators\Repository\AdminRepositoryInterface;
+use Project\Modules\Administrators\Repository\AdminsRepositoryInterface;
 use Project\Modules\Administrators\Infrastructure\Laravel\Console;
-use Project\Modules\Administrators\Repository\QueryAdminRepositoryInterface;
-use Project\Modules\Administrators\Infrastructure\Laravel\Repository\AdminsRepository;
+use Project\Modules\Administrators\Repository\QueryAdminsRepositoryInterface;
+use Project\Modules\Administrators\Infrastructure\Laravel\Repository\AdminsEloquentRepository;
 use Project\Modules\Administrators\Infrastructure\Laravel\AuthManager\GuardAuthManager;
-use Project\Modules\Administrators\Infrastructure\Laravel\Repository\QueryAdminsRepository;
+use Project\Modules\Administrators\Infrastructure\Laravel\Repository\QueryAdminsEloquentRepository;
 
 class AdministratorsServiceProvider extends ServiceProvider
 {
@@ -32,8 +32,8 @@ class AdministratorsServiceProvider extends ServiceProvider
     private array $eventsMapping = [];
 
     public array $singletons = [
-        AdminRepositoryInterface::class => AdminsRepository::class,
-        QueryAdminRepositoryInterface::class => QueryAdminsRepository::class,
+        AdminsRepositoryInterface::class => AdminsEloquentRepository::class,
+        QueryAdminsRepositoryInterface::class => QueryAdminsEloquentRepository::class,
         AuthManagerInterface::class => GuardAuthManager::class,
     ];
 

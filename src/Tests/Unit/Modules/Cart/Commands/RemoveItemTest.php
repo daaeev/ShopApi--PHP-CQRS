@@ -10,15 +10,15 @@ use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Adapters\ProductsService;
 use Project\Modules\Shopping\Cart\Commands\RemoveItemCommand;
-use Project\Modules\Shopping\Cart\Repository\MemoryCartRepository;
-use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Repository\CartsMemoryRepository;
+use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Shopping\Cart\Commands\Handlers\RemoveItemHandler;
 
 class RemoveItemTest extends \PHPUnit\Framework\TestCase
 {
     use CartFactory;
 
-    private CartRepositoryInterface $carts;
+    private CartsRepositoryInterface $carts;
     private ProductsService $productsService;
     private EnvironmentInterface $environment;
     private Client $client;
@@ -27,7 +27,7 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->client = new Client(md5(rand()), rand(1, 100));
-        $this->carts = new MemoryCartRepository(new Hydrator);
+        $this->carts = new CartsMemoryRepository(new Hydrator);
 
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)
             ->getMock();

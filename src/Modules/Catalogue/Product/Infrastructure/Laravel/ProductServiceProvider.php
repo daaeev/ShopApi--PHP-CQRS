@@ -6,10 +6,10 @@ use Illuminate\Support\ServiceProvider;
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Catalogue\Product\Queries;
 use Project\Modules\Catalogue\Product\Commands;
-use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
-use Project\Modules\Catalogue\Product\Repository\QueryProductRepositoryInterface;
-use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository\ProductRepository;
-use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository\QueryProductRepository;
+use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\QueryProductsRepositoryInterface;
+use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository\ProductsEloquentRepository;
+use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository\QueryProductsEloquentRepository;
 
 class ProductServiceProvider extends ServiceProvider
 {
@@ -24,11 +24,9 @@ class ProductServiceProvider extends ServiceProvider
         Queries\ProductsListQuery::class => Queries\Handlers\ProductsListHandler::class,
     ];
 
-    private array $eventsMapping = [];
-
     public array $singletons = [
-        ProductRepositoryInterface::class => ProductRepository::class,
-        QueryProductRepositoryInterface::class => QueryProductRepository::class,
+        ProductsRepositoryInterface::class => ProductsEloquentRepository::class,
+        QueryProductsRepositoryInterface::class => QueryProductsEloquentRepository::class,
     ];
 
     public function boot()

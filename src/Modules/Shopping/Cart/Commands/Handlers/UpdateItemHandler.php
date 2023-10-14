@@ -8,14 +8,14 @@ use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Adapters\ProductsService;
 use Project\Modules\Shopping\Cart\Commands\UpdateItemCommand;
-use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
 class UpdateItemHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private CartRepositoryInterface $carts,
+        private CartsRepositoryInterface $carts,
         private ProductsService $productsService,
         private EnvironmentInterface $environment
     ) {}

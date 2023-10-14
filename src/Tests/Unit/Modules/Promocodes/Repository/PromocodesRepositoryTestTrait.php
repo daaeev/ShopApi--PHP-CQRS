@@ -8,13 +8,13 @@ use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
-use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodeRepositoryInterface;
+use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 
 trait PromocodesRepositoryTestTrait
 {
     use PromocodeFactory;
 
-    protected PromocodeRepositoryInterface $promocodes;
+    protected PromocodesRepositoryInterface $promocodes;
 
     public function testAdd()
     {

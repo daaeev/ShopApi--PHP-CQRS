@@ -7,7 +7,7 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Modules\Administrators\Commands\UpdateAdminCommand;
-use Project\Modules\Administrators\Repository\MemoryAdminRepository;
+use Project\Modules\Administrators\Repository\AdminsMemoryRepository;
 use Project\Modules\Administrators\Commands\Handlers\UpdateAdminHandler;
 
 class UpdateAdminHandlerTest extends \PHPUnit\Framework\TestCase
@@ -28,7 +28,7 @@ class UpdateAdminHandlerTest extends \PHPUnit\Framework\TestCase
     public function testCreate()
     {
         $initial = $this->generateAdmin();
-        $repository = new MemoryAdminRepository(new Hydrator);
+        $repository = new AdminsMemoryRepository(new Hydrator);
         $repository->add($initial);
 
         $command = new UpdateAdminCommand(

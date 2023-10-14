@@ -6,17 +6,17 @@ use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Commands\UsePromocodeCommand;
-use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
-use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodeRepositoryInterface;
+use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
+use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 
 class UsePromocodeHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private CartRepositoryInterface $carts,
+        private CartsRepositoryInterface $carts,
         private EnvironmentInterface $environment,
-        private PromocodeRepositoryInterface $promocodes,
+        private PromocodesRepositoryInterface $promocodes,
     ) {}
 
     public function __invoke(UsePromocodeCommand $command): void

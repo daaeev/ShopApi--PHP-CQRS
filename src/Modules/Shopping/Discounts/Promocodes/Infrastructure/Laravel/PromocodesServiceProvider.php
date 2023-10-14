@@ -7,8 +7,8 @@ use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Shopping\Discounts\Promocodes\Commands;
 use Project\Modules\Shopping\Discounts\Promocodes\Queries;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodeRepository;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\QueryPromocodesRepository;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodesEloquentRepository;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\QueryPromocodesEloquentRepository;
 
 class PromocodesServiceProvider extends ServiceProvider
 {
@@ -26,8 +26,8 @@ class PromocodesServiceProvider extends ServiceProvider
     ];
 
     public array $singletons = [
-        Repository\PromocodeRepositoryInterface::class => PromocodeRepository::class,
-        Repository\QueryPromocodeRepositoryInterface::class => QueryPromocodesRepository::class,
+        Repository\PromocodesRepositoryInterface::class => PromocodesEloquentRepository::class,
+        Repository\QueryPromocodesRepositoryInterface::class => QueryPromocodesEloquentRepository::class,
     ];
 
     public function boot()

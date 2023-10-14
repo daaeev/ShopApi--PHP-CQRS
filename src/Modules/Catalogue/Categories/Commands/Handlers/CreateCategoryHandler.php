@@ -8,16 +8,16 @@ use Project\Modules\Catalogue\Product\Entity\ProductId;
 use Project\Modules\Catalogue\Categories\Entity\Category;
 use Project\Modules\Catalogue\Categories\Entity\CategoryId;
 use Project\Modules\Catalogue\Categories\Commands\CreateCategoryCommand;
-use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
-use Project\Modules\Catalogue\Categories\Repository\CategoryRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 
 class CreateCategoryHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private CategoryRepositoryInterface $categories,
-        private ProductRepositoryInterface $products
+        private CategoriesRepositoryInterface $categories,
+        private ProductsRepositoryInterface $products
     ) {}
 
     public function __invoke(CreateCategoryCommand $command): int

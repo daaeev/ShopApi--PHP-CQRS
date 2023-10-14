@@ -8,14 +8,14 @@ use Project\Modules\Administrators\Entity\Admin;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Administrators\Entity\AdminId;
 use Project\Modules\Administrators\Commands\UpdateAdminCommand;
-use Project\Modules\Administrators\Repository\AdminRepositoryInterface;
+use Project\Modules\Administrators\Repository\AdminsRepositoryInterface;
 
 class UpdateAdminHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private AdminRepositoryInterface $admins
+        private AdminsRepositoryInterface $admins
     ) {}
 
     public function __invoke(UpdateAdminCommand $command): void

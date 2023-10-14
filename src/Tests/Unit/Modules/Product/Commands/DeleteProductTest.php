@@ -7,20 +7,20 @@ use Project\Common\Repository\NotFoundException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Product\Commands\DeleteProductCommand;
-use Project\Modules\Catalogue\Product\Repository\MemoryProductRepository;
-use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\ProductsMemoryRepository;
+use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 use Project\Modules\Catalogue\Product\Commands\Handlers\DeleteProductHandler;
 
 class DeleteProductTest extends \PHPUnit\Framework\TestCase
 {
     use ProductFactory;
 
-    private ProductRepositoryInterface $products;
+    private ProductsRepositoryInterface $products;
     private EventDispatcherInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->products = new MemoryProductRepository(new Hydrator);
+        $this->products = new ProductsMemoryRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
         parent::setUp();

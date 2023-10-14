@@ -8,24 +8,24 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
 use Project\Modules\Catalogue\Categories\Commands\UpdateCategoryCommand;
-use Project\Modules\Catalogue\Product\Repository\MemoryProductRepository;
-use Project\Modules\Catalogue\Product\Repository\ProductRepositoryInterface;
-use Project\Modules\Catalogue\Categories\Repository\MemoryCategoryRepository;
-use Project\Modules\Catalogue\Categories\Repository\CategoryRepositoryInterface;
+use Project\Modules\Catalogue\Product\Repository\ProductsMemoryRepository;
+use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesMemoryRepository;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Commands\Handlers\UpdateCategoryHandler;
 
 class UpdateCategoryTest extends \PHPUnit\Framework\TestCase
 {
     use ProductFactory, CategoryFactory;
 
-    private CategoryRepositoryInterface $categories;
-    private ProductRepositoryInterface $products;
+    private CategoriesRepositoryInterface $categories;
+    private ProductsRepositoryInterface $products;
     private EventDispatcherInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->products = new MemoryProductRepository(new Hydrator);
-        $this->categories = new MemoryCategoryRepository(new Hydrator);
+        $this->products = new ProductsMemoryRepository(new Hydrator);
+        $this->categories = new CategoriesMemoryRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
         $this->dispatcher->expects($this->once()) // Category updated

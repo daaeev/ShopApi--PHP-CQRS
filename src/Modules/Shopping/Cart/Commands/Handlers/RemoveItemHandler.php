@@ -7,14 +7,14 @@ use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Commands\RemoveItemCommand;
-use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
 class RemoveItemHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private CartRepositoryInterface $carts,
+        private CartsRepositoryInterface $carts,
         private EnvironmentInterface $environment
     ) {}
 

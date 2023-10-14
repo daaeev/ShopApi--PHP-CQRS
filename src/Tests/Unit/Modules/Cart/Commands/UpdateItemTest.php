@@ -11,15 +11,15 @@ use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Adapters\ProductsService;
 use Project\Modules\Shopping\Cart\Commands\UpdateItemCommand;
-use Project\Modules\Shopping\Cart\Repository\MemoryCartRepository;
-use Project\Modules\Shopping\Cart\Repository\CartRepositoryInterface;
+use Project\Modules\Shopping\Cart\Repository\CartsMemoryRepository;
+use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Shopping\Cart\Commands\Handlers\UpdateItemHandler;
 
 class UpdateItemTest extends \PHPUnit\Framework\TestCase
 {
     use CartFactory;
 
-    private CartRepositoryInterface $carts;
+    private CartsRepositoryInterface $carts;
     private ProductsService $productsService;
     private EnvironmentInterface $environment;
     private Client $client;
@@ -28,7 +28,7 @@ class UpdateItemTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->client = new Client(md5(rand()), rand(1, 100));
-        $this->carts = new MemoryCartRepository(new Hydrator);
+        $this->carts = new CartsMemoryRepository(new Hydrator);
 
         $this->productsService = $this->getMockBuilder(ProductsService::class)
             ->disableOriginalConstructor()

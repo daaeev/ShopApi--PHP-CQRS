@@ -6,12 +6,12 @@ use Illuminate\Console\Command;
 use Project\Common\Administrators\Role;
 use Project\Modules\Administrators\Entity\Admin;
 use Project\Modules\Administrators\Entity\AdminId;
-use Project\Modules\Administrators\Repository\AdminRepositoryInterface;
+use Project\Modules\Administrators\Repository\AdminsRepositoryInterface;
 
 class MakeAdmin extends Command
 {
     public function __construct(
-        private AdminRepositoryInterface $admins
+        private AdminsRepositoryInterface $admins
     ) {
         parent::__construct();
     }

@@ -7,18 +7,18 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity;
 use Project\Modules\Shopping\Discounts\Promocodes\Commands\CreatePromocodeCommand;
-use Project\Modules\Shopping\Discounts\Promocodes\Repository\MemoryPromocodesRepository;
-use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodeRepositoryInterface;
+use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesMemoryRepository;
+use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Commands\Handlers\CreatePromocodeHandler;
 
 class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
 {
-    private PromocodeRepositoryInterface $promocodes;
+    private PromocodesRepositoryInterface $promocodes;
     private EventDispatcherInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->promocodes = new MemoryPromocodesRepository(new Hydrator);
+        $this->promocodes = new PromocodesMemoryRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
         $this->dispatcher->expects($this->exactly(1)) // promo created

@@ -6,10 +6,10 @@ use Illuminate\Support\ServiceProvider;
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Catalogue\Categories\Commands;
 use Project\Modules\Catalogue\Categories\Queries;
-use Project\Modules\Catalogue\Categories\Repository\CategoryRepositoryInterface;
-use Project\Modules\Catalogue\Categories\Repository\QueryCategoryRepositoryInterface;
-use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Repository\CategoryRepository;
-use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Repository\QueryCategoryRepository;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
+use Project\Modules\Catalogue\Categories\Repository\QueryCategoriesRepositoryInterface;
+use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Repository\CategoriesEloquentRepository;
+use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Repository\QueryCategoriesEloquentRepository;
 
 class CategoriesServiceProvider extends ServiceProvider
 {
@@ -27,8 +27,8 @@ class CategoriesServiceProvider extends ServiceProvider
     private array $eventsMapping = [];
 
     public array $singletons = [
-        CategoryRepositoryInterface::class => CategoryRepository::class,
-        QueryCategoryRepositoryInterface::class => QueryCategoryRepository::class,
+        CategoriesRepositoryInterface::class => CategoriesEloquentRepository::class,
+        QueryCategoriesRepositoryInterface::class => QueryCategoriesEloquentRepository::class,
     ];
 
     public function boot()
