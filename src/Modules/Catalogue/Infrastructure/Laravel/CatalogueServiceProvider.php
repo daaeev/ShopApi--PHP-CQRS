@@ -5,9 +5,15 @@ namespace Project\Modules\Catalogue\Infrastructure\Laravel;
 use Illuminate\Support\ServiceProvider;
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Catalogue\Queries;
+use Project\Modules\Catalogue\Presenters\ProductPresenterInterface;
+use Project\Modules\Catalogue\Presenters\CategoryPresenterInterface;
+use Project\Modules\Catalogue\Product\Queries\Handlers\GetProductHandler;
 use Project\Modules\Catalogue\Repositories\QueryCatalogueRepositoryInterface;
+use Project\Modules\Catalogue\Categories\Queries\Handlers\GetCategoryHandler;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\ProductServiceProvider;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Presenters\ProductAllContentEloquentPresenter;
 use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\CategoriesServiceProvider;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Presenters\CategoryAllContentEloquentPresenter;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Repositories\QueryCatalogueEloquentRepository;
 use Project\Modules\Catalogue\Settings\Infrastructure\Laravel\CatalogueSettingsServiceProvider;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\ProductContentServiceProvider;
@@ -26,16 +32,27 @@ class CatalogueServiceProvider extends ServiceProvider
     private array $queriesMapping = [
         Queries\ProductDetailsQuery::class => Queries\Handlers\ProductDetailsHandler::class,
         Queries\ProductsListQuery::class => Queries\Handlers\ProductsListHandler::class,
-        Queries\AllProductContentsQuery::class => Queries\Handlers\AllProductContentsHandler::class,
     ];
 
     public array $singletons = [
-        QueryCatalogueRepositoryInterface::class => QueryCatalogueEloquentRepository::class
+        QueryCatalogueRepositoryInterface::class => QueryCatalogueEloquentRepository::class,
     ];
 
     public function register()
     {
         $this->registerProviders();
+        $this->registerPresenters();
+    }
+
+    private function registerPresenters()
+    {
+        $this->app->when(GetCategoryHandler::class)
+            ->needs(CategoryPresenterInterface::class)
+            ->give(CategoryAllContentEloquentPresenter::class);
+
+        $this->app->when(GetProductHandler::class)
+            ->needs(ProductPresenterInterface::class)
+            ->give(ProductAllContentEloquentPresenter::class);
     }
 
     private function registerProviders()

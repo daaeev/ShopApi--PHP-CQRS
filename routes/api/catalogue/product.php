@@ -5,7 +5,6 @@ use Project\Common\Administrators\Role;
 use App\Http\Controllers\Api\Catalogue\Product\ProductController;
 use App\Http\Controllers\Api\Catalogue\ProductContent\ContentController;
 use App\Http\Controllers\Api\Catalogue\Settings\SettingsController;
-use App\Http\Controllers\Api\Catalogue\CatalogueController;
 
 Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])
     ->prefix('admin/catalogue/products')
@@ -22,15 +21,4 @@ Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])
         Route::delete('image/{id}', [ContentController::class, 'deleteImage']);
 
         Route::put('{id}/settings', [SettingsController::class, 'update']);
-    });
-
-Route::prefix('catalogue')->group(function () {
-    Route::get('{code}', [CatalogueController::class, 'details']);
-    Route::get('', [CatalogueController::class, 'list']);
-});
-
-Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])
-    ->prefix('admin/catalogue')
-    ->group(function () {
-        Route::get('{id}', [CatalogueController::class, 'allProductContents']);
     });

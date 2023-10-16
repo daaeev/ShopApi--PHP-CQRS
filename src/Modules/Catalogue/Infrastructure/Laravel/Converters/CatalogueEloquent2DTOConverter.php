@@ -8,8 +8,8 @@ use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Models as Eloquent;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models\Image;
-use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Models\Price as EloquentPrice;
-use Project\Modules\Catalogue\Api\DTO\Product\Price as DTOPrice;
+use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Utils\CategoryEloquent2DTOConverter;
+use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Converters\ProductEloquent2DTOConverter;
 
 class CatalogueEloquent2DTOConverter
 {
@@ -21,25 +21,7 @@ class CatalogueEloquent2DTOConverter
     public function convert(Eloquent\CatalogueProduct $product): DTO\CatalogueProduct
     {
         return new DTO\CatalogueProduct(
-            new DTO\Product\Product(
-                $product->id,
-                $product->name,
-                $product->code,
-                $product->active,
-                $product->availability,
-                array_column($product->colors->all(), 'color'),
-                array_column($product->sizes->all(), 'size'),
-                array_map(function (EloquentPrice $price) {
-                    return new DTOPrice(
-                        $price->currency,
-                        $price->price,
-                    );
-                }, $product->prices->all()),
-                new \DateTimeImmutable($product->created_at),
-                $product->updated_at
-                    ? new \DateTimeImmutable($product->updated_at)
-                    : null,
-            ),
+            ProductEloquent2DTOConverter::convert($product),
             new DTO\Product\Content(
                 $product->content?->language ?? $this->environment->getLanguage()->value,
                 $product->content?->name ?? '',
@@ -66,17 +48,7 @@ class CatalogueEloquent2DTOConverter
             ),
             array_map(function (Eloquent\CatalogueCategory $category) {
                 return new DTO\CatalogueCategory(
-                    new DTO\Category\Category(
-                        $category->id,
-                        $category->name,
-                        $category->slug,
-                        array_column($category->productsRef->all(), 'product_id'),
-                        $category->parent_id,
-                        new \DateTimeImmutable($category->created_at),
-                        $category->updated_at
-                            ? new \DateTimeImmutable($category->updated_at)
-                            : null
-                    ),
+                    CategoryEloquent2DTOConverter::convert($category),
                     new DTO\Category\Content(
                         $category->content?->language ?? $this->environment->getLanguage()->value,
                         $category->content?->name ?? '',

@@ -15,9 +15,4 @@ class CatalogueController extends BaseApiController
     {
         return $this->success($this->dispatchQuery($request->getQuery()));
     }
-
-    public function allProductContents(Requests\AllProductContentsRequest $request)
-    {
-        return $this->success($this->dispatchQuery($request->getQuery()));
-    }
 }

@@ -13,13 +13,12 @@ class CategoryContentService implements CategoryContentServiceInterface
     public function updateContent(Commands\UpdateCategoryContentCommand $command): void
     {
         $this->guardCategoryExists($command->category);
-        Eloquent\Content::updateOrCreate(
-            [
-                'category' => $command->category,
-                'language' => $command->language
-            ],
-            $command->fields
-        );
+        $this->clearLocalization($command->category, $command->language);
+        Eloquent\Content::create([
+            'category' => $command->category,
+            'language' => $command->language,
+            ...$command->fields
+        ]);
     }
 
     private function guardCategoryExists(int $category): void
@@ -31,5 +30,13 @@ class CategoryContentService implements CategoryContentServiceInterface
         if (!$categoryExists) {
             throw new NotFoundException('Category does not exists');
         }
+    }
+
+    private function clearLocalization(int $category, string $language): void
+    {
+        Eloquent\Content::query()
+            ->where('category', $category)
+            ->where('language', $language)
+            ->delete();
     }
 }

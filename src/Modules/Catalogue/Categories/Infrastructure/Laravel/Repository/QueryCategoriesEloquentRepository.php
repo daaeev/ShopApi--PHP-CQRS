@@ -8,6 +8,7 @@ use Project\Modules\Catalogue\Api\DTO\Category as DTO;
 use Project\Common\Entity\Collections\PaginatedCollection;
 use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Models as Eloquent;
 use Project\Modules\Catalogue\Categories\Repository\QueryCategoriesRepositoryInterface;
+use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Utils\CategoryEloquent2DTOConverter;
 
 class QueryCategoriesEloquentRepository implements QueryCategoriesRepositoryInterface
 {
@@ -22,22 +23,7 @@ class QueryCategoriesEloquentRepository implements QueryCategoriesRepositoryInte
             throw new NotFoundException('Category does not exists');
         }
 
-        return $this->hydrate($record);
-    }
-
-    public function hydrate(Eloquent\Category $record): DTO\Category
-    {
-        return new DTO\Category(
-            $record->id,
-            $record->name,
-            $record->slug,
-            array_column($record->productsRef->all(), 'product_id'),
-            $record->parent_id,
-            new \DateTimeImmutable($record->created_at),
-            $record->updated_at
-                ? new \DateTimeImmutable($record->updated_at)
-                : null
-        );
+        return CategoryEloquent2DTOConverter::convert($record);
     }
 
     public function list(int $page, int $limit, array $options = []): PaginatedCollection
@@ -51,7 +37,9 @@ class QueryCategoriesEloquentRepository implements QueryCategoriesRepositoryInte
                 $page
             );
 
-        $items = array_map([$this, 'hydrate'], $query->items());
+        $items = array_map(function (Eloquent\Category $category) {
+            return CategoryEloquent2DTOConverter::convert($category);
+        }, $query->items());
         return new PaginatedCollection($items, new Pagination(
             $query->currentPage(),
             $query->perPage(),

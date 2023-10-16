@@ -10,30 +10,13 @@ use Project\Common\Entity\Collections\PaginatedCollection;
 use Project\Modules\Catalogue\Repositories\QueryCatalogueRepositoryInterface;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Models as Eloquent;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\CatalogueEloquent2DTOConverter;
-use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\CatalogueEloquentToArrayConverter;
 
 class QueryCatalogueEloquentRepository implements QueryCatalogueRepositoryInterface
 {
     public function __construct(
         private CatalogueEloquent2DTOConverter $dtoConverter,
-        private CatalogueEloquentToArrayConverter $allContentArrayConverter,
         private EnvironmentInterface $environment
     ) {}
-
-    public function allContent(int $id, array $options = []): array
-    {
-        $record = Eloquent\CatalogueProduct::query()
-            ->where('id', $id)
-            ->options($options)
-            ->includeAllContents($this->environment->getLanguage())
-            ->first();
-
-        if (empty($record)) {
-            throw new NotFoundException('Catalogue product does not exists');
-        }
-
-        return $this->allContentArrayConverter->convert($record);
-    }
 
     public function get(int $id, array $options = []): DTO\CatalogueProduct
     {

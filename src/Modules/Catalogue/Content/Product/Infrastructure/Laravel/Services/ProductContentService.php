@@ -20,13 +20,12 @@ class ProductContentService implements ProductContentServiceInterface
     public function updateContent(Commands\UpdateProductContentCommand $command): void
     {
         $this->guardProductExists($command->product);
-        Eloquent\Content::updateOrCreate(
-            [
-                'product' => $command->product,
-                'language' => $command->language
-            ],
-            $command->fields
-        );
+        $this->clearLocalization($command->product, $command->language);
+        Eloquent\Content::create([
+            'product' => $command->product,
+            'language' => $command->language,
+            ...$command->fields
+        ]);
     }
 
     private function guardProductExists(int $product): void
@@ -38,6 +37,14 @@ class ProductContentService implements ProductContentServiceInterface
         if (!$productExists) {
             throw new NotFoundException('Product does not exists');
         }
+    }
+
+    private function clearLocalization(int $product, string $language): void
+    {
+        Eloquent\Content::query()
+            ->where('product', $product)
+            ->where('language', $language)
+            ->delete();
     }
 
     public function updatePreview(Commands\UpdateProductPreviewCommand $command): void

@@ -8,6 +8,7 @@ use Project\Common\Entity\Collections\Pagination;
 use Project\Common\Entity\Collections\PaginatedCollection;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Models as Eloquent;
 use Project\Modules\Catalogue\Product\Repository\QueryProductsRepositoryInterface;
+use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Converters\ProductEloquent2DTOConverter;
 
 class QueryProductsEloquentRepository implements QueryProductsRepositoryInterface
 {
@@ -22,30 +23,7 @@ class QueryProductsEloquentRepository implements QueryProductsRepositoryInterfac
             throw new NotFoundException('Product does not exists');
         }
 
-        return $this->hydrate($record);
-    }
-
-    private function hydrate(Eloquent\Product $product): DTO\Product
-    {
-        return new DTO\Product(
-            $product->id,
-            $product->name,
-            $product->code,
-            $product->active,
-            $product->availability,
-            array_column($product->colors->all(), 'color'),
-            array_column($product->sizes->all(), 'size'),
-            array_map(function (Eloquent\Price $price) {
-                return new DTO\Price(
-                    $price->currency,
-                    $price->price,
-                );
-            }, $product->prices->all()),
-            new \DateTimeImmutable($product->created_at),
-            $product->updated_at
-                ? new \DateTimeImmutable($product->updated_at)
-                : null,
-        );
+        return ProductEloquent2DTOConverter::convert($record);
     }
 
     public function list(int $page, int $limit, array $options = []): PaginatedCollection
@@ -59,7 +37,9 @@ class QueryProductsEloquentRepository implements QueryProductsRepositoryInterfac
                 $page
             );
 
-        $items = array_map([$this, 'hydrate'], $query->items());
+        $items = array_map(function (Eloquent\Product $record) {
+            return ProductEloquent2DTOConverter::convert($record);
+        }, $query->items());
         return new PaginatedCollection($items, new Pagination(
             $query->currentPage(),
             $query->perPage(),
