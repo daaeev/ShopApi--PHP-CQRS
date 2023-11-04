@@ -8,8 +8,6 @@ use Project\Common\CQRS\Buses\CompositeEventBus;
 use Project\Common\CQRS\Buses\CompositeRequestBus;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Infrastructure\Laravel\Services\FileManager;
-use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBus;
 use Project\Modules\Client\Infrastructure\Laravel\ClientServiceProvider;
@@ -24,10 +22,6 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         AdministratorsServiceProvider::class,
         ShoppingServiceProvider::class,
         ClientServiceProvider::class,
-    ];
-
-    public $singletons = [
-        FileManagerInterface::class => FileManager::class
     ];
 
     public function register()
