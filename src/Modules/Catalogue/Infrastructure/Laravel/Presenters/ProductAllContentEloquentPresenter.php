@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Catalogue\Infrastructure\Laravel\Presenters;
 
-use Project\Common\Services\FileManager\Disk;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 use Project\Common\Services\FileManager\FileManagerInterface;
@@ -40,20 +39,16 @@ class ProductAllContentEloquentPresenter implements ProductPresenterInterface
             }, $record->contents->all()),
             'images' => [
                 'preview' => $record->preview?->image
-                    ? $this->fileManager->fullPath(
-                        config('project.storage.products-images')
-                        . DIRECTORY_SEPARATOR
-                        . $record->preview->image,
-                        Disk::from($record->preview->disk)
-                    )
+                    ? [
+                        'id' => $record->preview?->id,
+                        'image' => $this->fileManager->url($record->preview?->image)
+                    ]
                     : null,
                 'additional' => array_map(function (Image $image) {
-                    return $this->fileManager->fullPath(
-                        config('project.storage.products-images')
-                        . DIRECTORY_SEPARATOR
-                        . $image->image,
-                        Disk::from($image->disk)
-                    );
+                    return [
+                        'id' => $image->id,
+                        'image' => $this->fileManager->url($image->image)
+                    ];
                 }, $record->images->all()),
             ],
             'settings' => [

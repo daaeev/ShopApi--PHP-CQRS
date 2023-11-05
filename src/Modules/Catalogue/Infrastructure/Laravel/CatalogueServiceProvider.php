@@ -3,20 +3,29 @@
 namespace Project\Modules\Catalogue\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Storage;
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Catalogue\Queries;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use Project\Common\Services\FileManager\FileManager;
+use Project\Infrastructure\Laravel\Services\LaravelStorage;
+use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Modules\Catalogue\Presenters\ProductPresenterInterface;
 use Project\Modules\Catalogue\Presenters\CategoryPresenterInterface;
 use Project\Modules\Catalogue\Product\Queries\Handlers\GetProductHandler;
 use Project\Modules\Catalogue\Repositories\QueryCatalogueRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Queries\Handlers\GetCategoryHandler;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\ProductServiceProvider;
+use Project\Common\Services\FileManager\DirectoryNameGenerators\BaseDirectoryNameGenerator;
+use Project\Common\Services\FileManager\FileNameGenerators\TimestampPrefixFileNameGenerator;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\CatalogueEloquent2DTOConverter;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Presenters\ProductAllContentEloquentPresenter;
 use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\CategoriesServiceProvider;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Presenters\CategoryAllContentEloquentPresenter;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Repositories\QueryCatalogueEloquentRepository;
 use Project\Modules\Catalogue\Settings\Infrastructure\Laravel\CatalogueSettingsServiceProvider;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\ProductContentServiceProvider;
+use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Services\ProductContentService;
 use Project\Modules\Catalogue\Content\Category\Infrastructure\Laravel\CategoryContentServiceProvider;
 
 class CatalogueServiceProvider extends ServiceProvider
@@ -41,7 +50,41 @@ class CatalogueServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerProviders();
+        $this->registerFileManager();
         $this->registerPresenters();
+    }
+
+    private function registerProviders()
+    {
+        foreach ($this->providers as $provider) {
+            $this->app->register($provider);
+        }
+    }
+
+    private function registerFileManager()
+    {
+        $services = [
+            CatalogueEloquent2DTOConverter::class,
+            ProductContentService::class,
+            ProductAllContentEloquentPresenter::class,
+        ];
+
+        $this->app
+            ->when($services)
+            ->needs(FileManagerInterface::class)
+            ->give(function ($app) {
+                $dir = config('project.storage.products-images');
+                return new FileManager(
+                    new BaseDirectoryNameGenerator($dir),
+                    new TimestampPrefixFileNameGenerator,
+                    new LaravelStorage(Storage::build([
+                        'driver' => 'local',
+                        'root' => Storage::drive('public')->path(''),
+                        'url' => Storage::drive('public')->url(''),
+                        'visibility' => Filesystem::VISIBILITY_PUBLIC
+                    ]))
+                );
+            });
     }
 
     private function registerPresenters()
@@ -53,13 +96,6 @@ class CatalogueServiceProvider extends ServiceProvider
         $this->app->when(GetProductHandler::class)
             ->needs(ProductPresenterInterface::class)
             ->give(ProductAllContentEloquentPresenter::class);
-    }
-
-    private function registerProviders()
-    {
-        foreach ($this->providers as $provider) {
-            $this->app->register($provider);
-        }
     }
 
     public function boot()

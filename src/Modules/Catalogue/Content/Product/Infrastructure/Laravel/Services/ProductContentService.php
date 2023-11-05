@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Services;
 
-use Project\Common\Services\FileManager\Disk;
 use Project\Common\Services\FileManager\File;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Services\FileManager\FileManagerInterface;
@@ -56,33 +55,19 @@ class ProductContentService implements ProductContentServiceInterface
             ->first();
 
         if (!empty($currentImage)) {
-            $this->fileManager->delete(
-                config('project.storage.products-images')
-                . DIRECTORY_SEPARATOR
-                . $currentImage->image,
-                Disk::from($currentImage->disk)
-            );
+            $this->fileManager->delete($currentImage->image);
             $currentImage->delete();
         }
 
-        $newImage = $this->saveImage($command->image);
+        $newImage = $this->fileManager->save($command->image);
         $this->saveProductImage($command->product, $newImage, true);
-    }
-
-    private function saveImage(mixed $image): File
-    {
-        return $this->fileManager->save(
-            $image,
-            config('project.storage.products-images'),
-        );
     }
 
     private function saveProductImage(int $product, File $image, bool $isPreview): void
     {
         Eloquent\Image::create([
             'product' => $product,
-            'image' => $image->getFileName(),
-            'disk' => $image->getDisk(),
+            'image' => $image->fileName,
             'is_preview' => $isPreview,
         ]);
     }
@@ -90,7 +75,7 @@ class ProductContentService implements ProductContentServiceInterface
     public function addImage(Commands\AddProductImageCommand $command): void
     {
         $this->guardProductExists($command->product);
-        $newImage = $this->saveImage($command->image);
+        $newImage = $this->fileManager->save($command->image);
         $this->saveProductImage($command->product, $newImage, false);
     }
 
@@ -102,12 +87,7 @@ class ProductContentService implements ProductContentServiceInterface
             throw new NotFoundException('Image does not exists');
         }
 
-        $this->fileManager->delete(
-            config('project.storage.products-images')
-            . DIRECTORY_SEPARATOR
-            . $image->image,
-            Disk::from($image->disk)
-        );
+        $this->fileManager->delete($image->image);
         $image->delete();
     }
 }

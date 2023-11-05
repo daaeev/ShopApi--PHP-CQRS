@@ -43,7 +43,12 @@ class FileManagerTest extends TestCase
     public function testSave()
     {
         $file = new File('init/test.txt', 'test.txt', 'test');
-        $savedFile = new File('directory/new_test.txt', 'new_test.txt', 'test');
+        $fileToSave = new File($file->fullPath, 'new_test.txt', $file->content);
+        $savedFile = new File(
+            'new_fullpath/new_test.txt',
+            $fileToSave->fileName,
+            $fileToSave->content
+        );
 
         $this->fileNameGeneratorMock->expects($this->once())
             ->method('generateName')
@@ -57,7 +62,7 @@ class FileManagerTest extends TestCase
 
         $this->fileStorageMock->expects($this->once())
             ->method('save')
-            ->with($file, 'directory/new_test.txt')
+            ->with($fileToSave, 'directory/new_test.txt')
             ->willReturn($savedFile);
 
         $this->assertSame($savedFile, $this->fileManager->save($file));

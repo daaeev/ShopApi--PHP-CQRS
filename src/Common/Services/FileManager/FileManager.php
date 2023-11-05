@@ -15,7 +15,11 @@ class FileManager implements FileManagerInterface
         $newFileName = $this->fileNameGenerator->generateName($file->fileName);
         $newFileDirectory = $this->directoryNameGenerator->generateDirectoryName($newFileName);
         $relativeFilePath = $newFileDirectory . '/' . $newFileName;
-        return $this->storage->save($file, $relativeFilePath);
+        return $this->storage->save(new File(
+            $file->fullPath,
+            $newFileName,
+            $file->content
+        ), $relativeFilePath);
     }
 
     public function delete(string $fileName): void

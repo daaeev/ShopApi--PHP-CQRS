@@ -11,7 +11,6 @@ class Image extends Model
     protected $fillable = [
         'product',
         'image',
-        'disk',
         'is_preview',
     ];
 }

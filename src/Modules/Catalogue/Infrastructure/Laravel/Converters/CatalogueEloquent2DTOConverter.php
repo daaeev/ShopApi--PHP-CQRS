@@ -3,7 +3,6 @@
 namespace Project\Modules\Catalogue\Infrastructure\Laravel\Converters;
 
 use Project\Modules\Catalogue\Api\DTO;
-use Project\Common\Services\FileManager\Disk;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Models as Eloquent;
@@ -27,21 +26,9 @@ class CatalogueEloquent2DTOConverter
                 $product->content?->name ?? '',
                 $product->content?->description ?? '',
             ),
-            $product->preview?->image
-                ? $this->fileManager->fullPath(
-                config('project.storage.products-images')
-                . DIRECTORY_SEPARATOR
-                . $product->preview->image,
-                Disk::from($product->preview->disk)
-                )
-                : null,
+            $this->fileManager->url($product->preview?->image),
             array_map(function (Image $image) {
-                return $this->fileManager->fullPath(
-                    config('project.storage.products-images')
-                    . DIRECTORY_SEPARATOR
-                    . $image->image,
-                    Disk::from($image->disk)
-                );
+                return $this->fileManager->url($image->image);
             }, $product->images->all()),
             new DTO\Product\Settings(
                 $product->settings?->displayed ?? false
