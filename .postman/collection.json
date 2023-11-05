@@ -630,7 +630,7 @@
 							"formdata": [
 								{
 									"key": "product",
-									"value": "2",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -1250,7 +1250,7 @@
 					},
 					"response": [
 						{
-							"name": "Example: Get cart",
+							"name": "Example: Get active cart",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1277,16 +1277,32 @@
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
-									"key": "Date",
-									"value": "Sat, 09 Sep 2023 11:41:02 GMT"
+									"key": "Server",
+									"value": "nginx/1.25.2"
 								},
 								{
-									"key": "Server",
-									"value": "Apache"
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.24"
 								},
 								{
 									"key": "Cache-Control",
 									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Oct 2023 15:08:48 GMT"
 								},
 								{
 									"key": "Access-Control-Allow-Origin",
@@ -1294,31 +1310,15 @@
 								},
 								{
 									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6Ii83NFl4dGhNd3cwNnN4cVpQbG1JSHc9PSIsInZhbHVlIjoiSFZzVmgxeEdWejMrNFFKUXR2ZFJhbktJcis5OFlhMjhmVmZlSG5HbG5ybGNTamo4MFBYYnU5TDhkWFVPZ3RWRGh0U1cxckJ2dEVPd3E1T0lsanRCQ3ZGMXpEaWxwL1RJa0J0L3J5MWViMGNZQkh0VkNRQ29RYmI2Ui9wRHNCMEYiLCJtYWMiOiJkNTA0MGNiMWZkY2NjODFiZDhiZjdhYjA3MDNmYTBjZDU3ZjUxOTYyODQwNDYzODRhODA1ZDhjNTIzNzM1ZDI5IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:41:02 GMT; Max-Age=7200; path=/; samesite=lax"
+									"value": "XSRF-TOKEN=eyJpdiI6IkU2NStSNFEzTTRzL2s3NGZwTXY4NUE9PSIsInZhbHVlIjoiczZ1MXJQVzAvamFjVXc2TlU0dWtWU1hUbGs1VEowSGxXQWpOZlF5QzlaMFptYTBWRHNSd3cwanRWR2VMaXU1ZVNJUjNad1ZPbDZGMGxaL013NE5lVi9vTFdLRWxJRGRUYmdFZ05vMXRCaWg4dGpVNnJlS3ZqWklYRW40RWJQMFoiLCJtYWMiOiI2ZTViODI5ODgyZTliNzIwMGMyZGRiNjhiYTQ5ZGExZDdkOTM4NmUwZWQ1YWVmZmY1YTUxMzc0MTIxNTdkZjQyIiwidGFnIjoiIn0%3D; expires=Thu, 12 Oct 2023 17:08:48 GMT; Max-Age=7200; path=/; samesite=lax"
 								},
 								{
 									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IlBqbVFPVUVxc3BiTVRSd0xOQWNPK3c9PSIsInZhbHVlIjoiR3g5KzBBLzhoREt2QWZRQ211TFlCMkpFemU0NkNwMFBLT01PaE4yMXpJeXYrSkVBa1JZeWQ2U0E3RC9IMU1qWWdlTlVyS1NZZkcxa1ozbzVpNjl4SWlmT3RzTVVLRHlrcW9UUFRLTXRYVnNsdFJOT3BvL0NYS3FsMDFXWVJsaGsiLCJtYWMiOiI3MmNjYTZiYjAwZDdmY2E0NjE0YzhiYWQ0YjgyZmEyNzQ0NmE2ZTIyNTM3ZWVmNDAwMmU5ZDUxZjRiYTU2MmU1IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:41:02 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=1000"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
+									"value": "laravel_session=eyJpdiI6ImJsbDVzNG9hUXdiMjJlTVliSkd0Ymc9PSIsInZhbHVlIjoiVmtqWXdlUnErcXpDb0VucnFkSWhoQjJEcG9FZmZmam1IVlEwdzVTSVJ0QnV0bjNHclFXSUpuZExaTXBGaGNXSmpQL0ZuU3J4V0w1S3FDNjE5dXdWYThZZG5oQ1h0eVc1Vk9tOTR6U1htOTQzOEZXendrOUhyeW9hcUVjWm1BUDUiLCJtYWMiOiIxYmM5YmZhOWEyNWIyNzRmMDUwZWY1OGE3YWZlNzdkMWIyOWEyNmYzZDUzZWUwNmU0ZjdlYjg4ODdhYTcyOGU3IiwidGFnIjoiIn0%3D; expires=Thu, 12 Oct 2023 17:08:48 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 1,\n        \"clientHash\": \"zu3dZSuYMfF8Y3ri2VNuAeVcChthy4truMmf9PYc\",\n        \"currency\": \"uah\",\n        \"active\": true,\n        \"totalPrice\": 1176,\n        \"promocode\": {\n            \"id\": 2,\n            \"name\": \"Test promocode\",\n            \"code\": \"Test\",\n            \"discountPercent\": 30,\n            \"active\": true,\n            \"startDate\": \"2023-09-09 00:00:00\",\n            \"endDate\": \"2023-09-10 00:00:00\",\n            \"createdAt\": \"2023-09-09 11:16:05\",\n            \"updatedAt\": null\n        },\n        \"items\": [\n            {\n                \"id\": 2,\n                \"product\": 1,\n                \"name\": \"Test product\",\n                \"price\": 420,\n                \"quantity\": 1,\n                \"size\": null,\n                \"color\": null,\n                \"content\": {\n                    \"id\": 1,\n                    \"name\": \"Test product\",\n                    \"code\": \"test\",\n                    \"active\": true,\n                    \"availability\": \"in_stock\",\n                    \"prices\": [\n                        {\n                            \"currency\": \"uah\",\n                            \"price\": 420\n                        }\n                    ],\n                    \"colors\": [\n                        \"Blue\"\n                    ],\n                    \"sizes\": [\n                        \"45\"\n                    ],\n                    \"createdAt\": \"2023-09-09 11:25:06\",\n                    \"updatedAt\": \"2023-09-09 11:25:06\",\n                    \"content\": {\n                        \"language\": \"ua\",\n                        \"name\": \"\",\n                        \"description\": \"\"\n                    },\n                    \"images\": {\n                        \"preview\": null,\n                        \"additional\": []\n                    },\n                    \"settings\": {\n                        \"displayed\": false\n                    },\n                    \"categories\": []\n                }\n            },\n            {\n                \"id\": 3,\n                \"product\": 2,\n                \"name\": \"Test product\",\n                \"price\": 420,\n                \"quantity\": 3,\n                \"size\": null,\n                \"color\": null,\n                \"content\": {\n                    \"id\": 2,\n                    \"name\": \"Test product\",\n                    \"code\": \"test2\",\n                    \"active\": true,\n                    \"availability\": \"in_stock\",\n                    \"prices\": [\n                        {\n                            \"currency\": \"uah\",\n                            \"price\": 420\n                        }\n                    ],\n                    \"colors\": [\n                        \"Blue\"\n                    ],\n                    \"sizes\": [\n                        \"45\"\n                    ],\n                    \"createdAt\": \"2023-09-09 11:25:16\",\n                    \"updatedAt\": \"2023-09-09 11:25:16\",\n                    \"content\": {\n                        \"language\": \"ua\",\n                        \"name\": \"\",\n                        \"description\": \"\"\n                    },\n                    \"images\": {\n                        \"preview\": null,\n                        \"additional\": []\n                    },\n                    \"settings\": {\n                        \"displayed\": false\n                    },\n                    \"categories\": []\n                }\n            }\n        ],\n        \"createdAt\": \"2023-09-09 11:18:53\",\n        \"updatedAt\": \"2023-09-09 11:25:26\"\n    }\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"client\": {\n            \"hash\": \"fVySTgejClBHpU3VFfnbzVDKlLGzm6LIv80bY8cQ\",\n            \"id\": 2\n        },\n        \"currency\": \"uah\",\n        \"active\": true,\n        \"totalPrice\": 420,\n        \"promocode\": null,\n        \"items\": [\n            {\n                \"id\": 2,\n                \"product\": 1,\n                \"name\": \"Test product\",\n                \"price\": 420,\n                \"quantity\": 1,\n                \"size\": null,\n                \"color\": null,\n                \"content\": {\n                    \"id\": 1,\n                    \"name\": \"Test product\",\n                    \"code\": \"test\",\n                    \"active\": true,\n                    \"availability\": \"in_stock\",\n                    \"prices\": [\n                        {\n                            \"currency\": \"uah\",\n                            \"price\": 420\n                        }\n                    ],\n                    \"colors\": [\n                        \"Blue\"\n                    ],\n                    \"sizes\": [\n                        \"45\"\n                    ],\n                    \"createdAt\": \"2023-09-10 11:00:16\",\n                    \"updatedAt\": \"2023-09-10 11:00:16\",\n                    \"content\": {\n                        \"language\": \"ua\",\n                        \"name\": \"Test product name\",\n                        \"description\": \"Test product description\"\n                    },\n                    \"images\": {\n                        \"preview\": null,\n                        \"additional\": []\n                    },\n                    \"settings\": {\n                        \"displayed\": false\n                    },\n                    \"categories\": []\n                }\n            }\n        ],\n        \"createdAt\": \"2023-10-12 15:06:31\",\n        \"updatedAt\": \"2023-10-12 15:06:32\"\n    }\n}"
 						}
 					]
 				}
@@ -2381,12 +2381,12 @@
 							},
 							"response": [
 								{
-									"name": "Example: Product",
+									"name": "Example: Get product details",
 									"originalRequest": {
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{domain}}/api/admin/catalogue/products/2",
+											"raw": "{{domain}}/api/admin/catalogue/products/1",
 											"host": [
 												"{{domain}}"
 											],
@@ -2395,7 +2395,7 @@
 												"admin",
 												"catalogue",
 												"products",
-												"2"
+												"1"
 											]
 										}
 									},
@@ -2404,48 +2404,48 @@
 									"_postman_previewlanguage": "json",
 									"header": [
 										{
-											"key": "Date",
-											"value": "Fri, 02 Jun 2023 14:28:18 GMT"
-										},
-										{
 											"key": "Server",
-											"value": "Apache"
+											"value": "nginx/1.25.2"
 										},
 										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "X-RateLimit-Limit",
-											"value": "60"
-										},
-										{
-											"key": "X-RateLimit-Remaining",
-											"value": "56"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										},
-										{
-											"key": "Keep-Alive",
-											"value": "timeout=120, max=997"
-										},
-										{
-											"key": "Connection",
-											"value": "Keep-Alive"
+											"key": "Content-Type",
+											"value": "application/json"
 										},
 										{
 											"key": "Transfer-Encoding",
 											"value": "chunked"
 										},
 										{
-											"key": "Content-Type",
-											"value": "application/json"
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 05 Nov 2023 11:53:48 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6InRBN1kyMGtIem9RYi9pRWJ6cDZGRlE9PSIsInZhbHVlIjoibHlaSHY4c3ZhQ1cxdlptd0ZKMGtwRTZxMWhJQjdSTUxVSlFtdTFFY0VoUkxGbEN0V0RZRmZQb2V5cm8rZDd6STlZMThZKzlJRnFTNnVVd0RWeFBaVjV5RTNaNDJQVkp2b1hiQi9LRWdJQmlITW9DTzQzQVpzcUorWDQwQW9TWS8iLCJtYWMiOiI1ODY0OGM0ZWM5NTFjOTkxNjMxNmU0ZjJjODA4NTJjMWUxY2Q1MTIyZDM4MTE1NDg0NDA1YWNmZmU4YWM0NjBkIiwidGFnIjoiIn0%3D; expires=Sun, 05 Nov 2023 13:53:48 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6Im5mMXRCWEhZWFoycnczd1YwQVNKM0E9PSIsInZhbHVlIjoiZ3VEMWczVlp0L3A1WjE0UWl4TVFLTDg0SXdMUjVYTlNmWDZmNXlMdm95WUUvekszNnlWNFdIc2ZoOE1Dd05XUW9yZGJBajQzWHdDK21yeHEzN0Jwc2haZlZBdTlFZXpCZmhTTzQ1VmpDaUxEcGg2TzdZc0ZJTCtEQ2E1OGxFaVEiLCJtYWMiOiJhY2YwYmQ4MzJhYzFjMTI1MGQwZGY5YmJiNzQ3MDVhYTNjZmJmNjQ4YThiMzY2NWQ4YzMxMGRhYWJlNTlkNWYwIiwidGFnIjoiIn0%3D; expires=Sun, 05 Nov 2023 13:53:48 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test update product\",\n        \"code\": \"test-update\",\n        \"active\": true,\n        \"availability\": \"in_stock\",\n        \"prices\": [\n            {\n                \"currency\": \"uah\",\n                \"price\": 425\n            }\n        ],\n        \"colors\": [\n            {\n                \"color\": \"#000000\",\n                \"type\": \"hex\"\n            }\n        ],\n        \"sizes\": []\n    }\n}"
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 1,\n        \"name\": \"Test product\",\n        \"code\": \"test\",\n        \"active\": true,\n        \"availability\": \"in_stock\",\n        \"prices\": [\n            {\n                \"currency\": \"uah\",\n                \"price\": 420\n            }\n        ],\n        \"colors\": [\n            \"Blue\"\n        ],\n        \"sizes\": [\n            \"45\"\n        ],\n        \"createdAt\": \"2023-09-10 11:00:16\",\n        \"updatedAt\": \"2023-09-10 11:00:16\",\n        \"content\": [\n            {\n                \"language\": \"ua\",\n                \"name\": \"Test product name\",\n                \"description\": \"Test product description\"\n            }\n        ],\n        \"images\": {\n            \"preview\": {\n                \"id\": 4,\n                \"image\": \"http://localhost/storage/products_images/1699185201_image.webp\"\n            },\n            \"additional\": [\n                {\n                    \"id\": 5,\n                    \"image\": \"http://localhost/storage/products_images/1699185200_image.webp\"\n                }\n            ]\n        },\n        \"settings\": {\n            \"displayed\": 0\n        },\n        \"categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Test category\",\n                \"slug\": \"test-category\",\n                \"products\": [\n                    1\n                ],\n                \"parent\": null,\n                \"createdAt\": \"2023-10-16 18:52:02\",\n                \"updatedAt\": \"2023-10-16 18:53:29\"\n            }\n        ]\n    }\n}"
 								}
 							]
 						},
@@ -2481,12 +2481,12 @@
 							},
 							"response": [
 								{
-									"name": "Example: Products",
+									"name": "Example: Get products list",
 									"originalRequest": {
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{domain}}/api/admin/catalogue/products?page=1&limit=2",
+											"raw": "{{domain}}/api/admin/catalogue/products",
 											"host": [
 												"{{domain}}"
 											],
@@ -2499,11 +2499,13 @@
 											"query": [
 												{
 													"key": "page",
-													"value": "1"
+													"value": "1",
+													"disabled": true
 												},
 												{
 													"key": "limit",
-													"value": "2"
+													"value": "2",
+													"disabled": true
 												}
 											]
 										}
@@ -2554,7 +2556,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test update product\",\n                \"code\": \"test-update\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 425\n                    }\n                ],\n                \"colors\": [\n                    {\n                        \"color\": \"#000000\",\n                        \"type\": \"hex\"\n                    }\n                ],\n                \"sizes\": []\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Test product\",\n                \"code\": \"test2\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 420\n                    }\n                ],\n                \"colors\": [\n                    {\n                        \"color\": \"#000000\",\n                        \"type\": \"hex\"\n                    }\n                ],\n                \"sizes\": [\n                    \"l\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 2,\n            \"total\": 4\n        }\n    }\n}"
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 1,\n                \"name\": \"Test product\",\n                \"code\": \"test\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 420\n                    }\n                ],\n                \"colors\": [\n                    \"Blue\"\n                ],\n                \"sizes\": [\n                    \"45\"\n                ],\n                \"createdAt\": \"2023-09-10 11:00:16\",\n                \"updatedAt\": \"2023-09-10 11:00:16\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 1\n        }\n    }\n}"
 								}
 							]
 						}
@@ -3261,93 +3263,6 @@
 					]
 				},
 				{
-					"name": "admin/catalogue/{id}",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/catalogue/6",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"catalogue",
-								"6"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: All product contents",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/catalogue/6",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"catalogue",
-										"6"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sat, 12 Aug 2023 08:16:29 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6InVGazhnWHVMVmZWMzVjckJ6WU9nR3c9PSIsInZhbHVlIjoic2hjUUd5VUNxaDk2bTVXc0VWaktTd1ZwWmNxNlRabUtsbkVFL0hHMWdETTZxT0t1bEZlRC85MVBaVUFERUorTjI4RXVTVnorUDFOQVBINXJkR094MlhRb1dqQWp4dklkS2FTRTE0ZWFzcndLWFJtRmtZeW1VM0Uvd2EzanM4ZHYiLCJtYWMiOiI5YzlkODBiMGNmNDRjZTNmM2RkYmQ4N2I3ZDkxYzYzODMyMWFhMjk3YmUwZGFiYTU5MzgwNDRlMWQ4ZThmMDcyIiwidGFnIjoiIn0%3D; expires=Sat, 12 Aug 2023 10:16:29 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IkhrZGlnYUxCUUxMQXVkN3JyZTBLeHc9PSIsInZhbHVlIjoidS95eVB4cTBuZTdsblhscEc0T1FYVVJUVGkybXZIcGo0bkhlU21jL1g5THBkbWg1L3BtbmwxdFN4dmtaeThuUWpad0xObTBtL1NBUkdxcTdOREd0azE4MDhKUjNOSlQ1dHFycDVMcDV3aG5IZ2dLdFp3MnpEbkxuYUFsUE5zd2UiLCJtYWMiOiI3ZDVkYjA3YjViZGQ3OGFiNTUyYWQyMjYwZDM1MDY0MDRiMzlhNmYwMDIyNGMyYTg0ZDIwNDU4N2NhODllY2I2IiwidGFnIjoiIn0%3D; expires=Sat, 12 Aug 2023 10:16:29 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=982"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 6,\n        \"name\": \"Test update product\",\n        \"code\": \"test-update\",\n        \"active\": 1,\n        \"availability\": \"in_stock\",\n        \"colors\": [\n            \"Blue\"\n        ],\n        \"sizes\": [],\n        \"prices\": [\n            {\n                \"currency\": \"uah\",\n                \"price\": \"425.00\"\n            }\n        ],\n        \"createdAt\": \"2023-07-15 09:31:24\",\n        \"updatedAt\": \"2023-08-12 08:15:55\",\n        \"content\": [\n            {\n                \"language\": \"ua\",\n                \"name\": \"Test product name\",\n                \"description\": \"Test product description\"\n            },\n            {\n                \"language\": \"en\",\n                \"name\": \"Test product name en\",\n                \"description\": \"Test product description en\"\n            }\n        ],\n        \"images\": {\n            \"preview\": \"http://localhost/storage/product_images/3Js9RWdfQAFJ9gqmShWZMRKaLTOApciV7NHeNLVo.webp\",\n            \"additional\": [\n                \"http://localhost/storage/product_images/Ut9hycjQAKdGCTXlu0tGfgojAsLpwW53lD84yeC5.webp\",\n                \"http://localhost/storage/product_images/GpsggzWvd2YotluTPoePaSR8vWSdnO71Qf6kHRA0.webp\"\n            ]\n        },\n        \"settings\": {\n            \"displayed\": 1\n        },\n        \"categories\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test category\",\n                \"slug\": \"test-category\",\n                \"products\": [\n                    6\n                ],\n                \"parent\": null,\n                \"createdAt\": \"2023-07-01 14:26:22\",\n                \"updatedAt\": \"2023-07-15 14:26:56\",\n                \"content\": [\n                    {\n                        \"language\": \"ua\",\n                        \"name\": \"Test category\"\n                    }\n                ]\n            }\n        ]\n    }\n}"
-						}
-					]
-				},
-				{
 					"name": "catalogue",
 					"request": {
 						"method": "GET",
@@ -3439,7 +3354,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 6,\n                \"name\": \"Test product\",\n                \"code\": \"test\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 420\n                    }\n                ],\n                \"colors\": [\n                    \"Blue\"\n                ],\n                \"sizes\": [\n                    \"45\"\n                ],\n                \"content\": {\n                    \"language\": \"ua\",\n                    \"name\": \"Test product name\",\n                    \"description\": \"Test product description\"\n                },\n                \"images\": {\n                    \"preview\": \"http://localhost/storage/product_images/3Js9RWdfQAFJ9gqmShWZMRKaLTOApciV7NHeNLVo.webp\",\n                    \"additional\": [\n                        \"http://localhost/storage/product_images/Ut9hycjQAKdGCTXlu0tGfgojAsLpwW53lD84yeC5.webp\",\n                        \"http://localhost/storage/product_images/GpsggzWvd2YotluTPoePaSR8vWSdnO71Qf6kHRA0.webp\"\n                    ]\n                },\n                \"settings\": {\n                    \"displayed\": true\n                },\n                \"categories\": [\n                    {\n                        \"id\": 2,\n                        \"name\": \"Test category\",\n                        \"slug\": \"test-category\",\n                        \"products\": [\n                            6\n                        ],\n                        \"parent\": null,\n                        \"createdAt\": \"2023-07-01 14:26:22\",\n                        \"updatedAt\": \"2023-07-15 14:26:56\",\n                        \"content\": {\n                            \"language\": \"ua\",\n                            \"name\": \"Test category\"\n                        }\n                    }\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 1\n        }\n    }\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 1,\n                \"name\": \"Test product\",\n                \"code\": \"test\",\n                \"active\": true,\n                \"availability\": \"in_stock\",\n                \"prices\": [\n                    {\n                        \"currency\": \"uah\",\n                        \"price\": 420\n                    }\n                ],\n                \"colors\": [\n                    \"Blue\"\n                ],\n                \"sizes\": [\n                    \"45\"\n                ],\n                \"createdAt\": \"2023-09-10 11:00:16\",\n                \"updatedAt\": \"2023-09-10 11:00:16\",\n                \"content\": {\n                    \"language\": \"ua\",\n                    \"name\": \"Test product name\",\n                    \"description\": \"Test product description\"\n                },\n                \"images\": {\n                    \"preview\": \"http://localhost/storage/products_images/1699185490_image.webp\",\n                    \"additional\": [\n                        \"http://localhost/storage/products_images/1699185497_image.webp\"\n                    ]\n                },\n                \"settings\": {\n                    \"displayed\": true\n                },\n                \"categories\": [\n                    {\n                        \"id\": 1,\n                        \"name\": \"Test category\",\n                        \"slug\": \"test-category\",\n                        \"products\": [\n                            1\n                        ],\n                        \"parent\": null,\n                        \"createdAt\": \"2023-10-16 18:52:02\",\n                        \"updatedAt\": \"2023-10-16 18:53:29\",\n                        \"content\": {\n                            \"language\": \"ua\",\n                            \"name\": \"Test category\"\n                        }\n                    }\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 1\n        }\n    }\n}"
 						}
 					]
 				},
@@ -3538,7 +3453,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 6,\n        \"name\": \"Test product\",\n        \"code\": \"test\",\n        \"active\": true,\n        \"availability\": \"in_stock\",\n        \"prices\": [\n            {\n                \"currency\": \"uah\",\n                \"price\": 420\n            }\n        ],\n        \"colors\": [\n            \"Blue\"\n        ],\n        \"sizes\": [\n            \"45\"\n        ],\n        \"content\": {\n            \"language\": \"en\",\n            \"name\": \"Test product name en\",\n            \"description\": \"Test product description en\"\n        },\n        \"images\": {\n            \"preview\": \"http://localhost/storage/product_images/3Js9RWdfQAFJ9gqmShWZMRKaLTOApciV7NHeNLVo.webp\",\n            \"additional\": [\n                \"http://localhost/storage/product_images/Ut9hycjQAKdGCTXlu0tGfgojAsLpwW53lD84yeC5.webp\",\n                \"http://localhost/storage/product_images/GpsggzWvd2YotluTPoePaSR8vWSdnO71Qf6kHRA0.webp\"\n            ]\n        },\n        \"settings\": {\n            \"displayed\": true\n        },\n        \"categories\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test category\",\n                \"slug\": \"test-category\",\n                \"products\": [\n                    6\n                ],\n                \"parent\": null,\n                \"createdAt\": \"2023-07-01 14:26:22\",\n                \"updatedAt\": \"2023-07-15 14:26:56\",\n                \"content\": {\n                    \"language\": \"\",\n                    \"name\": \"\"\n                }\n            }\n        ]\n    }\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 1,\n        \"name\": \"Test product\",\n        \"code\": \"test\",\n        \"active\": true,\n        \"availability\": \"in_stock\",\n        \"prices\": [\n            {\n                \"currency\": \"uah\",\n                \"price\": 420\n            }\n        ],\n        \"colors\": [\n            \"Blue\"\n        ],\n        \"sizes\": [\n            \"45\"\n        ],\n        \"createdAt\": \"2023-09-10 11:00:16\",\n        \"updatedAt\": \"2023-09-10 11:00:16\",\n        \"content\": {\n            \"language\": \"ua\",\n            \"name\": \"Test product name\",\n            \"description\": \"Test product description\"\n        },\n        \"images\": {\n            \"preview\": \"http://localhost/storage/products_images/1699185490_image.webp\",\n            \"additional\": [\n                \"http://localhost/storage/products_images/1699185497_image.webp\"\n            ]\n        },\n        \"settings\": {\n            \"displayed\": true\n        },\n        \"categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Test category\",\n                \"slug\": \"test-category\",\n                \"products\": [\n                    1\n                ],\n                \"parent\": null,\n                \"createdAt\": \"2023-10-16 18:52:02\",\n                \"updatedAt\": \"2023-10-16 18:53:29\",\n                \"content\": {\n                    \"language\": \"ua\",\n                    \"name\": \"Test category\"\n                }\n            }\n        ]\n    }\n}"
 						}
 					]
 				}
@@ -4312,8 +4227,8 @@
 									"disabled": true
 								},
 								{
-									"key": "hasNotEmptyCart",
-									"value": "0",
+									"key": "options[hasNotEmptyCart]",
+									"value": "1",
 									"disabled": true
 								}
 							]
@@ -4347,7 +4262,7 @@
 											"disabled": true
 										},
 										{
-											"key": "hasNotEmptyCart",
+											"key": "options[hasNotEmptyCart]",
 											"value": "0",
 											"disabled": true
 										}
