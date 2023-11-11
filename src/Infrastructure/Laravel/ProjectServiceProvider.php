@@ -2,6 +2,8 @@
 
 namespace Project\Infrastructure\Laravel;
 
+use Psr\Log\LoggerInterface;
+use Project\Common\CQRS\Buses\LoggingBus;
 use Project\Modules\Client\Api\ClientsApi;
 use App\Http\Middleware\AssignClientHashCookie;
 use Project\Common\CQRS\Buses\CompositeEventBus;
@@ -64,7 +66,10 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerBuses()
     {
         $this->app->singleton('CommandBus', function () {
-            return new TransactionBus(new CompositeRequestBus);
+            return new LoggingBus(
+                new TransactionBus(new CompositeRequestBus),
+                $this->app->make(LoggerInterface::class)
+            );
         });
 
         $this->app->singleton('QueryBus', function () {
@@ -72,7 +77,11 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         $this->app->singleton('EventBus', function () {
-            return new CompositeEventBus();
+            return new LoggingBus(
+                new CompositeEventBus(),
+                $this->app->make(LoggerInterface::class),
+                'event'
+            );
         });
 
         $this->app->resolving(DispatchEventsInterface::class, function ($object, $app) {
