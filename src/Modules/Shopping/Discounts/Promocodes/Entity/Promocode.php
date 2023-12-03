@@ -31,7 +31,7 @@ class Promocode implements Events\EventRoot
         $this->guardCodeDoesNotEmpty();
         $this->guardDiscountLessThanOneHundred();
         $this->guardDiscountGreaterThanZero();
-        $this->guardValidActiveDates();
+        $this->guardEndDateGreaterThanStartDate();
         $this->addEvent(new PromocodeCreated($this));
     }
 
@@ -63,7 +63,7 @@ class Promocode implements Events\EventRoot
         );
     }
 
-    private function guardValidActiveDates(): void
+    private function guardEndDateGreaterThanStartDate(): void
     {
         if (empty($this->endDate)) {
             return;
@@ -113,7 +113,7 @@ class Promocode implements Events\EventRoot
         }
 
         $this->startDate = $date;
-        $this->guardValidActiveDates();
+        $this->guardEndDateGreaterThanStartDate();
         $this->updated();
     }
 
@@ -124,7 +124,7 @@ class Promocode implements Events\EventRoot
         }
 
         $this->endDate = $date;
-        $this->guardValidActiveDates();
+        $this->guardEndDateGreaterThanStartDate();
         $this->updated();
     }
 

@@ -9,12 +9,12 @@ class AutoIncrementId extends Id
         parent::__construct($id);
     }
 
-    public static function random(): AutoIncrementId
+    public static function random(): static
     {
         return new static(random_int(1, 9999));
     }
 
-    public static function next(): AutoIncrementId
+    public static function next(): static
     {
         return new static(null);
     }

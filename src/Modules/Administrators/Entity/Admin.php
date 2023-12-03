@@ -116,8 +116,7 @@ class Admin implements Events\EventRoot
     {
         return match ($role) {
             Role::ADMIN => $this->hasRole($role),
-            Role::MANAGER => $this->hasRole($role)
-                || $this->hasRole(Role::ADMIN),
+            Role::MANAGER => $this->hasRole($role) || $this->hasRole(Role::ADMIN),
             default => false
         };
     }
@@ -152,6 +151,9 @@ class Admin implements Events\EventRoot
         return $this->password;
     }
 
+    /**
+     * @return Role[]
+     */
     public function getRoles(): array
     {
         return $this->roles;

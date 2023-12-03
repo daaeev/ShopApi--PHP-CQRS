@@ -8,6 +8,11 @@ abstract class Id
         protected mixed $id
     ) {}
 
+    public static function make($id): static
+    {
+        return new static($id);
+    }
+
     public function equalsTo(self $other): bool
     {
         if ($other->id === null) {
@@ -26,5 +31,5 @@ abstract class Id
         return $this->id;
     }
 
-    abstract public static function random(): self;
+    abstract public static function random(): static;
 }

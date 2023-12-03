@@ -221,6 +221,9 @@ class Cart implements Events\EventRoot
         return $this->active;
     }
 
+    /**
+     * @return CartItem[]
+     */
     public function getItems(): array
     {
         return $this->items;

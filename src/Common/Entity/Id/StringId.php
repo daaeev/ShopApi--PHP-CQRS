@@ -9,7 +9,7 @@ class StringId extends Id
         parent::__construct($id);
     }
 
-    public static function random(): StringId
+    public static function random(): static
     {
         return new static(md5(rand()));
     }

@@ -307,6 +307,9 @@ class Product implements Events\EventRoot
         return $this->sizes;
     }
 
+    /**
+     * @return Price\Price[]
+     */
     public function getPrices(): array
     {
         return $this->prices;
