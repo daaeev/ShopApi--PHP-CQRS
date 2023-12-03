@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\Services\FileManager\FileNameGenerators;
+namespace Project\Tests\Unit\Services\FileManager\DirectoryNameGenerators;
 
 use PHPUnit\Framework\TestCase;
 use Project\Common\Services\FileManager\FileNameGenerators\TimestampPrefixFileNameGenerator;
