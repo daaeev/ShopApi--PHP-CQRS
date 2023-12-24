@@ -3,7 +3,6 @@
 namespace Project\Modules\Catalogue\Api\DTO\Category;
 
 use Project\Common\Utils\DTO;
-use Project\Common\Utils\DateTimeFormat;
 
 class Category implements DTO
 {
@@ -25,8 +24,8 @@ class Category implements DTO
             'slug' => $this->slug,
             'products' => $this->products,
             'parent' => $this->parent,
-            'createdAt' => $this->createdAt->format(DateTimeFormat::FULL_DATE->value),
-            'updatedAt' => $this->updatedAt?->format(DateTimeFormat::FULL_DATE->value),
+            'createdAt' => $this->createdAt->format(\DateTimeInterface::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTimeInterface::RFC3339),
         ];
     }
 }

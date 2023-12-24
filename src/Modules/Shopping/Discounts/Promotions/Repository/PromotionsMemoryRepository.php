@@ -26,6 +26,12 @@ class PromotionsMemoryRepository implements PromotionsRepositoryInterface
             throw new DuplicateKeyException('Promotion with same id already exists');
         }
 
+        foreach ($promotion->getDiscounts() as $discount) {
+            if (null === $discount->getId()->getId()) {
+                $this->hydrator->hydrate($discount->getId(), ['id' => ++$this->increment]);
+            }
+        }
+
         $this->items[$promotion->getId()->getId()] = clone $promotion;
     }
 
@@ -33,6 +39,12 @@ class PromotionsMemoryRepository implements PromotionsRepositoryInterface
     {
         if (!isset($this->items[$promotion->getId()->getId()])) {
             throw new NotFoundException('Promotion does not exists');
+        }
+
+        foreach ($promotion->getDiscounts() as $discount) {
+            if (null === $discount->getId()->getId()) {
+                $this->hydrator->hydrate($discount->getId(), ['id' => ++$this->increment]);
+            }
         }
 
         $this->items[$promotion->getId()->getId()] = clone $promotion;

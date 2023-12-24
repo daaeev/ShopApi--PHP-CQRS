@@ -3,7 +3,6 @@
 namespace Project\Modules\Shopping\Api\DTO\Promocodes;
 
 use Project\Common\Utils\DTO;
-use Project\Common\Utils\DateTimeFormat;
 
 class Promocode implements DTO
 {
@@ -27,10 +26,10 @@ class Promocode implements DTO
             'code' => $this->code,
             'discountPercent' => $this->discountPercent,
             'active' => $this->active,
-            'startDate' => $this->startDate->format(DateTimeFormat::FULL_DATE->value),
-            'endDate' => $this->endDate?->format(DateTimeFormat::FULL_DATE->value),
-            'createdAt' => $this->createdAt->format(DateTimeFormat::FULL_DATE->value),
-            'updatedAt' => $this->updatedAt?->format(DateTimeFormat::FULL_DATE->value),
+            'startDate' => $this->startDate->format(\DateTimeInterface::RFC3339),
+            'endDate' => $this->endDate?->format(\DateTimeInterface::RFC3339),
+            'createdAt' => $this->createdAt->format(\DateTimeInterface::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTimeInterface::RFC3339),
         ];
     }
 }

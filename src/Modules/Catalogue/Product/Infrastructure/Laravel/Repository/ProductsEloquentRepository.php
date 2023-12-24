@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository;
 
-use Project\Common\Utils\DateTimeFormat;
 use Project\Modules\Catalogue\Product\Entity;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
@@ -35,16 +34,17 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
 
         if (!$record->exists) {
             $record->id = $entity->getId()->getId();
-            $record->created_at = $entity->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value);
+            $record->created_at = $entity->getCreatedAt()->getTimestamp();
         }
 
         $record->name = $entity->getName();
         $record->code = $entity->getCode();
         $record->active = $entity->isActive();
         $record->availability = $entity->getAvailability()->value;
-        $record->updated_at = $entity->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value);
+        $record->updated_at = $entity->getUpdatedAt()?->getTimestamp();
         $record->save();
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
+
         $this->persistSizes($entity, $record);
         $this->persistColors($entity, $record);
         $this->persistPrices($entity, $record);

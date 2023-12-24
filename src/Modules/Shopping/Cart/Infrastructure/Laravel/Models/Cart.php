@@ -8,12 +8,18 @@ use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Models\
 class Cart extends Model
 {
     protected $table = 'shopping_carts';
+
     protected $fillable = [
         'client_hash',
         'client_id',
         'currency',
         'active',
         'promocode_id'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function items()

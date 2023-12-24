@@ -2,7 +2,6 @@
 
 namespace Project\Tests\Unit\Modules\Promocodes\Commands;
 
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity;
@@ -53,12 +52,12 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($promocode->getActive());
         $this->assertTrue($promocode->isActive());
         $this->assertSame(
-            $promocode->getStartDate()->format(DateTimeFormat::FULL_DATE->value),
-            $command->startDate->format(DateTimeFormat::FULL_DATE->value)
+            $promocode->getStartDate()->getTimestamp(),
+            $command->startDate->getTimestamp()
         );
         $this->assertSame(
-            $promocode->getEndDate()?->format(DateTimeFormat::FULL_DATE->value),
-            $command->endDate?->format(DateTimeFormat::FULL_DATE->value)
+            $promocode->getEndDate()?->getTimestamp(),
+            $command->endDate?->getTimestamp()
         );
     }
 }

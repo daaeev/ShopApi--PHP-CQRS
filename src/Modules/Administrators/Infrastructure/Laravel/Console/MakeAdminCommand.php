@@ -8,7 +8,7 @@ use Project\Modules\Administrators\Entity\Admin;
 use Project\Modules\Administrators\Entity\AdminId;
 use Project\Modules\Administrators\Repository\AdminsRepositoryInterface;
 
-class MakeAdmin extends Command
+class MakeAdminCommand extends Command
 {
     public function __construct(
         private AdminsRepositoryInterface $admins

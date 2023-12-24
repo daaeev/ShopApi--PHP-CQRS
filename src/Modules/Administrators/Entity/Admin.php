@@ -15,20 +15,31 @@ class Admin implements Events\EventRoot
 {
     use Events\EventTrait;
 
+    private AdminId $id;
+    private string $name;
+    private string $login;
+    private array $roles;
+
     // Used only for save password!
     // Repository does not retrieve password
     private ?string $password = null;
 
     public function __construct(
-        private AdminId $id,
-        private string $name,
-        private string $login,
+        AdminId $id,
+        string $name,
+        string $login,
         string $password,
-        private array $roles,
+        array $roles,
     ) {
         Assert::notEmpty($name && $login && $password && $roles);
         Assert::allIsInstanceOf($roles, Role::class);
+
+        $this->id = $id;
+        $this->name = $name;
+        $this->login = $login;
         $this->password = $password;
+        $this->roles = $roles;
+
         $this->guardCorrectPassword();
         $this->guardCorrectLogin();
         $this->addEvent(new AdminCreated($this));

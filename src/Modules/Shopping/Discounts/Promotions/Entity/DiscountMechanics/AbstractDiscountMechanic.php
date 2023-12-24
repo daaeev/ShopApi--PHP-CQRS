@@ -12,11 +12,6 @@ abstract class AbstractDiscountMechanic implements Arrayable
         protected array $data = [],
     ) {}
 
-    public function __clone(): void
-    {
-        $this->id = clone $this->id;
-    }
-
     public function getId(): DiscountMechanicId
     {
         return $this->id;

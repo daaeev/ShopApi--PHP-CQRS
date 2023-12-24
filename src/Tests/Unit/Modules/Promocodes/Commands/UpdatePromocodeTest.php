@@ -2,7 +2,6 @@
 
 namespace Project\Tests\Unit\Modules\Promocodes\Commands;
 
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
@@ -32,17 +31,15 @@ class UpdatePromocodeTest extends \PHPUnit\Framework\TestCase
     public function testCreate()
     {
         $initial = $this->generatePromocode();
+        $initial->deactivate();
+        $initial->flushEvents();
         $this->promocodes->add($initial);
 
         $command = new UpdatePromocodeCommand(
-            $initial->getId()->getId(),
-            md5(rand()),
-            $initial->getStartDate()->add(
-                \DateInterval::createFromDateString('-1 day')
-            ),
-            $initial->getEndDate()?->add(
-                \DateInterval::createFromDateString('+1 day')
-            ),
+            id: $initial->getId()->getId(),
+            name: md5(rand()),
+            startDate: $initial->getStartDate()->add(\DateInterval::createFromDateString('-1 day')),
+            endDate: $initial->getEndDate()?->add(\DateInterval::createFromDateString('+1 day')),
         );
         $handler = new UpdatePromocodeHandler($this->promocodes);
         $handler->setDispatcher($this->dispatcher);
@@ -60,12 +57,12 @@ class UpdatePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($promocode->getId()->equalsTo(new Entity\PromocodeId($command->id)));
         $this->assertSame($command->name, $promocode->getName());
         $this->assertSame(
-            $promocode->getStartDate()->format(DateTimeFormat::FULL_DATE->value),
-            $command->startDate->format(DateTimeFormat::FULL_DATE->value)
+            $promocode->getStartDate()->getTimestamp(),
+            $command->startDate->getTimestamp()
         );
         $this->assertSame(
-            $promocode->getEndDate()?->format(DateTimeFormat::FULL_DATE->value),
-            $command->endDate?->format(DateTimeFormat::FULL_DATE->value)
+            $promocode->getEndDate()?->getTimestamp(),
+            $command->endDate?->getTimestamp()
         );
 
         $this->assertSame($promocode->getCode(), $initial->getCode());

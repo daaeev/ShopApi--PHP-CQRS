@@ -9,7 +9,7 @@ class PercentageDiscountMechanic extends AbstractDiscountMechanic
     public function __construct(DiscountMechanicId $id, array $data = [])
     {
         Assert::keyExists($data, 'percent', 'Percentage discount mechanic need percent argument');
-        Assert::integer($data['percent'], 'Discount percent must be integer');
+        Assert::numeric($data['percent'], 'Discount percent must be integer');
         Assert::greaterThanEq($data['percent'], 0, 'Discount percent must be greater or equal than 0');
         Assert::lessThanEq($data['percent'], 100, 'Discount percent must be less or equal than 100');
 

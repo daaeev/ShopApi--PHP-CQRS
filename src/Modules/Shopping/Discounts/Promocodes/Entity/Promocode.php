@@ -12,21 +12,34 @@ class Promocode implements Events\EventRoot
 {
     use Events\EventTrait;
 
+    private PromocodeId $id;
+    private string $name;
+    private string $code;
+    private int $discountPercent;
     private bool $active;
+    private \DateTimeImmutable $startDate;
+    private ?\DateTimeImmutable $endDate;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt;
 
     public function __construct(
-        private PromocodeId $id,
-        private string $name,
-        private string $code,
-        private int $discountPercent,
-        private \DateTimeImmutable $startDate,
-        private ?\DateTimeImmutable $endDate = null,
+        PromocodeId $id,
+        string $name,
+        string $code,
+        int $discountPercent,
+        \DateTimeImmutable $startDate,
+        ?\DateTimeImmutable $endDate = null,
     ) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->code = $code;
+        $this->discountPercent = $discountPercent;
         $this->active = true;
-        $this->createdAt = new \DateTimeImmutable();
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $this->createdAt = new \DateTimeImmutable;
         $this->updatedAt = null;
+
         $this->guardNameDoesNotEmpty();
         $this->guardCodeDoesNotEmpty();
         $this->guardDiscountLessThanOneHundred();
@@ -91,6 +104,8 @@ class Promocode implements Events\EventRoot
 
     public function setName(string $name): void
     {
+        $this->guardPromocodeNotActive();
+
         if ($name === $this->name) {
             return;
         }
@@ -98,6 +113,13 @@ class Promocode implements Events\EventRoot
         $this->name = $name;
         $this->guardNameDoesNotEmpty();
         $this->updated();
+    }
+
+    private function guardPromocodeNotActive(): void
+    {
+        if ($this->isActive()) {
+            throw new \DomainException('Cant update/delete active promo-code');
+        }
     }
 
     private function updated(): void
@@ -108,6 +130,8 @@ class Promocode implements Events\EventRoot
 
     public function setStartDate(\DateTimeImmutable $date): void
     {
+        $this->guardPromocodeNotActive();
+
         if ($date == $this->startDate) {
             return;
         }
@@ -119,6 +143,8 @@ class Promocode implements Events\EventRoot
 
     public function setEndDate(?\DateTimeImmutable $date): void
     {
+        $this->guardPromocodeNotActive();
+
         if ($date == $this->endDate) {
             return;
         }

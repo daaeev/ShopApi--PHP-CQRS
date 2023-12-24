@@ -4,7 +4,6 @@ namespace Project\Modules\Shopping\Api\DTO\Cart;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Api\DTO\Promocodes\Promocode;
 
@@ -39,8 +38,8 @@ class Cart implements DTO
             'items' => array_map(function (CartItem $item) {
                 return $item->toArray();
             }, $this->items),
-            'createdAt' => $this->createdAt->format(DateTimeFormat::FULL_DATE->value),
-            'updatedAt' => $this->updatedAt?->format(DateTimeFormat::FULL_DATE->value),
+            'createdAt' => $this->createdAt->format(\DateTimeInterface::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTimeInterface::RFC3339),
         ];
     }
 }

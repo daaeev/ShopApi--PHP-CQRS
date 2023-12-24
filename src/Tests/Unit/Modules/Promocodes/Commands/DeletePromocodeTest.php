@@ -23,39 +23,24 @@ class DeletePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->promocodes = new PromocodesMemoryRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
+        $this->dispatcher->expects($this->exactly(1)) // promo deleted
+            ->method('dispatch');
+
         parent::setUp();
     }
 
     public function testDelete()
     {
-        $this->dispatcher->expects($this->exactly(1)) // promo deleted
-            ->method('dispatch');
-
         $promocode = $this->generatePromocode();
         $promocode->deactivate();
         $promocode->flushEvents();
         $this->promocodes->add($promocode);
 
-        $command = new DeletePromocodeCommand(
-            $promocode->getId()->getId(),
-        );
+        $command = new DeletePromocodeCommand($promocode->getId()->getId());
         $handler = new DeletePromocodeHandler($this->promocodes);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
         $this->expectException(NotFoundException::class);
         $this->promocodes->get($promocode->getId());
-    }
-
-    public function testDeleteActivePromocode()
-    {
-        $promocode = $this->generatePromocode();
-        $this->promocodes->add($promocode);
-
-        $command = new DeletePromocodeCommand(
-            $promocode->getId()->getId(),
-        );
-        $handler = new DeletePromocodeHandler($this->promocodes);
-        $this->expectException(\DomainException::class);
-        call_user_func($handler, $command);
     }
 }

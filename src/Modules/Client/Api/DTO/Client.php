@@ -3,7 +3,6 @@
 namespace Project\Modules\Client\Api\DTO;
 
 use Project\Common\Utils\DTO;
-use Project\Common\Utils\DateTimeFormat;
 
 class Client implements DTO
 {
@@ -31,8 +30,8 @@ class Client implements DTO
             'email' => $this->email,
             'phoneConfirmed' => $this->phoneConfirmed,
             'emailConfirmed' => $this->emailConfirmed,
-            'createdAt' => $this->createdAt->format(DateTimeFormat::FULL_DATE->value),
-            'updatedAt' => $this->updatedAt?->format(DateTimeFormat::FULL_DATE->value)
+            'createdAt' => $this->createdAt->format(\DateTimeInterface::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTimeInterface::RFC3339)
         ];
     }
 }

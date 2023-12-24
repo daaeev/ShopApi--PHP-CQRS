@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository;
 
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
@@ -35,16 +34,16 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
 
         if (!$record->exists) {
             $record->id = $entity->getId()->getId();
-            $record->created_at = $entity->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value);
+            $record->created_at = $entity->getCreatedAt()->format(\DateTimeInterface::RFC3339);
         }
 
         $record->name = $entity->getName();
         $record->code = $entity->getCode();
         $record->discount_percent = $entity->getDiscountPercent();
         $record->active = $entity->getActive();
-        $record->start_date = $entity->getStartDate()->format(DateTimeFormat::FULL_DATE->value);
-        $record->end_date = $entity->getEndDate()?->format(DateTimeFormat::FULL_DATE->value);
-        $record->updated_at = $entity->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value);
+        $record->start_date = $entity->getStartDate()->format(\DateTimeInterface::RFC3339);
+        $record->end_date = $entity->getEndDate()?->format(\DateTimeInterface::RFC3339);
+        $record->updated_at = $entity->getUpdatedAt()?->format(\DateTimeInterface::RFC3339);
         $record->save();
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
     }

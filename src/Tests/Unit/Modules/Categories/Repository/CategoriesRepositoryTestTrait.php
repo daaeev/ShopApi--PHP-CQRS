@@ -2,7 +2,6 @@
 
 namespace Project\Tests\Unit\Modules\Categories\Repository;
 
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
@@ -44,12 +43,12 @@ trait CategoriesRepositoryTestTrait
         $this->assertEquals($initial->getSlug(), $found->getSlug());
         $this->assertEquals($initial->getProducts(), $found->getProducts());
         $this->assertSame(
-            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
-            $found->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
+            $initial->getCreatedAt()->getTimestamp(),
+            $found->getCreatedAt()->getTimestamp(),
         );
         $this->assertSame(
-            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value),
-            $found->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value),
+            $initial->getUpdatedAt()?->getTimestamp(),
+            $found->getUpdatedAt()?->getTimestamp(),
         );
     }
 

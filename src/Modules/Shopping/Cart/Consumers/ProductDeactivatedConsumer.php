@@ -4,6 +4,7 @@ namespace Project\Modules\Shopping\Cart\Consumers;
 
 use Project\Common\Product\Availability;
 use Project\Common\Events\DispatchEventsTrait;
+use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Catalogue\Api\Events\Product\ProductActivityChanged;
@@ -33,9 +34,19 @@ class ProductDeactivatedConsumer implements DispatchEventsInterface
 
         $carts = $this->carts->getActiveCartsWithProduct($event->getDTO()->id);
         foreach ($carts as $cart) {
-            $cart->removeItemsByProduct($event->getDTO()->id);
-            $this->carts->save($cart);
-            $this->dispatchEvents($cart->flushEvents());
+            $this->removeProductFromCart($cart, $event->getDTO()->id);
         }
+    }
+
+    private function removeProductFromCart(Cart $cart, int $product): void
+    {
+        foreach ($cart->getItems() as $cartItem) {
+            if ($cartItem->getProduct() === $product) {
+                $cart->removeItem($cartItem->getId());
+            }
+        }
+
+        $this->carts->save($cart);
+        $this->dispatchEvents($cart->flushEvents());
     }
 }

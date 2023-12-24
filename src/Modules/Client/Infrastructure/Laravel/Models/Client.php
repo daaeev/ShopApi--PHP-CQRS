@@ -20,6 +20,8 @@ class Client extends Model
     protected $casts = [
         'phone_confirmed' => 'boolean',
         'email_confirmed' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function carts()

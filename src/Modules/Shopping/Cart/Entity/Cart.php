@@ -18,6 +18,9 @@ class Cart implements Events\EventRoot
 {
     use Events\EventTrait;
 
+    private CartId $id;
+    private Client $client;
+    private array $items;
     private Currency $currentCurrency;
     private bool $active = true;
     private ?Promocode $promocode = null;
@@ -25,10 +28,13 @@ class Cart implements Events\EventRoot
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
-        private CartId $id,
-        private Client $client,
-        private array $items = []
+        CartId $id,
+        Client $client,
+        array $items = []
     ) {
+        $this->id = $id;
+        $this->client = $client;
+        $this->items = $items;
         $this->currentCurrency = Currency::default();
         $this->createdAt = new \DateTimeImmutable;
         $this->guardValidItems();
@@ -49,7 +55,6 @@ class Cart implements Events\EventRoot
         }
 
         $sameItem = $this->getSameItem($newItem);
-
         if ($sameItem->getQuantity() === $newItem->getQuantity()) {
             return;
         }
@@ -111,15 +116,6 @@ class Cart implements Events\EventRoot
         }
 
         throw new \DomainException('Cart item not found');
-    }
-
-    public function removeItemsByProduct(int $product): void
-    {
-        foreach ($this->items as $cartItem) {
-            if ($cartItem->getProduct() === $product) {
-                $this->removeItem($cartItem->getId());
-            }
-        }
     }
 
     private function updated(): void

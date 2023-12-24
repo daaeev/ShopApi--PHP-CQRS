@@ -2,7 +2,6 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Repository;
 
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Cart\Entity\CartId;
@@ -46,12 +45,12 @@ trait CartsRepositoryTestTrait
             );
         }
         $this->assertSame(
-            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
-            $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value)
+            $initial->getCreatedAt()->getTimestamp(),
+            $other->getCreatedAt()->getTimestamp()
         );
         $this->assertSame(
-            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value),
-            $other->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value)
+            $initial->getUpdatedAt()?->getTimestamp(),
+            $other->getUpdatedAt()?->getTimestamp()
         );
 
         $this->assertSame(count($initial->getItems()), count($other->getItems()));

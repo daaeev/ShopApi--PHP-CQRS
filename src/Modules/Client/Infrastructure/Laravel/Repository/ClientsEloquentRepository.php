@@ -3,7 +3,6 @@
 namespace Project\Modules\Client\Infrastructure\Laravel\Repository;
 
 use Project\Modules\Client\Entity;
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
@@ -34,7 +33,7 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
         if (!$record->exists) {
             $record->id = $entity->getId()->getId();
             $record->hash = $entity->getHash()->getId();
-            $record->created_at = $entity->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value);
+            $record->created_at = $entity->getCreatedAt()->getTimestamp();
         }
         $record->firstname = $entity->getName()->getFirstName();
         $record->lastname = $entity->getName()->getLastName();
@@ -42,7 +41,7 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
         $record->email = $entity->getContacts()->getEmail();
         $record->phone_confirmed = $entity->getContacts()->isPhoneConfirmed();
         $record->email_confirmed = $entity->getContacts()->isEmailConfirmed();
-        $record->updated_at = $entity->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value);
+        $record->updated_at = $entity->getUpdatedAt()?->getTimestamp();
         $record->save();
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
     }

@@ -19,6 +19,11 @@ class Product extends Model
         'availability',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     public function prices()
     {
         return $this->hasMany(Price::class, 'product_id', 'id');

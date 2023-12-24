@@ -35,8 +35,8 @@ class Product implements Utils\DTO
             }, $this->prices),
             'colors' => $this->colors,
             'sizes' => $this->sizes,
-            'createdAt' => $this->createdAt->format(Utils\DateTimeFormat::FULL_DATE->value),
-            'updatedAt' => $this->updatedAt?->format(Utils\DateTimeFormat::FULL_DATE->value),
+            'createdAt' => $this->createdAt->format(\DateTimeInterface::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTimeInterface::RFC3339),
         ];
     }
 }

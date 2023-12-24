@@ -2,7 +2,6 @@
 
 namespace Project\Tests\Unit\Modules\Promocodes\Repository;
 
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
@@ -32,20 +31,20 @@ trait PromocodesRepositoryTestTrait
         $this->assertSame($initial->getDiscountPercent(), $other->getDiscountPercent());
         $this->assertSame($initial->isActive(), $other->isActive());
         $this->assertSame(
-            $initial->getStartDate()->format(DateTimeFormat::FULL_DATE->value),
-            $other->getStartDate()->format(DateTimeFormat::FULL_DATE->value)
+            $initial->getStartDate()->getTimestamp(),
+            $other->getStartDate()->getTimestamp()
         );
         $this->assertSame(
-            $initial->getEndDate()?->format(DateTimeFormat::FULL_DATE->value),
-            $other->getEndDate()?->format(DateTimeFormat::FULL_DATE->value)
+            $initial->getEndDate()?->getTimestamp(),
+            $other->getEndDate()?->getTimestamp()
         );
         $this->assertSame(
-            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
-            $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value)
+            $initial->getCreatedAt()->getTimestamp(),
+            $other->getCreatedAt()->getTimestamp()
         );
         $this->assertSame(
-            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value),
-            $other->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value)
+            $initial->getUpdatedAt()?->getTimestamp(),
+            $other->getUpdatedAt()?->getTimestamp()
         );
     }
 
@@ -98,6 +97,7 @@ trait PromocodesRepositoryTestTrait
         $this->promocodes->add($initial);
 
         $added = $this->promocodes->get($initial->getId());
+        $added->deactivate();
         $added->setName(md5(rand()));
         $startDate = $added->getStartDate()->add(
             \DateInterval::createFromDateString('-1 day')
@@ -114,6 +114,7 @@ trait PromocodesRepositoryTestTrait
         $this->assertNotEquals($initial->getName(), $updated->getName());
         $this->assertNotEquals($initial->getStartDate(), $updated->getStartDate());
         $this->assertNotEquals($initial->getEndDate(), $updated->getEndDate());
+        $this->assertNotEquals($initial->isActive(), $updated->isActive());
     }
 
     public function testUpdateIfDoesNotExists()

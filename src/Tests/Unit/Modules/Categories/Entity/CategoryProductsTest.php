@@ -26,11 +26,8 @@ class CategoryProductsTest extends \PHPUnit\Framework\TestCase
     {
         $category = $this->generateCategory();
         $category->attachProduct(1);
-        $this->assertCount(1, $category->getProducts());
-        $category->flushEvents();
+        $this->expectException(\DomainException::class);
         $category->attachProduct(1);
-        $this->assertCount(1, $category->getProducts());
-        $this->assertEmpty($category->flushEvents());
     }
 
     public function testDetachProducts()

@@ -25,15 +25,14 @@ class CategoryParentTest extends \PHPUnit\Framework\TestCase
         $category = $this->generateCategory();
         $category->attachParent($parent = CategoryId::random());
         $category->flushEvents();
+        $this->expectException(\DomainException::class);
         $category->attachParent($parent);
-        $this->assertTrue($parent->equalsTo($category->getParent()));
-        $this->assertEmpty($category->flushEvents());
     }
 
-    public function testAttachCurrenctCategoryAsParent()
+    public function testAttachCurrentCategoryAsParent()
     {
-        $this->expectException(\DomainException::class);
         $category = $this->generateCategory();
+        $this->expectException(\DomainException::class);
         $category->attachParent($category->getId());
     }
 
@@ -49,8 +48,7 @@ class CategoryParentTest extends \PHPUnit\Framework\TestCase
     public function testDetachParentIfParentDoesNotAttached()
     {
         $category = $this->generateCategory();
+        $this->expectException(\DomainException::class);
         $category->detachParent();
-        $this->assertNull($category->getParent());
-        $this->assertEmpty($category->flushEvents());
     }
 }

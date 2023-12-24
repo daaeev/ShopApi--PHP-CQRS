@@ -13,31 +13,33 @@ class Promotion implements EventRoot
 {
     use EventTrait;
 
-    private bool $disabled;
+    private PromotionId $id;
+    private string $name;
+    private \DateTimeImmutable $startDate;
+    private ?\DateTimeImmutable $endDate;
+    private array $discounts;
+    private bool $disabled = false;
     private \DateTimeImmutable $createdAt;
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
-        private PromotionId $id,
-        private string $name,
-        private \DateTimeImmutable $startDate,
-        private ?\DateTimeImmutable $endDate = null,
-        private array $discounts = []
+        PromotionId $id,
+        string $name,
+        \DateTimeImmutable $startDate,
+        ?\DateTimeImmutable $endDate = null,
+        array $discounts = []
     ) {
         Assert::allIsInstanceOf($discounts, AbstractDiscountMechanic::class);
-        $this->disabled = false;
+
+        $this->id = $id;
+        $this->name = $name;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $this->discounts = $discounts;
         $this->createdAt = new \DateTimeImmutable;
-        $this->updatedAt = null;
+
         $this->guardEndDateGreaterThanStartDate();
         $this->addEvent(new Events\PromotionCreated($this));
-    }
-
-    public function __clone(): void
-    {
-        $this->id = clone $this->id;
-        foreach ($this->discounts as $key => $discount) {
-            $this->discounts[$key] = clone $discount;
-        }
     }
 
     private function guardEndDateGreaterThanStartDate(): void
@@ -131,6 +133,13 @@ class Promotion implements EventRoot
         $this->updated();
     }
 
+    private function guardPromotionNotActive(): void
+    {
+        if ($this->isActive()) {
+            throw new \DomainException('Cant update/delete active promotion');
+        }
+    }
+
     public function updateEndDate(?\DateTimeImmutable $endDate): void
     {
         $this->guardPromotionNotActive();
@@ -148,30 +157,40 @@ class Promotion implements EventRoot
     {
         $this->guardPromotionNotActive();
 
-        if (isset($this->discounts[$discount->getId()->getId()])) {
+        if ($this->discountExists($discount->getId())) {
             throw new \DomainException('Promotion already has discount with same id');
         }
 
-        $this->discounts[$discount->getId()->getId()] = $discount;
+        $this->discounts[] = $discount;
         $this->updated();
     }
 
-    private function guardPromotionNotActive(): void
+    private function discountExists(DiscountMechanicId $discountId): bool
     {
-        if ($this->isActive()) {
-            throw new \DomainException('Cant update/delete active promotion');
+        foreach ($this->discounts as $discount) {
+            if ($discountId->equalsTo($discount->getId())) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     public function removeDiscount(DiscountMechanicId $discountId): void
     {
         $this->guardPromotionNotActive();
 
-        if (!isset($this->discounts[$discountId->getId()])) {
+        if (!$this->discountExists($discountId)) {
             throw new \DomainException('Promotion does not have discount with id ' . $discountId->getId());
         }
 
-        unset($this->discounts[$discountId->getId()]);
+        foreach ($this->discounts as $index => $discount) {
+            if ($discountId->equalsTo($discount->getId())) {
+                unset($this->discounts[$index]);
+                break;
+            }
+        }
+
         $this->updated();
     }
 

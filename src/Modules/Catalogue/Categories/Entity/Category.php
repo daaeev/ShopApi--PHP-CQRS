@@ -10,18 +10,26 @@ class Category implements Events\EventRoot
 {
     use Events\EventTrait;
 
+    private CategoryId $id;
+    private string $name;
+    private string $slug;
     private array $products = [];
     private ?CategoryId $parent = null;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
-        private CategoryId $id,
-        private string $name,
-        private string $slug,
+        CategoryId $id,
+        string $name,
+        string $slug,
     ) {
         Assert::notEmpty($name && $slug);
+
+        $this->id = $id;
+        $this->name = $name;
+        $this->slug = $slug;
         $this->createdAt = new \DateTimeImmutable;
+
         $this->addEvent(new CategoryEvents\CategoryCreated($this));
     }
 
@@ -56,7 +64,7 @@ class Category implements Events\EventRoot
     public function attachProduct(int $product): void
     {
         if (in_array($product, $this->products)) {
-            return;
+            throw new \DomainException('Product already attached');
         }
 
         $this->products[] = $product;
@@ -73,24 +81,24 @@ class Category implements Events\EventRoot
         $this->updated();
     }
 
-    public function attachParent(CategoryId $parent): void
+    public function attachParent(CategoryId $parentId): void
     {
-        if (!empty($this->parent) && $parent->equalsTo($this->parent)) {
-            return;
+        if (!empty($this->parent) && $this->parent->equalsTo($parentId)) {
+            throw new \DomainException('Same parent category already attached');
         }
 
-        if ($parent->equalsTo($this->id)) {
+        if ($parentId->equalsTo($this->id)) {
             throw new \DomainException('Cant attach same category as parent');
         }
 
-        $this->parent = $parent;
+        $this->parent = $parentId;
         $this->updated();
     }
 
     public function detachParent(): void
     {
         if (empty($this->parent)) {
-            return;
+            throw new \DomainException('Category does not have parent category');
         }
 
         $this->parent = null;

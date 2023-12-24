@@ -15,13 +15,13 @@ class Product implements Events\EventRoot
     private ProductId $id;
     private string $name;
     private string $code;
-    private bool $active;
-    private Availability $availability;
-    private array $colors;
-    private array $sizes;
+    private bool $active = true;
+    private Availability $availability = Availability::IN_STOCK;
+    private array $colors = [];
+    private array $sizes = [];
     private array $prices;
     private \DateTimeImmutable $createdAt;
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
         ProductId $id,
@@ -33,12 +33,7 @@ class Product implements Events\EventRoot
         $this->name = $name;
         $this->code = $code;
         $this->prices = $prices;
-        $this->active = true;
-        $this->availability = Availability::IN_STOCK;
-        $this->colors = [];
-        $this->sizes = [];
         $this->createdAt = new \DateTimeImmutable;
-        $this->updatedAt = null;
         $this->guardCorrectConstructData();
         $this->keepPricesUnique();
         $this->addEvent(new ProductEvents\ProductCreated($this));

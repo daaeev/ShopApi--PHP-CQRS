@@ -41,7 +41,7 @@ class AdministratorsServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                Console\MakeAdmin::class
+                Console\MakeAdminCommand::class
             ]);
         }
         $this->app->get('CommandBus')->registerBus(new RequestBus($this->commandsMapping, $this->app));

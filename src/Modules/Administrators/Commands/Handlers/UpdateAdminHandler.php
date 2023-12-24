@@ -4,7 +4,6 @@ namespace Project\Modules\Administrators\Commands\Handlers;
 
 use Project\Common\Administrators\Role;
 use Project\Common\Events\DispatchEventsTrait;
-use Project\Modules\Administrators\Entity\Admin;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Administrators\Entity\AdminId;
 use Project\Modules\Administrators\Commands\UpdateAdminCommand;

@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Repository;
 
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Catalogue\Categories\Entity;
 use Project\Common\Repository\NotFoundException;
@@ -38,8 +37,8 @@ class CategoriesEloquentRepository implements CategoriesRepositoryInterface
         $record->name = $entity->getName();
         $record->slug = $entity->getSlug();
         $record->parent_id = $entity->getParent()?->getId();
-        $record->created_at = $entity->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value);
-        $record->updated_at = $entity->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value);
+        $record->created_at = $entity->getCreatedAt()->getTimestamp();
+        $record->updated_at = $entity->getUpdatedAt()?->getTimestamp();
         $record->save();
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
         $this->persistProducts($entity, $record);

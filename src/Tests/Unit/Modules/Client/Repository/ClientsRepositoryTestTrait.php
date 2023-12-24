@@ -3,7 +3,6 @@
 namespace Project\Tests\Unit\Modules\Client\Repository;
 
 use Project\Modules\Client\Entity\Name;
-use Project\Common\Utils\DateTimeFormat;
 use Project\Modules\Client\Entity\Client;
 use Project\Modules\Client\Entity\ClientId;
 use Project\Modules\Client\Entity\ClientHash;
@@ -39,12 +38,12 @@ trait ClientsRepositoryTestTrait
         $this->assertTrue($initial->getName()->equalsTo($other->getName()));
         $this->assertTrue($initial->getContacts()->equalsTo($other->getContacts()));
         $this->assertSame(
-            $initial->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value),
-            $other->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value)
+            $initial->getCreatedAt()->getTimestamp(),
+            $other->getCreatedAt()->getTimestamp()
         );
         $this->assertSame(
-            $initial->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value),
-            $other->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value)
+            $initial->getUpdatedAt()?->getTimestamp(),
+            $other->getUpdatedAt()?->getTimestamp()
         );
     }
 

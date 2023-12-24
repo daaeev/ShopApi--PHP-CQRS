@@ -56,27 +56,31 @@ class PromocodeActivityTest extends \PHPUnit\Framework\TestCase
     public function testIsActiveIfStartDateGreaterThanNow()
     {
         $promocode = $this->generatePromocode();
-        $startDate = $promocode->getEndDate()->add(
-            \DateInterval::createFromDateString('-1 second')
-        );
+        $startDate = $promocode->getEndDate()
+            ->add(\DateInterval::createFromDateString('-1 second'));
+        $promocode->deactivate();
         $promocode->setStartDate($startDate);
+        $promocode->activate();
         $this->assertFalse($promocode->isActive());
     }
 
     public function testIsActiveIfEndDateLessThanNow()
     {
         $promocode = $this->generatePromocode();
-        $endDate = $promocode->getStartDate()->add(
-            \DateInterval::createFromDateString('+1 second')
-        );
+        $endDate = $promocode->getStartDate()
+            ->add(\DateInterval::createFromDateString('+1 second'));
+        $promocode->deactivate();
         $promocode->setEndDate($endDate);
+        $promocode->activate();
         $this->assertFalse($promocode->isActive());
     }
 
     public function testIsActiveWithEmptyEndDate()
     {
         $promocode = $this->generatePromocode();
+        $promocode->deactivate();
         $promocode->setEndDate(null);
+        $promocode->activate();
         $this->assertTrue($promocode->isActive());
     }
 }

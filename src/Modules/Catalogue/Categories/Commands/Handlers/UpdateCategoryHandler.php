@@ -25,22 +25,17 @@ class UpdateCategoryHandler implements DispatchEventsInterface
         $category->updateName($command->name);
         $category->updateSlug($command->slug);
 
-        if ($category->getParent()?->getId() !== $command->parent) {
-            if ($command->parent !== null) {
-                $this->categories->get(new CategoryId($command->parent));
-                $category->attachParent(new CategoryId($command->parent));
-            } else {
-                $category->detachParent();
-            }
+        if ($command->parent !== null) {
+            $this->categories->get(new CategoryId($command->parent));
+            $category->attachParent(new CategoryId($command->parent));
+        } else {
+            $category->detachParent();
         }
 
-        if ($category->getProducts() !== $command->products) {
-            $category->detachProducts();
-
-            foreach ($command->products as $product) {
-                $this->products->get(new ProductId($product));
-                $category->attachProduct($product);
-            }
+        $category->detachProducts();
+        foreach ($command->products as $product) {
+            $this->products->get(new ProductId($product));
+            $category->attachProduct($product);
         }
 
         $this->categories->update($category);

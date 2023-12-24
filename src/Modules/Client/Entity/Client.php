@@ -10,15 +10,19 @@ class Client implements Events\EventRoot
 {
     use Events\EventTrait;
 
+    private ClientId $id;
+    private ClientHash $hash;
     private Name $name;
     private Contacts $contacts;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
-        private ClientId $id,
-        private ClientHash $hash,
+        ClientId $id,
+        ClientHash $hash,
     ) {
+        $this->id = $id;
+        $this->hash = $hash;
         $this->name = new Name;
         $this->contacts = new Contacts;
         $this->createdAt = new \DateTimeImmutable;

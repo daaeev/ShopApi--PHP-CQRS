@@ -13,24 +13,38 @@ class PromocodeNameTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $promocode = $this->generatePromocode();
+        $promocode->deactivate();
+        $promocode->flushEvents();
+        $oldUpdatedAt = $promocode->getUpdatedAt();
         $promocode->setName('Test update');
         $this->assertSame('Test update', $promocode->getName());
-        $this->assertNotEmpty($promocode->getUpdatedAt());
+        $this->assertNotSame($promocode->getUpdatedAt(), $oldUpdatedAt);
         $this->assertEvents($promocode, [new PromocodeUpdated($promocode)]);
     }
 
     public function testUpdateToSame()
     {
         $promocode = $this->generatePromocode();
+        $promocode->deactivate();
+        $promocode->flushEvents();
+        $oldUpdatedAt = $promocode->getUpdatedAt();
         $promocode->setName($promocode->getName());
-        $this->assertEmpty($promocode->getUpdatedAt());
+        $this->assertSame($promocode->getUpdatedAt(), $oldUpdatedAt);
         $this->assertEvents($promocode, []);
+    }
+
+    public function testUpdateWhenPromocodeActive()
+    {
+        $promocode = $this->generatePromocode();
+        $this->expectException(\DomainException::class);
+        $promocode->setName('New name');
     }
 
     public function testUpdateToEmpty()
     {
-        $this->expectException(\InvalidArgumentException::class);
         $promocode = $this->generatePromocode();
+        $promocode->deactivate();
+        $this->expectException(\InvalidArgumentException::class);
         $promocode->setName('');
     }
 }

@@ -3,7 +3,6 @@
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository;
 
 use Project\Modules\Shopping\Cart\Entity;
-use Project\Common\Utils\DateTimeFormat;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
 use Project\Common\Repository\NotFoundException;
@@ -49,9 +48,7 @@ class CartsEloquentRepository implements CartsRepositoryInterface
     {
         $record = Eloquent\Cart::query()
             ->whereRelation('items', 'product', '=', $product)
-            ->where([
-                'active' => true
-            ])
+            ->where(['active' => true])
             ->get();
 
         return array_map([$this->cartEloquentConverter, 'convert'], $record->all());
@@ -65,18 +62,17 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 
     private function persist(Entity\Cart $cart): void
     {
-        $record = Eloquent\Cart::firstOrNew([
-            'id' => $cart->getId()->getId()
-        ]);
+        $record = Eloquent\Cart::firstOrNew(['id' => $cart->getId()->getId()]);
         $record->client_hash = $cart->getClient()->getHash();
         $record->client_id = $cart->getClient()->getId();
         $record->active = $cart->active();
         $record->currency = $cart->getCurrency()->value;
         $record->promocode_id = $cart->getPromocode()?->getId()->getId();
-        $record->created_at = $cart->getCreatedAt()->format(DateTimeFormat::FULL_DATE->value);
-        $record->updated_at = $cart->getUpdatedAt()?->format(DateTimeFormat::FULL_DATE->value);
+        $record->created_at = $cart->getCreatedAt()->format(\DateTimeInterface::RFC3339);
+        $record->updated_at = $cart->getUpdatedAt()?->format(\DateTimeInterface::RFC3339);
         $record->save();
         $this->hydrator->hydrate($cart->getId(), ['id' => $record->id]);
+
         $this->persistCartItems($cart, $record);
     }
 

@@ -14,12 +14,8 @@ class CatalogueSettingsService implements CatalogueSettingsServiceInterface
     {
         $this->guardProductExists($command->product);
         Eloquent\Settings::updateOrCreate(
-            [
-                'product' => $command->product
-            ],
-            [
-                'displayed' => $command->displayed
-            ]
+            ['product' => $command->product],
+            ['displayed' => $command->displayed]
         );
     }
 
