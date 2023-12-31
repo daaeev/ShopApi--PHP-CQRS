@@ -15,7 +15,7 @@ class CreatePromotionHandler implements DispatchEventsInterface
     use DispatchEventsTrait;
 
     public function __construct(
-        private DiscountMechanics\DiscountMechanicFactory $discountFactory,
+        private DiscountMechanics\DiscountMechanicFactoryInterface $discountFactory,
         private PromotionsRepositoryInterface $promotions
     ) {}
 
@@ -50,7 +50,7 @@ class CreatePromotionHandler implements DispatchEventsInterface
 
         return $this->discountFactory->make(
             DiscountMechanics\DiscountType::from($discount['type']),
-            $discount['date']
+            $discount['data']
         );
     }
 }

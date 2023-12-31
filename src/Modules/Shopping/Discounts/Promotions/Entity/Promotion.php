@@ -65,11 +65,6 @@ class Promotion implements EventRoot
         $this->updated();
     }
 
-    public function disabled(): bool
-    {
-        return $this->disabled;
-    }
-
     private function updated(): void
     {
         $this->updatedAt = new \DateTimeImmutable;
@@ -84,40 +79,6 @@ class Promotion implements EventRoot
 
         $this->disabled = false;
         $this->updated();
-    }
-
-    public function isActive(): bool
-    {
-        return !$this->disabled && $this->started() && !$this->ended();
-    }
-
-    public function started(): bool
-    {
-        $now = new \DateTimeImmutable;
-        return $now > $this->startDate;
-    }
-
-    public function ended(): bool
-    {
-        $now = new \DateTimeImmutable;
-        return !empty($this->endDate) && ($now > $this->endDate);
-    }
-
-    public function getActualStatus(): PromotionStatus
-    {
-        if ($this->disabled) {
-            return PromotionStatus::DISABLED;
-        }
-
-        if (!$this->started()) {
-            return PromotionStatus::NOT_STARTED;
-        }
-
-        if ($this->ended()) {
-            return PromotionStatus::ENDED;
-        }
-
-        return PromotionStatus::STARTED;
     }
 
     public function updateStartDate(\DateTimeImmutable $startDate): void
@@ -230,6 +191,45 @@ class Promotion implements EventRoot
     public function getEndDate(): ?\DateTimeImmutable
     {
         return $this->endDate;
+    }
+
+    public function disabled(): bool
+    {
+        return $this->disabled;
+    }
+
+    public function isActive(): bool
+    {
+        return !$this->disabled && $this->started() && !$this->ended();
+    }
+
+    public function started(): bool
+    {
+        $now = new \DateTimeImmutable;
+        return $now > $this->startDate;
+    }
+
+    public function ended(): bool
+    {
+        $now = new \DateTimeImmutable;
+        return !empty($this->endDate) && ($now > $this->endDate);
+    }
+
+    public function getActualStatus(): PromotionStatus
+    {
+        if ($this->disabled) {
+            return PromotionStatus::DISABLED;
+        }
+
+        if (!$this->started()) {
+            return PromotionStatus::NOT_STARTED;
+        }
+
+        if ($this->ended()) {
+            return PromotionStatus::ENDED;
+        }
+
+        return PromotionStatus::STARTED;
     }
 
     /**
