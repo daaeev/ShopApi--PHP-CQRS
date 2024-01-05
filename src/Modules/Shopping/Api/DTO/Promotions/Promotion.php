@@ -4,14 +4,14 @@ namespace Project\Modules\Shopping\Api\DTO\Promotions;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;
+use Project\Common\Entity\Duration;
 
 class Promotion implements DTO
 {
     public function __construct(
         public readonly int $id,
         public readonly string $name,
-        public readonly \DateTimeImmutable $startData,
-        public readonly ?\DateTimeImmutable $endDate,
+        public readonly Duration $duration,
         public readonly string $status,
         public readonly array $discounts,
         public readonly \DateTimeImmutable $createdAt,
@@ -29,8 +29,7 @@ class Promotion implements DTO
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'startData' => $this->startData->format(\DateTimeInterface::RFC3339),
-            'endDate' => $this->endDate?->format(\DateTimeInterface::RFC3339),
+            'duration' => $this->duration->toArray(),
             'status' => $this->status,
             'discounts' => array_map(function (PromotionDiscount $discount) {
                 return $discount->toArray();

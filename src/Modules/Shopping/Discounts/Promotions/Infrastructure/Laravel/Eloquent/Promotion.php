@@ -28,4 +28,41 @@ class Promotion extends Model
     {
         return $this->hasMany(PromotionDiscount::class, 'promotion_id');
     }
+
+    public function scopeWhereStatusDoesNotRefreshed($query)
+    {
+        $query->where(function ($subQuery) {
+            $subQuery->where('disabled', true);
+            $subQuery->where('status', '!=', PromotionStatus::DISABLED);
+        });
+
+        $query->orWhere(function ($subQuery) {
+            $subQuery->where('disabled', false);
+            $subQuery->whereNotNull('start_date');
+            $subQuery->where('start_date', '>=', new \DateTimeImmutable);
+            $subQuery->where('status', '!=', PromotionStatus::NOT_STARTED);
+        });
+
+        $query->orWhere(function ($subQuery) {
+            $subQuery->where('disabled', false);
+            $subQuery->where(function ($startDateQuery) {
+                $startDateQuery->where('start_date', '<=', new \DateTimeImmutable)
+                    ->orWhereNull('start_date');
+            });
+
+            $subQuery->where(function ($endDateQuery) {
+                $endDateQuery->where('end_date', '>=', new \DateTimeImmutable)
+                    ->orWhereNull('end_date');
+            });
+
+            $subQuery->where('status', '!=', PromotionStatus::STARTED);
+        });
+
+        $query->orWhere(function ($subQuery) {
+            $subQuery->where('disabled', false);
+            $subQuery->whereNotNull('end_date');
+            $subQuery->where('end_date', '<=', new \DateTimeImmutable);
+            $subQuery->where('status', '!=', PromotionStatus::ENDED);
+        });
+    }
 }

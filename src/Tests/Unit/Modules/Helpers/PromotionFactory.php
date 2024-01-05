@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Helpers;
 
+use Project\Common\Entity\Duration;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
 
@@ -11,16 +12,15 @@ trait PromotionFactory
     public function makePromotion(
         Entity\PromotionId $id,
         string $name,
-        \DateTimeImmutable $startDate,
+        ?\DateTimeImmutable $startDate = null,
         ?\DateTimeImmutable $endDate = null,
         array $discounts = []
     ): Entity\Promotion {
         return new Entity\Promotion(
             $id,
             $name,
-            $startDate,
-            $endDate,
-            $discounts
+            new Duration($startDate, $endDate),
+            $discounts,
         );
     }
 
@@ -29,8 +29,10 @@ trait PromotionFactory
         $promotion = new Entity\Promotion(
             Entity\PromotionId::random(),
             substr(md5(rand(0, 9999)), 0, 5),
-            new \DateTimeImmutable('-' . rand(1, 5) . ' days'),
-            new \DateTimeImmutable('+' . rand(1, 5) . ' days'),
+            new Duration(
+                new \DateTimeImmutable('-' . rand(1, 5) . ' days'),
+                new \DateTimeImmutable('+' . rand(1, 5) . ' days'),
+            )
         );
         $promotion->flushEvents();
         return $promotion;

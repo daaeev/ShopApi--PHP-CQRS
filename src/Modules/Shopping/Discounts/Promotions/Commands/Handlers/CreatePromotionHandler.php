@@ -3,6 +3,7 @@
 namespace Project\Modules\Shopping\Discounts\Promotions\Commands\Handlers;
 
 use Webmozart\Assert\Assert;
+use Project\Common\Entity\Duration;
 use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
@@ -25,10 +26,13 @@ class CreatePromotionHandler implements DispatchEventsInterface
         $promotion = new Entity\Promotion(
             Entity\PromotionId::next(),
             $command->name,
-            $command->startDate,
-            $command->endDate,
+            new Duration(
+                $command->startDate,
+                $command->endDate,
+            ),
             $promotionDiscounts
         );
+
         if ($command->disabled) {
             $promotion->disable();
         }

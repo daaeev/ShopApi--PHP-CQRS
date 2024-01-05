@@ -3,6 +3,7 @@
 namespace Project\Modules\Shopping\Discounts\Promotions\Entity;
 
 use Webmozart\Assert\Assert;
+use Project\Common\Entity\Duration;
 use Project\Common\Events\EventRoot;
 use Project\Common\Events\EventTrait;
 use Project\Modules\Shopping\Api\Events\Promotions as Events;
@@ -15,8 +16,8 @@ class Promotion implements EventRoot
 
     private PromotionId $id;
     private string $name;
-    private \DateTimeImmutable $startDate;
-    private ?\DateTimeImmutable $endDate;
+    private Duration $duration;
+    private PromotionStatus $status;
     private array $discounts;
     private bool $disabled = false;
     private \DateTimeImmutable $createdAt;
@@ -25,39 +26,24 @@ class Promotion implements EventRoot
     public function __construct(
         PromotionId $id,
         string $name,
-        \DateTimeImmutable $startDate,
-        ?\DateTimeImmutable $endDate = null,
+        Duration $duration,
         array $discounts = []
     ) {
         Assert::allIsInstanceOf($discounts, AbstractDiscountMechanic::class);
 
         $this->id = $id;
         $this->name = $name;
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
+        $this->duration = $duration;
+        $this->status = PromotionStatus::calculate($this);
         $this->discounts = $discounts;
         $this->createdAt = new \DateTimeImmutable;
 
-        $this->guardEndDateGreaterThanStartDate();
         $this->addEvent(new Events\PromotionCreated($this));
-    }
-
-    private function guardEndDateGreaterThanStartDate(): void
-    {
-        if (empty($this->endDate)) {
-            return;
-        }
-
-        Assert::greaterThan(
-            $this->endDate,
-            $this->startDate,
-            'End date must be greater than start date'
-        );
     }
 
     public function disable(): void
     {
-        if ($this->disabled()) {
+        if ($this->disabled) {
             throw new \DomainException('Promotion already disabled');
         }
 
@@ -73,7 +59,7 @@ class Promotion implements EventRoot
 
     public function enable(): void
     {
-        if (!$this->disabled()) {
+        if (!$this->disabled) {
             throw new \DomainException('Promotion already enabled');
         }
 
@@ -81,16 +67,15 @@ class Promotion implements EventRoot
         $this->updated();
     }
 
-    public function updateStartDate(\DateTimeImmutable $startDate): void
+    public function updateDuration(Duration $duration): void
     {
         $this->guardPromotionNotActive();
 
-        if ($startDate == $this->startDate) {
+        if ($duration->equalsTo($this->duration)) {
             return;
         }
 
-        $this->startDate = $startDate;
-        $this->guardEndDateGreaterThanStartDate();
+        $this->duration = $duration;
         $this->updated();
     }
 
@@ -101,16 +86,19 @@ class Promotion implements EventRoot
         }
     }
 
-    public function updateEndDate(?\DateTimeImmutable $endDate): void
+    private function isActive(): bool
     {
-        $this->guardPromotionNotActive();
+        return !$this->disabled && $this->duration->started();
+    }
 
-        if ($endDate == $this->endDate) {
+    public function refreshStatus(): void
+    {
+        $refreshedStatus = PromotionStatus::calculate($this);
+        if ($refreshedStatus === $this->status) {
             return;
         }
 
-        $this->endDate = $endDate;
-        $this->guardEndDateGreaterThanStartDate();
+        $this->status = $refreshedStatus;
         $this->updated();
     }
 
@@ -183,53 +171,19 @@ class Promotion implements EventRoot
         return $this->name;
     }
 
-    public function getStartDate(): \DateTimeImmutable
+    public function getDuration(): Duration
     {
-        return $this->startDate;
+        return $this->duration;
     }
 
-    public function getEndDate(): ?\DateTimeImmutable
+    public function getStatus(): PromotionStatus
     {
-        return $this->endDate;
+        return $this->status;
     }
 
     public function disabled(): bool
     {
         return $this->disabled;
-    }
-
-    public function isActive(): bool
-    {
-        return !$this->disabled && $this->started() && !$this->ended();
-    }
-
-    public function started(): bool
-    {
-        $now = new \DateTimeImmutable;
-        return $now > $this->startDate;
-    }
-
-    public function ended(): bool
-    {
-        $now = new \DateTimeImmutable;
-        return !empty($this->endDate) && ($now > $this->endDate);
-    }
-
-    public function getActualStatus(): PromotionStatus
-    {
-        if ($this->disabled) {
-            return PromotionStatus::DISABLED;
-        }
-
-        if (!$this->started()) {
-            return PromotionStatus::NOT_STARTED;
-        }
-
-        if ($this->ended()) {
-            return PromotionStatus::ENDED;
-        }
-
-        return PromotionStatus::STARTED;
     }
 
     /**

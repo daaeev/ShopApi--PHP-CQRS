@@ -4,76 +4,113 @@ namespace Project\Tests\Unit\CQRS;
 
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Common\CQRS\Buses\CompositeRequestBus;
-use Project\Tests\Unit\CQRS\Commands\CommandsTrait;
 
 class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
 {
-    use CommandsTrait;
-
     public function testDispatchCommand()
     {
-        $command = new Commands\TestCommand;
+        $command = new \stdClass;
         $busMock = $this->getMockBuilder(RequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $busMock->expects($this->once())
             ->method('canDispatch')
             ->with($command)
             ->willReturn(true);
+
         $busMock->expects($this->once())
             ->method('dispatch')
             ->with($command)
             ->willReturn('Success');
 
-        $bus = new CompositeRequestBus;
-        $bus->registerBus($busMock);
-        $this->assertEquals('Success', $bus->dispatch($command));
+        $compositeBus = new CompositeRequestBus;
+        $compositeBus->registerBus($busMock);
+        $this->assertEquals('Success', $compositeBus->dispatch($command));
     }
 
-    public function testDispatchCommandWithoutAnyHandlers()
+    public function testDispatchCommandWithOneBusThatCantDispatchEvent()
     {
-        $this->expectException(\DomainException::class);
-        $bus = new CompositeRequestBus;
-        $bus->dispatch(new Commands\TestCommand);
-    }
-
-
-    public function testCanDispatch()
-    {
-        $command = new Commands\TestCommand;
+        $command = new \stdClass;
         $busMock = $this->getMockBuilder(RequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $busMock->expects($this->once())
-            ->method('canDispatch')
-            ->with($command)
-            ->willReturn(true);
 
-        $bus = new CompositeRequestBus;
-        $bus->registerBus($busMock);
-        $this->assertTrue($bus->canDispatch($command));
-    }
-
-    public function testCantDispatch()
-    {
-        $command = new Commands\TestCommand;
-        $busMock = $this->getMockBuilder(RequestBus::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $busMock->expects($this->once())
             ->method('canDispatch')
             ->with($command)
             ->willReturn(false);
 
-        $bus = new CompositeRequestBus;
-        $bus->registerBus($busMock);
-        $this->assertFalse($bus->canDispatch($command));
+        $compositeBus = new CompositeRequestBus;
+        $compositeBus->registerBus($busMock);
+        $this->expectException(\DomainException::class);
+        $compositeBus->dispatch($command);
     }
 
-    public function testCantDispatchWithoutAnyRegisteredBuses()
+    public function testDispatchCommandWithoutRegisteredBusses()
     {
-        $command = new Commands\TestCommand;
-        $bus = new CompositeRequestBus;
-        $this->assertFalse($bus->canDispatch($command));
+        $command = new \stdClass;
+        $compositeBus = new CompositeRequestBus;
+        $this->expectException(\DomainException::class);
+        $compositeBus->dispatch($command);
+    }
+
+    public function testCanDispatch()
+    {
+        $command = new \stdClass;
+        $busMock = $this->getMockBuilder(RequestBus::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $busMock->expects($this->once())
+            ->method('canDispatch')
+            ->with($command)
+            ->willReturn(true);
+
+        $compositeBus = new CompositeRequestBus;
+        $compositeBus->registerBus($busMock);
+        $this->assertTrue($compositeBus->canDispatch($command));
+    }
+
+    public function testCantDispatchWithOneRegisteredBus()
+    {
+        $command = new \stdClass;
+        $busMock = $this->getMockBuilder(RequestBus::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $busMock->expects($this->once())
+            ->method('canDispatch')
+            ->with($command)
+            ->willReturn(false);
+
+        $compositeBus = new CompositeRequestBus;
+        $compositeBus->registerBus($busMock);
+        $this->assertFalse($compositeBus->canDispatch($command));
+    }
+
+    public function testCantDispatchWithoutRegisteredBusses()
+    {
+        $command = new \stdClass;
+        $compositeBus = new CompositeRequestBus;
+        $this->assertFalse($compositeBus->canDispatch($command));
+    }
+
+    public function testRegisterBus()
+    {
+        $command = new \stdClass;
+        $busMock = $this->getMockBuilder(RequestBus::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $busMock->expects($this->once())
+            ->method('canDispatch')
+            ->with($command)
+            ->willReturn(true);
+
+        $compositeBus = new CompositeRequestBus;
+        $this->assertFalse($compositeBus->canDispatch($command));
+        $compositeBus->registerBus($busMock);
+        $this->assertTrue($compositeBus->canDispatch($command));
     }
 }

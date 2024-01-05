@@ -25,10 +25,13 @@ class CreatePromotionCommandTest extends \PHPUnit\Framework\TestCase
         $this->promotions = new PromotionsMemoryRepository(new Hydrator);
         $this->mechanicFactory = $this->getMockBuilder(DiscountMechanics\DiscountMechanicFactoryInterface::class)
             ->getMock();
+
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
+
         $this->dispatcher->expects($this->exactly(1)) // promotion created
             ->method('dispatch');
+
         parent::setUp();
     }
 
@@ -64,8 +67,8 @@ class CreatePromotionCommandTest extends \PHPUnit\Framework\TestCase
         CreatePromotionCommand $command
     ): void {
         $this->assertSame($promotion->getName(), $command->name);
-        $this->assertSame($promotion->getStartDate()->getTimestamp(), $command->startDate->getTimestamp());
-        $this->assertSame($promotion->getEndDate()->getTimestamp(), $command->endDate->getTimestamp());
+        $this->assertSame($promotion->getDuration()->getStartDate()?->getTimestamp(), $command->startDate?->getTimestamp());
+        $this->assertSame($promotion->getDuration()->getEndDate()?->getTimestamp(), $command->endDate?->getTimestamp());
         $this->assertSame($promotion->disabled(), $command->disabled);
 
         $this->assertCount(count($command->discounts), $promotion->getDiscounts());

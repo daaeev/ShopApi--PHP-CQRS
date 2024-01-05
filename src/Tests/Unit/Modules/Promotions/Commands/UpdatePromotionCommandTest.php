@@ -23,8 +23,10 @@ class UpdatePromotionCommandTest extends \PHPUnit\Framework\TestCase
         $this->promotions = new PromotionsMemoryRepository(new Hydrator);
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
+
         $this->dispatcher->expects($this->exactly(1)) // promotion updated
             ->method('dispatch');
+
         parent::setUp();
     }
 
@@ -54,7 +56,7 @@ class UpdatePromotionCommandTest extends \PHPUnit\Framework\TestCase
         UpdatePromotionCommand $command
     ): void {
         $this->assertSame($promotion->getName(), $command->name);
-        $this->assertSame($promotion->getStartDate()->getTimestamp(), $command->startDate->getTimestamp());
-        $this->assertSame($promotion->getEndDate()->getTimestamp(), $command->endDate->getTimestamp());
+        $this->assertSame($promotion->getDuration()->getStartDate()?->getTimestamp(), $command->startDate?->getTimestamp());
+        $this->assertSame($promotion->getDuration()->getEndDate()?->getTimestamp(), $command->endDate?->getTimestamp());
     }
 }

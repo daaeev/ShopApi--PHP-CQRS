@@ -2,10 +2,7 @@
 
 namespace Project\Common\CQRS\Buses;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
-
-class CompositeEventBus extends Interfaces\AbstractCompositeBus implements
-    EventDispatcherInterface
+class CompositeEventBus extends AbstractCompositeMessageBus
 {
     public function dispatch(object $event): void
     {

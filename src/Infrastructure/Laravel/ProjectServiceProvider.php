@@ -3,15 +3,16 @@
 namespace Project\Infrastructure\Laravel;
 
 use Psr\Log\LoggerInterface;
-use Project\Common\CQRS\Buses\LoggingBus;
 use Project\Modules\Client\Api\ClientsApi;
 use App\Http\Middleware\AssignClientHashCookie;
+use Project\Common\Events\DispatchEventsInterface;
+use Project\Common\CQRS\ApplicationMessagesManager;
+use Project\Common\CQRS\Buses\Decorators\LoggingBusDecorator;
+use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\CQRS\Buses\CompositeEventBus;
 use Project\Common\CQRS\Buses\CompositeRequestBus;
-use Project\Common\Events\DispatchEventsInterface;
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
-use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBus;
+use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBusDecorator;
 use Project\Modules\Client\Infrastructure\Laravel\ClientServiceProvider;
 use Project\Modules\Shopping\Infrastructure\Laravel\ShoppingServiceProvider;
 use Project\Modules\Catalogue\Infrastructure\Laravel\CatalogueServiceProvider;
@@ -32,6 +33,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->registerEnvironment();
         $this->registerAssignClientHashMiddleware();
         $this->registerBuses();
+        $this->registerMessageManager();
     }
 
     private function registerProviders()
@@ -66,26 +68,39 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerBuses()
     {
         $this->app->singleton('CommandBus', function () {
-            return new LoggingBus(
-                new TransactionBus(new CompositeRequestBus),
+            return new LoggingBusDecorator(
+                new TransactionBusDecorator(new CompositeRequestBus),
                 $this->app->make(LoggerInterface::class)
             );
         });
 
         $this->app->singleton('QueryBus', function () {
-            return new TransactionBus(new CompositeRequestBus);
+            return new LoggingBusDecorator(
+                new TransactionBusDecorator(new CompositeRequestBus),
+                $this->app->make(LoggerInterface::class),
+            );
         });
 
         $this->app->singleton('EventBus', function () {
-            return new LoggingBus(
-                new CompositeEventBus(),
+            return new LoggingBusDecorator(
+                new TransactionBusDecorator(new CompositeEventBus()),
                 $this->app->make(LoggerInterface::class),
-                'event'
             );
         });
 
         $this->app->resolving(DispatchEventsInterface::class, function ($object, $app) {
             $object->setDispatcher($app->make('EventBus'));
+        });
+    }
+
+    public function registerMessageManager()
+    {
+        $this->app->singleton(ApplicationMessagesManager::class, function ($app) {
+            return new ApplicationMessagesManager(
+                $app->make('CommandBus'),
+                $app->make('QueryBus'),
+                $app->make('EventBus'),
+            );
         });
     }
 }

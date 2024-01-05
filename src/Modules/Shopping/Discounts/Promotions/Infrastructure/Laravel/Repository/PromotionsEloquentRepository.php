@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Repository;
 
+use Project\Common\Entity\Duration;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
@@ -37,9 +38,9 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
     {
         $record->id = $entity->getId()->getId();
         $record->name = $entity->getName();
-        $record->status = $entity->getActualStatus();
-        $record->start_date = $entity->getStartDate()->getTimestamp();
-        $record->end_date = $entity->getEndDate()->getTimestamp();
+        $record->status = $entity->getStatus();
+        $record->start_date = $entity->getDuration()->getStartDate()?->getTimestamp();
+        $record->end_date = $entity->getDuration()->getEndDate()?->getTimestamp();
         $record->disabled = $entity->disabled();
         $record->created_at = $entity->getCreatedAt()->getTimestamp();
         $record->updated_at = $entity->getUpdatedAt()?->getTimestamp();
@@ -100,8 +101,15 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
         return $this->hydrator->hydrate(Entity\Promotion::class, [
             'id' => Entity\PromotionId::make($record->id),
             'name' => $record->name,
-            'startDate' => new \DateTimeImmutable($record->start_date),
-            'endDate' => new \DateTimeImmutable($record->end_date),
+            'duration' => new Duration(
+                $record->start_date
+                    ? new \DateTimeImmutable($record->start_date)
+                    : null,
+                $record->end_date
+                    ? new \DateTimeImmutable($record->end_date)
+                    : null,
+            ),
+            'status' => $record->status,
             'disabled' => $record->disabled,
             'discounts' => array_map(function (Eloquent\PromotionDiscount $discountRecord) {
                 return $this->discountsFactory->make($discountRecord->type, $discountRecord->data);

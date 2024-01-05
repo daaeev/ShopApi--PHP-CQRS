@@ -2,7 +2,16 @@
 
 namespace Project\Common\CQRS\Buses;
 
-class CompositeRequestBus extends Interfaces\AbstractCompositeBus
+class CompositeRequestBus extends AbstractCompositeMessageBus
 {
+    public function dispatch(object $request)
+    {
+        foreach ($this->buses as $bus) {
+            if ($bus->canDispatch($request)) {
+                return $bus->dispatch($request);
+            }
+        }
 
+        throw new \DomainException('Cant dispatch command ' . $request::class);
+    }
 }

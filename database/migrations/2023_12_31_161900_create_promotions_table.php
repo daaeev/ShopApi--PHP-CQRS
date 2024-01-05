@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable(false);
             $table->string('status')->nullable(false);
-            $table->timestamp('start_date')->nullable(false);
-            $table->timestamp('end_date')->nullable(false);
-            $table->boolean('disabled')->default(false);
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
+            $table->boolean('disabled')
+                ->default(false)
+                ->nullable(false);
             $table->timestamps();
         });
     }

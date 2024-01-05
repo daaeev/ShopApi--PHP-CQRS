@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\CQRS;
 
+use Project\Common\Events\Event;
 use Project\Common\CQRS\Buses\CompositeEventBus;
 use Project\Common\CQRS\Buses\EventBus;
 
@@ -9,66 +10,110 @@ class CompositeEventBusTest extends \PHPUnit\Framework\TestCase
 {
     public function testDispatchEvent()
     {
-        $command = new Commands\TestCommand;
+        $event = $this->getMockBuilder(Event::class)->getMock();
         $busMock = $this->getMockBuilder(EventBus::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $busMock->expects($this->once())
             ->method('canDispatch')
-            ->with($command)
+            ->with($event)
             ->willReturn(true);
+
         $busMock->expects($this->once())
             ->method('dispatch')
-            ->with($command);
+            ->with($event);
 
-        $bus = new CompositeEventBus;
-        $bus->registerBus($busMock);
-        $bus->dispatch($command);
+        $compositeBus = new CompositeEventBus;
+        $compositeBus->registerBus($busMock);
+        $compositeBus->dispatch($event);
     }
 
-    public function testDispatchEventWithoutAnyHandlers()
+    public function testDispatchEventWithOneBusThatCantDispatchEvent()
     {
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $busMock = $this->getMockBuilder(EventBus::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $busMock->expects($this->once())
+            ->method('canDispatch')
+            ->with($event)
+            ->willReturn(false);
+
+        $busMock->expects($this->never())
+            ->method('dispatch')
+            ->with($event);
+
+        $compositeBus = new CompositeEventBus;
+        $compositeBus->registerBus($busMock);
+        $compositeBus->dispatch($event);
+    }
+
+    public function testDispatchEventWithoutRegisteredBusses()
+    {
+        $event = $this->getMockBuilder(Event::class)->getMock();
         $this->expectNotToPerformAssertions();
-        $bus = new CompositeEventBus;
-        $bus->dispatch(new Commands\TestCommand);
+        $compositeBus = new CompositeEventBus;
+        $compositeBus->dispatch($event);
     }
 
     public function testCanDispatch()
     {
-        $command = new Commands\TestCommand;
+        $event = $this->getMockBuilder(Event::class)->getMock();
         $busMock = $this->getMockBuilder(EventBus::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $busMock->expects($this->once())
             ->method('canDispatch')
-            ->with($command)
+            ->with($event)
             ->willReturn(true);
 
-        $bus = new CompositeEventBus;
-        $bus->registerBus($busMock);
-        $this->assertTrue($bus->canDispatch($command));
+        $compositeBus = new CompositeEventBus;
+        $compositeBus->registerBus($busMock);
+        $this->assertTrue($compositeBus->canDispatch($event));
     }
 
-    public function testCantDispatch()
+    public function testCantDispatchWithOneRegisteredBus()
     {
-        $command = new Commands\TestCommand;
+        $event = $this->getMockBuilder(Event::class)->getMock();
         $busMock = $this->getMockBuilder(EventBus::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $busMock->expects($this->once())
             ->method('canDispatch')
-            ->with($command)
+            ->with($event)
             ->willReturn(false);
 
-        $bus = new CompositeEventBus;
-        $bus->registerBus($busMock);
-        $this->assertFalse($bus->canDispatch($command));
+        $compositeBus = new CompositeEventBus;
+        $compositeBus->registerBus($busMock);
+        $this->assertFalse($compositeBus->canDispatch($event));
     }
 
-    public function testCantDispatchWithoutAnyRegisteredBuses()
+    public function testCantDispatchWithoutRegisteredBusses()
     {
-        $command = new Commands\TestCommand;
-        $bus = new CompositeEventBus;
-        $this->assertFalse($bus->canDispatch($command));
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $compositeBus = new CompositeEventBus;
+        $this->assertFalse($compositeBus->canDispatch($event));
+    }
+
+    public function testRegisterBus()
+    {
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $busMock = $this->getMockBuilder(EventBus::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $busMock->expects($this->once())
+            ->method('canDispatch')
+            ->with($event)
+            ->willReturn(true);
+
+        $compositeBus = new CompositeEventBus;
+        $this->assertFalse($compositeBus->canDispatch($event));
+        $compositeBus->registerBus($busMock);
+        $this->assertTrue($compositeBus->canDispatch($event));
     }
 }

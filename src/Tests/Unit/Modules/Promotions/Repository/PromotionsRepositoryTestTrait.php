@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Promotions\Repository;
 
+use Project\Common\Entity\Duration;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
@@ -34,16 +35,8 @@ trait PromotionsRepositoryTestTrait
         $this->assertTrue($initial->getId()->equalsTo($other->getId()));
         $this->assertSame($initial->getName(), $other->getName());
         $this->assertSame($initial->disabled(), $other->disabled());
-        $this->assertSame($initial->isActive(), $other->isActive());
-        $this->assertSame($initial->getActualStatus(), $other->getActualStatus());
-        $this->assertSame(
-            $initial->getStartDate()->getTimestamp(),
-            $other->getStartDate()->getTimestamp()
-        );
-        $this->assertSame(
-            $initial->getUpdatedAt()?->getTimestamp(),
-            $other->getUpdatedAt()?->getTimestamp()
-        );
+        $this->assertSame($initial->getStatus(), $other->getStatus());
+        $this->assertTrue($initial->getDuration()->equalsTo($other->getDuration()));
         $this->assertSame(
             $initial->getCreatedAt()->getTimestamp(),
             $other->getCreatedAt()->getTimestamp()
@@ -103,22 +96,20 @@ trait PromotionsRepositoryTestTrait
         $discount = $this->generateDiscount();
         $added->addDiscount($discount);
         $added->updateName(md5(rand()));
-        $startDate = $added->getStartDate()->add(
+        $startDate = $added->getDuration()->getStartDate()->add(
             \DateInterval::createFromDateString('-1 day')
         );
-        $endDate = $added->getEndDate()->add(
+        $endDate = $added->getDuration()->getEndDate()->add(
             \DateInterval::createFromDateString('+1 day')
         );
-        $added->updateStartDate($startDate);
-        $added->updateEndDate($endDate);
+        $added->updateDuration(new Duration($startDate, $endDate));
         $this->promotions->update($added);
 
         $updated = $this->promotions->get($initial->getId());
         $this->assertSamePromotions($added, $updated);
         $this->assertNotEquals($initial->getName(), $updated->getName());
         $this->assertNotEquals($initial->disabled(), $updated->disabled());
-        $this->assertNotEquals($initial->getStartDate(), $updated->getStartDate());
-        $this->assertNotEquals($initial->getEndDate(), $updated->getEndDate());
+        $this->assertFalse($initial->getDuration()->equalsTo($updated->getDuration()));
         $this->assertNotEquals($initial->getDiscounts(), $updated->getDiscounts());
         $this->assertNotEmpty($discount->getId()->getId());
     }

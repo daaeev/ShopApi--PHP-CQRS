@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Shopping\Discounts\Promotions\Queries;
 use Project\Modules\Shopping\Discounts\Promotions\Commands;
+use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Console;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\QueryPromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactory;
@@ -18,6 +19,7 @@ class PromotionsServiceProvider extends ServiceProvider
     private array $commandsMapping = [
         Commands\CreatePromotionCommand::class => Commands\Handlers\CreatePromotionHandler::class,
         Commands\UpdatePromotionCommand::class => Commands\Handlers\UpdatePromotionHandler::class,
+        Commands\RefreshPromotionStatusCommand::class => Commands\Handlers\RefreshPromotionStatusHandler::class,
         Commands\DeletePromotionCommand::class => Commands\Handlers\DeletePromotionHandler::class,
         Commands\AddPromotionDiscountCommand::class => Commands\Handlers\AddPromotionDiscountHandler::class,
         Commands\RemovePromotionDiscountCommand::class => Commands\Handlers\RemovePromotionDiscountHandler::class,
@@ -38,6 +40,12 @@ class PromotionsServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Console\RefreshPromotionsStatusCommand::class,
+            ]);
+        }
+
         $this->app->get('CommandBus')->registerBus(new RequestBus($this->commandsMapping, $this->app));
         $this->app->get('QueryBus')->registerBus(new RequestBus($this->queriesMapping, $this->app));
     }

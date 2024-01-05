@@ -29,7 +29,6 @@ trait DispatchEventsTrait
     public function dispatchEvents(array $events): void
     {
         $this->checkDispatcherInstantiate();
-
         foreach ($events as $event) {
             $this->dispatcher->dispatch($event);
         }

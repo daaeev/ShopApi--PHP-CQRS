@@ -3,33 +3,38 @@
 namespace Project\Tests\Unit\CQRS;
 
 use Psr\Log\LoggerInterface;
-use Project\Common\CQRS\Buses\LoggingBus;
-use Project\Common\CQRS\Buses\Interfaces\AbstractCompositeBus;
 use PHPUnit\Framework\TestCase;
+use Project\Common\CQRS\Buses\Decorators\LoggingBusDecorator;
+use Project\Common\CQRS\Buses\CompositeRequestBus;
 
 class LoggingBusTest extends TestCase
 {
     public function testDispatch()
     {
-        $command = new Commands\TestCommand;
-        $decoratedBusMock = $this->getMockBuilder(AbstractCompositeBus::class)
+        $command = new \stdClass;
+        $decoratedBusMock = $this->getMockBuilder(CompositeRequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $decoratedBusMock->expects($this->once())
             ->method('dispatch')
-            ->with($command);
+            ->with($command)
+            ->willReturn('Success');
+
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $message = 'Dispatch test: '
+
+        $message = 'Dispatch message: '
             . $command::class
             . ' with params '
             . json_encode(get_object_vars($command));
+
         $loggerMock->expects($this->once())
             ->method('info')
             ->with($message);
 
-        $loggingBus = new LoggingBus($decoratedBusMock, $loggerMock, 'test');
-        $loggingBus->dispatch($command);
+        $loggingBus = new LoggingBusDecorator($decoratedBusMock, $loggerMock);
+        $this->assertSame('Success', $loggingBus->dispatch($command));
     }
 }

@@ -24,10 +24,13 @@ class AddPromotionDiscountCommandTest extends \PHPUnit\Framework\TestCase
         $this->promotions = new PromotionsMemoryRepository(new Hydrator);
         $this->mechanicFactory = $this->getMockBuilder(DiscountMechanics\DiscountMechanicFactoryInterface::class)
             ->getMock();
+
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock();
+
         $this->dispatcher->expects($this->exactly(1)) // promotion updated
             ->method('dispatch');
+
         parent::setUp();
     }
 

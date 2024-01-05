@@ -4,7 +4,7 @@ namespace Project\Common\CQRS\Buses;
 
 use Psr\Container\ContainerInterface;
 
-class RequestBus implements Interfaces\BusInterface
+class RequestBus implements MessageBusInterface
 {
     private array $bindings;
     private ContainerInterface $container;
@@ -15,52 +15,38 @@ class RequestBus implements Interfaces\BusInterface
         $this->container = $container;
     }
 
-    public function dispatch(object $command): mixed
+    public function dispatch(object $request): mixed
     {
-        if (!$this->canDispatch($command)) {
-            throw new \DomainException('Cant dispatch command ' . $command::class);
+        if (!$this->canDispatch($request)) {
+            throw new \DomainException('Cant dispatch command ' . $request::class);
         }
 
-        $handler = $this->bindings[$command::class];
-
+        $handler = $this->bindings[$request::class];
         if (is_string($handler) && class_exists($handler)) {
-            return $this->executeCallableHandler($command, $handler);
+            $handlerObject = $this->container->get($handler);
+            return $this->executeHandler($request, $handlerObject);
         }
 
         if (is_array($handler) && (count($handler) === 2)) {
-            return $this->executeHandlerMethod($command, $handler[0], $handler[1]);
+            $handlerObject = $this->container->get($handler[0]);
+            $handlerMethod = $handler[1];
+            return $this->executeHandler($request, [$handlerObject, $handlerMethod]);
         }
 
-        throw new \DomainException('Cant execute ' . $command::class . ' command handler');
+        throw new \DomainException('Cant execute ' . $request::class . ' command handler');
     }
 
-    public function canDispatch(object $command): bool
+    private function executeHandler(object $request, object|array $handler): mixed
     {
-        return isset($this->bindings[$command::class]);
-    }
-
-    private function executeCallableHandler(object $command, string $handlerClass): mixed
-    {
-        $handler = $this->container->get($handlerClass);
-
         if (!is_callable($handler)) {
-            throw new \DomainException($command::class . ' handler dont callable');
+            throw new \DomainException($request::class . ' handler not callable');
         }
 
-        return call_user_func($handler, $command);
+        return call_user_func($handler, $request);
     }
 
-    private function executeHandlerMethod(
-        object $command,
-        string $handlerClass,
-        string $method
-    ): mixed {
-        $handler = $this->container->get($handlerClass);
-
-        if (!method_exists($handler, $method)) {
-            throw new \DomainException($command::class . ' handler does not has ' . $method . ' method');
-        }
-
-        return $handler->$method($command);
+    public function canDispatch(object $request): bool
+    {
+        return isset($this->bindings[$request::class]);
     }
 }

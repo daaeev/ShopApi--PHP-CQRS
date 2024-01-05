@@ -2,87 +2,115 @@
 
 namespace Project\Tests\Unit\CQRS;
 
+use Project\Common\Events\Event;
+use Psr\Container\ContainerInterface;
 use Project\Common\CQRS\Buses\EventBus;
-use Project\Tests\Unit\CQRS\Commands\CommandsTrait;
-use Project\Tests\Unit\CQRS\Commands\Handlers\CallableCommandHandler;
-use Project\Tests\Unit\CQRS\Commands\Handlers\NonCallableCommandHandler;
-use Project\Tests\Unit\CQRS\Commands\TestCommand;
-use Project\Tests\Unit\CQRS\Container\NotFoundException;
+use Project\Tests\Unit\CQRS\Handlers\CallableHandler;
 
 class EventBusTest extends \PHPUnit\Framework\TestCase
 {
-    use CommandsTrait;
+    protected ContainerInterface $container;
 
-    public function testDispatchEventWithOneHandler()
+    protected function setUp(): void
     {
-        $command = new TestCommand;
-        $eventMock = $this->getMockBuilder(CallableCommandHandler::class)
+        $this->container = $this->getMockBuilder(ContainerInterface::class)
             ->getMock();
-        $eventMock->expects($this->once())
-            ->method('__invoke')
-            ->with($command);
 
-        $bus = new EventBus(
-            $this->getCommandBindings(),
-            new Container\TestContainer([
-                CallableCommandHandler::class => $eventMock
-            ])
-        );
-        $bus->dispatch($command);
+        parent::setUp();
+    }
+
+    public function testDispatchEvent()
+    {
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $handlerMock = $this->getMockBuilder(CallableHandler::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $handlerMock->expects($this->once())
+            ->method('__invoke')
+            ->with($event);
+
+        $this->container->expects($this->once())
+            ->method('get')
+            ->with($handlerMock::class)
+            ->willReturn($handlerMock);
+
+        $eventBus = new EventBus([$event::class => $handlerMock::class], $this->container);
+        $eventBus->dispatch($event);
     }
 
     public function testDispatchEventWithManyHandlers()
     {
-        $command = new TestCommand;
-        $eventMock = $this->getMockBuilder(CallableCommandHandler::class)
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $firstHandlerMock = $this->getMockBuilder(CallableHandler::class)
             ->getMock();
-        $eventMock->expects($this->exactly(2))
+
+        $firstHandlerMock->expects($this->once())
             ->method('__invoke')
-            ->with($command);
-        
-        $bus = new EventBus(
-            [
-                TestCommand::class => [
-                    CallableCommandHandler::class,
-                    CallableCommandHandler::class
-                ]
-            ],
-            new Container\TestContainer([
-                CallableCommandHandler::class => $eventMock
-            ])
+            ->with($event);
+
+        $secondHandlerMock = $this->getMockBuilder(CallableHandler::class)
+            ->getMock();
+
+        $secondHandlerMock->expects($this->once())
+            ->method('__invoke')
+            ->with($event);
+
+        $this->container->expects($this->exactly(2))
+            ->method('get')
+            ->willReturnOnConsecutiveCalls($firstHandlerMock, $secondHandlerMock);
+
+        $eventBus = new EventBus(
+            [$event::class => [$firstHandlerMock::class, $secondHandlerMock::class]],
+            $this->container
         );
-        $bus->dispatch($command);
+        $eventBus->dispatch($event);
     }
 
-    public function testDispatchEventWithoutHandlers()
+    public function testDispatchNotEventObject()
     {
-        $this->expectException(\DomainException::class);
-        $bus = new EventBus(
-            [],
-            new Container\TestContainer([])
-        );
-        $bus->dispatch(new TestCommand());
+        $event = new \stdClass;
+        $eventBus = new EventBus([], $this->container);
+        $this->expectException(\InvalidArgumentException::class);
+        $eventBus->dispatch($event);
     }
 
-    public function testContainerDoesNotHasHandler()
+    public function testDispatchEventWithoutRegisteredHandlers()
     {
-        $this->expectException(NotFoundException::class);
-        $bus = new EventBus(
-            $this->getCommandBindings(),
-            new Container\TestContainer([])
-        );
-        $bus->dispatch(new TestCommand);
+        $this->expectNotToPerformAssertions();
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $eventBus = new EventBus([], $this->container);
+        $eventBus->dispatch($event);
     }
 
     public function testDispatchEventWithNonCallableHandler()
     {
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $handlerMock = new \stdClass;
+
+        $this->container->expects($this->once())
+            ->method('get')
+            ->with($handlerMock::class)
+            ->willReturn($handlerMock);
+
+        $eventBus = new EventBus([$event::class => $handlerMock::class], $this->container);
         $this->expectException(\DomainException::class);
-        $bus = new EventBus(
-            [
-                TestCommand::class => NonCallableCommandHandler::class
-            ],
-            new Container\TestContainer([NonCallableCommandHandler::class => new NonCallableCommandHandler])
-        );
-        $bus->dispatch(new TestCommand);
+        $eventBus->dispatch($event);
+    }
+
+    public function testCanDispatch()
+    {
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $handlerMock = new \stdClass;
+
+        $eventBus = new EventBus([$event::class => $handlerMock::class], $this->container);
+        $this->assertTrue($eventBus->canDispatch($event));
+    }
+
+    public function testCantDispatch()
+    {
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $eventBus = new EventBus([], $this->container);
+        $this->assertFalse($eventBus->canDispatch($event));
     }
 }

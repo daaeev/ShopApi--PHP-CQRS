@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Repository;
 
+use Project\Common\Entity\Duration;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Entity\Collections\Pagination;
 use Project\Modules\Shopping\Api\DTO\Promotions as DTO;
@@ -30,10 +31,14 @@ class QueryPromotionsEloquentRepository implements QueryPromotionsRepositoryInte
         return new DTO\Promotion(
             $record->id,
             $record->name,
-            new \DateTimeImmutable($record->start_date),
-            $record->end_date
-                ? new \DateTimeImmutable($record->end_date)
-                : null,
+            new Duration(
+                $record->start_date
+                    ? new \DateTimeImmutable($record->start_date)
+                    : null,
+                $record->end_date
+                    ? new \DateTimeImmutable($record->end_date)
+                    : null,
+            ),
             $record->status,
             array_map(function (Eloquent\PromotionDiscount $discountRecord) {
                 return new DTO\PromotionDiscount(

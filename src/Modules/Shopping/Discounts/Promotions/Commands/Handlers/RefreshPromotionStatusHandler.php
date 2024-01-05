@@ -2,14 +2,13 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Commands\Handlers;
 
-use Project\Common\Entity\Duration;
 use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
-use Project\Modules\Shopping\Discounts\Promotions\Commands\UpdatePromotionCommand;
+use Project\Modules\Shopping\Discounts\Promotions\Commands\AddPromotionDiscountCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 
-class UpdatePromotionHandler implements DispatchEventsInterface
+class RefreshPromotionStatusHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
@@ -17,14 +16,10 @@ class UpdatePromotionHandler implements DispatchEventsInterface
         private PromotionsRepositoryInterface $promotions
     ) {}
 
-    public function __invoke(UpdatePromotionCommand $command): void
+    public function __invoke(AddPromotionDiscountCommand $command): void
     {
         $promotion = $this->promotions->get(Entity\PromotionId::make($command->id));
-        $promotion->updateName($command->name);
-        $promotion->updateDuration(new Duration(
-            $command->startDate,
-            $command->endDate,
-        ));
+        $promotion->refreshStatus();
         $this->promotions->update($promotion);
         $this->dispatchEvents($promotion->flushEvents());
     }
