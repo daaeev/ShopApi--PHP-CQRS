@@ -5,9 +5,8 @@ namespace Project\Common\CQRS\Buses;
 use Webmozart\Assert\Assert;
 use Project\Common\Events\Event;
 use Psr\Container\ContainerInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
 
-class EventBus implements MessageBusInterface, EventDispatcherInterface
+class EventBus implements MessageBusInterface
 {
     private array $bindings;
     private ContainerInterface $container;

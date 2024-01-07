@@ -6,7 +6,7 @@ use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Catalogue\Product\Entity;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Modules\Catalogue\Api\DTO\Product\Price;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;
@@ -19,15 +19,17 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
     use ProductFactory;
 
     private ProductsRepositoryInterface $products;
-    private EventDispatcherInterface $dispatcher;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
         $this->products = new ProductsMemoryRepository(new Hydrator);
-        $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
+
         $this->dispatcher->expects($this->exactly(2)) // product created, product updated
             ->method('dispatch');
+
         parent::setUp();
     }
 

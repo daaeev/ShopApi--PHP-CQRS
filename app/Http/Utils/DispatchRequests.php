@@ -2,20 +2,25 @@
 
 namespace App\Http\Utils;
 
+use Project\Common\Events\Event;
+use Project\Common\CQRS\ApplicationMessagesManager;
+
 trait DispatchRequests
 {
+    protected ApplicationMessagesManager $messagesManager;
+
     protected function dispatchCommand(object $command): mixed
     {
-        return app()->make('CommandBus')->dispatch($command);
+        return $this->messagesManager->dispatchCommand($command);
     }
 
     protected function dispatchQuery(object $query): mixed
     {
-        return app()->make('QueryBus')->dispatch($query);
+        return $this->messagesManager->dispatchQuery($query);
     }
 
-    protected function dispatchEvent(object $event): mixed
+    protected function dispatchEvent(Event $event): void
     {
-        return app()->make('EventBus')->dispatch($event);
+        $this->messagesManager->dispatchEvent($event);
     }
 }

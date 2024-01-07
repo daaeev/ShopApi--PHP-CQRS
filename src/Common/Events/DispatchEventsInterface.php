@@ -2,11 +2,11 @@
 
 namespace Project\Common\Events;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 
 interface DispatchEventsInterface
 {
-    public function setDispatcher(EventDispatcherInterface $dispatcher): void;
+    public function setDispatcher(MessageBusInterface $eventBus): void;
 
     public function dispatch(Event $event): void;
 }

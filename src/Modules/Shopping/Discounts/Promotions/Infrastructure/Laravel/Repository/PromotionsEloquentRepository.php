@@ -112,7 +112,11 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
             'status' => $record->status,
             'disabled' => $record->disabled,
             'discounts' => array_map(function (Eloquent\PromotionDiscount $discountRecord) {
-                return $this->discountsFactory->make($discountRecord->type, $discountRecord->data);
+                return $this->discountsFactory->make(
+                    $discountRecord->type,
+                    $discountRecord->data,
+                    Entity\DiscountMechanics\DiscountMechanicId::make($discountRecord->id)
+                );
             }, $record->discounts->all()),
             'createdAt' => new \DateTimeImmutable($record->created_at),
             'updatedAt' => $record->updated_at

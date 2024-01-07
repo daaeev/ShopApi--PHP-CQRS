@@ -4,6 +4,7 @@ namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics;
 
 use PHPUnit\Framework\TestCase;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicId;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\PercentageDiscountMechanic;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactoryInterface;
@@ -18,7 +19,7 @@ class DiscountMechanicsFactoryTest extends TestCase
         parent::setUp();
     }
 
-    public function testCreatePercentageDiscount()
+    public function testCreateDiscount()
     {
         $discount = $this->factory->make(
             DiscountType::PERCENTAGE,
@@ -26,7 +27,19 @@ class DiscountMechanicsFactoryTest extends TestCase
         );
 
         $this->assertInstanceOf(PercentageDiscountMechanic::class, $discount);
+        $this->assertNull($discount->getId()->getId());
         $this->assertSame(DiscountType::PERCENTAGE, $discount->getType());
         $this->assertSame(25, $discount->getPercent());
+    }
+
+    public function testCreateDiscountWithExistentId()
+    {
+        $discount = $this->factory->make(
+            DiscountType::PERCENTAGE,
+            ['percent' => 25],
+            $id = DiscountMechanicId::random()
+        );
+
+        $this->assertTrue($id->equalsTo($discount->getId()));
     }
 }

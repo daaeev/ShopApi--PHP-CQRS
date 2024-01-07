@@ -3,7 +3,7 @@
 namespace Project\Tests\Unit\Modules\Promotions\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsMemoryRepository;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\RemovePromotionDiscountCommand;
@@ -15,12 +15,12 @@ class RemovePromotionDiscountCommandTest extends \PHPUnit\Framework\TestCase
     use PromotionFactory;
 
     private PromotionsRepositoryInterface $promotions;
-    private EventDispatcherInterface $dispatcher;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
         $this->promotions = new PromotionsMemoryRepository(new Hydrator);
-        $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
         $this->dispatcher->expects($this->exactly(1)) // promotion updated

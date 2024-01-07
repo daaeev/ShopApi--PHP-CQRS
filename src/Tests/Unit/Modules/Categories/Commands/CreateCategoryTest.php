@@ -3,7 +3,7 @@
 namespace Project\Tests\Unit\Modules\Categories\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
 use Project\Modules\Catalogue\Categories\Commands\CreateCategoryCommand;
@@ -20,16 +20,18 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
 
     private CategoriesRepositoryInterface $categories;
     private ProductsRepositoryInterface $products;
-    private EventDispatcherInterface $dispatcher;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
         $this->products = new ProductsMemoryRepository(new Hydrator);
         $this->categories = new CategoriesMemoryRepository(new Hydrator);
-        $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
+
         $this->dispatcher->expects($this->exactly(2)) // Category created, category updated
-        ->method('dispatch');
+            ->method('dispatch');
+
         parent::setUp();
     }
 

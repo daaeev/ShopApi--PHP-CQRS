@@ -4,7 +4,7 @@ namespace Project\Tests\Unit\Events;
 
 use Project\Common\Events\Event;
 use Project\Common\Events\DispatchEventsTrait;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Events\Helpers\EventsFactory;
 
 class DispathEventsTraitTest extends \PHPUnit\Framework\TestCase
@@ -14,7 +14,7 @@ class DispathEventsTraitTest extends \PHPUnit\Framework\TestCase
     public function testSetDispatcher()
     {
         $this->assertFalse(isset($this->dispatcher));
-        $dispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $dispatcherMock = $this->createMock(MessageBusInterface::class);
         $this->setDispatcher($dispatcherMock);
         $this->assertTrue(isset($this->dispatcher));
         $this->assertSame($dispatcherMock, $this->dispatcher);
@@ -23,7 +23,7 @@ class DispathEventsTraitTest extends \PHPUnit\Framework\TestCase
     public function testCheckDispatcherInstantiate()
     {
         $this->expectNotToPerformAssertions();
-        $dispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $dispatcherMock = $this->createMock(MessageBusInterface::class);
         $this->setDispatcher($dispatcherMock);
         $this->checkDispatcherInstantiate();
     }
@@ -37,11 +37,13 @@ class DispathEventsTraitTest extends \PHPUnit\Framework\TestCase
     public function testDispatch()
     {
         $event = $this->makeEvent();
-        $dispatcherMock = $this->getMockBuilder(EventDispatcherInterface::class)
+        $dispatcherMock = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
+
         $dispatcherMock->expects($this->once())
             ->method('dispatch')
             ->with($event);
+
         $this->setDispatcher($dispatcherMock);
         $this->dispatch($event);
     }
@@ -60,7 +62,7 @@ class DispathEventsTraitTest extends \PHPUnit\Framework\TestCase
             $this->makeEvent(),
             $this->makeEvent(),
         ];
-        $dispatcherMock = $this->getMockBuilder(EventDispatcherInterface::class)
+        $dispatcherMock = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
         $matcher = $this->exactly(3);
         $dispatcherMock->expects($matcher)
@@ -84,7 +86,7 @@ class DispathEventsTraitTest extends \PHPUnit\Framework\TestCase
 
     public function testDispatchEventsWithEmptyArray()
     {
-        $dispatcherMock = $this->getMockBuilder(EventDispatcherInterface::class)
+        $dispatcherMock = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
         $dispatcherMock->expects($this->never())
             ->method('dispatch');

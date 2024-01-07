@@ -3,7 +3,7 @@
 namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Modules\Administrators\Entity\Admin;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Modules\Administrators\Commands\LogoutCommand;
 use Project\Modules\Administrators\Commands\Handlers\LogoutHandler;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
@@ -11,16 +11,19 @@ use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 class LogoutHandlerTest extends \PHPUnit\Framework\TestCase
 {
     private AuthManagerInterface $auth;
-    private EventDispatcherInterface $dispatcher;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
         $this->auth = $this->getMockBuilder(AuthManagerInterface::class)
             ->getMock();
-        $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
+
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
+
         $this->dispatcher->expects($this->never())
             ->method('dispatch');
+
         parent::setUp();
     }
 

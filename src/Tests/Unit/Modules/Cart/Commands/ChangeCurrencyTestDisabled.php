@@ -6,7 +6,7 @@ use Project\Common\Product\Currency;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\CartId;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Adapters\ProductsService;
@@ -24,7 +24,7 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
     private ProductsService $productsService;
     private EnvironmentInterface $environment;
     private Client $client;
-    private EventDispatcherInterface $dispatcher;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
@@ -37,11 +37,12 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
 
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)
             ->getMock();
+
         $this->environment->expects($this->once())
             ->method('getClient')
             ->willReturn($this->client);
 
-        $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
 

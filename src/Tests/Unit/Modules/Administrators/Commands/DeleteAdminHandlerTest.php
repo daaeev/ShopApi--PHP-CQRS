@@ -4,7 +4,7 @@ namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Modules\Administrators\Commands\DeleteAdminCommand;
 use Project\Modules\Administrators\Repository\AdminsMemoryRepository;
@@ -14,14 +14,16 @@ class DeleteAdminHandlerTest extends \PHPUnit\Framework\TestCase
 {
     use AdminFactory;
 
-    private EventDispatcherInterface $dispatcher;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
+
         $this->dispatcher->expects($this->once()) // Admin deleted
             ->method('dispatch');
+
         parent::setUp();
     }
 

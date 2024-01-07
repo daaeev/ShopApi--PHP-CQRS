@@ -4,7 +4,7 @@ namespace Project\Tests\Unit\Modules\Product\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Product\Commands\DeleteProductCommand;
 use Project\Modules\Catalogue\Product\Repository\ProductsMemoryRepository;
@@ -16,13 +16,14 @@ class DeleteProductTest extends \PHPUnit\Framework\TestCase
     use ProductFactory;
 
     private ProductsRepositoryInterface $products;
-    private EventDispatcherInterface $dispatcher;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
         $this->products = new ProductsMemoryRepository(new Hydrator);
-        $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
+
         parent::setUp();
     }
 
