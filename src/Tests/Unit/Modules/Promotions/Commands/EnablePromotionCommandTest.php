@@ -5,6 +5,7 @@ namespace Project\Tests\Unit\Modules\Promotions\Commands;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\PromotionStatus;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\EnablePromotionCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsMemoryRepository;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
@@ -33,6 +34,7 @@ class EnablePromotionCommandTest extends \PHPUnit\Framework\TestCase
     {
         $promotion = $this->generatePromotion();
         $promotion->disable();
+        $promotion->refreshStatus();
         $promotion->flushEvents();
         $this->promotions->add($promotion);
 
@@ -43,5 +45,6 @@ class EnablePromotionCommandTest extends \PHPUnit\Framework\TestCase
 
         $updatedPromotion = $this->promotions->get($promotion->getId());
         $this->assertFalse($updatedPromotion->disabled());
+        $this->assertSame(PromotionStatus::STARTED, $updatedPromotion->getStatus());
     }
 }

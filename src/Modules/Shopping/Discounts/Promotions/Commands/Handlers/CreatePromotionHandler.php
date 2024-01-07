@@ -35,6 +35,7 @@ class CreatePromotionHandler implements DispatchEventsInterface
 
         if ($command->disabled) {
             $promotion->disable();
+            $promotion->refreshStatus();
         }
 
         $this->promotions->add($promotion);

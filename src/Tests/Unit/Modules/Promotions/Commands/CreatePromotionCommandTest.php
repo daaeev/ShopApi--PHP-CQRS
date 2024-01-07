@@ -48,7 +48,7 @@ class CreatePromotionCommandTest extends \PHPUnit\Framework\TestCase
             name: 'Promotion',
             startDate: new \DateTimeImmutable('-1 day'),
             endDate: new \DateTimeImmutable('+1 day'),
-            disabled: false,
+            disabled: true,
             discounts: [[
                 'type' => $promotionDiscount->getType()->value,
                 'data' => $promotionDiscount->getData()
@@ -59,6 +59,7 @@ class CreatePromotionCommandTest extends \PHPUnit\Framework\TestCase
         $promotionId = call_user_func($handler, $command);
 
         $promotion = $this->promotions->get(new Entity\PromotionId($promotionId));
+        $this->assertSame(Entity\PromotionStatus::DISABLED, $promotion->getStatus());
         $this->assertSamePromotion($promotion, $command);
     }
 

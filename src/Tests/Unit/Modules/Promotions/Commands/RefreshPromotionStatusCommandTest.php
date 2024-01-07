@@ -1,17 +1,17 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Promotions\Commands;
+namespace Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\PromotionStatus;
-use Project\Modules\Shopping\Discounts\Promotions\Commands\DisablePromotionCommand;
+use Project\Modules\Shopping\Discounts\Promotions\Entity;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsMemoryRepository;
+use Project\Modules\Shopping\Discounts\Promotions\Commands\RefreshPromotionStatusCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
-use Project\Modules\Shopping\Discounts\Promotions\Commands\Handlers\DisablePromotionHandler;
+use Project\Modules\Shopping\Discounts\Promotions\Commands\Handlers\RefreshPromotionStatusHandler;
 
-class DisablePromotionCommandTest extends \PHPUnit\Framework\TestCase
+class RefreshPromotionStatusCommandTest extends \PHPUnit\Framework\TestCase
 {
     use PromotionFactory;
 
@@ -33,16 +33,16 @@ class DisablePromotionCommandTest extends \PHPUnit\Framework\TestCase
     public function testCreate()
     {
         $promotion = $this->generatePromotion();
+        $promotion->disable();
+        $promotion->flushEvents();
         $this->promotions->add($promotion);
 
-        $command = new DisablePromotionCommand($promotion->getId()->getId());
-        $handler = new DisablePromotionHandler($this->promotions);
+        $command = new RefreshPromotionStatusCommand($promotion->getId()->getId());
+        $handler = new RefreshPromotionStatusHandler($this->promotions);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
         $updatedPromotion = $this->promotions->get($promotion->getId());
-        $this->assertTrue($updatedPromotion->disabled());
-        $this->assertSame(PromotionStatus::DISABLED, $updatedPromotion->getStatus());
-
+        $this->assertSame(Entity\PromotionStatus::DISABLED, $updatedPromotion->getStatus());
     }
 }

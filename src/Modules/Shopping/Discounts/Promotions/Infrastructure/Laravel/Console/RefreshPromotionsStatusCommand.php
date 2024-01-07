@@ -29,7 +29,7 @@ class RefreshPromotionsStatusCommand extends Command
         foreach ($notRefreshedPromotions as $notRefreshedPromotion) {
             $refreshStatusCommand = new RefreshPromotionStatusCommand($notRefreshedPromotion->id);
             $this->messagesManager->dispatchCommand($refreshStatusCommand);
-            $this->comment('Promotion ' . $notRefreshedPromotion->id . ' status refreshed');
+            $this->comment('Promotion #' . $notRefreshedPromotion->id . ' status refreshed');
         }
 
         $executionTime = Carbon::now()->diffInSeconds($startTime);

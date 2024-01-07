@@ -5,6 +5,6 @@ namespace Project\Modules\Shopping\Discounts\Promotions\Commands;
 class RefreshPromotionStatusCommand
 {
     public function __construct(
-        public readonly int $promotionId
+        public readonly int $id
     ) {}
 }
