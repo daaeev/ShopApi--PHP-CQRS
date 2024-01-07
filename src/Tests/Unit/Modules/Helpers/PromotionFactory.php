@@ -14,12 +14,14 @@ trait PromotionFactory
         string $name,
         ?\DateTimeImmutable $startDate = null,
         ?\DateTimeImmutable $endDate = null,
+        bool $disabled = false,
         array $discounts = []
     ): Entity\Promotion {
         return new Entity\Promotion(
             $id,
             $name,
             new Duration($startDate, $endDate),
+            $disabled,
             $discounts,
         );
     }

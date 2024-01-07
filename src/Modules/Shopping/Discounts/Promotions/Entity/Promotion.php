@@ -18,8 +18,8 @@ class Promotion implements EventRoot
     private string $name;
     private Duration $duration;
     private PromotionStatus $status;
+    private bool $disabled;
     private array $discounts;
-    private bool $disabled = false;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -27,6 +27,7 @@ class Promotion implements EventRoot
         PromotionId $id,
         string $name,
         Duration $duration,
+        bool $disabled = false,
         array $discounts = []
     ) {
         Assert::allIsInstanceOf($discounts, AbstractDiscountMechanic::class);
@@ -34,6 +35,7 @@ class Promotion implements EventRoot
         $this->id = $id;
         $this->name = $name;
         $this->duration = $duration;
+        $this->disabled = $disabled;
         $this->status = PromotionStatus::calculate($this);
         $this->discounts = $discounts;
         $this->createdAt = new \DateTimeImmutable;

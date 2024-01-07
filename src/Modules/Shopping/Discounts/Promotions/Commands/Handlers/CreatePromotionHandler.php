@@ -30,13 +30,9 @@ class CreatePromotionHandler implements DispatchEventsInterface
                 $command->startDate,
                 $command->endDate,
             ),
+            $command->disabled,
             $promotionDiscounts
         );
-
-        if ($command->disabled) {
-            $promotion->disable();
-            $promotion->refreshStatus();
-        }
 
         $this->promotions->add($promotion);
         $this->dispatchEvents($promotion->flushEvents());

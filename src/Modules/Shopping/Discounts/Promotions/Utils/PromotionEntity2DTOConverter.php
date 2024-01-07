@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Utils;
 
+use Project\Common\Entity\Duration;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
 use Project\Modules\Shopping\Api\DTO\Promotions as DTO;
@@ -13,9 +14,8 @@ class PromotionEntity2DTOConverter
         return new DTO\Promotion(
             $entity->getId()->getId(),
             $entity->getName(),
-            $entity->getStartDate(),
-            $entity->getEndDate(),
-            $entity->getActualStatus()->value,
+            $entity->getDuration(),
+            $entity->getStatus()->value,
             array_map(function (DiscountMechanics\AbstractDiscountMechanic $discount) {
                 return $discount->toArray();
             }, $entity->getDiscounts()),

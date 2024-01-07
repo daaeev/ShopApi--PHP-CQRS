@@ -61,11 +61,11 @@ trait PromotionsRepositoryTestTrait
         $id = PromotionId::next();
         $discount = $this->discountFactory->make(DiscountType::PERCENTAGE, ['percent' => 25]);
         $promotion = $this->makePromotion(
-            $id,
-            'Promotion slug',
-            new \DateTimeImmutable('-1 day'),
-            new \DateTimeImmutable('+1 day'),
-            [$discount]
+            id: $id,
+            name: 'Promotion slug',
+            startDate: new \DateTimeImmutable('-1 day'),
+            endDate: new \DateTimeImmutable('+1 day'),
+            discounts: [$discount]
         );
         $this->promotions->add($promotion);
         $this->assertNotNull($id->getId());

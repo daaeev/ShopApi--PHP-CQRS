@@ -20,6 +20,7 @@ class CreatePromotionTest extends TestCase
             $name = md5(rand()),
             $startDate = new \DateTimeImmutable('-1 day'),
             $endDate = new \DateTimeImmutable('+1 day'),
+            $disabled = true,
             $discounts = [$this->generateDiscount()]
         );
 
@@ -27,9 +28,9 @@ class CreatePromotionTest extends TestCase
         $this->assertSame($promotion->getName(), $name);
         $this->assertSame($promotion->getDuration()->getStartDate()?->getTimestamp(), $startDate->getTimestamp());
         $this->assertSame($promotion->getDuration()->getEndDate()?->getTimestamp(), $endDate->getTimestamp());
-        $this->assertSame(PromotionStatus::STARTED, $promotion->getStatus());
+        $this->assertSame(PromotionStatus::DISABLED, $promotion->getStatus());
         $this->assertSame($promotion->getDiscounts(), $discounts);
-        $this->assertFalse($promotion->disabled());
+        $this->assertSame($disabled, $promotion->disabled());
         $this->assertNotNull($promotion->getCreatedAt());
         $this->assertNull($promotion->getUpdatedAt());
         $this->assertEvents($promotion, [new PromotionCreated($promotion)]);
