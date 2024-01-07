@@ -67,4 +67,14 @@ class PromotionsController extends BaseApiController
 
         return $this->success($output, 'Promotion discount removed');
     }
+
+    public function get(Requests\GetPromotionRequest $request)
+    {
+        return $this->success($this->dispatchQuery($request->getQuery()));
+    }
+
+    public function list(Requests\GetPromotionsRequest $request)
+    {
+        return $this->success($this->dispatchQuery($request->getQuery()));
+    }
 }

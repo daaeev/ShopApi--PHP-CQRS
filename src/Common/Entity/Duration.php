@@ -61,8 +61,8 @@ class Duration implements Arrayable
     public function toArray(): array
     {
         return [
-            'startDate' => $this->startDate?->getTimestamp(),
-            'endDate' => $this->endDate?->getTimestamp(),
+            'startDate' => $this->startDate?->format(\DateTimeInterface::RFC3339),
+            'endDate' => $this->endDate?->format(\DateTimeInterface::RFC3339),
         ];
     }
 }

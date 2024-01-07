@@ -39,7 +39,7 @@ class QueryPromotionsEloquentRepository implements QueryPromotionsRepositoryInte
                     ? new \DateTimeImmutable($record->end_date)
                     : null,
             ),
-            $record->status,
+            $record->status->value,
             array_map(function (Eloquent\PromotionDiscount $discountRecord) {
                 return new DTO\PromotionDiscount(
                     $discountRecord->id,
