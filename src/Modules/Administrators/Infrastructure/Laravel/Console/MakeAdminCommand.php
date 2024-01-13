@@ -4,20 +4,24 @@ namespace Project\Modules\Administrators\Infrastructure\Laravel\Console;
 
 use Illuminate\Console\Command;
 use Project\Common\Administrators\Role;
+use Project\Common\Events\DispatchEventsTrait;
 use Project\Modules\Administrators\Entity\Admin;
 use Project\Modules\Administrators\Entity\AdminId;
+use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Administrators\Repository\AdminsRepositoryInterface;
 
-class MakeAdminCommand extends Command
+class MakeAdminCommand extends Command implements DispatchEventsInterface
 {
-    public function __construct(
-        private AdminsRepositoryInterface $admins
-    ) {
-        parent::__construct();
-    }
+    use DispatchEventsTrait;
 
     protected $description = 'Create new admin';
     protected $signature = 'app-admin:create {login?} {name?}';
+
+    public function __construct(
+        private AdminsRepositoryInterface $admins,
+    ) {
+        parent::__construct();
+    }
 
     public function handle()
     {
@@ -48,14 +52,8 @@ class MakeAdminCommand extends Command
             $password,
             [Role::ADMIN]
         );
+
         $this->admins->add($admin);
         return $admin;
-    }
-
-    private function dispatchEvents(array $events): void
-    {
-        foreach ($events as $event) {
-            app()->make('EventBus')->dispatch($event);
-        }
     }
 }

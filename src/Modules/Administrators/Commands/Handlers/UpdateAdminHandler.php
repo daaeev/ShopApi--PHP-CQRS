@@ -25,6 +25,7 @@ class UpdateAdminHandler implements DispatchEventsInterface
         $entity->setRoles(array_map(function (string $role) {
             return Role::from($role);
         }, $command->roles));
+
         if (!empty($command->password)) {
             $entity->setPassword($command->password);
         }

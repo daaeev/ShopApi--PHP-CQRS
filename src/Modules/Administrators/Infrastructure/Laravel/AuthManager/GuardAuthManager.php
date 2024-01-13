@@ -55,7 +55,6 @@ class GuardAuthManager implements AuthManagerInterface
         }
 
         $admin = $this->guard->user();
-
         return $this->hydrator->hydrate(Entity\Admin::class, [
             'id' => new Entity\AdminId($admin->id),
             'name' => $admin->name,

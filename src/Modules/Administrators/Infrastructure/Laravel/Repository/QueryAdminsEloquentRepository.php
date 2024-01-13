@@ -21,10 +21,10 @@ class QueryAdminsEloquentRepository implements QueryAdminsRepositoryInterface
             throw new NotFoundException('Admin does not exists');
         }
 
-        return $this->hydrate($record);
+        return $this->convertEloquentToDTO($record);
     }
 
-    private function hydrate(Eloquent\Administrator $admin): DTO\Admin
+    private function convertEloquentToDTO(Eloquent\Administrator $admin): DTO\Admin
     {
         return new DTO\Admin(
             $admin->id,
@@ -44,8 +44,7 @@ class QueryAdminsEloquentRepository implements QueryAdminsRepositoryInterface
                 $page
             );
 
-        $items = array_map([$this, 'hydrate'], $query->items());
-
+        $items = array_map([$this, 'convertEloquentToDTO'], $query->items());
         return new PaginatedCollection($items, new Pagination(
             $query->currentPage(),
             $query->perPage(),

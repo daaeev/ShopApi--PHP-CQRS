@@ -21,7 +21,6 @@ class AdminsEloquentRepository implements AdminsRepositoryInterface
     public function add(Entity\Admin $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (Eloquent\Administrator::find($id)) {
             throw new DuplicateKeyException('Admin with same id already exists');
         }
@@ -33,14 +32,11 @@ class AdminsEloquentRepository implements AdminsRepositoryInterface
     {
         $this->guardLoginUnique($entity);
 
-        if (!$record->exists) {
-            $record->id = $entity->getId()->getId();
-        }
-
         if (!empty($entity->getPassword())) {
             $record->hashPassword($this->hasher, $entity->getPassword());
         }
 
+        $record->id = $entity->getId()->getId();
         $record->name = $entity->getName();
         $record->login = $entity->getLogin();
         $record->roles = array_column($entity->getRoles(), 'value');
@@ -63,7 +59,6 @@ class AdminsEloquentRepository implements AdminsRepositoryInterface
     public function update(Entity\Admin $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (!$record = Eloquent\Administrator::find($id)) {
             throw new NotFoundException('Admin does not exists');
         }
@@ -74,7 +69,6 @@ class AdminsEloquentRepository implements AdminsRepositoryInterface
     public function delete(Entity\Admin $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (!$record = Eloquent\Administrator::find($id)) {
             throw new NotFoundException('Admin does not exists');
         }

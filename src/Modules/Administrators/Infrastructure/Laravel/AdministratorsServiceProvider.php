@@ -29,7 +29,6 @@ class AdministratorsServiceProvider extends ServiceProvider
         Queries\AdminsListQuery::class => Queries\Handlers\AdminsListHandler::class,
         Queries\AuthorizedAdminQuery::class => Queries\Handlers\AuthorizedAdminHandler::class,
     ];
-    private array $eventsMapping = [];
 
     public array $singletons = [
         AdminsRepositoryInterface::class => AdminsEloquentRepository::class,
@@ -44,6 +43,7 @@ class AdministratorsServiceProvider extends ServiceProvider
                 Console\MakeAdminCommand::class
             ]);
         }
+        
         $this->app->get('CommandBus')->registerBus(new RequestBus($this->commandsMapping, $this->app));
         $this->app->get('QueryBus')->registerBus(new RequestBus($this->queriesMapping, $this->app));
     }

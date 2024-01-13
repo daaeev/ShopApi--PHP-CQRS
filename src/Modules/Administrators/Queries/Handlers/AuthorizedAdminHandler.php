@@ -14,10 +14,10 @@ class AuthorizedAdminHandler
 
     public function __invoke(GetAdminQuery $query): array
     {
-        if (!($admin = $this->auth->logged())) {
+        if (!$this->auth->logged()) {
             throw new \DomainException('You are not logged in');
         }
 
-        return AdministratorEntity2DTOConverter::convert($admin)->toArray();
+        return AdministratorEntity2DTOConverter::convert($this->auth->logged())->toArray();
     }
 }
