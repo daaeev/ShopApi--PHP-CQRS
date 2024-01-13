@@ -49,6 +49,7 @@ class ProductContentService implements ProductContentServiceInterface
     public function updatePreview(Commands\UpdateProductPreviewCommand $command): void
     {
         $this->guardProductExists($command->product);
+
         $currentImage = Eloquent\Image::query()
             ->where('product', $command->product)
             ->where('is_preview', true)
@@ -82,7 +83,6 @@ class ProductContentService implements ProductContentServiceInterface
     public function deleteImage(Commands\DeleteProductImageCommand $command): void
     {
         $image = Eloquent\Image::find($command->id);
-
         if (empty($image)) {
             throw new NotFoundException('Image does not exists');
         }

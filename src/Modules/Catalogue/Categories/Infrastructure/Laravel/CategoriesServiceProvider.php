@@ -24,8 +24,6 @@ class CategoriesServiceProvider extends ServiceProvider
         Queries\CategoriesListQuery::class => Queries\Handlers\CategoriesListHandler::class,
     ];
 
-    private array $eventsMapping = [];
-
     public array $singletons = [
         CategoriesRepositoryInterface::class => CategoriesEloquentRepository::class,
         QueryCategoriesRepositoryInterface::class => QueryCategoriesEloquentRepository::class,

@@ -89,11 +89,13 @@ class CatalogueServiceProvider extends ServiceProvider
 
     private function registerPresenters()
     {
-        $this->app->when(GetCategoryHandler::class)
+        $this->app
+            ->when(GetCategoryHandler::class)
             ->needs(CategoryPresenterInterface::class)
             ->give(CategoryAllContentEloquentPresenter::class);
 
-        $this->app->when(GetProductHandler::class)
+        $this->app
+            ->when(GetProductHandler::class)
             ->needs(ProductPresenterInterface::class)
             ->give(ProductAllContentEloquentPresenter::class);
     }

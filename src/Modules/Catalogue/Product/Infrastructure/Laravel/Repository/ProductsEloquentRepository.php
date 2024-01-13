@@ -20,7 +20,6 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     public function add(Entity\Product $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (Eloquent\Product::find($id)) {
             throw new DuplicateKeyException('Product with same id already exists');
         }
@@ -32,15 +31,12 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     {
         $this->guardCodeIsUnique($entity);
 
-        if (!$record->exists) {
-            $record->id = $entity->getId()->getId();
-            $record->created_at = $entity->getCreatedAt()->getTimestamp();
-        }
-
+        $record->id = $entity->getId()->getId();
         $record->name = $entity->getName();
         $record->code = $entity->getCode();
         $record->active = $entity->isActive();
         $record->availability = $entity->getAvailability()->value;
+        $record->created_at = $entity->getCreatedAt()->getTimestamp();
         $record->updated_at = $entity->getUpdatedAt()?->getTimestamp();
         $record->save();
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
@@ -53,7 +49,6 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     private function guardCodeIsUnique(Entity\Product $entity): void
     {
         $code = $entity->getCode();
-
         $notUnique = Eloquent\Product::query()
             ->where('code', $code)
             ->where('id', '!=', $entity->getId()->getId())
@@ -67,7 +62,6 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     private function persistSizes(Entity\Product $entity, Eloquent\Product $record): void
     {
         $record->sizes()->delete();
-
         foreach ($entity->getSizes() as $size) {
             $record->sizes()->create([
                 'size' => $size
@@ -78,7 +72,6 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     private function persistColors(Entity\Product $entity, Eloquent\Product $record): void
     {
         $record->colors()->delete();
-
         foreach ($entity->getColors() as $color) {
             $record->colors()->create([
                 'color' => $color,
@@ -89,7 +82,6 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     private function persistPrices(Entity\Product $entity, Eloquent\Product $record): void
     {
         $record->prices()->delete();
-
         foreach ($entity->getPrices() as $price) {
             $record->prices()->create([
                 'currency' => $price->getCurrency(),
@@ -101,7 +93,6 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     public function update(Entity\Product $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (!$record = Eloquent\Product::find($id)) {
             throw new NotFoundException('Product does not exists');
         }
@@ -112,7 +103,6 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     public function delete(Entity\Product $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (!$record = Eloquent\Product::find($id)) {
             throw new NotFoundException('Product does not exists');
         }
@@ -160,7 +150,6 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     private function hydratePrices(Eloquent\Product $record): array
     {
         $hydratedPrices = [];
-
         foreach ($record->prices as $price) {
             $hydratedPrices[$price->currency] = new Entity\Price\Price(
                 Currency::from($price->currency),

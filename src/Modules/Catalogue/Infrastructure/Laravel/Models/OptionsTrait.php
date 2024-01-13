@@ -14,7 +14,6 @@ trait OptionsTrait
     public function scopeOptions(Builder $query, array $options)
     {
         $mergedOptions = array_merge($this->options, $options);
-
         if (!empty($mergedOptions['active'])) {
             $query->where('active', $mergedOptions['active']);
         }

@@ -30,13 +30,11 @@ class UpdateProductHandler implements DispatchEventsInterface
                 $price->price
             );
         }, $command->prices));
-        $command->active
-            ? $entity->activate()
-            : $entity->deactivate();
+
+        $command->active ? $entity->activate() : $entity->deactivate();
         $entity->setAvailability(Availability::from($command->availability));
         $entity->setSizes($command->sizes);
         $entity->setColors($command->colors);
-
         $this->products->update($entity);
         $this->dispatchEvents($entity->flushEvents());
     }

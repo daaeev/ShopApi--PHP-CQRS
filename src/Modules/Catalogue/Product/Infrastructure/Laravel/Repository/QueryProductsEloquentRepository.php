@@ -40,6 +40,7 @@ class QueryProductsEloquentRepository implements QueryProductsRepositoryInterfac
         $items = array_map(function (Eloquent\Product $record) {
             return ProductEloquent2DTOConverter::convert($record);
         }, $query->items());
+
         return new PaginatedCollection($items, new Pagination(
             $query->currentPage(),
             $query->perPage(),

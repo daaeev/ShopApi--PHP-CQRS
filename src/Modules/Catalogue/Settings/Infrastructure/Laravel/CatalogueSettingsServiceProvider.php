@@ -17,8 +17,6 @@ class CatalogueSettingsServiceProvider extends ServiceProvider
         Commands\UpdateProductSettingsCommand::class => [CatalogueSettingsServiceInterface::class, 'update'],
     ];
 
-    private array $queriesMapping = [];
-
     private array $eventsMapping = [
         ProductCreated::class => ProductCreatedConsumer::class
     ];

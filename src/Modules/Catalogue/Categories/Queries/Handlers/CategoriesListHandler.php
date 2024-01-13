@@ -13,10 +13,6 @@ class CategoriesListHandler
 
     public function __invoke(CategoriesListQuery $query): array
     {
-        return $this->categories->list(
-            $query->page,
-            $query->limit,
-            $query->options
-        )->toArray();
+        return $this->categories->list($query->page, $query->limit, $query->options)->toArray();
     }
 }

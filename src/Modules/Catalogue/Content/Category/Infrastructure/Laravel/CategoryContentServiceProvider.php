@@ -14,9 +14,6 @@ class CategoryContentServiceProvider extends ServiceProvider
         UpdateCategoryContentCommand::class => [CategoryContentServiceInterface::class, 'updateContent'],
     ];
 
-    private array $queriesMapping = [];
-    private array $eventsMapping = [];
-
     public array $singletons = [
         CategoryContentServiceInterface::class => CategoryContentService::class
     ];

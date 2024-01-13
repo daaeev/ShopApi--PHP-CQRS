@@ -5,9 +5,9 @@ namespace Project\Modules\Catalogue\Product\Commands\Handlers;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
 use Project\Modules\Catalogue\Product\Entity;
-use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
+use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;
 use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 
@@ -32,13 +32,11 @@ class CreateProductHandler implements DispatchEventsInterface
                 );
             }, $command->prices)
         );
-        $command->active
-            ? $entity->activate()
-            : $entity->deactivate();
+
+        $command->active ? $entity->activate() : $entity->deactivate();
         $entity->setAvailability(Availability::from($command->availability));
         $entity->setSizes($command->sizes);
         $entity->setColors($command->colors);
-
         $this->products->add($entity);
         $this->dispatchEvents($entity->flushEvents());
         return $entity->getId()->getId();

@@ -18,7 +18,6 @@ class CategoriesEloquentRepository implements CategoriesRepositoryInterface
     public function add(Entity\Category $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (Eloquent\Category::find($id)) {
             throw new DuplicateKeyException('Category with same id already exists');
         }
@@ -30,10 +29,7 @@ class CategoriesEloquentRepository implements CategoriesRepositoryInterface
     {
         $this->guardSlugIsUnique($entity);
 
-        if (!$record->exists) {
-            $record->id = $entity->getId()->getId();
-        }
-
+        $record->id = $entity->getId()->getId();
         $record->name = $entity->getName();
         $record->slug = $entity->getSlug();
         $record->parent_id = $entity->getParent()?->getId();
@@ -47,7 +43,6 @@ class CategoriesEloquentRepository implements CategoriesRepositoryInterface
     private function guardSlugIsUnique(Entity\Category $entity): void
     {
         $slug = $entity->getSlug();
-
         $notUnique = Eloquent\Category::query()
             ->where('slug', $slug)
             ->where('id', '!=', $entity->getId()->getId())
@@ -61,7 +56,6 @@ class CategoriesEloquentRepository implements CategoriesRepositoryInterface
     private function persistProducts(Entity\Category $entity, Eloquent\Category $record): void
     {
         $record->productsRef()->delete();
-
         foreach ($entity->getProducts() as $product) {
             $record->productsRef()->create([
                 'product_id' => $product
@@ -72,7 +66,6 @@ class CategoriesEloquentRepository implements CategoriesRepositoryInterface
     public function update(Entity\Category $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (!$record = Eloquent\Category::find($id)) {
             throw new NotFoundException('Category does not exists');
         }
@@ -83,7 +76,6 @@ class CategoriesEloquentRepository implements CategoriesRepositoryInterface
     public function delete(Entity\Category $entity): void
     {
         $id = $entity->getId()->getId();
-
         if (!$record = Eloquent\Category::find($id)) {
             throw new NotFoundException('Category does not exists');
         }

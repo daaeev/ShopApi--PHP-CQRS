@@ -88,7 +88,6 @@ class Product implements Events\EventRoot
     private function keepPricesUnique(): void
     {
         $prices = [];
-
         foreach ($this->prices as $price) {
             $prices[$price->getCurrency()->value] = $price;
         }

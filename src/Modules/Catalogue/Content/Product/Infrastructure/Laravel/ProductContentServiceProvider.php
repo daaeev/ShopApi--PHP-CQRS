@@ -17,9 +17,6 @@ class ProductContentServiceProvider extends ServiceProvider
         Commands\DeleteProductImageCommand::class => [ProductContentServiceInterface::class, 'deleteImage'],
     ];
 
-    private array $queriesMapping = [];
-    private array $eventsMapping = [];
-
     public array $singletons = [
         ProductContentServiceInterface::class => ProductContentService::class
     ];

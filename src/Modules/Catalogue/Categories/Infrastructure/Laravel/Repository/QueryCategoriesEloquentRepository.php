@@ -40,6 +40,7 @@ class QueryCategoriesEloquentRepository implements QueryCategoriesRepositoryInte
         $items = array_map(function (Eloquent\Category $category) {
             return CategoryEloquent2DTOConverter::convert($category);
         }, $query->items());
+
         return new PaginatedCollection($items, new Pagination(
             $query->currentPage(),
             $query->perPage(),

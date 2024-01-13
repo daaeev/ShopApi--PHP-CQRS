@@ -13,10 +13,6 @@ class ProductsListHandler
 
     public function __invoke(ProductsListQuery $query): array
     {
-        return $this->repository->list(
-            $query->page,
-            $query->limit,
-            $query->params
-        )->toArray();
+        return $this->repository->list($query->page, $query->limit, $query->params)->toArray();
     }
 }

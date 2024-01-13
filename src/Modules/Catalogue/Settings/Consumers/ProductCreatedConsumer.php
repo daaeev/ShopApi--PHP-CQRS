@@ -22,6 +22,7 @@ class ProductCreatedConsumer implements DispatchEventsInterface
             $event->getDTO()->id,
             false
         );
+
         $this->settings->update($command);
     }
 }

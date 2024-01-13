@@ -61,6 +61,7 @@ class QueryCatalogueEloquentRepository implements QueryCatalogueRepositoryInterf
         $items = array_map(function (Eloquent\CatalogueProduct $record) {
             return $this->dtoConverter->convert($record);
         }, $query->items());
+
         return new PaginatedCollection($items, new Pagination(
             $query->currentPage(),
             $query->perPage(),
