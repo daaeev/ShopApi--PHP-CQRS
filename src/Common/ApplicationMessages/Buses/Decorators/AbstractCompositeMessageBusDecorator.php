@@ -1,9 +1,9 @@
 <?php
 
-namespace Project\Common\CQRS\Buses\Decorators;
+namespace Project\Common\ApplicationMessages\Buses\Decorators;
 
-use Project\Common\CQRS\Buses\MessageBusInterface;
-use Project\Common\CQRS\Buses\AbstractCompositeMessageBus;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
+use Project\Common\ApplicationMessages\Buses\AbstractCompositeMessageBus;
 
 abstract class AbstractCompositeMessageBusDecorator extends AbstractCompositeMessageBus
 {

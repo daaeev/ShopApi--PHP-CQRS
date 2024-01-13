@@ -1,9 +1,9 @@
 <?php
 
-namespace Project\Common\CQRS\Buses\Decorators;
+namespace Project\Common\ApplicationMessages\Buses\Decorators;
 
 use Psr\Log\LoggerInterface;
-use Project\Common\CQRS\Buses\AbstractCompositeMessageBus;
+use Project\Common\ApplicationMessages\Buses\AbstractCompositeMessageBus;
 
 class LoggingBusDecorator extends AbstractCompositeMessageBusDecorator
 {

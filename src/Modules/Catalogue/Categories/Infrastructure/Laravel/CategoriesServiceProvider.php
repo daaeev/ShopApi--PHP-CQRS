@@ -3,9 +3,9 @@
 namespace Project\Modules\Catalogue\Categories\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Project\Common\CQRS\Buses\RequestBus;
-use Project\Modules\Catalogue\Categories\Commands;
 use Project\Modules\Catalogue\Categories\Queries;
+use Project\Modules\Catalogue\Categories\Commands;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Repository\QueryCategoriesRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\Repository\CategoriesEloquentRepository;

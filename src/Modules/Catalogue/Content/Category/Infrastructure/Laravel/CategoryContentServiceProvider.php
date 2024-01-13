@@ -3,7 +3,7 @@
 namespace Project\Modules\Catalogue\Content\Category\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Project\Common\CQRS\Buses\RequestBus;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Catalogue\Content\Category\Commands\UpdateCategoryContentCommand;
 use Project\Modules\Catalogue\Content\Category\Services\CategoryContentServiceInterface;
 use Project\Modules\Catalogue\Content\Category\Infrastructure\Laravel\Services\CategoryContentService;

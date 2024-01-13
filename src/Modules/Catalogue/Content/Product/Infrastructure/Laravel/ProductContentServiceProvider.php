@@ -3,8 +3,8 @@
 namespace Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Catalogue\Content\Product\Commands;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Catalogue\Content\Product\Services\ProductContentServiceInterface;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Services\ProductContentService;
 

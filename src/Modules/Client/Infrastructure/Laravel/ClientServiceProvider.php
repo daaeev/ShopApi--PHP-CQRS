@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Client\Infrastructure\Laravel;
 
-use Illuminate\Support\ServiceProvider;
 use Project\Modules\Client\Queries;
-use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Client\Repository;
+use Illuminate\Support\ServiceProvider;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Client\Infrastructure\Laravel\Repository\ClientsEloquentRepository;
 use Project\Modules\Client\Infrastructure\Laravel\Repository\QueryClientsEloquentRepository;
 

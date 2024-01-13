@@ -3,15 +3,15 @@
 namespace Project\Modules\Administrators\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Project\Common\CQRS\Buses\RequestBus;
-use Project\Modules\Administrators\Commands;
 use Project\Modules\Administrators\Queries;
+use Project\Modules\Administrators\Commands;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
+use Project\Modules\Administrators\Infrastructure\Laravel\Console;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 use Project\Modules\Administrators\Repository\AdminsRepositoryInterface;
-use Project\Modules\Administrators\Infrastructure\Laravel\Console;
 use Project\Modules\Administrators\Repository\QueryAdminsRepositoryInterface;
-use Project\Modules\Administrators\Infrastructure\Laravel\Repository\AdminsEloquentRepository;
 use Project\Modules\Administrators\Infrastructure\Laravel\AuthManager\GuardAuthManager;
+use Project\Modules\Administrators\Infrastructure\Laravel\Repository\AdminsEloquentRepository;
 use Project\Modules\Administrators\Infrastructure\Laravel\Repository\QueryAdminsEloquentRepository;
 
 class AdministratorsServiceProvider extends ServiceProvider

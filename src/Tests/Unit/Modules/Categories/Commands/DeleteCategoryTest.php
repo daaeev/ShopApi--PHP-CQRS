@@ -4,13 +4,13 @@ namespace Project\Tests\Unit\Modules\Categories\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Catalogue\Categories\Commands\DeleteCategoryCommand;
 use Project\Modules\Catalogue\Categories\Repository\CategoriesMemoryRepository;
-use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Commands\Handlers\DeleteCategoryHandler;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 
 class DeleteCategoryTest extends \PHPUnit\Framework\TestCase
 {

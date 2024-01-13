@@ -2,7 +2,7 @@
 
 namespace Project\Common\Events;
 
-use Project\Common\CQRS\Buses\MessageBusInterface;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 
 trait DispatchEventsTrait
 {

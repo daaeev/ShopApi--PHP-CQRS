@@ -1,9 +1,9 @@
 <?php
 
-namespace Project\Infrastructure\Laravel\CQRS\Buses\Decorators;
+namespace Project\Infrastructure\Laravel\ApplicationMessages\Buses\Decorators;
 
 use Illuminate\Support\Facades\DB;
-use Project\Common\CQRS\Buses\Decorators\AbstractCompositeMessageBusDecorator;
+use Project\Common\ApplicationMessages\Buses\Decorators\AbstractCompositeMessageBusDecorator;
 
 class TransactionBusDecorator extends AbstractCompositeMessageBusDecorator
 {

@@ -3,9 +3,9 @@
 namespace Project\Modules\Catalogue\Settings\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Project\Common\CQRS\Buses\EventBus;
-use Project\Common\CQRS\Buses\RequestBus;
 use Project\Modules\Catalogue\Settings\Commands;
+use Project\Common\ApplicationMessages\Buses\EventBus;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Catalogue\Api\Events\Product\ProductCreated;
 use Project\Modules\Catalogue\Settings\Consumers\ProductCreatedConsumer;
 use Project\Modules\Catalogue\Settings\Services\CatalogueSettingsServiceInterface;

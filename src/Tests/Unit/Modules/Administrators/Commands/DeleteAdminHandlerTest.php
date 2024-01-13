@@ -4,9 +4,9 @@ namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Modules\Administrators\Commands\DeleteAdminCommand;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Administrators\Repository\AdminsMemoryRepository;
 use Project\Modules\Administrators\Commands\Handlers\DeleteAdminHandler;
 

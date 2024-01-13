@@ -3,7 +3,7 @@
 namespace Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Project\Common\CQRS\Buses\RequestBus;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Shopping\Discounts\Promotions\Queries;
 use Project\Modules\Shopping\Discounts\Promotions\Commands;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Console;

@@ -3,8 +3,8 @@
 namespace Project\Tests\Laravel\CQRS;
 
 use Illuminate\Support\Facades\DB;
-use Project\Common\CQRS\Buses\CompositeRequestBus;
-use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBusDecorator;
+use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
+use Project\Infrastructure\Laravel\ApplicationMessages\Buses\Decorators\TransactionBusDecorator;
 
 class TransactionBusDecoratorTest extends \Tests\TestCase
 {

@@ -2,12 +2,12 @@
 
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel;
 
+use Illuminate\Support\ServiceProvider;
 use Project\Modules\Shopping\Cart\Queries;
 use Project\Modules\Shopping\Cart\Commands;
 use Project\Modules\Shopping\Cart\Consumers;
-use Illuminate\Support\ServiceProvider;
-use Project\Common\CQRS\Buses\EventBus;
-use Project\Common\CQRS\Buses\RequestBus;
+use Project\Common\ApplicationMessages\Buses\EventBus;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Shopping\Cart\Presenters\CartPresenter;
 use Project\Modules\Catalogue\Api\Events\Product as ProductEvents;
 use Project\Modules\Shopping\Cart\Presenters\CartPresenterInterface;

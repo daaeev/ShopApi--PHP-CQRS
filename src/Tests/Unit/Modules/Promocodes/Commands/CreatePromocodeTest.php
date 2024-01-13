@@ -3,8 +3,8 @@
 namespace Project\Tests\Unit\Modules\Promocodes\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Commands\CreatePromocodeCommand;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesMemoryRepository;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;

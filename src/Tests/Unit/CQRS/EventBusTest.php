@@ -4,8 +4,8 @@ namespace Project\Tests\Unit\CQRS;
 
 use Project\Common\Events\Event;
 use Psr\Container\ContainerInterface;
-use Project\Common\CQRS\Buses\EventBus;
 use Project\Tests\Unit\CQRS\Handlers\CallableHandler;
+use Project\Common\ApplicationMessages\Buses\EventBus;
 
 class EventBusTest extends \PHPUnit\Framework\TestCase
 {

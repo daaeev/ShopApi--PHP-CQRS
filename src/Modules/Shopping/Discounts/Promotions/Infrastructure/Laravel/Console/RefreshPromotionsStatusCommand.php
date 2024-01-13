@@ -4,7 +4,7 @@ namespace Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\C
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Project\Common\CQRS\ApplicationMessagesManager;
+use Project\Common\ApplicationMessages\ApplicationMessagesManager;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Eloquent;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\RefreshPromotionStatusCommand;
 

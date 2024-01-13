@@ -3,16 +3,16 @@
 namespace Project\Tests\Unit\Modules\Categories\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Common\CQRS\Buses\MessageBusInterface;
+use Project\Modules\Catalogue\Categories\Entity;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Catalogue\Categories\Commands\CreateCategoryCommand;
 use Project\Modules\Catalogue\Product\Repository\ProductsMemoryRepository;
 use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Repository\CategoriesMemoryRepository;
-use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Commands\Handlers\CreateCategoryHandler;
-use Project\Modules\Catalogue\Categories\Entity;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 
 class CreateCategoryTest extends \PHPUnit\Framework\TestCase
 {

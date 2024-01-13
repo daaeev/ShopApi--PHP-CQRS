@@ -3,14 +3,14 @@
 namespace Project\Tests\Unit\Modules\Promotions\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\CreatePromotionCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsMemoryRepository;
-use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\Handlers\CreatePromotionHandler;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
+use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 
 class CreatePromotionCommandTest extends \PHPUnit\Framework\TestCase
 {

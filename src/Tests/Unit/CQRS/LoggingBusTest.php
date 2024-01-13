@@ -4,8 +4,8 @@ namespace Project\Tests\Unit\CQRS;
 
 use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
-use Project\Common\CQRS\Buses\Decorators\LoggingBusDecorator;
-use Project\Common\CQRS\Buses\CompositeRequestBus;
+use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
+use Project\Common\ApplicationMessages\Buses\Decorators\LoggingBusDecorator;
 
 class LoggingBusTest extends TestCase
 {

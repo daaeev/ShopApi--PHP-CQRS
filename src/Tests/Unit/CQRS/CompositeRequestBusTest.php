@@ -2,8 +2,8 @@
 
 namespace Project\Tests\Unit\CQRS;
 
-use Project\Common\CQRS\Buses\RequestBus;
-use Project\Common\CQRS\Buses\CompositeRequestBus;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
+use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
 
 class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
 {

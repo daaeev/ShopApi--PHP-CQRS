@@ -3,9 +3,9 @@
 namespace Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsMemoryRepository;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\RefreshPromotionStatusCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;

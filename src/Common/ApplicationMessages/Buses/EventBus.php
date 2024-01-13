@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Common\CQRS\Buses;
+namespace Project\Common\ApplicationMessages\Buses;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Events\Event;

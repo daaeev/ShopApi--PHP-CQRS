@@ -3,8 +3,8 @@
 namespace Project\Tests\Unit\Modules\Promotions\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsMemoryRepository;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\RemovePromotionDiscountCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;

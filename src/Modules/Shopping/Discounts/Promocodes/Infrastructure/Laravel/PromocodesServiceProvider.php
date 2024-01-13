@@ -3,9 +3,9 @@
 namespace Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Project\Common\CQRS\Buses\RequestBus;
-use Project\Modules\Shopping\Discounts\Promocodes\Commands;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Shopping\Discounts\Promocodes\Queries;
+use Project\Modules\Shopping\Discounts\Promocodes\Commands;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodesEloquentRepository;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\QueryPromocodesEloquentRepository;

@@ -4,15 +4,15 @@ namespace Project\Tests\Unit\Modules\Categories\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Catalogue\Categories\Entity;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Catalogue\Categories\Commands\UpdateCategoryCommand;
 use Project\Modules\Catalogue\Product\Repository\ProductsMemoryRepository;
 use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Repository\CategoriesMemoryRepository;
-use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Commands\Handlers\UpdateCategoryHandler;
+use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 
 class UpdateCategoryTest extends \PHPUnit\Framework\TestCase
 {

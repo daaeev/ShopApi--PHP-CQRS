@@ -4,8 +4,8 @@ namespace Project\Tests\Unit\Events;
 
 use Project\Common\Events\Event;
 use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Tests\Unit\Events\Helpers\EventsFactory;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 
 class DispathEventsTraitTest extends \PHPUnit\Framework\TestCase
 {

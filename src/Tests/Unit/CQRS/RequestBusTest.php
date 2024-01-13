@@ -3,9 +3,9 @@
 namespace Project\Tests\Unit\CQRS;
 
 use Psr\Container\ContainerInterface;
-use Project\Common\CQRS\Buses\RequestBus;
 use Project\Tests\Unit\CQRS\Handlers\ServiceHandler;
 use Project\Tests\Unit\CQRS\Handlers\CallableHandler;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 
 class RequestBusTest extends \PHPUnit\Framework\TestCase
 {

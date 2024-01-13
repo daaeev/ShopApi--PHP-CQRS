@@ -6,17 +6,17 @@ use Psr\Log\LoggerInterface;
 use Project\Modules\Client\Api\ClientsApi;
 use App\Http\Middleware\AssignClientHashCookie;
 use Project\Common\Events\DispatchEventsInterface;
-use Project\Common\CQRS\ApplicationMessagesManager;
-use Project\Common\CQRS\Buses\Decorators\LoggingBusDecorator;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Common\CQRS\Buses\CompositeEventBus;
-use Project\Common\CQRS\Buses\CompositeRequestBus;
+use Project\Common\ApplicationMessages\Buses\CompositeEventBus;
+use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
+use Project\Common\ApplicationMessages\ApplicationMessagesManager;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
-use Project\Infrastructure\Laravel\CQRS\Buses\Decorators\TransactionBusDecorator;
 use Project\Modules\Client\Infrastructure\Laravel\ClientServiceProvider;
+use Project\Common\ApplicationMessages\Buses\Decorators\LoggingBusDecorator;
 use Project\Modules\Shopping\Infrastructure\Laravel\ShoppingServiceProvider;
 use Project\Modules\Catalogue\Infrastructure\Laravel\CatalogueServiceProvider;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
+use Project\Infrastructure\Laravel\ApplicationMessages\Buses\Decorators\TransactionBusDecorator;
 
 class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
 {

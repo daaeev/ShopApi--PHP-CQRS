@@ -3,8 +3,8 @@
 namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Modules\Administrators\Entity\Admin;
-use Project\Common\CQRS\Buses\MessageBusInterface;
 use Project\Modules\Administrators\Commands\LogoutCommand;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Administrators\Commands\Handlers\LogoutHandler;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 

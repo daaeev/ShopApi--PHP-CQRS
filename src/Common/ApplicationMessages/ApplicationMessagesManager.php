@@ -1,8 +1,8 @@
 <?php
 
-namespace Project\Common\CQRS;
+namespace Project\Common\ApplicationMessages;
 
-use Project\Common\CQRS\Buses\MessageBusInterface;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 
 class ApplicationMessagesManager
 {

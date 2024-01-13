@@ -2,12 +2,12 @@
 
 namespace Project\Modules\Catalogue\Infrastructure\Laravel;
 
+use Project\Modules\Catalogue\Queries;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Storage;
-use Project\Common\CQRS\Buses\RequestBus;
-use Project\Modules\Catalogue\Queries;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Project\Common\Services\FileManager\FileManager;
+use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Infrastructure\Laravel\Services\LaravelStorage;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Modules\Catalogue\Presenters\ProductPresenterInterface;
@@ -16,15 +16,15 @@ use Project\Modules\Catalogue\Product\Queries\Handlers\GetProductHandler;
 use Project\Modules\Catalogue\Repositories\QueryCatalogueRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Queries\Handlers\GetCategoryHandler;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\ProductServiceProvider;
+use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\CategoriesServiceProvider;
 use Project\Common\Services\FileManager\DirectoryNameGenerators\BaseDirectoryNameGenerator;
 use Project\Common\Services\FileManager\FileNameGenerators\TimestampPrefixFileNameGenerator;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Converters\CatalogueEloquent2DTOConverter;
-use Project\Modules\Catalogue\Infrastructure\Laravel\Presenters\ProductAllContentEloquentPresenter;
-use Project\Modules\Catalogue\Categories\Infrastructure\Laravel\CategoriesServiceProvider;
-use Project\Modules\Catalogue\Infrastructure\Laravel\Presenters\CategoryAllContentEloquentPresenter;
-use Project\Modules\Catalogue\Infrastructure\Laravel\Repositories\QueryCatalogueEloquentRepository;
 use Project\Modules\Catalogue\Settings\Infrastructure\Laravel\CatalogueSettingsServiceProvider;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Presenters\ProductAllContentEloquentPresenter;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Repositories\QueryCatalogueEloquentRepository;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\ProductContentServiceProvider;
+use Project\Modules\Catalogue\Infrastructure\Laravel\Presenters\CategoryAllContentEloquentPresenter;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Services\ProductContentService;
 use Project\Modules\Catalogue\Content\Category\Infrastructure\Laravel\CategoryContentServiceProvider;
 
