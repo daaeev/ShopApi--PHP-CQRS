@@ -45,7 +45,6 @@ class CartsMemoryRepository implements CartsRepositoryInterface
     public function getActiveCartsWithProduct(int $product): array
     {
         $carts = [];
-
         foreach ($this->items as $cart) {
             if (!$cart->active()) {
                 continue;
@@ -63,7 +62,7 @@ class CartsMemoryRepository implements CartsRepositoryInterface
 
     public function save(Entity\Cart $cart): void
     {
-        $this->guardClientDoesNotHasAnotherActiveCart($cart);
+        $this->guardClientDoesNotHaveAnotherActiveCart($cart);
 
         if (null === $cart->getId()->getId()) {
             $this->hydrator->hydrate($cart->getId(), ['id' => ++$this->increment]);
@@ -78,7 +77,7 @@ class CartsMemoryRepository implements CartsRepositoryInterface
         $this->items[$cart->getId()->getId()] = clone $cart;
     }
 
-    private function guardClientDoesNotHasAnotherActiveCart(Entity\Cart $cart)
+    private function guardClientDoesNotHaveAnotherActiveCart(Entity\Cart $cart)
     {
         if (!$cart->active()) {
             return;
@@ -87,11 +86,16 @@ class CartsMemoryRepository implements CartsRepositoryInterface
         foreach ($this->items as $currentCart) {
             if (
                 !$currentCart->getId()->equalsTo($cart->getId())
-                && ($currentCart->getClient()->getHash() === $cart->getClient()->getHash())
+                && $this->isCartsClientsEquals($cart, $currentCart)
                 && $currentCart->active()
             ) {
                 throw new \DomainException('Client already have active cart');
             }
         }
+    }
+
+    private function isCartsClientsEquals(Entity\Cart $cart, Entity\Cart $otherCart): bool
+    {
+        return $cart->getClient()->getHash() === $otherCart->getClient()->getHash();
     }
 }

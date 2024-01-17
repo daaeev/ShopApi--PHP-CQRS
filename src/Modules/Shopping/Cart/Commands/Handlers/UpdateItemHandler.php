@@ -24,7 +24,6 @@ class UpdateItemHandler implements DispatchEventsInterface
     {
         $client = $this->environment->getClient();
         $cart = $this->carts->getActiveCart($client);
-
         $item = $cart->getItem(new CartItemId($command->item));
         $cart->addItem($this->productsService->resolveCartItem(
             $item->getProduct(),
@@ -33,6 +32,7 @@ class UpdateItemHandler implements DispatchEventsInterface
             $item->getSize(),
             $item->getColor(),
         ));
+
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());
     }

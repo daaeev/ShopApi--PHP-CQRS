@@ -19,9 +19,6 @@ class GetActiveCartHandler
     {
         $client = $this->environment->getClient();
         $cart = $this->carts->getActiveCart($client);
-        return $this->presenter->present(
-            $cart,
-            $this->environment->getLanguage()
-        );
+        return $this->presenter->present($cart, $this->environment->getLanguage());
     }
 }

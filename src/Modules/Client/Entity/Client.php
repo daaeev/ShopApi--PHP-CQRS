@@ -17,10 +17,7 @@ class Client implements Events\EventRoot
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
-    public function __construct(
-        ClientId $id,
-        ClientHash $hash,
-    ) {
+    public function __construct(ClientId $id, ClientHash $hash) {
         $this->id = $id;
         $this->hash = $hash;
         $this->name = new Name;
@@ -57,6 +54,7 @@ class Client implements Events\EventRoot
             false,
             $this->contacts->isEmailConfirmed(),
         );
+
         $this->updated();
     }
 
@@ -72,6 +70,7 @@ class Client implements Events\EventRoot
             $this->contacts->isPhoneConfirmed(),
             false,
         );
+
         $this->updated();
     }
 
@@ -91,6 +90,7 @@ class Client implements Events\EventRoot
             true,
             $this->contacts->isEmailConfirmed(),
         );
+
         $this->updated();
     }
 
@@ -110,6 +110,7 @@ class Client implements Events\EventRoot
             $this->contacts->isPhoneConfirmed(),
             true
         );
+
         $this->updated();
     }
 

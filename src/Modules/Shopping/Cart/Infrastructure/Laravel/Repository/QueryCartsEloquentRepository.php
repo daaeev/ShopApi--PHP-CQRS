@@ -3,11 +3,11 @@
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository;
 
 use Project\Common\Product\Currency;
-use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Common\Environment\Client\Client;
-use Project\Modules\Shopping\Cart\Repository\QueryCartsRepositoryInterface;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
+use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Modules\Shopping\Cart\Utils\CartEntity2DTOConverter;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
+use Project\Modules\Shopping\Cart\Repository\QueryCartsRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquent2EntityConverter;
 
 class QueryCartsEloquentRepository implements QueryCartsRepositoryInterface
@@ -42,8 +42,7 @@ class QueryCartsEloquentRepository implements QueryCartsRepositoryInterface
 
     private function hydrate(Eloquent\Cart $record): DTO\Cart
     {
-        return CartEntity2DTOConverter::convert(
-            $this->eloquentConverter->convert($record)
-        );
+        $cartEntity = $this->eloquentConverter->convert($record);
+        return CartEntity2DTOConverter::convert($cartEntity);
     }
 }

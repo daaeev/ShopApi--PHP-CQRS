@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Client extends Model
 {
     protected $table = 'clients';
+
     protected $fillable = [
         'hash',
         'firstname',
@@ -17,6 +18,7 @@ class Client extends Model
         'phone_confirmed',
         'email_confirmed',
     ];
+
     protected $casts = [
         'phone_confirmed' => 'boolean',
         'email_confirmed' => 'boolean',
@@ -33,8 +35,7 @@ class Client extends Model
     {
         if (!empty($options['hasNotEmptyCart'])) {
             $query->whereHas('carts', function (Builder $query) {
-                $query->where('active', true)
-                    ->has('items');
+                $query->where('active', true)->has('items');
             });
         }
     }

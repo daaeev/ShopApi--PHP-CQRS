@@ -58,13 +58,10 @@ class QueryPromotionsEloquentRepository implements QueryPromotionsRepositoryInte
     {
         $records = Eloquent\Promotion::query()
             ->with('discounts')
-            ->paginate(
-                perPage: $limit,
-                page: $page
-            );
+            ->paginate(perPage: $limit, page: $page);
 
-        $dtos = array_map([$this, 'convertPromotionRecord'], $records->items());
-        return new PaginatedCollection($dtos, new Pagination(
+        $promotionsDTO = array_map([$this, 'convertPromotionRecord'], $records->items());
+        return new PaginatedCollection($promotionsDTO, new Pagination(
             $records->currentPage(),
             $records->perPage(),
             $records->total(),

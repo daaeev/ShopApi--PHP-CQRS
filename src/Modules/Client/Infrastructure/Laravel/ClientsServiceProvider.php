@@ -9,7 +9,7 @@ use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Client\Infrastructure\Laravel\Repository\ClientsEloquentRepository;
 use Project\Modules\Client\Infrastructure\Laravel\Repository\QueryClientsEloquentRepository;
 
-class ClientServiceProvider extends ServiceProvider
+class ClientsServiceProvider extends ServiceProvider
 {
     private array $queriesMapping = [
         Queries\GetClientQuery::class => Queries\Handlers\GetClientHandler::class,

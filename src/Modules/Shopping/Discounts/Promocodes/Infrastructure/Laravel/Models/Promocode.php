@@ -18,6 +18,7 @@ class Promocode extends Model
     ];
 
     protected $casts = [
+        'active' => 'boolean',
         'start_date' => 'datetime',
         'end_date' => 'datetime',
         'created_at' => 'datetime',

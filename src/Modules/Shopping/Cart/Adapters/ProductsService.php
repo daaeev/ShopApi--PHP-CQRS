@@ -24,7 +24,6 @@ class ProductsService
     ): Entity\CartItem {
         $product = $this->products->get($product);
         $this->validateProduct($product, $size, $color, $guardProductAvailable);
-
         return new Entity\CartItem(
             Entity\CartItemId::next(),
             $product->id,
@@ -45,6 +44,7 @@ class ProductsService
         if ($guardProductAvailable) {
             $this->guardProductAvailable($product);
         }
+
         $this->guardProductHasSize($product, $size);
         $this->guardProductHasColor($product, $color);
     }
@@ -79,7 +79,6 @@ class ProductsService
     private function retrievePrice(ProductDTO $product, Currency $currency): float
     {
         $itemPrice = null;
-
         foreach ($product->prices as $productPrice) {
             if ($productPrice->currency === $currency->value) {
                 $itemPrice = $productPrice->price;

@@ -12,9 +12,23 @@ use Project\Modules\Client\Infrastructure\Laravel\Utils\ClientEloquent2DTOConver
 
 class QueryClientsEloquentRepository implements QueryClientsRepositoryInterface
 {
-    public function get(int $id): DTO\Client
+    public function getById(int $id): DTO\Client
     {
-        if (!($record = Eloquent\Client::find($id))) {
+        $record = Eloquent\Client::find($id);
+        if (empty($record)) {
+            throw new NotFoundException('Client does not exists');
+        }
+
+        return ClientEloquent2DTOConverter::convert($record);
+    }
+
+    public function getByHash(string $hash): DTO\Client
+    {
+        $record = Eloquent\Client::query()
+            ->where('hash', $hash)
+            ->first();
+
+        if (empty($record)) {
             throw new NotFoundException('Client does not exists');
         }
 
@@ -29,18 +43,15 @@ class QueryClientsEloquentRepository implements QueryClientsRepositoryInterface
                 perPage: $limit,
                 page: $page,
             );
-        $dtos = array_map(
-            '\Project\Modules\Client\Infrastructure\Laravel\Utils\ClientEloquent2DTOConverter::convert',
-            $query->items()
-        );
 
-        return new PaginatedCollection(
-            $dtos,
-            new Pagination(
-                $query->currentPage(),
-                $query->perPage(),
-                $query->total()
-            )
-        );
+        $clientsDTO = array_map(function (Eloquent\Client $record) {
+            return ClientEloquent2DTOConverter::convert($record);
+        }, $query->items());
+
+        return new PaginatedCollection($clientsDTO, new Pagination(
+            $query->currentPage(),
+            $query->perPage(),
+            $query->total()
+        ));
     }
 }

@@ -8,20 +8,22 @@ use Project\Common\Events\DispatchEventsTrait;
 use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Client\Utils\ClientEntity2DTOConverter;
 use Project\Modules\Client\Repository\ClientsRepositoryInterface;
+use Project\Modules\Client\Repository\QueryClientsRepositoryInterface;
 
 class ClientsApi implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
-        private ClientsRepositoryInterface $clients
+        private ClientsRepositoryInterface $clients,
+        private QueryClientsRepositoryInterface $queryClients,
     ) {}
 
     public function get(int|string $id): DTO\Client
     {
-        $id = is_int($id) ? new Entity\ClientId($id) : new Entity\ClientHash($id);
-        $client = $this->clients->get($id);
-        return ClientEntity2DTOConverter::convert($client);
+        return is_int($id)
+            ? $this->queryClients->getById($id)
+            : $this->queryClients->getByHash($id);
     }
 
     public function create(
@@ -35,10 +37,8 @@ class ClientsApi implements DispatchEventsInterface
             Entity\ClientId::next(),
             new Entity\ClientHash($hash)
         );
-        $client->updateName(new Entity\Name(
-            $firstName,
-            $lastName
-        ));
+
+        $client->updateName(new Entity\Name($firstName, $lastName));
         $client->updatePhone($phone);
         $client->updateEmail($email);
         $this->clients->add($client);

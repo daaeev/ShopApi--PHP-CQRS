@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Utils;
 
-use Project\Common\Entity\Duration;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
 use Project\Modules\Shopping\Api\DTO\Promotions as DTO;

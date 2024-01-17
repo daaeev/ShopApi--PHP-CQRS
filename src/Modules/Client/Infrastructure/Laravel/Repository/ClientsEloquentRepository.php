@@ -30,19 +30,18 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
         $this->guardHashUnique($entity);
         $this->guardContactsUnique($entity);
 
-        if (!$record->exists) {
-            $record->id = $entity->getId()->getId();
-            $record->hash = $entity->getHash()->getId();
-            $record->created_at = $entity->getCreatedAt()->getTimestamp();
-        }
+        $record->id = $entity->getId()->getId();
+        $record->hash = $entity->getHash()->getId();
         $record->firstname = $entity->getName()->getFirstName();
         $record->lastname = $entity->getName()->getLastName();
         $record->phone = $entity->getContacts()->getPhone();
         $record->email = $entity->getContacts()->getEmail();
         $record->phone_confirmed = $entity->getContacts()->isPhoneConfirmed();
         $record->email_confirmed = $entity->getContacts()->isEmailConfirmed();
+        $record->created_at = $entity->getCreatedAt()->getTimestamp();
         $record->updated_at = $entity->getUpdatedAt()?->getTimestamp();
         $record->save();
+
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
     }
 

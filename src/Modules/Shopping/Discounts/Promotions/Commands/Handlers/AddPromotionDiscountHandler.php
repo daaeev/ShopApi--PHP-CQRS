@@ -22,25 +22,24 @@ class AddPromotionDiscountHandler implements DispatchEventsInterface
     public function __invoke(AddPromotionDiscountCommand $command): void
     {
         $promotion = $this->promotions->get(Entity\PromotionId::make($command->id));
-        $promotion->addDiscount($this->makeDiscount(
-            $command->discountType,
-            $command->discountData
-        ));
+        $discount = $this->makeDiscount($command);
+        $promotion->addDiscount($discount);
         $this->promotions->update($promotion);
         $this->dispatchEvents($promotion->flushEvents());
     }
 
-    private function makeDiscount(string $discountType, array $discountData): DiscountMechanics\AbstractDiscountMechanic
-    {
+    private function makeDiscount(
+        AddPromotionDiscountCommand $command
+    ): DiscountMechanics\AbstractDiscountMechanic {
         Assert::inArray(
-            $discountType,
+            $command->discountType,
             DiscountMechanics\DiscountType::values(),
             'Unexpected discount type'
         );
 
         return $this->discountFactory->make(
-            DiscountMechanics\DiscountType::from($discountType),
-            $discountData
+            DiscountMechanics\DiscountType::from($command->discountType),
+            $command->discountData
         );
     }
 }

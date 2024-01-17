@@ -16,11 +16,11 @@ class Promocode implements Events\EventRoot
     private string $name;
     private string $code;
     private int $discountPercent;
-    private bool $active;
+    private bool $active = true;
     private \DateTimeImmutable $startDate;
     private ?\DateTimeImmutable $endDate;
     private \DateTimeImmutable $createdAt;
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
         PromocodeId $id,
@@ -34,11 +34,9 @@ class Promocode implements Events\EventRoot
         $this->name = $name;
         $this->code = $code;
         $this->discountPercent = $discountPercent;
-        $this->active = true;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->createdAt = new \DateTimeImmutable;
-        $this->updatedAt = null;
 
         $this->guardNameDoesNotEmpty();
         $this->guardCodeDoesNotEmpty();
@@ -90,7 +88,6 @@ class Promocode implements Events\EventRoot
     public function isActive(): bool
     {
         $currentTime = new \DateTimeImmutable();
-
         if ($currentTime < $this->startDate) {
             return false;
         }

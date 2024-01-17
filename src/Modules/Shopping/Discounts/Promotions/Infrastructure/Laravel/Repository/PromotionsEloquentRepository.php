@@ -45,6 +45,7 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
         $record->created_at = $entity->getCreatedAt()->getTimestamp();
         $record->updated_at = $entity->getUpdatedAt()?->getTimestamp();
         $record->save();
+
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
     }
 
@@ -58,6 +59,7 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
             $discountRecord->type = $discount->getType();
             $discountRecord->data = $discount->getData();
             $discountRecord->save();
+
             $this->hydrator->hydrate($discount->getId(), ['id' => $discountRecord->id]);
         }
     }

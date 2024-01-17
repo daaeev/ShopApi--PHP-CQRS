@@ -21,10 +21,8 @@ class UpdatePromotionHandler implements DispatchEventsInterface
     {
         $promotion = $this->promotions->get(Entity\PromotionId::make($command->id));
         $promotion->updateName($command->name);
-        $promotion->updateDuration(new Duration(
-            $command->startDate,
-            $command->endDate,
-        ));
+        $newDuration = new Duration($command->startDate, $command->endDate);
+        $promotion->updateDuration($newDuration);
         $this->promotions->update($promotion);
         $this->dispatchEvents($promotion->flushEvents());
     }

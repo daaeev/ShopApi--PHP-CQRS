@@ -13,6 +13,6 @@ class GetClientHandler
 
     public function __invoke(GetClientQuery $query): array
     {
-        return $this->clients->get($query->id)->toArray();
+        return $this->clients->getById($query->id)->toArray();
     }
 }

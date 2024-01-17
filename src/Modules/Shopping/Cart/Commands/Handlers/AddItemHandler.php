@@ -31,6 +31,7 @@ class AddItemHandler implements DispatchEventsInterface
             $command->color,
             guardProductAvailable: true
         ));
+
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());
     }

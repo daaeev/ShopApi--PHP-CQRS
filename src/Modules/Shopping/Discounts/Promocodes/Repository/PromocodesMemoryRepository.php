@@ -76,7 +76,6 @@ class PromocodesMemoryRepository implements PromocodesRepositoryInterface
     public function getByCode(string $code): Entity\Promocode
     {
         $promocode = null;
-
         foreach ($this->items as $item) {
             if ($item->getCode() === $code) {
                 $promocode = $item;

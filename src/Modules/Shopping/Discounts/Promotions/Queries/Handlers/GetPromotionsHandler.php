@@ -13,8 +13,10 @@ class GetPromotionsHandler
 
     public function __invoke(GetPromotionsQuery $query): array
     {
-        return $this->promotions
-            ->list($query->page, $query->limit, $query->options)
-            ->toArray();
+        return $this->promotions->list(
+            $query->page,
+            $query->limit,
+            $query->options
+        )->toArray();
     }
 }

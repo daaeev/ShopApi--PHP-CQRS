@@ -27,6 +27,7 @@ class CreatePromocodeHandler implements DispatchEventsInterface
             $command->startDate,
             $command->endDate,
         );
+
         $this->promocodes->add($promocode);
         $this->dispatchEvents($promocode->flushEvents());
         return $promocode->getId()->getId();

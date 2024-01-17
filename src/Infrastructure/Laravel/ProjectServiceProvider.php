@@ -11,7 +11,7 @@ use Project\Common\ApplicationMessages\Buses\CompositeEventBus;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
 use Project\Common\ApplicationMessages\ApplicationMessagesManager;
 use Project\Infrastructure\Laravel\Environment\EnvironmentService;
-use Project\Modules\Client\Infrastructure\Laravel\ClientServiceProvider;
+use Project\Modules\Client\Infrastructure\Laravel\ClientsServiceProvider;
 use Project\Common\ApplicationMessages\Buses\Decorators\LoggingBusDecorator;
 use Project\Modules\Shopping\Infrastructure\Laravel\ShoppingServiceProvider;
 use Project\Modules\Catalogue\Infrastructure\Laravel\CatalogueServiceProvider;
@@ -24,7 +24,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         CatalogueServiceProvider::class,
         AdministratorsServiceProvider::class,
         ShoppingServiceProvider::class,
-        ClientServiceProvider::class,
+        ClientsServiceProvider::class,
     ];
 
     public function register()

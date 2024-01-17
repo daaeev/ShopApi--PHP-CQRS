@@ -46,6 +46,14 @@ class Cart implements Events\EventRoot
         Assert::allIsInstanceOf($this->items, CartItem::class);
     }
 
+    public static function instantiate(Client $client): self
+    {
+        return new self(
+            CartId::next(),
+            $client
+        );
+    }
+
     public function addItem(CartItem $newItem): void
     {
         if (!$this->sameItemExists($newItem)) {
@@ -178,14 +186,6 @@ class Cart implements Events\EventRoot
         $this->promocode = null;
         $this->addEvent(new PromocodeRemovedFromCart($this));
         $this->updated();
-    }
-
-    public static function instantiate(Client $client): self
-    {
-        return new self(
-            CartId::next(),
-            $client
-        );
     }
 
     public function getTotalPrice(): float

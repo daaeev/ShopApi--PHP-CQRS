@@ -23,7 +23,6 @@ class UsePromocodeHandler implements DispatchEventsInterface
     {
         $cart = $this->carts->getActiveCart($this->environment->getClient());
         $promocode = $this->promocodes->getByCode($command->promocode);
-
         if (!$promocode->isActive()) {
             throw new \DomainException('Cant use not active promocode');
         }

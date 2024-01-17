@@ -6,21 +6,14 @@ use Project\Common\Repository\NotFoundException;
 use Project\Common\Entity\Collections\Pagination;
 use Project\Modules\Shopping\Api\DTO\Promocodes as DTO;
 use Project\Common\Entity\Collections\PaginatedCollection;
-use Project\Modules\Shopping\Discounts\Promocodes\Utils\PromocodeEntity2DTOConverter;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\QueryPromocodesRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquent2EntityConverter;
 
 class QueryPromocodesEloquentRepository implements QueryPromocodesRepositoryInterface
 {
-    public function __construct(
-        private PromocodeEloquent2EntityConverter $eloquentConverter
-    ) {}
-
     public function get(int $id, array $options = []): DTO\Promocode
     {
         $record = Eloquent\Promocode::find($id);
-
         if (empty($record)) {
             throw new NotFoundException('Promocode does not exists');
         }
@@ -30,8 +23,20 @@ class QueryPromocodesEloquentRepository implements QueryPromocodesRepositoryInte
 
     private function hydrate(Eloquent\Promocode $record): DTO\Promocode
     {
-        return PromocodeEntity2DTOConverter::convert(
-            $this->eloquentConverter->convert($record)
+        return new DTO\Promocode(
+            $record->id,
+            $record->name,
+            $record->code,
+            $record->discount_percent,
+            $record->active,
+            new \DateTimeImmutable($record->start_date),
+            $record->end_date
+                ? new \DateTimeImmutable($record->end_date)
+                : null,
+            new \DateTimeImmutable($record->created_at),
+            $record->updated_at
+                ? new \DateTimeImmutable($record->updated_at)
+                : null,
         );
     }
 

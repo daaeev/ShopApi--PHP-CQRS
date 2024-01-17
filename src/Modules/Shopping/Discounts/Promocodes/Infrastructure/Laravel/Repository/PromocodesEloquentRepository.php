@@ -20,7 +20,6 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
     public function add(Entity\Promocode $promocode): void
     {
         $id = $promocode->getId()->getId();
-
         if (Eloquent\Promocode::find($id)) {
             throw new DuplicateKeyException('Promocode with same id already exists');
         }
@@ -32,19 +31,17 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
     {
         $this->guardCodeUnique($entity);
 
-        if (!$record->exists) {
-            $record->id = $entity->getId()->getId();
-            $record->created_at = $entity->getCreatedAt()->format(\DateTimeInterface::RFC3339);
-        }
-
+        $record->id = $entity->getId()->getId();
         $record->name = $entity->getName();
         $record->code = $entity->getCode();
         $record->discount_percent = $entity->getDiscountPercent();
         $record->active = $entity->getActive();
         $record->start_date = $entity->getStartDate()->format(\DateTimeInterface::RFC3339);
         $record->end_date = $entity->getEndDate()?->format(\DateTimeInterface::RFC3339);
+        $record->created_at = $entity->getCreatedAt()->format(\DateTimeInterface::RFC3339);
         $record->updated_at = $entity->getUpdatedAt()?->format(\DateTimeInterface::RFC3339);
         $record->save();
+
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
     }
 
@@ -63,7 +60,6 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
     public function update(Entity\Promocode $promocode): void
     {
         $id = $promocode->getId()->getId();
-
         if (!$record = Eloquent\Promocode::find($id)) {
             throw new NotFoundException('Promocode does not exists');
         }
@@ -74,7 +70,6 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
     public function delete(Entity\Promocode $promocode): void
     {
         $id = $promocode->getId()->getId();
-
         if (!$record = Eloquent\Promocode::find($id)) {
             throw new NotFoundException('Promocode does not exists');
         }

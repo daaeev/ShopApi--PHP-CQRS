@@ -19,7 +19,8 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 
     public function get(Entity\CartId $id): Entity\Cart
     {
-        if (!$record = Eloquent\Cart::find($id->getId())) {
+        $record = Eloquent\Cart::find($id->getId());
+        if (empty($record)) {
             throw new NotFoundException('Cart does not exists');
         }
 
@@ -29,10 +30,7 @@ class CartsEloquentRepository implements CartsRepositoryInterface
     public function getActiveCart(Client $client): Entity\Cart
     {
         $record = Eloquent\Cart::query()
-            ->where([
-                'client_id' => $client->getId(),
-                'active' => true
-            ])
+            ->where(['client_id' => $client->getId(), 'active' => true])
             ->first();
 
         if (empty($record)) {
@@ -71,15 +69,14 @@ class CartsEloquentRepository implements CartsRepositoryInterface
         $record->created_at = $cart->getCreatedAt()->format(\DateTimeInterface::RFC3339);
         $record->updated_at = $cart->getUpdatedAt()?->format(\DateTimeInterface::RFC3339);
         $record->save();
-        $this->hydrator->hydrate($cart->getId(), ['id' => $record->id]);
 
+        $this->hydrator->hydrate($cart->getId(), ['id' => $record->id]);
         $this->persistCartItems($cart, $record);
     }
 
     private function persistCartItems(Entity\Cart $cart, Eloquent\Cart $record): void
     {
         $record->items()->delete();
-
         foreach ($cart->getItems() as $cartItem) {
             $cartItemRecord = $record->items()->create([
                 'cart_id' => $cart->getId()->getId(),
@@ -90,6 +87,7 @@ class CartsEloquentRepository implements CartsRepositoryInterface
                 'size' => $cartItem->getSize(),
                 'color' => $cartItem->getColor(),
             ]);
+
             $this->hydrator->hydrate($cartItem->getId(), ['id' => $cartItemRecord->id]);
         }
     }
