@@ -4,10 +4,10 @@ namespace Project\Modules\Administrators\Infrastructure\Laravel\Console;
 
 use Illuminate\Console\Command;
 use Project\Common\Administrators\Role;
-use Project\Common\Events\DispatchEventsTrait;
 use Project\Modules\Administrators\Entity\Admin;
 use Project\Modules\Administrators\Entity\AdminId;
-use Project\Common\Events\DispatchEventsInterface;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Administrators\Repository\AdminsRepositoryInterface;
 
 class MakeAdminCommand extends Command implements DispatchEventsInterface

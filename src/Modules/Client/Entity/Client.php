@@ -2,14 +2,12 @@
 
 namespace Project\Modules\Client\Entity;
 
-use Project\Common\Events;
+use Project\Common\Entity\Aggregate;
 use Project\Modules\Client\Api\Events\ClientUpdated;
 use Project\Modules\Client\Api\Events\ClientCreated;
 
-class Client implements Events\EventRoot
+class Client extends Aggregate
 {
-    use Events\EventTrait;
-
     private ClientId $id;
     private ClientHash $hash;
     private Name $name;

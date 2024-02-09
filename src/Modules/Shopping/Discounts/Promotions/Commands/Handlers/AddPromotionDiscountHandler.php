@@ -3,9 +3,9 @@
 namespace Project\Modules\Shopping\Discounts\Promotions\Commands\Handlers;
 
 use Webmozart\Assert\Assert;
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\AddPromotionDiscountCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;

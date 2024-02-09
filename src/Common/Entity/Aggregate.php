@@ -1,8 +1,10 @@
 <?php
 
-namespace Project\Common\Events;
+namespace Project\Common\Entity;
 
-trait EventTrait
+use Project\Common\ApplicationMessages\Events\Event;
+
+abstract class Aggregate
 {
     protected array $events = [];
 

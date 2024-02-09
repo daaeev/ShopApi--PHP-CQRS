@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Catalogue\Categories\Commands\Handlers;
 
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Categories\Entity\CategoryId;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Categories\Commands\DeleteCategoryCommand;
 use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
 

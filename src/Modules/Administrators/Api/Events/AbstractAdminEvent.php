@@ -3,8 +3,8 @@
 namespace Project\Modules\Administrators\Api\Events;
 
 use Project\Common\Utils;
-use Project\Common\Events\Event;
 use Project\Modules\Administrators\Entity;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Administrators\Utils\AdministratorEntity2DTOConverter;
 
 class AbstractAdminEvent extends Event

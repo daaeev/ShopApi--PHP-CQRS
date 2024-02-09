@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Modules\Shopping\Cart\Commands\RemovePromocodeCommand;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
 class RemovePromocodeHandler implements DispatchEventsInterface

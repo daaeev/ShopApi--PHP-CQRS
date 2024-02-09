@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Shopping\Discounts\Promocodes\Commands\Handlers;
 
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Commands\CreatePromocodeCommand;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 

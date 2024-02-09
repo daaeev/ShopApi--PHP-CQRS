@@ -3,9 +3,9 @@
 namespace Project\Modules\Shopping\Discounts\Promotions\Commands\Handlers;
 
 use Project\Common\Entity\Duration;
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\UpdatePromotionCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 

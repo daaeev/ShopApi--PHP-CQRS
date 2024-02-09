@@ -2,7 +2,7 @@
 
 namespace Project\Tests\Unit\CQRS;
 
-use Project\Common\Events\Event;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Common\ApplicationMessages\Buses\EventBus;
 use Project\Common\ApplicationMessages\Buses\CompositeEventBus;
 

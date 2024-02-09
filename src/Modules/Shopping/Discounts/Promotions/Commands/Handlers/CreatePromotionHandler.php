@@ -4,11 +4,11 @@ namespace Project\Modules\Shopping\Discounts\Promotions\Commands\Handlers;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Entity\Duration;
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
-use Project\Modules\Shopping\Discounts\Promotions\Commands\CreatePromotionCommand;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
+use Project\Modules\Shopping\Discounts\Promotions\Commands\CreatePromotionCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 
 class CreatePromotionHandler implements DispatchEventsInterface

@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Catalogue\Product\Commands\Handlers;
 
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Product\Entity\ProductId;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Modules\Catalogue\Product\Commands\DeleteProductCommand;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 
 class DeleteProductHandler implements DispatchEventsInterface

@@ -2,11 +2,11 @@
 
 namespace Project\Modules\Catalogue\Categories\Commands\Handlers;
 
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Product\Entity\ProductId;
 use Project\Modules\Catalogue\Categories\Entity\Category;
 use Project\Modules\Catalogue\Categories\Entity\CategoryId;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Categories\Commands\CreateCategoryCommand;
 use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;

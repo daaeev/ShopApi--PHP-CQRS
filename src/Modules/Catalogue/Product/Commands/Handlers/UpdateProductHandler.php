@@ -6,9 +6,9 @@ use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
 use Project\Modules\Catalogue\Product\Entity;
 use Project\Modules\Catalogue\Api\DTO\Product as DTO;
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Modules\Catalogue\Product\Commands\UpdateProductCommand;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 
 class UpdateProductHandler implements DispatchEventsInterface

@@ -3,8 +3,8 @@
 namespace Project\Modules\Shopping\Api\Events\Cart;
 
 use Project\Common\Utils;
-use Project\Common\Events\Event;
 use Project\Modules\Shopping\Cart\Entity;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Shopping\Cart\Utils\CartEntity2DTOConverter;
 
 class AbstractCartEvent extends Event

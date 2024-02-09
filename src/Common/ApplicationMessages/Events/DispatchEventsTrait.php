@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Common\Events;
+namespace Project\Common\ApplicationMessages\Events;
 
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 

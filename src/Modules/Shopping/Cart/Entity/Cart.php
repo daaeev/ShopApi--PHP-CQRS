@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Cart\Entity;
 
-use Project\Common\Events;
+use Project\Common\Entity\Aggregate;
 use Webmozart\Assert\Assert;
 use Project\Common\Product\Currency;
 use Project\Common\Environment\Client\Client;
@@ -14,10 +14,8 @@ use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeRemovedFromCart;
 
-class Cart implements Events\EventRoot
+class Cart extends Aggregate
 {
-    use Events\EventTrait;
-
     private CartId $id;
     private Client $client;
     private array $items;

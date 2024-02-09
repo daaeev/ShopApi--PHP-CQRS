@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Shopping\Api\Events\Promocodes;
 
-use Project\Common\Events\Event;
-use Project\Modules\Shopping\Discounts\Promocodes\Entity;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Shopping\Api\DTO\Promocodes as DTO;
+use Project\Modules\Shopping\Discounts\Promocodes\Entity;
 use Project\Modules\Shopping\Discounts\Promocodes\Utils\PromocodeEntity2DTOConverter;
 
 class AbstractPromocodeEvent extends Event

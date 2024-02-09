@@ -3,11 +3,11 @@
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Common\Product\Currency;
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Adapters\ProductsService;
 use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
 class ChangeCurrencyHandler implements DispatchEventsInterface

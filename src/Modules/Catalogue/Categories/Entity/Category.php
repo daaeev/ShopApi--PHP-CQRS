@@ -2,14 +2,12 @@
 
 namespace Project\Modules\Catalogue\Categories\Entity;
 
-use Project\Common\Events;
+use Project\Common\Entity\Aggregate;
 use Webmozart\Assert\Assert;
 use Project\Modules\Catalogue\Api\Events\Category as CategoryEvents;
 
-class Category implements Events\EventRoot
+class Category extends Aggregate
 {
-    use Events\EventTrait;
-
     private CategoryId $id;
     private string $name;
     private string $slug;

@@ -2,12 +2,12 @@
 
 namespace Project\Modules\Client\Api;
 
-use Project\Modules\Client\Api\DTO;
 use Project\Modules\Client\Entity;
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
+use Project\Modules\Client\Api\DTO;
 use Project\Modules\Client\Utils\ClientEntity2DTOConverter;
 use Project\Modules\Client\Repository\ClientsRepositoryInterface;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Client\Repository\QueryClientsRepositoryInterface;
 
 class ClientsApi implements DispatchEventsInterface

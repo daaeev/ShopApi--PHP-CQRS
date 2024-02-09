@@ -2,11 +2,11 @@
 
 namespace Project\Tests\Unit\Modules\Helpers;
 
-use Project\Common\Events\EventRoot;
+use Project\Common\Entity\Aggregate;
 
 trait AssertEvents
 {
-    private function assertEvents(EventRoot $entity, array $events): void
+    private function assertEvents(Aggregate $entity, array $events): void
     {
         $entityEvents = $entity->flushEvents();
         $this->assertCount(

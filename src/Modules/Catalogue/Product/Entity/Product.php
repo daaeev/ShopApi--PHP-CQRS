@@ -2,16 +2,14 @@
 
 namespace Project\Modules\Catalogue\Product\Entity;
 
-use Project\Common\Events;
+use Project\Common\Entity\Aggregate;
 use Webmozart\Assert\Assert;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
 use Project\Modules\Catalogue\Api\Events\Product as ProductEvents;
 
-class Product implements Events\EventRoot
+class Product extends Aggregate
 {
-    use Events\EventTrait;
-
     private ProductId $id;
     private string $name;
     private string $code;

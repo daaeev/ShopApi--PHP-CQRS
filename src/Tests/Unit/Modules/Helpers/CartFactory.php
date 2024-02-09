@@ -22,7 +22,7 @@ trait CartFactory
 
     private function generateCart(): Entity\Cart
     {
-        $cart = Entity\Cart::instantiate(new Client(md5(rand()), rand(1, 100)));
+        $cart = Entity\Cart::instantiate(new Client(md5(rand(1, 9999)), rand(1, 9999)));
         $cart->flushEvents();
         return $cart;
     }

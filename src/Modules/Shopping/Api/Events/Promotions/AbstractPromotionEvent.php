@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Api\Events\Promotions;
 
-use Project\Common\Events\Event;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Shopping\Api\DTO\Promotions as DTO;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
 use Project\Modules\Shopping\Discounts\Promotions\Utils\PromotionEntity2DTOConverter;

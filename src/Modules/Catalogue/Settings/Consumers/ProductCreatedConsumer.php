@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Catalogue\Settings\Consumers;
 
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Catalogue\Settings\Commands\UpdateProductSettingsCommand;
 use Project\Modules\Catalogue\Settings\Services\CatalogueSettingsServiceInterface;
 use Project\Modules\Catalogue\Api\Events\Product\ProductCreated as ProductCreatedEvent;

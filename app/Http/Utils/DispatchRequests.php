@@ -2,7 +2,7 @@
 
 namespace App\Http\Utils;
 
-use Project\Common\Events\Event;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Common\ApplicationMessages\ApplicationMessagesManager;
 
 trait DispatchRequests

@@ -2,10 +2,10 @@
 
 namespace Project\Tests\Unit\Events;
 
-use Project\Common\Events\Event;
-use Project\Common\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Tests\Unit\Events\Helpers\EventsFactory;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 
 class DispathEventsTraitTest extends \PHPUnit\Framework\TestCase
 {

@@ -2,19 +2,17 @@
 
 namespace Project\Modules\Administrators\Entity;
 
-use Project\Common\Events;
+use Project\Common\Entity\Aggregate;
 use Webmozart\Assert\Assert;
 use Project\Common\Administrators\Role;
 use Project\Modules\Administrators\Api\Events\AdminCreated;
-use Project\Modules\Administrators\Api\Events\AdminLoginChanged;
-use Project\Modules\Administrators\Api\Events\AdminRolesChanged;
 use Project\Modules\Administrators\Api\Events\AdminDeleted;
+use Project\Modules\Administrators\Api\Events\AdminRolesChanged;
+use Project\Modules\Administrators\Api\Events\AdminLoginChanged;
 use Project\Modules\Administrators\Api\Events\AdminPasswordChanged;
 
-class Admin implements Events\EventRoot
+class Admin extends Aggregate
 {
-    use Events\EventTrait;
-
     private AdminId $id;
     private string $name;
     private string $login;

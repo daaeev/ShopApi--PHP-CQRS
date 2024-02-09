@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Catalogue\Api\Events\Category;
 
-use Project\Common\Events\Event;
 use Project\Modules\Catalogue\Categories\Entity;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Catalogue\Api\DTO\Category as DTO;
 use Project\Modules\Catalogue\Categories\Utils\CategoryEntity2DTOConverter;
 

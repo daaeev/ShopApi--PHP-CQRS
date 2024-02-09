@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Discounts\Promocodes\Queries\Handlers;
 
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Queries\GetPromocodesListQuery;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\QueryPromocodesRepositoryInterface;
 

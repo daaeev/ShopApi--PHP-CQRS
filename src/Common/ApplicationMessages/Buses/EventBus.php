@@ -3,8 +3,8 @@
 namespace Project\Common\ApplicationMessages\Buses;
 
 use Webmozart\Assert\Assert;
-use Project\Common\Events\Event;
 use Psr\Container\ContainerInterface;
+use Project\Common\ApplicationMessages\Events\Event;
 
 class EventBus implements MessageBusInterface
 {

@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Commands\UsePromocodeCommand;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 

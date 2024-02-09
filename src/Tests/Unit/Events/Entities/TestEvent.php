@@ -3,7 +3,7 @@
 namespace Project\Tests\Unit\Events\Entities;
 
 use Project\Common\Utils;
-use Project\Common\Events\Event;
+use Project\Common\ApplicationMessages\Events\Event;
 
 class TestEvent extends Event
 {

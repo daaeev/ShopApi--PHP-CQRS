@@ -2,8 +2,8 @@
 
 namespace Project\Tests\Unit\CQRS;
 
-use Project\Common\Events\Event;
 use Psr\Container\ContainerInterface;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Tests\Unit\CQRS\Handlers\CallableHandler;
 use Project\Common\ApplicationMessages\Buses\EventBus;
 

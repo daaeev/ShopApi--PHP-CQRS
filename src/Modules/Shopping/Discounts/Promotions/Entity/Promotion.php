@@ -4,16 +4,13 @@ namespace Project\Modules\Shopping\Discounts\Promotions\Entity;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Entity\Duration;
-use Project\Common\Events\EventRoot;
-use Project\Common\Events\EventTrait;
+use Project\Common\Entity\Aggregate;
 use Project\Modules\Shopping\Api\Events\Promotions as Events;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicId;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\AbstractDiscountMechanic;
 
-class Promotion implements EventRoot
+class Promotion extends Aggregate
 {
-    use EventTrait;
-
     private PromotionId $id;
     private string $name;
     private Duration $duration;

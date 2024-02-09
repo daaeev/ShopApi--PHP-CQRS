@@ -3,8 +3,8 @@
 namespace Project\Modules\Client\Api\Events;
 
 use Project\Common\Utils;
-use Project\Common\Events\Event;
 use Project\Modules\Client\Entity\Client;
+use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Client\Utils\ClientEntity2DTOConverter;
 
 abstract class AbstractClientEvent extends Event

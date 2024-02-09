@@ -16,7 +16,6 @@ class CartsEloquentRepositoryTest extends \Tests\TestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
         $this->carts = new CartsEloquentRepository(
             new Hydrator,
             new CartEloquent2EntityConverter(
@@ -24,9 +23,12 @@ class CartsEloquentRepositoryTest extends \Tests\TestCase
                 new PromocodeEloquentConverter(new Hydrator)
             )
         );
+
         $this->promocodes = new PromocodesEloquentRepository(
             new Hydrator,
             new PromocodeEloquentConverter(new Hydrator)
         );
+
+        parent::setUp();
     }
 }

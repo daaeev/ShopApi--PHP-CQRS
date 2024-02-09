@@ -3,10 +3,10 @@
 namespace Project\Modules\Administrators\Commands\Handlers;
 
 use Project\Common\Administrators\Role;
-use Project\Common\Events\DispatchEventsTrait;
-use Project\Common\Events\DispatchEventsInterface;
 use Project\Modules\Administrators\Entity\AdminId;
 use Project\Modules\Administrators\Commands\UpdateAdminCommand;
+use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
+use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Administrators\Repository\AdminsRepositoryInterface;
 
 class UpdateAdminHandler implements DispatchEventsInterface

@@ -2,16 +2,14 @@
 
 namespace Project\Modules\Shopping\Discounts\Promocodes\Entity;
 
-use Project\Common\Events;
+use Project\Common\Entity\Aggregate;
 use Webmozart\Assert\Assert;
 use Project\Modules\Shopping\Api\Events\Promocodes\PromocodeCreated;
 use Project\Modules\Shopping\Api\Events\Promocodes\PromocodeUpdated;
 use Project\Modules\Shopping\Api\Events\Promocodes\PromocodeDeleted;
 
-class Promocode implements Events\EventRoot
+class Promocode extends Aggregate
 {
-    use Events\EventTrait;
-
     private PromocodeId $id;
     private string $name;
     private string $code;
