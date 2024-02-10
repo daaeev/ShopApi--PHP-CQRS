@@ -1,10 +1,10 @@
 <?php
 
-namespace Project\Tests\Unit\CQRS;
+namespace Project\Tests\Unit\MessageBuses;
 
 use Psr\Container\ContainerInterface;
 use Project\Common\ApplicationMessages\Events\Event;
-use Project\Tests\Unit\CQRS\Handlers\CallableHandler;
+use Project\Tests\Unit\MessageBuses\Handlers\CallableHandler;
 use Project\Common\ApplicationMessages\Buses\EventBus;
 
 class EventBusTest extends \PHPUnit\Framework\TestCase

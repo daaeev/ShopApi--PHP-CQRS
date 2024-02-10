@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\CQRS;
+namespace Project\Tests\Unit\MessageBuses;
 
 use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;

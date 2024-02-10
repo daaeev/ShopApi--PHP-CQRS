@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Laravel\CQRS;
+namespace Project\Tests\Laravel\MessageBuses;
 
 use Illuminate\Support\Facades\DB;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;

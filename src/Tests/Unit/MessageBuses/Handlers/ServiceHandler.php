@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\CQRS\Handlers;
+namespace Project\Tests\Unit\MessageBuses\Handlers;
 
 class ServiceHandler
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Project\Tests\Unit\CQRS;
+namespace Project\Tests\Unit\MessageBuses;
 
 use Psr\Container\ContainerInterface;
-use Project\Tests\Unit\CQRS\Handlers\ServiceHandler;
-use Project\Tests\Unit\CQRS\Handlers\CallableHandler;
+use Project\Tests\Unit\MessageBuses\Handlers\ServiceHandler;
+use Project\Tests\Unit\MessageBuses\Handlers\CallableHandler;
 use Project\Common\ApplicationMessages\Buses\RequestBus;
 
 class RequestBusTest extends \PHPUnit\Framework\TestCase

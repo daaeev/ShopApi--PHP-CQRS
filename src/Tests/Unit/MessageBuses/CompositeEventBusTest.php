@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\CQRS;
+namespace Project\Tests\Unit\MessageBuses;
 
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Common\ApplicationMessages\Buses\EventBus;

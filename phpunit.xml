@@ -30,9 +30,9 @@
         <testsuite name="ProjectUnitCommonEntities">
             <directory suffix="Test.php">./src/Tests/Unit/Entity</directory>
         </testsuite>
-        <!--CQRS-->
-        <testsuite name="ProjectUnitCQRS">
-            <directory suffix="Test.php">./src/Tests/Unit/CQRS</directory>
+        <!--MessageBuses-->
+        <testsuite name="ProjectUnitMessageBuses">
+            <directory suffix="Test.php">./src/Tests/Unit/MessageBuses</directory>
         </testsuite>
         <!--Events-->
         <testsuite name="ProjectUnitEvents">
