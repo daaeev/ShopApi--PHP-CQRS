@@ -4,6 +4,7 @@ namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Common\Administrators\Role;
 use Project\Common\Entity\Hydrator\Hydrator;
+use Project\Common\Repository\IdentityMap;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Modules\Administrators\Commands\UpdateAdminCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
@@ -27,30 +28,29 @@ class UpdateAdminHandlerTest extends \PHPUnit\Framework\TestCase
         parent::setUp();
     }
 
-    public function testCreate()
+    public function testUpdate()
     {
         $initial = $this->generateAdmin();
-        $repository = new AdminsMemoryRepository(new Hydrator);
+        $repository = new AdminsMemoryRepository(new Hydrator, new IdentityMap);
         $repository->add($initial);
 
         $command = new UpdateAdminCommand(
             $initial->getId()->getId(),
             $name = 'Updated admin name',
-            $login = $this->correctAdminLogin,
+            $this->correctAdminLogin,
             $this->correctAdminPassword,
             [Role::MANAGER->value],
         );
+
         $handler = new UpdateAdminHandler($repository);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
+
         $updated = $repository->get($initial->getId());
-
-        $this->assertNotSame($initial->getName(), $updated->getName());
-        $this->assertNotSame($initial->getLogin(), $updated->getLogin());
-        $this->assertNotSame($initial->getRoles(), $updated->getRoles());
-
+        $this->assertSame($initial, $updated);
         $this->assertSame($updated->getName(), $name);
-        $this->assertSame($updated->getLogin(), $login);
+        $this->assertSame($updated->getLogin(), $this->correctAdminLogin);
+        $this->assertSame($updated->getPassword(), $this->correctAdminPassword);
         $this->assertSame($updated->getRoles(), [Role::MANAGER]);
     }
 }

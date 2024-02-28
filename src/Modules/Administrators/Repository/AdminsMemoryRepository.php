@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Administrators\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Modules\Administrators\Entity;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
@@ -13,7 +14,8 @@ class AdminsMemoryRepository implements AdminsRepositoryInterface
     private int $increment = 0;
 
     public function __construct(
-        private Hydrator $hydrator
+        private Hydrator $hydrator,
+        private IdentityMap $identityMap
     ) {}
 
     public function add(Entity\Admin $entity): void
@@ -28,6 +30,7 @@ class AdminsMemoryRepository implements AdminsRepositoryInterface
             throw new DuplicateKeyException('Admin with same id already exists');
         }
 
+        $this->identityMap->add($entity->getId()->getId(), $entity);
         $this->items[$entity->getId()->getId()] = clone $entity;
     }
 
@@ -61,6 +64,7 @@ class AdminsMemoryRepository implements AdminsRepositoryInterface
             throw new NotFoundException('Admin does not exists');
         }
 
+        $this->identityMap->remove($entity->getId()->getId());
         unset($this->items[$entity->getId()->getId()]);
     }
 
@@ -70,12 +74,15 @@ class AdminsMemoryRepository implements AdminsRepositoryInterface
             throw new NotFoundException('Admin does not exists');
         }
 
+        if ($this->identityMap->has($id->getId())) {
+            return $this->identityMap->get($id->getId());
+        }
+
         $entity = clone $this->items[$id->getId()];
+        $this->identityMap->add($id->getId(), $entity);
         // Passwords saves in db using hashed value.
         // And repository does not decode value and does not retrieve password
-        $this->hydrator->hydrate($entity, [
-            'password' => null
-        ]);
+        $this->hydrator->hydrate($entity, ['password' => null]);
         return $entity;
     }
 }

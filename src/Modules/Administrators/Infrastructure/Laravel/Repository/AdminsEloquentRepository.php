@@ -4,6 +4,7 @@ namespace Project\Modules\Administrators\Infrastructure\Laravel\Repository;
 
 use Project\Common\Administrators\Role;
 use Illuminate\Contracts\Hashing\Hasher;
+use Project\Common\Repository\IdentityMap;
 use Project\Modules\Administrators\Entity;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
@@ -15,17 +16,23 @@ class AdminsEloquentRepository implements AdminsRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
+        private IdentityMap $identityMap,
         private Hasher $hasher,
     ) {}
 
     public function add(Entity\Admin $entity): void
     {
         $id = $entity->getId()->getId();
+        if (!empty($id) && $this->identityMap->has($id)) {
+            throw new DuplicateKeyException('Admin with same id already exists');
+        }
+
         if (Eloquent\Administrator::find($id)) {
             throw new DuplicateKeyException('Admin with same id already exists');
         }
 
         $this->persist($entity, new Eloquent\Administrator);
+        $this->identityMap->add($entity->getId()->getId(), $entity);
     }
 
     private function persist(Entity\Admin $entity, Eloquent\Administrator $record): void
@@ -59,6 +66,10 @@ class AdminsEloquentRepository implements AdminsRepositoryInterface
     public function update(Entity\Admin $entity): void
     {
         $id = $entity->getId()->getId();
+        if (empty($id) || !$this->identityMap->has($id)) {
+            throw new NotFoundException('Admin does not exists');
+        }
+
         if (!$record = Eloquent\Administrator::find($id)) {
             throw new NotFoundException('Admin does not exists');
         }
@@ -69,20 +80,35 @@ class AdminsEloquentRepository implements AdminsRepositoryInterface
     public function delete(Entity\Admin $entity): void
     {
         $id = $entity->getId()->getId();
+        if (empty($id) || !$this->identityMap->has($id)) {
+            throw new NotFoundException('Admin does not exists');
+        }
+
         if (!$record = Eloquent\Administrator::find($id)) {
             throw new NotFoundException('Admin does not exists');
         }
 
+        $this->identityMap->remove($id);
         $record->delete();
     }
 
     public function get(Entity\AdminId $id): Entity\Admin
     {
+        if (empty($id->getId())) {
+            throw new NotFoundException('Admin does not exists');
+        }
+
+        if ($this->identityMap->has($id->getId())) {
+            return $this->identityMap->get($id->getId());
+        }
+
         if (!$record = Eloquent\Administrator::find($id->getId())) {
             throw new NotFoundException('Admin does not exists');
         }
 
-        return $this->hydrate($record);
+        $entity = $this->hydrate($record);
+        $this->identityMap->add($id->getId(), $entity);
+        return $entity;
     }
 
     private function hydrate(Eloquent\Administrator $record): Entity\Admin

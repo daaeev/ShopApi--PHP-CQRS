@@ -20,7 +20,7 @@ class Admin extends Aggregate
 
     // Used only for save password!
     // Repository does not retrieve password
-    private ?string $password = null;
+    private ?string $password;
 
     public function __construct(
         AdminId $id,
@@ -41,6 +41,11 @@ class Admin extends Aggregate
         $this->guardCorrectPassword();
         $this->guardCorrectLogin();
         $this->addEvent(new AdminCreated($this));
+    }
+
+    public function __clone(): void
+    {
+        $this->id = clone $this->id;
     }
 
     private function guardCorrectLogin(): void

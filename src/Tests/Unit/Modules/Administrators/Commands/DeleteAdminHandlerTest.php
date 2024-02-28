@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Modules\Administrators\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Repository\NotFoundException;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Modules\Administrators\Commands\DeleteAdminCommand;
@@ -27,10 +28,10 @@ class DeleteAdminHandlerTest extends \PHPUnit\Framework\TestCase
         parent::setUp();
     }
 
-    public function testCreate()
+    public function testDelete()
     {
         $initial = $this->generateAdmin();
-        $repository = new AdminsMemoryRepository(new Hydrator);
+        $repository = new AdminsMemoryRepository(new Hydrator, new IdentityMap);
         $repository->add($initial);
 
         $command = new DeleteAdminCommand($initial->getId()->getId());
