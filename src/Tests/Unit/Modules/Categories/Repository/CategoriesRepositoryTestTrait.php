@@ -28,28 +28,26 @@ trait CategoriesRepositoryTestTrait
         $initial = $this->generateCategory();
         $initial->attachParent($parent->getId());
         $initial->attachProduct($product->getId()->getId());
-        $this->categories->add($initial);
-        $found = $this->categories->get($initial->getId());
-        $this->assertSameCategories($initial, $found);
-    }
 
-    private function assertSameCategories(Category $initial, Category $found): void
-    {
-        $this->assertTrue($initial->getId()->equalsTo($found->getId()));
-        if (($initial->getParent() !== null) && ($found->getParent() !== null)) {
-            $this->assertTrue($initial->getParent()->equalsTo($found->getParent()));
-        }
-        $this->assertEquals($initial->getName(), $found->getName());
-        $this->assertEquals($initial->getSlug(), $found->getSlug());
-        $this->assertEquals($initial->getProducts(), $found->getProducts());
-        $this->assertSame(
-            $initial->getCreatedAt()->getTimestamp(),
-            $found->getCreatedAt()->getTimestamp(),
-        );
-        $this->assertSame(
-            $initial->getUpdatedAt()?->getTimestamp(),
-            $found->getUpdatedAt()?->getTimestamp(),
-        );
+        $id = $initial->getId();
+        $name = $initial->getName();
+        $slug = $initial->getSlug();
+        $products = $initial->getProducts();
+        $parent = $initial->getParent();
+        $createdAt = $initial->getCreatedAt();
+        $updatedAt = $initial->getUpdatedAt();
+
+        $this->categories->add($initial);
+
+        $found = $this->categories->get($initial->getId());
+        $this->assertSame($initial, $found);
+        $this->assertTrue($found->getId()->equalsTo($id));
+        $this->assertSame($found->getName(), $name);
+        $this->assertSame($found->getSlug(), $slug);
+        $this->assertSame($found->getProducts(), $products);
+        $this->assertTrue($found->getParent()->equalsTo($parent));
+        $this->assertSame($found->getCreatedAt()->getTimestamp(), $createdAt->getTimestamp());
+        $this->assertSame($found->getUpdatedAt()->getTimestamp(), $updatedAt->getTimestamp());
     }
 
     public function testAddIncrementIds()
@@ -59,6 +57,7 @@ trait CategoriesRepositoryTestTrait
             md5(rand()),
             md5(rand()),
         );
+
         $this->categories->add($category);
         $this->assertNotNull($category->getId()->getId());
     }
@@ -71,6 +70,7 @@ trait CategoriesRepositoryTestTrait
             $category->getName(),
             'Unique category slug',
         );
+
         $this->categories->add($category);
         $this->expectException(DuplicateKeyException::class);
         $this->categories->add($categoryWithSameId);
@@ -96,18 +96,25 @@ trait CategoriesRepositoryTestTrait
         $initial = $this->generateCategory();
         $this->categories->add($initial);
         $added = $this->categories->get($initial->getId());
-        $added->updateSlug(md5(rand()));
-        $added->updateName(md5(rand()));
-        $added->attachParent($parent->getId());
+
+        $added->updateSlug($slug = md5(rand()));
+        $added->updateName($name = md5(rand()));
+        $added->attachParent($parent = $parent->getId());
         $added->attachProduct($product->getId()->getId());
+        $products = $added->getProducts();
+        $createdAt = $added->getCreatedAt();
+        $updatedAt = $added->getUpdatedAt();
         $this->categories->update($added);
+
         $updated = $this->categories->get($initial->getId());
-        $this->assertSameCategories($added, $updated);
-        $this->assertNotSame($initial->getSlug(), $updated->getSlug());
-        $this->assertNotSame($initial->getName(), $updated->getName());
-        $this->assertNotSame($initial->getProducts(), $updated->getProducts());
-        $this->assertNull($initial->getParent());
-        $this->assertNull($initial->getUpdatedAt());
+        $this->assertSame($initial, $added);
+        $this->assertSame($added, $updated);
+        $this->assertSame($updated->getSlug(), $slug);
+        $this->assertSame($updated->getName(), $name);
+        $this->assertTrue($updated->getParent()->equalsTo($parent));
+        $this->assertSame($updated->getProducts(), $products);
+        $this->assertSame($updated->getCreatedAt()->getTimestamp(), $createdAt->getTimestamp());
+        $this->assertSame($updated->getUpdatedAt()->getTimestamp(), $updatedAt->getTimestamp());
     }
 
     public function testUpdateIfDoesNotExists()
@@ -128,7 +135,7 @@ trait CategoriesRepositoryTestTrait
         $this->categories->update($categoryWithNotUniqueCode);
     }
 
-    public function testUpdateSameCategoryAndDoesNotChangeSlug()
+    public function testUpdateCategoryAndDoesNotChangeSlug()
     {
         $category = $this->generateCategory();
         $this->categories->add($category);
@@ -150,14 +157,6 @@ trait CategoriesRepositoryTestTrait
         $this->expectException(NotFoundException::class);
         $category = $this->generateCategory();
         $this->categories->delete($category);
-    }
-
-    public function testGet()
-    {
-        $category = $this->generateCategory();
-        $this->categories->add($category);
-        $found = $this->categories->get($category->getId());
-        $this->assertSameCategories($category, $found);
     }
 
     public function testGetIfDoesNotExists()

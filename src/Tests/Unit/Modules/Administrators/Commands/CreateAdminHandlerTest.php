@@ -33,10 +33,10 @@ class CreateAdminHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $repository = new AdminsMemoryRepository(new Hydrator, new IdentityMap);
         $command = new CreateAdminCommand(
-            $name = 'admin',
-            $login = $this->correctAdminLogin,
-            $this->correctAdminPassword,
-            [Role::ADMIN->value],
+            name: 'admin',
+            login: $this->correctAdminLogin,
+            password: $this->correctAdminPassword,
+            roles: [Role::ADMIN->value],
         );
 
         $handler = new CreateAdminHandler($repository);
@@ -44,8 +44,8 @@ class CreateAdminHandlerTest extends \PHPUnit\Framework\TestCase
         $adminId = call_user_func($handler, $command);
 
         $admin = $repository->get(new AdminId($adminId));
-        $this->assertSame($admin->getName(), $name);
-        $this->assertSame($admin->getLogin(), $login);
+        $this->assertSame($admin->getName(), $command->name);
+        $this->assertSame($admin->getLogin(), $command->login);
         $this->assertSame($admin->getRoles(), [Role::ADMIN]);
     }
 }

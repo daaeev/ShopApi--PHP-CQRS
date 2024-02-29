@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Modules\Categories\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
+use Project\Common\Repository\IdentityMap;
 use Project\Modules\Catalogue\Categories\Entity;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
@@ -25,7 +26,7 @@ class UpdateCategoryTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->products = new ProductsMemoryRepository(new Hydrator);
-        $this->categories = new CategoriesMemoryRepository(new Hydrator);
+        $this->categories = new CategoriesMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -52,24 +53,25 @@ class UpdateCategoryTest extends \PHPUnit\Framework\TestCase
             products: [$categoryProduct->getId()->getId()],
             parent: $parentCategory->getId()->getId()
         );
+
         $handler = new UpdateCategoryHandler($this->categories, $this->products);
         $handler->setDispatcher($this->dispatcher);
-
         call_user_func($handler, $command);
-        $category = $this->categories->get($initialCategory->getId());
-        $this->assertSameCategory($category, $command);
+
+        $updated = $this->categories->get($initialCategory->getId());
+        $this->assertSameCategory($initialCategory, $updated, $command);
     }
 
-    private function assertSameCategory(Entity\Category $category, UpdateCategoryCommand $command): void
-    {
-        $this->assertSame($command->id, $category->getId()->getId());
-        $this->assertSame($command->name, $category->getName());
-        $this->assertSame($command->slug, $category->getSlug());
-        $this->assertSame($command->parent, $category->getParent()?->getId());
-
-        $this->assertCount(count($command->products), $category->getProducts());
-        foreach ($command->products as $product) {
-            $this->assertTrue(in_array($product, $category->getProducts()));
-        }
+    private function assertSameCategory(
+        Entity\Category $initial,
+        Entity\Category $updated,
+        UpdateCategoryCommand $command
+    ): void {
+        $this->assertSame($initial, $updated);
+        $this->assertSame($command->id, $updated->getId()->getId());
+        $this->assertSame($command->name, $updated->getName());
+        $this->assertSame($command->slug, $updated->getSlug());
+        $this->assertSame($command->parent, $updated->getParent()?->getId());
+        $this->assertSame($command->products, $updated->getProducts());
     }
 }

@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Modules\Categories\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Repository\NotFoundException;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
@@ -21,7 +22,7 @@ class DeleteCategoryTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->categories = new CategoriesMemoryRepository(new Hydrator);
+        $this->categories = new CategoriesMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -36,9 +37,7 @@ class DeleteCategoryTest extends \PHPUnit\Framework\TestCase
         $initialCategory = $this->generateCategory();
         $this->categories->add($initialCategory);
 
-        $command = new DeleteCategoryCommand(
-            id: $initialCategory->getId()->getId(),
-        );
+        $command = new DeleteCategoryCommand($initialCategory->getId()->getId());
         $handler = new DeleteCategoryHandler($this->categories);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);

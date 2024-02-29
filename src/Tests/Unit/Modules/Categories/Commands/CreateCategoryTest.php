@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Modules\Categories\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
+use Project\Common\Repository\IdentityMap;
 use Project\Modules\Catalogue\Categories\Entity;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
@@ -25,7 +26,7 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->products = new ProductsMemoryRepository(new Hydrator);
-        $this->categories = new CategoriesMemoryRepository(new Hydrator);
+        $this->categories = new CategoriesMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -48,10 +49,11 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
             products: [$categoryProduct->getId()->getId()],
             parent: $parentCategory->getId()->getId()
         );
+
         $handler = new CreateCategoryHandler($this->categories, $this->products);
         $handler->setDispatcher($this->dispatcher);
-
         $categoryId = call_user_func($handler, $command);
+
         $category = $this->categories->get(new Entity\CategoryId($categoryId));
         $this->assertSameCategory($category, $command);
     }
@@ -61,10 +63,6 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($command->name, $category->getName());
         $this->assertSame($command->slug, $category->getSlug());
         $this->assertSame($command->parent, $category->getParent()?->getId());
-
-        $this->assertCount(count($command->products), $category->getProducts());
-        foreach ($command->products as $product) {
-            $this->assertTrue(in_array($product, $category->getProducts()));
-        }
+        $this->assertSame($command->products, $category->getProducts());
     }
 }

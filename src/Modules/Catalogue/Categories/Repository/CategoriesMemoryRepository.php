@@ -3,6 +3,7 @@
 namespace Project\Modules\Catalogue\Categories\Repository;
 
 use Project\Common\Entity\Hydrator\Hydrator;
+use Project\Common\Repository\IdentityMap;
 use Project\Modules\Catalogue\Categories\Entity;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
@@ -13,7 +14,8 @@ class CategoriesMemoryRepository implements CategoriesRepositoryInterface
     private int $increment = 0;
 
     public function __construct(
-        private readonly Hydrator $hydrator
+        private readonly Hydrator $hydrator,
+        private readonly IdentityMap $identityMap
     ) {}
 
     public function add(Entity\Category $entity): void
@@ -28,6 +30,7 @@ class CategoriesMemoryRepository implements CategoriesRepositoryInterface
             throw new DuplicateKeyException('Category with same id already exists');
         }
 
+        $this->identityMap->add($entity->getId()->getId(), $entity);
         $this->items[$entity->getId()->getId()] = clone $entity;
     }
 
@@ -61,6 +64,7 @@ class CategoriesMemoryRepository implements CategoriesRepositoryInterface
             throw new NotFoundException('Category does not exists');
         }
 
+        $this->identityMap->remove($entity->getId()->getId());
         unset($this->items[$entity->getId()->getId()]);
     }
 
@@ -70,6 +74,12 @@ class CategoriesMemoryRepository implements CategoriesRepositoryInterface
             throw new NotFoundException('Category does not exists');
         }
 
-        return clone $this->items[$id->getId()];
+        if ($this->identityMap->has($id->getId())) {
+            return $this->identityMap->get($id->getId());
+        }
+
+        $entity = clone $this->items[$id->getId()];
+        $this->identityMap->add($id->getId(), $entity);
+        return $entity;
     }
 }

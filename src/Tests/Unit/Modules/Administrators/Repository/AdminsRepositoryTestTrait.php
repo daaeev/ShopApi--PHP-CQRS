@@ -19,6 +19,7 @@ trait AdminsRepositoryTestTrait
     public function testAdd()
     {
         $initial = $this->generateAdmin();
+        $id = $initial->getId();
         $name = $initial->getName();
         $login = $initial->getLogin();
         $password = $initial->getPassword();
@@ -28,6 +29,7 @@ trait AdminsRepositoryTestTrait
 
         $found = $this->admins->get($initial->getId());
         $this->assertSame($initial, $found);
+        $this->assertTrue($found->getId()->equalsTo($id));
         $this->assertSame($found->getName(), $name);
         $this->assertSame($found->getLogin(), $login);
         $this->assertSame($found->getPassword(), $password);
@@ -135,14 +137,6 @@ trait AdminsRepositoryTestTrait
         $this->expectException(NotFoundException::class);
         $admin = $this->generateAdmin();
         $this->admins->delete($admin);
-    }
-
-    public function testGet()
-    {
-        $initial = $this->generateAdmin();
-        $this->admins->add($initial);
-        $found = $this->admins->get($initial->getId());
-        $this->assertSame($initial, $found);
     }
 
     public function testGetIfDoesNotExists()
