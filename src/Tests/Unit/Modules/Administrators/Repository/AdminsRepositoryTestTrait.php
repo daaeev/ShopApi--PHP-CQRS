@@ -3,7 +3,6 @@
 namespace Project\Tests\Unit\Modules\Administrators\Repository;
 
 use Project\Common\Administrators\Role;
-use Project\Modules\Administrators\Entity\Admin;
 use Project\Modules\Administrators\Entity\AdminId;
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 use Project\Common\Repository\DuplicateKeyException;

@@ -14,7 +14,7 @@ class CategoriesMemoryRepositoryTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->categories = new CategoriesMemoryRepository(new Hydrator, new IdentityMap);
-        $this->products = new ProductsMemoryRepository(new Hydrator);
+        $this->products = new ProductsMemoryRepository(new Hydrator, new IdentityMap);
         parent::setUp();
     }
 }

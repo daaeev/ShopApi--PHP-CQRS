@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Catalogue\Product\Infrastructure\Laravel\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Modules\Catalogue\Product\Entity;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
@@ -15,16 +16,22 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
+        private IdentityMap $identityMap,
     ) {}
 
     public function add(Entity\Product $entity): void
     {
         $id = $entity->getId()->getId();
+        if (!empty($id) && $this->identityMap->has($id)) {
+            throw new DuplicateKeyException('Product with same id already exists');
+        }
+
         if (Eloquent\Product::find($id)) {
             throw new DuplicateKeyException('Product with same id already exists');
         }
 
         $this->persist($entity, new Eloquent\Product);
+        $this->identityMap->add($entity->getId()->getId(), $entity);
     }
 
     private function persist(Entity\Product $entity, Eloquent\Product $record): void
@@ -93,6 +100,10 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     public function update(Entity\Product $entity): void
     {
         $id = $entity->getId()->getId();
+        if (empty($id) || !$this->identityMap->has($id)) {
+            throw new NotFoundException('Product does not exists');
+        }
+
         if (!$record = Eloquent\Product::find($id)) {
             throw new NotFoundException('Product does not exists');
         }
@@ -103,20 +114,35 @@ class ProductsEloquentRepository implements ProductsRepositoryInterface
     public function delete(Entity\Product $entity): void
     {
         $id = $entity->getId()->getId();
+        if (empty($id) || !$this->identityMap->has($id)) {
+            throw new NotFoundException('Product does not exists');
+        }
+
         if (!$record = Eloquent\Product::find($id)) {
             throw new NotFoundException('Product does not exists');
         }
 
+        $this->identityMap->remove($id);
         $record->delete();
     }
 
     public function get(Entity\ProductId $id): Entity\Product
     {
+        if (empty($id->getId())) {
+            throw new NotFoundException('Product does not exists');
+        }
+
+        if ($this->identityMap->has($id->getId())) {
+            return $this->identityMap->get($id->getId());
+        }
+
         if (!$record = Eloquent\Product::find($id->getId())) {
             throw new NotFoundException('Product does not exists');
         }
 
-        return $this->hydrate($record);
+        $entity = $this->hydrate($record);
+        $this->identityMap->add($id->getId(), $entity);
+        return $entity;
     }
 
     private function hydrate(Eloquent\Product $record): Entity\Product

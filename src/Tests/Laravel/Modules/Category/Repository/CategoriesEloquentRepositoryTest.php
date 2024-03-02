@@ -15,7 +15,7 @@ class CategoriesEloquentRepositoryTest extends \Tests\TestCase
 
     protected function setUp(): void
     {
-        $this->products = new ProductsEloquentRepository(new Hydrator);
+        $this->products = new ProductsEloquentRepository(new Hydrator, new IdentityMap);
         $this->categories = new CategoriesEloquentRepository(new Hydrator, new IdentityMap);
         parent::setUp();
     }

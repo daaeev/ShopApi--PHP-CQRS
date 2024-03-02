@@ -4,6 +4,7 @@ namespace Project\Tests\Unit\Modules\Product\Commands;
 
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Catalogue\Product\Entity;
 use Project\Modules\Catalogue\Api\DTO\Product\Price;
@@ -25,7 +26,7 @@ class UpdateProductTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->products = new ProductsMemoryRepository(new Hydrator);
+        $this->products = new ProductsMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -37,21 +38,17 @@ class UpdateProductTest extends \PHPUnit\Framework\TestCase
 
     public function testUpdate()
     {
-        $product = $this->generateProduct();
-        $this->products->add($product);
+        $initial = $this->generateProduct();
+        $this->products->add($initial);
 
         $command = new UpdateProductCommand(
-            id: $product->getId()->getId(),
+            id: $initial->getId()->getId(),
             name: md5(rand()),
             code: md5(rand()),
             active: false,
             availability: Availability::PREORDER->value,
-            colors: [
-                md5(rand()),
-            ],
-            sizes: [
-                md5(rand()),
-            ],
+            colors: [md5(rand())],
+            sizes: [md5(rand())],
             prices: array_map(function (Entity\Price\Price $price) {
                 return new Price(
                     $price->getCurrency()->value,
@@ -59,12 +56,13 @@ class UpdateProductTest extends \PHPUnit\Framework\TestCase
                 );
             }, $this->makePrices())
         );
+
         $handler = new UpdateProductHandler($this->products);
         $handler->setDispatcher($this->dispatcher);
-
         call_user_func($handler, $command);
-        $product = $this->products->get($product->getId());
-        $this->assertSameProduct($product, $command);
+
+        $updated = $this->products->get($initial->getId());
+        $this->assertSameProduct($updated, $command);
     }
 
     private function assertSameProduct(Product $product, UpdateProductCommand $command): void
@@ -74,23 +72,13 @@ class UpdateProductTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($command->code, $product->getCode());
         $this->assertSame($command->availability, $product->getAvailability()->value);
         $this->assertSame($command->active, $product->isActive());
-
-        $this->assertCount(count($command->colors), $product->getColors());
-        foreach ($command->colors as $color) {
-            $this->assertTrue(in_array($color, $product->getColors()));
-        }
-
-        $this->assertCount(count($command->sizes), $product->getSizes());
-        foreach ($command->sizes as $size) {
-            $this->assertTrue(in_array($size, $product->getSizes()));
-        }
+        $this->assertSame($command->colors, $product->getColors());
+        $this->assertSame($command->sizes, $product->getSizes());
 
         $this->assertCount(count($command->prices), $product->getPrices());
         foreach ($command->prices as $price) {
-            $this->assertTrue((new Entity\Price\Price(
-                Currency::from($price->currency),
-                $price->price,
-            ))->equalsTo($product->getPrices()[$price->currency]));
+            $priceEntity = new Entity\Price\Price(Currency::from($price->currency), $price->price);
+            $this->assertTrue($priceEntity->equalsTo($product->getPrices()[$price->currency]));
         }
     }
 }

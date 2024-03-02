@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Catalogue\Product\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Modules\Catalogue\Product\Entity;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
@@ -13,7 +14,8 @@ class ProductsMemoryRepository implements ProductsRepositoryInterface
     private int $increment = 0;
 
     public function __construct(
-        private Hydrator $hydrator
+        private readonly Hydrator $hydrator,
+        private readonly IdentityMap $identityMap,
     ) {}
 
     public function add(Entity\Product $entity): void
@@ -28,6 +30,7 @@ class ProductsMemoryRepository implements ProductsRepositoryInterface
             throw new DuplicateKeyException('Product with same id already exists');
         }
 
+        $this->identityMap->add($entity->getId()->getId(), $entity);
         $this->items[$entity->getId()->getId()] = clone $entity;
     }
 
@@ -61,6 +64,7 @@ class ProductsMemoryRepository implements ProductsRepositoryInterface
             throw new NotFoundException('Product does not exists');
         }
 
+        $this->identityMap->remove($entity->getId()->getId());
         unset($this->items[$entity->getId()->getId()]);
     }
 
@@ -70,6 +74,12 @@ class ProductsMemoryRepository implements ProductsRepositoryInterface
             throw new NotFoundException('Product does not exists');
         }
 
-        return clone $this->items[$id->getId()];
+        if ($this->identityMap->has($id->getId())) {
+            return $this->identityMap->get($id->getId());
+        }
+
+        $entity = clone $this->items[$id->getId()];
+        $this->identityMap->add($id->getId(), $entity);
+        return $entity;
     }
 }

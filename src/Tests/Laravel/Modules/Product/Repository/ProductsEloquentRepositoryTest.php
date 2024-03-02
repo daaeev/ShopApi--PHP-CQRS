@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Laravel\Modules\Product\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Product\Repository\ProductsRepositoryTestTrait;
@@ -13,7 +14,7 @@ class ProductsEloquentRepositoryTest extends \Tests\TestCase
 
     protected function setUp(): void
     {
-        $this->products = new ProductsEloquentRepository(new Hydrator());
+        $this->products = new ProductsEloquentRepository(new Hydrator, new IdentityMap);
         parent::setUp();
     }
 }

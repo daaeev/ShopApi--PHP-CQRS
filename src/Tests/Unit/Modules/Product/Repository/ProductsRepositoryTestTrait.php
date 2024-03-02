@@ -4,7 +4,6 @@ namespace Project\Tests\Unit\Modules\Product\Repository;
 
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
-use Project\Modules\Catalogue\Product\Entity\Product;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Product\Entity\ProductId;
 use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
@@ -18,38 +17,31 @@ trait ProductsRepositoryTestTrait
     public function testAdd()
     {
         $initial = $this->generateProduct();
-        $initial->setColors([
-            md5(rand()),
-            md5(rand()),
-        ]);
-        $initial->setSizes([
-            md5(rand())
-        ]);
-        $this->products->add($initial);
-        $found = $this->products->get($initial->getId());
-        $this->assertSameProducts($initial, $found);
-    }
+        $id = $initial->getId();
+        $name = $initial->getName();
+        $code = $initial->getCode();
+        $active = $initial->isActive();
+        $availability = $initial->getAvailability();
+        $prices = $initial->getPrices();
+        $initial->setColors($colors = [md5(rand()), md5(rand())]);
+        $initial->setSizes($sizes = [md5(rand())]);
+        $createdAt = $initial->getCreatedAt();
+        $updatedAt = $initial->getUpdatedAt();
 
-    private function assertSameProducts(Product $initial, Product $other): void
-    {
-        $this->assertTrue($initial->getId()->equalsTo($other->getId()));
-        $this->assertEquals($initial->getName(), $other->getName());
-        $this->assertEquals($initial->getCode(), $other->getCode());
-        $this->assertEquals($initial->isActive(), $other->isActive());
-        $this->assertEquals($initial->getAvailability(), $other->getAvailability());
-        $this->assertTrue($initial->samePrices($other->getPrices()));
-        $this->assertTrue($initial->sameColors($other->getColors()));
-        $this->assertSame($initial->getColors(), $other->getColors());
-        $this->assertTrue($initial->sameSizes($other->getSizes()));
-        $this->assertSame($initial->getSizes(), $other->getSizes());
-        $this->assertSame(
-            $initial->getCreatedAt()->getTimestamp(),
-            $other->getCreatedAt()->getTimestamp()
-        );
-        $this->assertSame(
-            $initial->getUpdatedAt()?->getTimestamp(),
-            $other->getUpdatedAt()?->getTimestamp()
-        );
+        $this->products->add($initial);
+
+        $found = $this->products->get($initial->getId());
+        $this->assertSame($initial, $found);
+        $this->assertTrue($found->getId()->equalsTo($id));
+        $this->assertSame($found->getName(), $name);
+        $this->assertSame($found->getCode(), $code);
+        $this->assertSame($found->isActive(), $active);
+        $this->assertSame($found->getAvailability(), $availability);
+        $this->assertSame($found->getPrices(), $prices);
+        $this->assertSame($found->getColors(), $colors);
+        $this->assertSame($found->getSizes(), $sizes);
+        $this->assertSame($found->getCreatedAt()->getTimestamp(), $createdAt->getTimestamp());
+        $this->assertSame($found->getUpdatedAt()?->getTimestamp(), $updatedAt?->getTimestamp());
     }
 
     public function testAddIncrementIds()
@@ -60,6 +52,7 @@ trait ProductsRepositoryTestTrait
             md5(rand()),
             $this->makePrices()
         );
+
         $this->products->add($product);
         $this->assertNotNull($product->getId()->getId());
     }
@@ -73,6 +66,7 @@ trait ProductsRepositoryTestTrait
             'Unique product code',
             $this->makePrices()
         );
+
         $this->products->add($product);
         $this->expectException(DuplicateKeyException::class);
         $this->products->add($productWithSameId);
@@ -92,20 +86,31 @@ trait ProductsRepositoryTestTrait
     {
         $initial = $this->generateProduct();
         $this->products->add($initial);
+
         $added = $this->products->get($initial->getId());
-        $added->setColors([
-            md5(rand()),
-            md5(rand()),
-            md5(rand()),
-        ]);
-        $added->setCode(md5(rand()));
-        $added->setName(md5(rand()));
+        $added->setName($name = md5(rand()));
+        $added->setCode($code = md5(rand()));
+        $added->setSizes($sizes = [md5(rand())]);
+        $added->setColors($colors = [md5(rand()), md5(rand()), md5(rand())]);
+        $active = $added->isActive();
+        $availability = $added->getAvailability();
+        $prices = $added->getPrices();
+        $createdAt = $added->getCreatedAt();
+        $updatedAt = $added->getUpdatedAt();
         $this->products->update($added);
+
         $updated = $this->products->get($initial->getId());
-        $this->assertSameProducts($added, $updated);
-        $this->assertNotEquals($initial->getCode(), $updated->getCode());
-        $this->assertNotEquals($initial->getName(), $updated->getName());
-        $this->assertFalse($initial->sameColors($updated->getColors()));
+        $this->assertSame($initial, $added);
+        $this->assertSame($added, $updated);
+        $this->assertSame($updated->getName(), $name);
+        $this->assertSame($updated->getCode(), $code);
+        $this->assertSame($updated->getSizes(), $sizes);
+        $this->assertSame($updated->getColors(), $colors);
+        $this->assertSame($updated->isActive(), $active);
+        $this->assertSame($updated->getAvailability(), $availability);
+        $this->assertSame($updated->getPrices(), $prices);
+        $this->assertSame($updated->getCreatedAt()->getTimestamp(), $createdAt->getTimestamp());
+        $this->assertSame($updated->getUpdatedAt()?->getTimestamp(), $updatedAt?->getTimestamp());
     }
 
     public function testUpdateIfDoesNotExists()
@@ -148,14 +153,6 @@ trait ProductsRepositoryTestTrait
         $this->expectException(NotFoundException::class);
         $product = $this->generateProduct();
         $this->products->delete($product);
-    }
-
-    public function testGet()
-    {
-        $product = $this->generateProduct();
-        $this->products->add($product);
-        $found = $this->products->get($product->getId());
-        $this->assertSameProducts($product, $found);
     }
 
     public function testGetIfDoesNotExists()

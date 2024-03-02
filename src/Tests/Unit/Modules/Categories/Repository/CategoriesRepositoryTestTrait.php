@@ -6,7 +6,6 @@ use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Tests\Unit\Modules\Helpers\CategoryFactory;
-use Project\Modules\Catalogue\Categories\Entity\Category;
 use Project\Modules\Catalogue\Categories\Entity\CategoryId;
 use Project\Modules\Catalogue\Product\Repository\ProductsRepositoryInterface;
 use Project\Modules\Catalogue\Categories\Repository\CategoriesRepositoryInterface;
@@ -33,7 +32,7 @@ trait CategoriesRepositoryTestTrait
         $name = $initial->getName();
         $slug = $initial->getSlug();
         $products = $initial->getProducts();
-        $parent = $initial->getParent();
+        $parentId = $initial->getParent()->getId();
         $createdAt = $initial->getCreatedAt();
         $updatedAt = $initial->getUpdatedAt();
 
@@ -45,7 +44,7 @@ trait CategoriesRepositoryTestTrait
         $this->assertSame($found->getName(), $name);
         $this->assertSame($found->getSlug(), $slug);
         $this->assertSame($found->getProducts(), $products);
-        $this->assertTrue($found->getParent()->equalsTo($parent));
+        $this->assertSame($found->getParent()->getId(), $parentId);
         $this->assertSame($found->getCreatedAt()->getTimestamp(), $createdAt->getTimestamp());
         $this->assertSame($found->getUpdatedAt()->getTimestamp(), $updatedAt->getTimestamp());
     }
@@ -99,8 +98,9 @@ trait CategoriesRepositoryTestTrait
 
         $added->updateSlug($slug = md5(rand()));
         $added->updateName($name = md5(rand()));
-        $added->attachParent($parent = $parent->getId());
+        $added->attachParent($parent->getId());
         $added->attachProduct($product->getId()->getId());
+        $parentId = $parent->getId()->getId();
         $products = $added->getProducts();
         $createdAt = $added->getCreatedAt();
         $updatedAt = $added->getUpdatedAt();
@@ -111,7 +111,7 @@ trait CategoriesRepositoryTestTrait
         $this->assertSame($added, $updated);
         $this->assertSame($updated->getSlug(), $slug);
         $this->assertSame($updated->getName(), $name);
-        $this->assertTrue($updated->getParent()->equalsTo($parent));
+        $this->assertSame($updated->getParent()->getId(), $parentId);
         $this->assertSame($updated->getProducts(), $products);
         $this->assertSame($updated->getCreatedAt()->getTimestamp(), $createdAt->getTimestamp());
         $this->assertSame($updated->getUpdatedAt()->getTimestamp(), $updatedAt->getTimestamp());

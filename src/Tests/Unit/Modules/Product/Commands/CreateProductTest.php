@@ -4,9 +4,10 @@ namespace Project\Tests\Unit\Modules\Product\Commands;
 
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Catalogue\Product\Entity;
-use Project\Modules\Catalogue\Api\DTO\Product\Price;
+use Project\Modules\Catalogue\Api\DTO\Product as DTO;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Catalogue\Product\Commands\CreateProductCommand;
@@ -23,7 +24,7 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->products = new ProductsMemoryRepository(new Hydrator);
+        $this->products = new ProductsMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -40,23 +41,17 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
             code: md5(rand()),
             active: true,
             availability: Availability::IN_STOCK->value,
-            colors: [
-                md5(rand()),
-            ],
-            sizes: [
-                md5(rand()),
-            ],
+            colors: [md5(rand())],
+            sizes: [md5(rand())],
             prices: array_map(function (Entity\Price\Price $price) {
-                return new Price(
-                    $price->getCurrency()->value,
-                    $price->getPrice(),
-                );
+                return new DTO\Price($price->getCurrency()->value, $price->getPrice());
             }, $this->makePrices())
         );
+
         $handler = new CreateProductHandler($this->products);
         $handler->setDispatcher($this->dispatcher);
-
         $productId = call_user_func($handler, $command);
+
         $product = $this->products->get(new Entity\ProductId($productId));
         $this->assertSameProduct($product, $command);
     }
@@ -67,23 +62,13 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($command->code, $product->getCode());
         $this->assertSame($command->availability, $product->getAvailability()->value);
         $this->assertSame($command->active, $product->isActive());
-
-        $this->assertCount(count($command->colors), $product->getColors());
-        foreach ($command->colors as $color) {
-            $this->assertTrue(in_array($color, $product->getColors()));
-        }
-
-        $this->assertCount(count($command->sizes), $product->getSizes());
-        foreach ($command->sizes as $size) {
-            $this->assertTrue(in_array($size, $product->getSizes()));
-        }
+        $this->assertSame($command->colors, $product->getColors());
+        $this->assertSame($command->sizes, $product->getSizes());
 
         $this->assertCount(count($command->prices), $product->getPrices());
         foreach ($command->prices as $price) {
-            $this->assertTrue((new Entity\Price\Price(
-                Currency::from($price->currency),
-                $price->price,
-            ))->equalsTo($product->getPrices()[$price->currency]));
+            $priceEntity = new Entity\Price\Price(Currency::from($price->currency), $price->price);
+            $this->assertTrue($priceEntity->equalsTo($product->getPrices()[$price->currency]));
         }
     }
 }

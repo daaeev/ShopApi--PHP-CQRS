@@ -25,7 +25,7 @@ class UpdateCategoryTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->products = new ProductsMemoryRepository(new Hydrator);
+        $this->products = new ProductsMemoryRepository(new Hydrator, new IdentityMap);
         $this->categories = new CategoriesMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
