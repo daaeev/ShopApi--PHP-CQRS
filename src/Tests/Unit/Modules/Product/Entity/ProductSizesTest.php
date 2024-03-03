@@ -13,14 +13,8 @@ class ProductSizesTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $product = $this->generateProduct();
-        $sizes = [
-            md5(rand()),
-            md5(rand()),
-        ];
-
-        $this->assertFalse($product->sameSizes($sizes));
+        $sizes = [md5(rand()), md5(rand())];
         $product->setSizes($sizes);
-        $this->assertTrue($product->sameSizes($sizes));
 
         $this->assertCount(2, $product->getSizes());
         $this->assertSame($sizes, $product->getSizes());
@@ -31,16 +25,16 @@ class ProductSizesTest extends \PHPUnit\Framework\TestCase
     public function testUpdateToSame()
     {
         $product = $this->generateProduct();
-        $sizes = [
-            md5(rand()),
-            md5(rand()),
-        ];
+        $sizes = [md5(rand()), md5(rand())];
         $product->setSizes($sizes);
+        $oldUpdatedAt = $product->getUpdatedAt();
         $product->flushEvents();
+
         $product->setSizes($sizes);
 
         $this->assertCount(2, $product->getSizes());
         $this->assertSame($sizes, $product->getSizes());
+        $this->assertSame($oldUpdatedAt, $product->getUpdatedAt());
         $this->assertEmpty($product->flushEvents());
     }
 
@@ -48,14 +42,9 @@ class ProductSizesTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->generateProduct();
         $clonedSize = md5(rand());
-        $sizes = [
-            $clonedSize,
-            $clonedSize,
-            md5(rand()),
-        ];
+        $sizes = [$clonedSize, $clonedSize, md5(rand())];
         $product->setSizes($sizes);
 
-        $this->assertFalse($product->sameSizes($sizes));
         $this->assertCount(2, $product->getSizes());
         foreach ($sizes as $size) {
             $this->assertTrue(in_array($size, $product->getSizes()));

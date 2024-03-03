@@ -21,10 +21,7 @@ class ProductCodeTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($updatedCode, $product->getCode());
         $this->assertNotEquals($initialCode, $product->getCode());
         $this->assertNotEmpty($product->getUpdatedAt());
-        $this->assertEvents($product, [
-            new ProductCodeChanged($product),
-            new ProductUpdated($product)
-        ]);
+        $this->assertEvents($product, [new ProductCodeChanged($product), new ProductUpdated($product)]);
     }
 
     public function testUpdateToSame()

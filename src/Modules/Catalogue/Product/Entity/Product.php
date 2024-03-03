@@ -184,7 +184,7 @@ class Product extends Aggregate
         $this->updated();
     }
 
-    public function samePrices(array $prices): bool
+    private function samePrices(array $prices): bool
     {
         if (count($this->prices) !== count($prices)) {
             return false;
@@ -213,7 +213,7 @@ class Product extends Aggregate
         $this->updated();
     }
 
-    public function sameColors(array $colors): bool
+    private function sameColors(array $colors): bool
     {
         if (count($this->colors) !== count($colors)) {
             return false;
@@ -244,7 +244,7 @@ class Product extends Aggregate
         $this->updated();
     }
 
-    public function sameSizes(array $sizes): bool
+    private function sameSizes(array $sizes): bool
     {
         if (count($this->sizes) !== count($sizes)) {
             return false;

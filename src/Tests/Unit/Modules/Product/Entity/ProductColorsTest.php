@@ -13,38 +13,27 @@ class ProductColorsTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $product = $this->generateProduct();
-        $colors = [
-            md5(rand()),
-            md5(rand()),
-        ];
+        $colors = [md5(rand()), md5(rand())];
 
-        $this->assertFalse($product->sameColors($colors));
         $product->setColors($colors);
-        $this->assertTrue($product->sameColors($colors));
 
-        $this->assertCount(2, $product->getColors());
         $this->assertSame($colors, $product->getColors());
         $this->assertNotEmpty($product->getUpdatedAt());
-        $this->assertEvents($product, [
-            new ProductUpdated($product)
-        ]);
+        $this->assertEvents($product, [new ProductUpdated($product)]);
     }
 
     public function testUpdateToSame()
     {
         $product = $this->generateProduct();
-        $colors = [
-            md5(rand()),
-            md5(rand()),
-        ];
+        $colors = [md5(rand()), md5(rand())];
         $product->setColors($colors);
+        $oldUpdatedAt = $product->getUpdatedAt();
         $product->flushEvents();
+
         $product->setColors($colors);
 
-        $this->assertCount(2, $product->getColors());
-        $this->assertTrue($product->sameColors($colors));
+        $this->assertSame($oldUpdatedAt, $product->getUpdatedAt());
         $this->assertSame($colors, $product->getColors());
-        $this->assertNotEmpty($product->getUpdatedAt());
         $this->assertEmpty($product->flushEvents());
     }
 
@@ -52,20 +41,14 @@ class ProductColorsTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->generateProduct();
         $clonedColor = md5(rand());
-        $colors = [
-            $clonedColor,
-            $clonedColor,
-            md5(rand()),
-        ];
+        $colors = [$clonedColor, $clonedColor, md5(rand())];
         $product->setColors($colors);
 
         $this->assertCount(2, $product->getColors());
-        $this->assertFalse($product->sameColors($colors));
         foreach ($colors as $color) {
             $this->assertTrue(in_array($color, $product->getColors()));
         }
-        $this->assertEvents($product, [
-            new ProductUpdated($product)
-        ]);
+
+        $this->assertEvents($product, [new ProductUpdated($product)]);
     }
 }

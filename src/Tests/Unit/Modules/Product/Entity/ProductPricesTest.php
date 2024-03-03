@@ -27,28 +27,22 @@ class ProductPricesTest extends \PHPUnit\Framework\TestCase
             );
         }
 
-        $this->assertFalse($product->samePrices($updatedPrices));
         $product->setPrices($updatedPrices);
-        $this->assertTrue($product->samePrices($updatedPrices));
 
-        $this->assertNotEmpty($product->getUpdatedAt());
         foreach ($updatedPrices as $updatedPrice) {
             $this->assertArrayHasKey($updatedPrice->getCurrency()->value, $product->getPrices());
             $this->assertTrue($updatedPrice->equalsTo($product->getPrices()[$updatedPrice->getCurrency()->value]));
         }
-        $this->assertEvents($product, [
-            new ProductPricesChanged($product),
-            new ProductUpdated($product),
-        ]);
+
+        $this->assertNotEmpty($product->getUpdatedAt());
+        $this->assertEvents($product, [new ProductPricesChanged($product), new ProductUpdated($product)]);
     }
 
-    public function testUpdateWithInvalidPricesData()
+    public function testUpdateWithInvalidPrice()
     {
         $product = $this->generateProduct();
         $this->expectException(InvalidArgumentException::class);
-        $product->setPrices([
-            'Invalid price data'
-        ]);
+        $product->setPrices(['Invalid price']);
     }
 
     public function testUpdateToSame()
@@ -56,7 +50,12 @@ class ProductPricesTest extends \PHPUnit\Framework\TestCase
         $product = $this->generateProduct();
         $prices = $product->getPrices();
         $product->setPrices($prices);
-        $product->samePrices($prices);
+
+        foreach ($prices as $price) {
+            $this->assertArrayHasKey($price->getCurrency()->value, $product->getPrices());
+            $this->assertTrue($price->equalsTo($product->getPrices()[$price->getCurrency()->value]));
+        }
+
         $this->assertNull($product->getUpdatedAt());
         $this->assertEmpty($product->flushEvents());
     }
@@ -66,12 +65,14 @@ class ProductPricesTest extends \PHPUnit\Framework\TestCase
         $product = $this->generateProduct();
         $prices = $this->makePrices();
         $initialCount = count($prices);
+
         $clonedPrice = array_shift($prices);
         $prices[] = clone $clonedPrice;
         $prices[] = clone $clonedPrice;
         $prices[] = clone $clonedPrice;
-        $this->assertFalse($product->samePrices($prices));
+
         $product->setPrices($prices);
+
         $this->assertCount($initialCount, $product->getPrices());
         $this->assertNotCount(count($prices), $product->getPrices());
 
@@ -80,7 +81,7 @@ class ProductPricesTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testUpdateWithoutAnyActiveCurrencyPrice()
+    public function testUpdateWithoutAllActiveCurrenciesPrices()
     {
         $product = $this->generateProduct();
         $prices = $this->makePrices();
@@ -91,15 +92,9 @@ class ProductPricesTest extends \PHPUnit\Framework\TestCase
 
     public function testEqualsPrices()
     {
-        $price = new Price(
-            Currency::default(),
-            rand(100, 500)
-        );
+        $price = new Price(Currency::default(), rand(100, 500));
         $this->assertTrue($price->equalsTo($price));
-        $otherPrice = new Price(
-            Currency::default(),
-            $price->getPrice() + rand(10, 50)
-        );
+        $otherPrice = new Price(Currency::default(), $price->getPrice() + rand(10, 50));
         $this->assertFalse($price->equalsTo($otherPrice));
     }
 }

@@ -34,7 +34,6 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($product->getUpdatedAt());
         $this->assertEvents($product, [new ProductCreated($product)]);
 
-        $this->assertTrue($product->samePrices($prices));
         foreach ($prices as $price) {
             $this->assertArrayHasKey($price->getCurrency()->value, $product->getPrices());
             $this->assertTrue($price->equalsTo($product->getPrices()[$price->getCurrency()->value]));

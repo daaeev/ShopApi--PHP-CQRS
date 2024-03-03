@@ -16,14 +16,14 @@ class ProductActivityTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->generateProduct();
         $product->deactivate();
+        $oldUpdatedAt = $product->getUpdatedAt();
         $product->flushEvents();
+
         $product->activate();
+
         $this->assertTrue($product->isActive());
-        $this->assertNotEmpty($product->getUpdatedAt());
-        $this->assertEvents($product, [
-            new ProductActivityChanged($product),
-            new ProductUpdated($product),
-        ]);
+        $this->assertNotSame($oldUpdatedAt, $product->getUpdatedAt());
+        $this->assertEvents($product, [new ProductActivityChanged($product), new ProductUpdated($product)]);
     }
 
     public function testActivateIfAlreadyActive()
@@ -40,9 +40,7 @@ class ProductActivityTest extends \PHPUnit\Framework\TestCase
         $product = $this->generateProduct();
         $product->deactivate();
         $product->setPrices([]);
-        $product->flushEvents();
-        $this->assertFalse($product->isActive());
-        $this->assertEmpty($product->getPrices());
+
         $this->expectException(DomainException::class);
         $product->activate();
     }
@@ -53,19 +51,20 @@ class ProductActivityTest extends \PHPUnit\Framework\TestCase
         $product->deactivate();
         $this->assertFalse($product->isActive());
         $this->assertNotEmpty($product->getUpdatedAt());
-        $this->assertEvents($product, [
-            new ProductActivityChanged($product),
-            new ProductUpdated($product),
-        ]);
+        $this->assertEvents($product, [new ProductActivityChanged($product), new ProductUpdated($product)]);
     }
 
     public function testDeactivateIfAlreadyDeactivated()
     {
         $product = $this->generateProduct();
         $product->deactivate();
+        $oldUpdatedAt = $product->getUpdatedAt();
         $product->flushEvents();
+
         $product->deactivate();
+
         $this->assertFalse($product->isActive());
+        $this->assertSame($oldUpdatedAt, $product->getUpdatedAt());
         $this->assertEmpty($product->flushEvents());
     }
 }
