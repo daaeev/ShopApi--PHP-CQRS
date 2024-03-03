@@ -23,6 +23,7 @@ class ClientContactsObjectTest extends \PHPUnit\Framework\TestCase
             true,
             true
         );
+
         $this->assertEquals($phone, $contacts->getPhone());
         $this->assertEquals($email, $contacts->getEmail());
         $this->assertTrue($contacts->isPhoneConfirmed());
@@ -82,6 +83,7 @@ class ClientContactsObjectTest extends \PHPUnit\Framework\TestCase
         $phone2 = '+380123456788';
         $email1 = 'testequals1@gmail.com';
         $email2 = 'testequals2@gmail.com';
+
         return [
             [new Contacts, new Contacts($phone1)],
             [new Contacts($phone1), new Contacts($phone1, $email1)],

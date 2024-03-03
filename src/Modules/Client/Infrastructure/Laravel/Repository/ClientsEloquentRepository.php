@@ -3,6 +3,7 @@
 namespace Project\Modules\Client\Infrastructure\Laravel\Repository;
 
 use Project\Modules\Client\Entity;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
@@ -13,16 +14,23 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
+        private IdentityMap $identityMap,
     ) {}
 
     public function add(Entity\Client $client): void
     {
         $id = $client->getId()->getId();
+        if (!empty($id) && $this->identityMap->has($id)) {
+            throw new DuplicateKeyException('Client with same id already exists');
+        }
+
         if (Eloquent\Client::find($id)) {
             throw new DuplicateKeyException('Client with same id already exists');
         }
 
         $this->persist($client, new Eloquent\Client);
+        $this->identityMap->add($client->getId()->getId(), $client);
+        $this->identityMap->add($client->getHash()->getId(), $client);
     }
 
     private function persist(Entity\Client $entity, Eloquent\Client $record): void
@@ -85,6 +93,10 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
     public function update(Entity\Client $client): void
     {
         $id = $client->getId()->getId();
+        if (empty($id) || !$this->identityMap->has($id)) {
+            throw new NotFoundException('Client does not exists');
+        }
+
         if (!$record = Eloquent\Client::find($id)) {
             throw new NotFoundException('Client does not exists');
         }
@@ -95,18 +107,33 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
     public function delete(Entity\Client $client): void
     {
         $id = $client->getId()->getId();
+        if (empty($id) || !$this->identityMap->has($id)) {
+            throw new NotFoundException('Client does not exists');
+        }
+
         if (!$record = Eloquent\Client::find($id)) {
             throw new NotFoundException('Client does not exists');
         }
 
+        $this->identityMap->remove($id);
+        $this->identityMap->remove($client->getHash()->getId());
         $record->delete();
     }
 
     public function get(Entity\ClientHash|Entity\ClientId $id): Entity\Client
     {
-        return $id instanceof Entity\ClientId
-            ? $this->getById($id)
-            : $this->getByHash($id);
+        if (empty($id->getId())) {
+            throw new NotFoundException('Client does not exists');
+        }
+
+        if ($this->identityMap->has($id->getId())) {
+            return $this->identityMap->get($id->getId());
+        }
+
+        $client = ($id instanceof Entity\ClientId) ? $this->getById($id) : $this->getByHash($id);
+        $this->identityMap->add($client->getId()->getId(), $client);
+        $this->identityMap->add($client->getHash()->getId(), $client);
+        return $client;
     }
 
     private function getById(Entity\ClientId $id): Entity\Client
@@ -121,10 +148,7 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
 
     private function getByHash(Entity\ClientHash $id): Entity\Client
     {
-        $record = Eloquent\Client::query()
-            ->where('hash', $id->getId())
-            ->first();
-
+        $record = Eloquent\Client::query()->where('hash', $id->getId())->first();
         if (empty($record)) {
             throw new NotFoundException('Client does not exists');
         }

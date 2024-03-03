@@ -2,6 +2,7 @@
 
 namespace Client\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Client\Repository\ClientsRepositoryTestTrait;
@@ -13,7 +14,7 @@ class ClientsEloquentRepositoryTest extends \Tests\TestCase
 
     protected function setUp(): void
     {
-        $this->clients = new ClientsEloquentRepository(new Hydrator);
+        $this->clients = new ClientsEloquentRepository(new Hydrator, new IdentityMap);
         parent::setUp();
     }
 }

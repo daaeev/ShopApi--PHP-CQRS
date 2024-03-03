@@ -14,11 +14,9 @@ class ClientNameTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $client = $this->generateClient();
-        $name = new Name(
-            'firstName',
-            'lastName',
-        );
+        $name = new Name('firstName', 'lastName');
         $client->updateName($name);
+
         $this->assertTrue($name->equalsTo($client->getName()));
         $this->assertNotEmpty($client->getUpdatedAt());
         $this->assertEvents($client, [new ClientUpdated($client)]);
@@ -27,14 +25,13 @@ class ClientNameTest extends \PHPUnit\Framework\TestCase
     public function testUpdateToSame()
     {
         $client = $this->generateClient();
-        $name = new Name(
-            'firstName',
-            'lastName',
-        );
+        $name = new Name('firstName', 'lastName',);
         $client->updateName($name);
         $client->flushEvents();
         $updatedAt = $client->getUpdatedAt();
+
         $client->updateName($name);
+
         $this->assertSame($updatedAt, $client->getUpdatedAt());
         $this->assertEvents($client, []);
     }

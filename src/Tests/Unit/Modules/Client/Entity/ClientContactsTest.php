@@ -26,7 +26,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client->updatePhone($phone = $this->generatePhone());
         $client->flushEvents();
         $updatedAt = $client->getUpdatedAt();
+
         $client->updatePhone($phone);
+
         $this->assertSame($updatedAt, $client->getUpdatedAt());
         $this->assertEvents($client, []);
     }
@@ -44,7 +46,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client = $this->generateClient();
         $client->updateEmail($email = $this->generateEmail());
         $client->confirmEmail();
+
         $client->updatePhone($phone = $this->generatePhone());
+
         $this->assertEquals($email, $client->getContacts()->getEmail());
         $this->assertTrue($client->getContacts()->isEmailConfirmed());
         $this->assertEquals($phone, $client->getContacts()->getPhone());
@@ -55,7 +59,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client = $this->generateClient();
         $client->updatePhone($this->generatePhone());
         $client->confirmPhone();
+
         $client->updatePhone($phone = $this->generatePhone());
+
         $this->assertEquals($phone, $client->getContacts()->getPhone());
         $this->assertFalse($client->getContacts()->isPhoneConfirmed());
     }
@@ -75,7 +81,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client->updateEmail($email = $this->generateEmail());
         $client->flushEvents();
         $updatedAt = $client->getUpdatedAt();
+
         $client->updateEmail($email);
+
         $this->assertSame($updatedAt, $client->getUpdatedAt());
         $this->assertEvents($client, []);
     }
@@ -104,7 +112,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client = $this->generateClient();
         $client->updateEmail($this->generateEmail());
         $client->confirmEmail();
+
         $client->updateEmail($email = $this->generateEmail());
+
         $this->assertEquals($email, $client->getContacts()->getEmail());
         $this->assertFalse($client->getContacts()->isEmailConfirmed());
     }
@@ -114,7 +124,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client = $this->generateClient();
         $client->updatePhone($this->generatePhone());
         $updatedAt = $client->getUpdatedAt();
+
         $client->confirmPhone();
+
         $this->assertNotSame($updatedAt, $client->getUpdatedAt());
         $this->assertTrue($client->getContacts()->isPhoneConfirmed());
     }
@@ -131,6 +143,7 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client = $this->generateClient();
         $client->updatePhone($this->generatePhone());
         $client->confirmPhone();
+
         $this->expectException(\DomainException::class);
         $client->confirmPhone();
     }
@@ -142,7 +155,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client->confirmEmail();
         $client->updatePhone($this->generatePhone());
         $updatedAt = $client->getUpdatedAt();
+
         $client->confirmPhone();
+
         $this->assertEquals($email, $client->getContacts()->getEmail());
         $this->assertTrue($client->getContacts()->isEmailConfirmed());
         $this->assertNotSame($updatedAt, $client->getUpdatedAt());
@@ -154,7 +169,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client = $this->generateClient();
         $client->updateEmail($this->generateEmail());
         $updatedAt = $client->getUpdatedAt();
+
         $client->confirmEmail();
+
         $this->assertNotSame($updatedAt, $client->getUpdatedAt());
         $this->assertTrue($client->getContacts()->isEmailConfirmed());
     }
@@ -171,6 +188,7 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client = $this->generateClient();
         $client->updateEmail($this->generateEmail());
         $client->confirmEmail();
+
         $this->expectException(\DomainException::class);
         $client->confirmEmail();
     }
@@ -182,7 +200,9 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client->confirmPhone();
         $client->updateEmail($this->generateEmail());
         $updatedAt = $client->getUpdatedAt();
+
         $client->confirmEmail();
+
         $this->assertEquals($phone, $client->getContacts()->getPhone());
         $this->assertTrue($client->getContacts()->isPhoneConfirmed());
         $this->assertNotSame($updatedAt, $client->getUpdatedAt());
