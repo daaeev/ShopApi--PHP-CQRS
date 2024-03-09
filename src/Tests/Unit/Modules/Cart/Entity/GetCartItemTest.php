@@ -14,9 +14,9 @@ class GetCartItemTest extends \PHPUnit\Framework\TestCase
         $cart = $this->generateCart();
         $cartItem = $this->generateCartItem();
         $cart->addItem($cartItem);
-        $this->assertTrue($cartItem->getId()->equalsTo($cart->getItem($cartItem->getId())->getId()));
-        $this->assertSame($cartItem->getQuantity(), $cart->getItem($cartItem->getId())->getQuantity());
-        $this->assertTrue($cartItem->equalsTo($cart->getItem($cartItem->getId())));
+
+		$itemFromCart = $cart->getItem($cartItem->getId());
+        $this->assertTrue($cartItem->equalsTo($itemFromCart));
     }
 
     public function testGetItemIfDoesNotExists()

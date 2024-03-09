@@ -44,7 +44,18 @@ class Cart extends Aggregate
         Assert::allIsInstanceOf($this->items, CartItem::class);
     }
 
-    public static function instantiate(Client $client): self
+	public function __clone(): void
+	{
+		$this->id = clone $this->id;
+		$this->client = clone $this->client;
+		$this->promocode = $this->promocode ? clone $this->promocode : null;
+
+		foreach ($this->items as $index => $cartItem) {
+			$this->items[$index] = clone $cartItem;
+		}
+	}
+
+	public static function instantiate(Client $client): self
     {
         return new self(
             CartId::next(),

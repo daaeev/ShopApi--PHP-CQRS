@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Product\Currency;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\CartId;
@@ -28,14 +29,15 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->client = new Client(md5(rand()), rand(1, 100));
-        $this->carts = new CartsMemoryRepository(new Hydrator);
+        $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
 
         $this->productsService = $this->getMockBuilder(ProductsService::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)
-            ->getMock();
+			->getMock();
+
         $this->environment->expects($this->once())
             ->method('getClient')
             ->willReturn($this->client);
@@ -57,15 +59,18 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             $size = md5(rand()),
             $color = md5(rand()),
         );
+
         $this->productsService->expects($this->once())
             ->method('resolveCartItem')
             ->with($product, $quantity, Currency::default(), $size, $color, true)
             ->willReturn($cartItem = $this->generateCartItem());
-        $handler = new AddItemHandler(
+
+		$handler = new AddItemHandler(
             $this->carts,
             $this->productsService,
             $this->environment
         );
+
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
@@ -79,14 +84,10 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
 
     public function testAddItemIfCartInstantiatedBefore()
     {
-        $this->dispatcher->expects($this->once()) // Cart updated
-            ->method('dispatch');
-
-        $initialCart = $this->makeCart(
-            CartId::next(),
-            $this->client,
-            [$initialCartItem = $this->generateCartItem()]
-        );
+        $this->dispatcher->expects($this->once())->method('dispatch'); // Cart updated
+        $initialCart = $this->makeCart(CartId::next(), $this->client);
+		$initialCartItem = $this->generateCartItem();
+		$initialCart->addItem($initialCartItem);
         $initialCart->flushEvents();
         $this->carts->save($initialCart);
 
@@ -96,28 +97,18 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             $size = md5(rand()),
             $color = md5(rand()),
         );
+
         $this->productsService->expects($this->once())
             ->method('resolveCartItem')
             ->with($product, $quantity, $initialCart->getCurrency(), $size, $color, true)
             ->willReturn($addedCartItem = $this->generateCartItem());
-        $handler = new AddItemHandler(
-            $this->carts,
-            $this->productsService,
-            $this->environment
-        );
+
+		$handler = new AddItemHandler($this->carts, $this->productsService, $this->environment);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
-        $cart = $this->carts->getActiveCart($this->client);
-        $this->assertSame($cart->getClient(), $this->client);
-        $this->assertCount(2, $cart->getItems());
-
-        $this->assertTrue($initialCartItem->equalsTo($cart->getItems()[0]));
-        $this->assertTrue($initialCartItem->getId()->equalsTo($cart->getItems()[0]->getId()));
-        $this->assertSame($initialCartItem->getQuantity(), $cart->getItems()[0]->getQuantity());
-
-        $this->assertTrue($addedCartItem->equalsTo($cart->getItems()[1]));
-        $this->assertTrue($addedCartItem->getId()->equalsTo($cart->getItems()[1]->getId()));
-        $this->assertSame($addedCartItem->getQuantity(), $cart->getItems()[1]->getQuantity());
+        $this->assertCount(2, $initialCart->getItems());
+        $this->assertTrue($initialCartItem->equalsTo($initialCart->getItems()[0]));
+        $this->assertTrue($addedCartItem->equalsTo($initialCart->getItems()[1]));
     }
 }

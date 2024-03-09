@@ -29,7 +29,12 @@ class CartItem
         Assert::greaterThanEq($this->price, 0);
     }
 
-    public function equalsTo(self $other): bool
+	public function __clone(): void
+	{
+		$this->id = clone $this->id;
+	}
+
+	public function equalsTo(self $other): bool
     {
         return (
             ($this->getProduct() === $other->getProduct())

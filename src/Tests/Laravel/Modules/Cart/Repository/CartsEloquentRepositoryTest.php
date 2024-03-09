@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Laravel\Modules\Cart\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Cart\Repository\CartsRepositoryTestTrait;
@@ -18,6 +19,7 @@ class CartsEloquentRepositoryTest extends \Tests\TestCase
     {
         $this->carts = new CartsEloquentRepository(
             new Hydrator,
+			new IdentityMap,
             new CartEloquent2EntityConverter(
                 new Hydrator,
                 new PromocodeEloquentConverter(new Hydrator)

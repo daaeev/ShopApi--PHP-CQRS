@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Product\Currency;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\CartId;
@@ -29,7 +30,7 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->client = new Client(md5(rand()), rand(1, 100));
-        $this->carts = new CartsMemoryRepository(new Hydrator);
+        $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
 
         $this->productsService = $this->getMockBuilder(ProductsService::class)
             ->disableOriginalConstructor()

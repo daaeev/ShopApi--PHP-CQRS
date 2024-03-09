@@ -3,6 +3,7 @@
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository;
 
 use Project\Modules\Shopping\Cart\Entity;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
 use Project\Common\Repository\NotFoundException;
@@ -14,49 +15,95 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
+		private IdentityMap $identityMap,
         private CartEloquent2EntityConverter $cartEloquentConverter
     ) {}
 
     public function get(Entity\CartId $id): Entity\Cart
     {
-        $record = Eloquent\Cart::find($id->getId());
-        if (empty($record)) {
+		if (empty($id->getId())) {
+			throw new NotFoundException('Cart does not exists');
+		}
+
+		if ($this->identityMap->has($id->getId())) {
+			return $this->identityMap->get($id->getId());
+		}
+
+        if (!$record = Eloquent\Cart::find($id->getId())) {
             throw new NotFoundException('Cart does not exists');
         }
 
-        return $this->cartEloquentConverter->convert($record);
-    }
+        $cart = $this->cartEloquentConverter->convert($record);
+		$this->identityMap->add($id->getId(), $cart);
+		return $cart;
+	}
 
     public function getActiveCart(Client $client): Entity\Cart
     {
-        $record = Eloquent\Cart::query()
-            ->where(['client_id' => $client->getId(), 'active' => true])
-            ->first();
-
+		$record = Eloquent\Cart::where(['client_id' => $client->getId(), 'active' => true])->first();
         if (empty($record)) {
             $cart = Entity\Cart::instantiate($client);
             $this->save($cart);
             return $cart;
         }
 
-        return $this->cartEloquentConverter->convert($record);
+		if ($this->identityMap->has($record->id)) {
+			return $this->identityMap->get($record->id);
+		}
+
+		$cart = $this->cartEloquentConverter->convert($record);
+		$this->identityMap->add($cart->getId()->getId(), $cart);
+		return $cart;
     }
 
     public function getActiveCartsWithProduct(int $product): array
     {
-        $record = Eloquent\Cart::query()
+        $records = Eloquent\Cart::query()
             ->whereRelation('items', 'product', '=', $product)
             ->where(['active' => true])
             ->get();
 
-        return array_map([$this->cartEloquentConverter, 'convert'], $record->all());
+		$carts = [];
+		foreach ($records as $record) {
+			if ($this->identityMap->has($record->id)) {
+				$carts[] = $this->identityMap->get($record->id);
+				continue;
+			}
+
+			$cart = $this->cartEloquentConverter->convert($record);
+			$this->identityMap->add($cart->getId()->getId(), $cart);
+			$carts[] = $cart;
+		}
+
+        return $carts;
     }
 
     public function save(Entity\Cart $cart): void
     {
         $this->guardClientDoesNotHasAnotherActiveCart($cart);
         $this->persist($cart);
+		
+		if (!$this->identityMap->has($cart->getId()->getId())) {
+			$this->identityMap->add($cart->getId()->getId(), $cart);
+		}
     }
+
+	private function guardClientDoesNotHasAnotherActiveCart(Entity\Cart $cart): void
+	{
+		if (!$cart->active()) {
+			return;
+		}
+
+		$anotherActiveCartExists = Eloquent\Cart::query()
+			->where('id', '!=', $cart->getId()->getId())
+			->where('client_id', $cart->getClient()->getId())
+			->where('active', true)
+			->exists();
+
+		if ($anotherActiveCartExists) {
+			throw new \DomainException('Client already have active cart');
+		}
+	}
 
     private function persist(Entity\Cart $cart): void
     {
@@ -89,23 +136,6 @@ class CartsEloquentRepository implements CartsRepositoryInterface
             ]);
 
             $this->hydrator->hydrate($cartItem->getId(), ['id' => $cartItemRecord->id]);
-        }
-    }
-
-    private function guardClientDoesNotHasAnotherActiveCart(Entity\Cart $cart): void
-    {
-        if (!$cart->active()) {
-            return;
-        }
-
-        $anotherActiveCartExists = Eloquent\Cart::query()
-            ->where('id', '!=', $cart->getId()->getId())
-            ->where('client_id', $cart->getClient()->getId())
-            ->where('active', true)
-            ->exists();
-
-        if ($anotherActiveCartExists) {
-            throw new \DomainException('Client already have active cart');
         }
     }
 }

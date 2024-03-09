@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\CartId;
@@ -27,10 +28,11 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->client = new Client(md5(rand()), rand(1, 100));
-        $this->carts = new CartsMemoryRepository(new Hydrator);
+        $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
 
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)
             ->getMock();
+
         $this->environment->expects($this->once())
             ->method('getClient')
             ->willReturn($this->client);
@@ -41,23 +43,34 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
         parent::setUp();
     }
 
+	public function testRemoveCartItem()
+	{
+		$this->dispatcher->expects($this->exactly(1)) // Cart updated
+			->method('dispatch');
+
+		$initialCart = $this->makeCart(CartId::next(), $this->client);
+		$initialCart->addItem($cartItem = $this->generateCartItem());
+		$initialCart->flushEvents();
+		$this->carts->save($initialCart);
+
+		$command = new RemoveItemCommand($cartItem->getId()->getId());
+		$handler = new RemoveItemHandler($this->carts, $this->environment);
+		$handler->setDispatcher($this->dispatcher);
+		call_user_func($handler, $command);
+
+		$this->assertEmpty($initialCart->getItems());
+	}
+
     public function testRemoveCartItemIfDoesNotExists()
     {
-        $initialCart = $this->makeCart(
-            CartId::next(),
-            $this->client,
-        );
+        $initialCart = $this->makeCart(CartId::next(), $this->client);
         $initialCart->flushEvents();
         $this->carts->save($initialCart);
 
-        $command = new RemoveItemCommand(
-            1
-        );
-        $handler = new RemoveItemHandler(
-            $this->carts,
-            $this->environment
-        );
+        $command = new RemoveItemCommand(1);
+        $handler = new RemoveItemHandler($this->carts, $this->environment);
         $handler->setDispatcher($this->dispatcher);
+
         $this->expectException(\DomainException::class);
         call_user_func($handler, $command);
     }
