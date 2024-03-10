@@ -6,7 +6,7 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Models as Eloquent;
 
-class PromocodeEloquent2EntityConverter
+class PromocodeEloquentToEntityConverter
 {
     public function __construct(
         private Hydrator $hydrator,

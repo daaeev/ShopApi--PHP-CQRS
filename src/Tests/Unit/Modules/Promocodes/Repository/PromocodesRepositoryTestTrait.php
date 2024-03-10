@@ -18,35 +18,27 @@ trait PromocodesRepositoryTestTrait
     public function testAdd()
     {
         $initial = $this->generatePromocode();
+		$initialProperties = $this->getPromocodeProperties($initial);
         $this->promocodes->add($initial);
+
         $found = $this->promocodes->get($initial->getId());
-        $this->assertSamePromocodes($initial, $found);
+		$this->assertSame($initial, $found);
+		$this->assertSame($initialProperties, $this->getPromocodeProperties($found));
     }
 
-    private function assertSamePromocodes(Promocode $initial, Promocode $other): void
-    {
-        $this->assertTrue($initial->getId()->equalsTo($other->getId()));
-        $this->assertSame($initial->getName(), $other->getName());
-        $this->assertSame($initial->getCode(), $other->getCode());
-        $this->assertSame($initial->getDiscountPercent(), $other->getDiscountPercent());
-        $this->assertSame($initial->isActive(), $other->isActive());
-        $this->assertSame(
-            $initial->getStartDate()->getTimestamp(),
-            $other->getStartDate()->getTimestamp()
-        );
-        $this->assertSame(
-            $initial->getEndDate()?->getTimestamp(),
-            $other->getEndDate()?->getTimestamp()
-        );
-        $this->assertSame(
-            $initial->getCreatedAt()->getTimestamp(),
-            $other->getCreatedAt()->getTimestamp()
-        );
-        $this->assertSame(
-            $initial->getUpdatedAt()?->getTimestamp(),
-            $other->getUpdatedAt()?->getTimestamp()
-        );
-    }
+	private function getPromocodeProperties(Promocode $promocode): array
+	{
+		$id = $promocode->getId();
+		$name = $promocode->getName();
+		$code = $promocode->getCode();
+		$discountPercent = $promocode->getDiscountPercent();
+		$active = $promocode->isActive();
+		$startDate = $promocode->getStartDate();
+		$endDate = $promocode->getEndDate();
+		$createdAt = $promocode->getCreatedAt();
+		$updatedAt = $promocode->getUpdatedAt();
+		return [$id, $name, $code, $discountPercent, $active, $startDate, $endDate, $createdAt, $updatedAt];
+	}
 
     public function testAddIncrementIds()
     {
@@ -57,6 +49,7 @@ trait PromocodesRepositoryTestTrait
             rand(1, 100),
             new \DateTimeImmutable('-1 day')
         );
+
         $this->promocodes->add($promocode);
         $this->assertNotNull($promocode->getId()->getId());
     }
@@ -71,6 +64,7 @@ trait PromocodesRepositoryTestTrait
             rand(1, 100),
             new \DateTimeImmutable('-1 day')
         );
+
         $this->promocodes->add($promocode);
         $this->expectException(DuplicateKeyException::class);
         $this->promocodes->add($promocodeWithSameId);
@@ -86,6 +80,7 @@ trait PromocodesRepositoryTestTrait
             rand(1, 100),
             new \DateTimeImmutable('-1 day')
         );
+
         $this->promocodes->add($promocode);
         $this->expectException(DuplicateKeyException::class);
         $this->promocodes->add($promocodeWithNotUniqueCode);
@@ -94,27 +89,27 @@ trait PromocodesRepositoryTestTrait
     public function testUpdate()
     {
         $initial = $this->generatePromocode();
+		$initialProperties = $this->getPromocodeProperties($initial);
         $this->promocodes->add($initial);
 
         $added = $this->promocodes->get($initial->getId());
         $added->deactivate();
         $added->setName(md5(rand()));
-        $startDate = $added->getStartDate()->add(
-            \DateInterval::createFromDateString('-1 day')
-        );
-        $endDate = $added->getEndDate()->add(
-            \DateInterval::createFromDateString('+1 day')
-        );
+        $startDate = $added->getStartDate()->add(\DateInterval::createFromDateString('-1 day'));
+        $endDate = $added->getEndDate()->add(\DateInterval::createFromDateString('+1 day'));
         $added->setStartDate($startDate);
         $added->setEndDate($endDate);
+		$addedProperties = $this->getPromocodeProperties($added);
         $this->promocodes->update($added);
 
         $updated = $this->promocodes->get($initial->getId());
-        $this->assertSamePromocodes($added, $updated);
-        $this->assertNotEquals($initial->getName(), $updated->getName());
-        $this->assertNotEquals($initial->getStartDate(), $updated->getStartDate());
-        $this->assertNotEquals($initial->getEndDate(), $updated->getEndDate());
-        $this->assertNotEquals($initial->isActive(), $updated->isActive());
+        $this->assertSame($initial, $added);
+        $this->assertSame($added, $updated);
+
+		$updatedProperties = $this->getPromocodeProperties($updated);
+		$this->assertNotSame($initialProperties, $addedProperties);
+		$this->assertNotSame($initialProperties, $updatedProperties);
+		$this->assertSame($addedProperties, $updatedProperties);
     }
 
     public function testUpdateIfDoesNotExists()
@@ -140,17 +135,26 @@ trait PromocodesRepositoryTestTrait
         $this->promocodes->delete($promocode);
     }
 
-    public function testGet()
-    {
-        $promocode = $this->generatePromocode();
-        $this->promocodes->add($promocode);
-        $found = $this->promocodes->get($promocode->getId());
-        $this->assertSamePromocodes($promocode, $found);
-    }
-
     public function testGetIfDoesNotExists()
     {
         $this->expectException(NotFoundException::class);
         $this->promocodes->get(PromocodeId::random());
     }
+
+	public function testGetByCode()
+	{
+		$initial = $this->generatePromocode();
+		$initialProperties = $this->getPromocodeProperties($initial);
+		$this->promocodes->add($initial);
+
+		$found = $this->promocodes->getByCode($initial->getCode());
+		$this->assertSame($initial, $found);
+		$this->assertSame($initialProperties, $this->getPromocodeProperties($found));
+	}
+
+	public function testGetByCodeIfDoesNotExists()
+	{
+		$this->expectException(NotFoundException::class);
+		$this->promocodes->getByCode('test');
+	}
 }

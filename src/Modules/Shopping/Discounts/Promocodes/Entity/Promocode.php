@@ -83,7 +83,12 @@ class Promocode extends Aggregate
         }
     }
 
-    public function isActive(): bool
+	public function __clone(): void
+	{
+		$this->id = clone $this->id;
+	}
+
+	public function isActive(): bool
     {
         $currentTime = new \DateTimeImmutable();
         if ($currentTime < $this->startDate) {

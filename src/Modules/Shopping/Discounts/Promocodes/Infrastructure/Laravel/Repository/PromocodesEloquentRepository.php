@@ -2,29 +2,37 @@
 
 namespace Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquent2EntityConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquentToEntityConverter;
 
 class PromocodesEloquentRepository implements PromocodesRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
-        private PromocodeEloquent2EntityConverter $converter
+		private IdentityMap $identityMap,
+        private PromocodeEloquentToEntityConverter $converter
     ) {}
 
     public function add(Entity\Promocode $promocode): void
     {
         $id = $promocode->getId()->getId();
+		if (!empty($id) && $this->identityMap->has($id)) {
+			throw new DuplicateKeyException('Promocode with same id already exists');
+		}
+
         if (Eloquent\Promocode::find($id)) {
             throw new DuplicateKeyException('Promocode with same id already exists');
         }
 
         $this->persist($promocode, new Eloquent\Promocode);
+		$this->identityMap->add($promocode->getId()->getId(), $promocode);
+		$this->identityMap->add($promocode->getCode(), $promocode);
     }
 
     private function persist(Entity\Promocode $entity, Eloquent\Promocode $record): void
@@ -47,6 +55,15 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
 
     private function guardCodeUnique(Entity\Promocode $promocode): void
     {
+		if ($this->identityMap->has($promocode->getCode())) {
+			$samePromocode = $this->identityMap->get($promocode->getCode());
+			if (!$promocode->getId()->equalsTo($samePromocode->getId())) {
+				throw new DuplicateKeyException('Promocode must be unique');
+			}
+
+			return;
+		}
+
         $notUnique = Eloquent\Promocode::query()
             ->where('code', $promocode->getCode())
             ->where('id', '!=', $promocode->getId()->getId())
@@ -60,7 +77,11 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
     public function update(Entity\Promocode $promocode): void
     {
         $id = $promocode->getId()->getId();
-        if (!$record = Eloquent\Promocode::find($id)) {
+		if (empty($id) || !$this->identityMap->has($id)) {
+			throw new NotFoundException('Promocode does not exists');
+		}
+
+		if (!$record = Eloquent\Promocode::find($id)) {
             throw new NotFoundException('Promocode does not exists');
         }
 
@@ -70,32 +91,53 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
     public function delete(Entity\Promocode $promocode): void
     {
         $id = $promocode->getId()->getId();
+		if (empty($id) || !$this->identityMap->has($id)) {
+			throw new NotFoundException('Promocode does not exists');
+		}
+
         if (!$record = Eloquent\Promocode::find($id)) {
             throw new NotFoundException('Promocode does not exists');
         }
 
         $record->delete();
+		$this->identityMap->remove($id);
+		$this->identityMap->remove($promocode->getCode());
     }
 
     public function get(Entity\PromocodeId $id): Entity\Promocode
     {
+		if (empty($id->getId())) {
+			throw new NotFoundException('Promocode does not exists');
+		}
+
+		if ($this->identityMap->has($id->getId())) {
+			return $this->identityMap->get($id->getId());
+		}
+
         if (!$record = Eloquent\Promocode::find($id->getId())) {
             throw new NotFoundException('Promocode does not exists');
         }
 
-        return $this->converter->convert($record);
+        $promocode = $this->converter->convert($record);
+		$this->identityMap->add($promocode->getId()->getId(), $promocode);
+		$this->identityMap->add($promocode->getCode(), $promocode);
+		return $promocode;
     }
 
     public function getByCode(string $code): Entity\Promocode
     {
-        $record = Eloquent\Promocode::query()
-            ->where('code', $code)
-            ->first();
+		if ($this->identityMap->has($code)) {
+			return $this->identityMap->get($code);
+		}
 
+        $record = Eloquent\Promocode::query()->where('code', $code)->first();
         if (!$record) {
             throw new NotFoundException('Promocode does not exists');
         }
 
-        return $this->converter->convert($record);
+		$promocode = $this->converter->convert($record);
+		$this->identityMap->add($promocode->getId()->getId(), $promocode);
+		$this->identityMap->add($promocode->getCode(), $promocode);
+		return $promocode;
     }
 }

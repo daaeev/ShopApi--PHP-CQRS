@@ -22,18 +22,26 @@ trait CartsRepositoryTestTrait
     public function testSave()
     {
         $initial = $this->generateCart();
-        $initial->addItem($this->generateCartItem());
-        $initial->usePromocode($this->generatePromocode());
-        $this->promocodes->add($initial->getPromocode());
-
 		$initialProperties = $this->getCartProperties($initial);
         $this->carts->save($initial);
 
-        $found = $this->carts->get($initial->getId());
-        $this->assertSame($initial, $found);
+		$added = $this->carts->get($initial->getId());
+		$this->assertSame($initialProperties, $this->getCartProperties($added));
 
-		$foundProperties = $this->getCartProperties($found);
-		$this->assertSame($initialProperties, $foundProperties);
+		$added->addItem($this->generateCartItem());
+		$added->usePromocode($this->generatePromocode());
+		$this->promocodes->add($added->getPromocode());
+		$addedProperties = $this->getCartProperties($added);
+		$this->carts->save($added);
+
+        $updated = $this->carts->get($added->getId());
+        $this->assertSame($initial, $added);
+        $this->assertSame($added, $updated);
+
+		$updatedProperties = $this->getCartProperties($updated);
+		$this->assertNotSame($initialProperties, $addedProperties);
+		$this->assertNotSame($initialProperties, $updatedProperties);
+		$this->assertSame($addedProperties, $updatedProperties);
     }
 
 	private function getCartProperties(Cart $cart): array
@@ -112,15 +120,12 @@ trait CartsRepositoryTestTrait
     {
         $initial = $this->generateCart();
         $initial->addItem($this->generateCartItem());
-
 		$initialProperties = $this->getCartProperties($initial);
 		$this->carts->save($initial);
 
         $found = $this->carts->getActiveCart($initial->getClient());
         $this->assertSame($initial, $found);
-
-		$foundProperties = $this->getCartProperties($found);
-		$this->assertSame($initialProperties, $foundProperties);
+		$this->assertSame($initialProperties, $this->getCartProperties($found));
     }
 
 	public function testGetActiveCartIfAnotherDeactivatedExists()

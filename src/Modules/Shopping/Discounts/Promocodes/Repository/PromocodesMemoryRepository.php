@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Discounts\Promocodes\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
@@ -13,7 +14,8 @@ class PromocodesMemoryRepository implements PromocodesRepositoryInterface
     private int $increment = 0;
 
     public function __construct(
-        private Hydrator $hydrator
+        private Hydrator $hydrator,
+		private IdentityMap $identityMap,
     ) {}
 
     public function add(Entity\Promocode $promocode): void
@@ -24,30 +26,29 @@ class PromocodesMemoryRepository implements PromocodesRepositoryInterface
             $this->hydrator->hydrate($promocode->getId(), ['id' => ++$this->increment]);
         }
 
-        if (isset($this->items[$promocode->getId()->getId()])) {
+        if ($this->identityMap->has($promocode->getId()->getId())) {
             throw new DuplicateKeyException('Promocode with same id already exists');
         }
 
         $this->items[$promocode->getId()->getId()] = clone $promocode;
+		$this->identityMap->add($promocode->getId()->getId(), $promocode);
+		$this->identityMap->add($promocode->getCode(), $promocode);
     }
 
     private function guardCodeUnique(Entity\Promocode $promocode): void
     {
-        foreach ($this->items as $item) {
-            if ($promocode->getId()->equalsTo($item->getId())) {
-                continue;
-            }
+		if (!$this->identityMap->has($promocode->getCode())) {
+			return;
+		}
 
-            if ($promocode->getCode() === $item->getCode()) {
-                throw new DuplicateKeyException('Promo-code must be unique');
-            }
-        }
+		$samePromocode = $this->identityMap->get($promocode->getCode());
+		if (!$promocode->getId()->equalsTo($samePromocode->getId())) {
+			throw new DuplicateKeyException('Promocode must be unique');
+		}
     }
 
     public function update(Entity\Promocode $promocode): void
     {
-        $this->guardCodeUnique($promocode);
-
         if (empty($this->items[$promocode->getId()->getId()])) {
             throw new NotFoundException('Promocode does not exists');
         }
@@ -61,31 +62,30 @@ class PromocodesMemoryRepository implements PromocodesRepositoryInterface
             throw new NotFoundException('Promocode does not exists');
         }
 
-        unset($this->items[$promocode->getId()->getId()]);
+		$this->identityMap->remove($promocode->getId()->getId());
+		$this->identityMap->remove($promocode->getCode());
+		unset($this->items[$promocode->getId()->getId()]);
     }
 
     public function get(Entity\PromocodeId $id): Entity\Promocode
     {
-        if (empty($this->items[$id->getId()])) {
+        if (empty($id->getId())) {
             throw new NotFoundException('Promocode does not exists');
         }
 
-        return clone $this->items[$id->getId()];
+		if (!$this->identityMap->has($id->getId())) {
+			throw new NotFoundException('Promocode does not exists');
+		}
+
+		return $this->identityMap->get($id->getId());
     }
 
     public function getByCode(string $code): Entity\Promocode
     {
-        $promocode = null;
-        foreach ($this->items as $item) {
-            if ($item->getCode() === $code) {
-                $promocode = $item;
-            }
-        }
+		if (!$this->identityMap->has($code)) {
+			throw new NotFoundException('Promocode does not exists');
+		}
 
-        if ($promocode === null) {
-            throw new \DomainException('Promo-code must be unique');
-        }
-
-        return clone $promocode;
-    }
+		return $this->identityMap->get($code);
+	}
 }

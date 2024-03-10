@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Promocodes\Commands;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
@@ -19,7 +20,7 @@ class ActivatePromocodeTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->promocodes = new PromocodesMemoryRepository(new Hydrator);
+        $this->promocodes = new PromocodesMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 

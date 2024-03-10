@@ -9,7 +9,7 @@ use Project\Tests\Unit\Modules\Cart\Repository\CartsRepositoryTestTrait;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository\CartsEloquentRepository;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquent2EntityConverter;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodesEloquentRepository;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquent2EntityConverter as PromocodeEloquentConverter;
+use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquentToEntityConverter as PromocodeEloquentConverter;
 
 class CartsEloquentRepositoryTest extends \Tests\TestCase
 {
@@ -28,6 +28,7 @@ class CartsEloquentRepositoryTest extends \Tests\TestCase
 
         $this->promocodes = new PromocodesEloquentRepository(
             new Hydrator,
+			new IdentityMap,
             new PromocodeEloquentConverter(new Hydrator)
         );
 
