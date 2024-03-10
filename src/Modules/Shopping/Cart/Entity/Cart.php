@@ -49,7 +49,8 @@ class Cart extends Aggregate
 		$this->id = clone $this->id;
 		$this->client = clone $this->client;
 		$this->promocode = $this->promocode ? clone $this->promocode : null;
-
+		$this->createdAt = clone $this->createdAt;
+		$this->updatedAt = $this->updatedAt ? clone $this->updatedAt : null;
 		foreach ($this->items as $index => $cartItem) {
 			$this->items[$index] = clone $cartItem;
 		}

@@ -86,6 +86,10 @@ class Promocode extends Aggregate
 	public function __clone(): void
 	{
 		$this->id = clone $this->id;
+		$this->startDate = clone $this->startDate;
+		$this->endDate = $this->endDate ? clone $this->endDate : null;
+		$this->createdAt = clone $this->createdAt;
+		$this->updatedAt = $this->updatedAt ? clone $this->updatedAt : null;
 	}
 
 	public function isActive(): bool
