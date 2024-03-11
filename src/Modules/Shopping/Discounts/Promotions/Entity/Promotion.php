@@ -40,7 +40,15 @@ class Promotion extends Aggregate
         $this->addEvent(new Events\PromotionCreated($this));
     }
 
-    public function disable(): void
+	public function __clone(): void
+	{
+		$this->id = clone $this->id;
+		$this->duration = clone $this->duration;
+		$this->createdAt = clone $this->createdAt;
+		$this->updatedAt = $this->updatedAt ? clone $this->updatedAt : null;
+	}
+
+	public function disable(): void
     {
         if ($this->disabled) {
             throw new \DomainException('Promotion already disabled');

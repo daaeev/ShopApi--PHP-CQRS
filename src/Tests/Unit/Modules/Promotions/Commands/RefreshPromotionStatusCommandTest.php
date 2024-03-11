@@ -2,6 +2,7 @@
 
 namespace Commands;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
@@ -20,7 +21,7 @@ class RefreshPromotionStatusCommandTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->promotions = new PromotionsMemoryRepository(new Hydrator);
+        $this->promotions = new PromotionsMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -42,7 +43,6 @@ class RefreshPromotionStatusCommandTest extends \PHPUnit\Framework\TestCase
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
-        $updatedPromotion = $this->promotions->get($promotion->getId());
-        $this->assertSame(Entity\PromotionStatus::DISABLED, $updatedPromotion->getStatus());
+        $this->assertSame(Entity\PromotionStatus::DISABLED, $promotion->getStatus());
     }
 }

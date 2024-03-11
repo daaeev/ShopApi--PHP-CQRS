@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Promotions\Commands;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
@@ -20,7 +21,7 @@ class DeletePromotionCommandTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->promotions = new PromotionsMemoryRepository(new Hydrator);
+        $this->promotions = new PromotionsMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 

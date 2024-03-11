@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Promotions\Commands;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
@@ -20,7 +21,7 @@ class UpdatePromotionCommandTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->promotions = new PromotionsMemoryRepository(new Hydrator);
+        $this->promotions = new PromotionsMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -43,12 +44,12 @@ class UpdatePromotionCommandTest extends \PHPUnit\Framework\TestCase
             startDate: new \DateTimeImmutable('-1 day'),
             endDate: new \DateTimeImmutable('+1 day'),
         );
+
         $handler = new UpdatePromotionHandler($this->promotions);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
-        $updatedPromotion = $this->promotions->get($promotion->getId());
-        $this->assertSamePromotion($updatedPromotion, $command);
+        $this->assertSamePromotion($promotion, $command);
     }
 
     private function assertSamePromotion(
@@ -56,7 +57,7 @@ class UpdatePromotionCommandTest extends \PHPUnit\Framework\TestCase
         UpdatePromotionCommand $command
     ): void {
         $this->assertSame($promotion->getName(), $command->name);
-        $this->assertSame($promotion->getDuration()->getStartDate()?->getTimestamp(), $command->startDate?->getTimestamp());
-        $this->assertSame($promotion->getDuration()->getEndDate()?->getTimestamp(), $command->endDate?->getTimestamp());
+        $this->assertSame($promotion->getDuration()->getStartDate()?->getTimestamp(), $command->startDate->getTimestamp());
+        $this->assertSame($promotion->getDuration()->getEndDate()?->getTimestamp(), $command->endDate->getTimestamp());
     }
 }

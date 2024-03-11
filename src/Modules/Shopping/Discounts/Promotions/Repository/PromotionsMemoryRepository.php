@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Repository;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
@@ -13,7 +14,8 @@ class PromotionsMemoryRepository implements PromotionsRepositoryInterface
     private int $increment = 0;
 
     public function __construct(
-        private Hydrator $hydrator
+        private Hydrator $hydrator,
+		private IdentityMap $identityMap,
     ) {}
 
     public function add(Entity\Promotion $promotion): void
@@ -32,6 +34,7 @@ class PromotionsMemoryRepository implements PromotionsRepositoryInterface
             }
         }
 
+		$this->identityMap->add($promotion->getId()->getId(), $promotion);
         $this->items[$promotion->getId()->getId()] = clone $promotion;
     }
 
@@ -56,6 +59,7 @@ class PromotionsMemoryRepository implements PromotionsRepositoryInterface
             throw new NotFoundException('Promotion does not exists');
         }
 
+		$this->identityMap->remove($promotion->getId()->getId());
         unset($this->items[$promotion->getId()->getId()]);
     }
 
@@ -65,6 +69,6 @@ class PromotionsMemoryRepository implements PromotionsRepositoryInterface
             throw new NotFoundException('Promotion does not exists');
         }
 
-        return clone $this->items[$id->getId()];
+        return $this->identityMap->get($id->getId());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Promotions\Commands;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
@@ -19,7 +20,7 @@ class RemovePromotionDiscountCommandTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->promotions = new PromotionsMemoryRepository(new Hydrator);
+        $this->promotions = new PromotionsMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -31,9 +32,9 @@ class RemovePromotionDiscountCommandTest extends \PHPUnit\Framework\TestCase
 
     public function testCreate()
     {
-        $promotionDiscount = $this->generateDiscount();
         $promotion = $this->generatePromotion();
         $promotion->disable();
+		$promotionDiscount = $this->generateDiscount();
         $promotion->addDiscount($promotionDiscount);
         $promotion->flushEvents();
         $this->promotions->add($promotion);
@@ -42,11 +43,11 @@ class RemovePromotionDiscountCommandTest extends \PHPUnit\Framework\TestCase
             promotionId: $promotion->getId()->getId(),
             discountId: $promotionDiscount->getId()->getId()
         );
+
         $handler = new RemovePromotionDiscountHandler($this->promotions);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
-        $updatedPromotion = $this->promotions->get($promotion->getId());
-        $this->assertEmpty($updatedPromotion->getDiscounts());
+        $this->assertEmpty($promotion->getDiscounts());
     }
 }

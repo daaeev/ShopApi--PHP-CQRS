@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Promotions\Commands;
 
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
@@ -20,7 +21,7 @@ class EnablePromotionCommandTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->promotions = new PromotionsMemoryRepository(new Hydrator);
+        $this->promotions = new PromotionsMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
 
@@ -43,8 +44,7 @@ class EnablePromotionCommandTest extends \PHPUnit\Framework\TestCase
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
-        $updatedPromotion = $this->promotions->get($promotion->getId());
-        $this->assertFalse($updatedPromotion->disabled());
-        $this->assertSame(PromotionStatus::STARTED, $updatedPromotion->getStatus());
+        $this->assertFalse($promotion->disabled());
+        $this->assertSame(PromotionStatus::STARTED, $promotion->getStatus());
     }
 }

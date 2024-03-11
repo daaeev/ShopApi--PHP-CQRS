@@ -3,6 +3,7 @@
 namespace Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Repository;
 
 use Project\Common\Entity\Duration;
+use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
@@ -15,18 +16,24 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
+		private IdentityMap $identityMap,
         private DiscountMechanicFactoryInterface $discountsFactory
     ) {}
 
     public function add(Entity\Promotion $promotion): void
     {
         $id = $promotion->getId()->getId();
+		if (!empty($id) && $this->identityMap->has($id)) {
+			throw new DuplicateKeyException('Promotion with same id already exists');
+		}
+
         if (Eloquent\Promotion::find($id)) {
             throw new DuplicateKeyException('Promotion with same id already exists');
         }
 
         $this->persist($promotion, new Eloquent\Promotion);
-    }
+		$this->identityMap->add($promotion->getId()->getId(), $promotion);
+	}
 
     private function persist(Entity\Promotion $entity, Eloquent\Promotion $record): void
     {
@@ -66,8 +73,12 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
 
     public function update(Entity\Promotion $promotion): void
     {
-        $record = Eloquent\Promotion::find($promotion->getId()->getId());
-        if (empty($record)) {
+		$id = $promotion->getId()->getId();
+		if (empty($id) || !$this->identityMap->has($id)) {
+			throw new NotFoundException('Promotion not found');
+		}
+
+        if (!$record = Eloquent\Promotion::find($id)) {
             throw new NotFoundException('Promotion not found');
         }
 
@@ -76,16 +87,29 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
 
     public function delete(Entity\Promotion $promotion): void
     {
-        $record = Eloquent\Promotion::find($promotion->getId()->getId());
-        if (empty($record)) {
+		$id = $promotion->getId()->getId();
+		if (empty($id) || !$this->identityMap->has($id)) {
+			throw new NotFoundException('Promotion not found');
+		}
+
+        if (!$record = Eloquent\Promotion::find($id)) {
             throw new NotFoundException('Promotion not found');
         }
 
         $record->delete();
-    }
+		$this->identityMap->remove($id);
+	}
 
     public function get(Entity\PromotionId $id): Entity\Promotion
     {
+		if (empty($id->getId())) {
+			throw new NotFoundException('Promotion not found');
+		}
+
+		if ($this->identityMap->has($id->getId())) {
+			return $this->identityMap->get($id->getId());
+		}
+
         $record = Eloquent\Promotion::query()
             ->where('id', $id->getId())
             ->with('discounts')
@@ -95,7 +119,9 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
             throw new NotFoundException('Promotion not found');
         }
 
-        return $this->hydrate($record);
+        $promotion = $this->hydrate($record);
+		$this->identityMap->add($id->getId(), $promotion);
+		return $promotion;
     }
 
     private function hydrate(Eloquent\Promotion $record): Entity\Promotion
