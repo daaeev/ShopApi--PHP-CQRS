@@ -14,8 +14,6 @@ class CatalogueApi
 
     public function get(int $product, Language $language): DTO\CatalogueProduct
     {
-        return $this->catalogue->get($product, [
-            'language' => $language->value
-        ]);
+        return $this->catalogue->get($product, ['language' => $language->value]);
     }
 }

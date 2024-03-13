@@ -8,7 +8,7 @@ use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Shopping\Cart\Adapters\ProductsService;
+use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
 use Project\Modules\Shopping\Cart\Commands\RemoveItemCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsMemoryRepository;
@@ -20,7 +20,7 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
     use CartFactory;
 
     private CartsRepositoryInterface $carts;
-    private ProductsService $productsService;
+    private CatalogueService $productsService;
     private EnvironmentInterface $environment;
     private Client $client;
     private MessageBusInterface $dispatcher;

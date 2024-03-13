@@ -16,7 +16,8 @@ class CreateCartItemTest extends \PHPUnit\Framework\TestCase
             $id = CartItemId::random(),
             $product = rand(1, 10),
             $name = md5(rand()),
-            $price = (float) rand(100, 500),
+            $regularPrice = (float) rand(400, 500),
+            $price = (float) rand(100, 400),
             $quantity = rand(1, 10),
             $size = md5(rand()),
             $color = md5(rand()),
@@ -25,6 +26,7 @@ class CreateCartItemTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($id->equalsTo($item->getId()));
         $this->assertSame($product, $item->getProduct());
         $this->assertSame($name, $item->getName());
+        $this->assertSame($regularPrice, $item->getRegularPrice());
         $this->assertSame($price, $item->getPrice());
         $this->assertSame($quantity, $item->getQuantity());
         $this->assertSame($size, $item->getSize());
@@ -39,6 +41,7 @@ class CreateCartItemTest extends \PHPUnit\Framework\TestCase
             CartItemId::next(),
             $generated->getProduct(),
             $generated->getName(),
+            $generated->getRegularPrice(),
             $generated->getPrice(),
             $generated->getQuantity() + 1,
             $generated->getSize(),
@@ -58,7 +61,8 @@ class CreateCartItemTest extends \PHPUnit\Framework\TestCase
             CartItemId::random(),
             rand(1, 10),
             md5(rand()),
-            (float) rand(100, 500),
+            (float) rand(400, 500),
+            (float) rand(100, 400),
             0,
             md5(rand()),
             md5(rand()),
@@ -73,9 +77,40 @@ class CreateCartItemTest extends \PHPUnit\Framework\TestCase
             rand(1, 10),
             md5(rand()),
             -5,
+            rand(10, 500),
             rand(1, 10),
             md5(rand()),
             md5(rand()),
         );
     }
+
+	public function testCreateCartItemWithNegativeRegularPrice()
+	{
+		$this->expectException(InvalidArgumentException::class);
+		$this->makeCartItem(
+			CartItemId::random(),
+			rand(1, 10),
+			md5(rand()),
+			rand(10, 500),
+			-5,
+			rand(1, 10),
+			md5(rand()),
+			md5(rand()),
+		);
+	}
+
+	public function testCreateCartItemWithPriceThatGreaterThenRegularPrice()
+	{
+		$this->expectException(InvalidArgumentException::class);
+		$this->makeCartItem(
+			CartItemId::random(),
+			rand(1, 10),
+			md5(rand()),
+			100,
+			150,
+			rand(1, 10),
+			md5(rand()),
+			md5(rand()),
+		);
+	}
 }

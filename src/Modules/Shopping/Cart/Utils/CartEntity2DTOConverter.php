@@ -31,6 +31,7 @@ class CartEntity2DTOConverter
             $item->getId()->getId(),
             $item->getProduct(),
             $item->getName(),
+            $item->getRegularPrice(),
             $item->getPrice(),
             $item->getQuantity(),
             $item->getSize(),

@@ -43,6 +43,7 @@ class CartEloquent2EntityConverter
             'id' => new Entity\CartItemId($record->id),
             'product' => $record->product,
             'name' => $record->name,
+            'regularPrice' => $record->regular_price,
             'price' => $record->price,
             'quantity' => $record->quantity,
             'size' => $record->size,

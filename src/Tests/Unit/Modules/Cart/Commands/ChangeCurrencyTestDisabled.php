@@ -9,7 +9,7 @@ use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Shopping\Cart\Adapters\ProductsService;
+use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
 use Project\Modules\Shopping\Cart\Repository\CartsMemoryRepository;
@@ -22,7 +22,7 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
     use CartFactory;
 
     private CartsRepositoryInterface $carts;
-    private ProductsService $productsService;
+    private CatalogueService $productsService;
     private EnvironmentInterface $environment;
     private Client $client;
     private MessageBusInterface $dispatcher;
@@ -32,7 +32,7 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
         $this->client = new Client(md5(rand()), rand(1, 100));
         $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
 
-        $this->productsService = $this->getMockBuilder(ProductsService::class)
+        $this->productsService = $this->getMockBuilder(CatalogueService::class)
             ->disableOriginalConstructor()
             ->getMock();
 

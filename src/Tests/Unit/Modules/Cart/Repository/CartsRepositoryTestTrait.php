@@ -64,7 +64,8 @@ trait CartsRepositoryTestTrait
 			CartItemId::next(),
 			rand(1, 10),
 			md5(rand()),
-			rand(100, 500),
+			rand(400, 500),
+			rand(100, 400),
 			rand(1, 10)
 		);
 

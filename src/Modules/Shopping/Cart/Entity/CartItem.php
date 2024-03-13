@@ -10,13 +10,15 @@ class CartItem
         private CartItemId $id,
         private int $product,
         private string $name,
-        private float $price,
+        private float $regularPrice, // Price without any discounts
+		private float $price, // Price with discounts
         private int $quantity,
         private ?string $size = null,
         private ?string $color = null,
     ) {
         $this->guardQuantityGreaterThanZero();
         $this->guardPriceGreaterThanZero();
+        $this->guardReqularPriceGreaterThanPrice();
     }
 
     private function guardQuantityGreaterThanZero(): void
@@ -26,8 +28,14 @@ class CartItem
 
     private function guardPriceGreaterThanZero(): void
     {
+        Assert::greaterThanEq($this->regularPrice, 0);
         Assert::greaterThanEq($this->price, 0);
     }
+
+	private function guardReqularPriceGreaterThanPrice()
+	{
+		Assert::greaterThanEq($this->regularPrice, $this->price);
+	}
 
 	public function __clone(): void
 	{
@@ -38,7 +46,7 @@ class CartItem
     {
         return (
             ($this->getProduct() === $other->getProduct())
-            && ($this->getName() === $other->getName())
+            && ($this->getRegularPrice() === $other->getRegularPrice())
             && ($this->getPrice() === $other->getPrice())
             && ($this->getSize() === $other->getSize())
             && ($this->getColor() === $other->getColor())
@@ -60,7 +68,12 @@ class CartItem
         return $this->name;
     }
 
-    public function getPrice(): float
+	public function getRegularPrice(): float
+	{
+		return $this->regularPrice;
+	}
+
+	public function getPrice(): float
     {
         return $this->price;
     }

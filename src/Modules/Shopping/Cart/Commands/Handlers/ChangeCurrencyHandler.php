@@ -4,7 +4,7 @@ namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Common\Product\Currency;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Shopping\Cart\Adapters\ProductsService;
+use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
 use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
@@ -16,7 +16,7 @@ class ChangeCurrencyHandler implements DispatchEventsInterface
 
     public function __construct(
         private CartsRepositoryInterface $carts,
-        private ProductsService $productsService,
+        private CatalogueService $productsService,
         private EnvironmentInterface $environment
     ) {}
 

@@ -129,6 +129,7 @@ class CartsEloquentRepository implements CartsRepositoryInterface
                 'cart_id' => $cart->getId()->getId(),
                 'product' => $cartItem->getProduct(),
                 'name' => $cartItem->getName(),
+                'regular_price' => $cartItem->getRegularPrice(),
                 'price' => $cartItem->getPrice(),
                 'quantity' => $cartItem->getQuantity(),
                 'size' => $cartItem->getSize(),

@@ -46,6 +46,7 @@ class UpdateCartItemTest extends \PHPUnit\Framework\TestCase
             CartItemId::random(),
             $item->getProduct(),
             $item->getName(),
+            $item->getRegularPrice(),
             $item->getPrice(),
             $item->getQuantity() + 1,
             $item->getSize(),
