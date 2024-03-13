@@ -53,6 +53,13 @@ class CartItem
         );
     }
 
+	public function updatePrice(float $price): void
+	{
+		$this->price = $price;
+		$this->guardPriceGreaterThanZero();
+		$this->guardReqularPriceGreaterThanPrice();
+	}
+
     public function getId(): CartItemId
     {
         return $this->id;

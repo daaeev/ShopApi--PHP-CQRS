@@ -42,7 +42,7 @@ trait PromotionFactory
 
     public function generateDiscount(): DiscountMechanics\AbstractDiscountMechanic
     {
-        return new DiscountMechanics\PercentageDiscountMechanic(
+        return new DiscountMechanics\Percentage\PercentageDiscountMechanic(
             DiscountMechanics\DiscountMechanicId::random(),
             ['percent' => 25]
         );

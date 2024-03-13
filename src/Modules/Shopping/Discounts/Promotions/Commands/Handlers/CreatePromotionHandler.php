@@ -16,7 +16,7 @@ class CreatePromotionHandler implements DispatchEventsInterface
     use DispatchEventsTrait;
 
     public function __construct(
-        private DiscountMechanics\DiscountMechanicFactoryInterface $discountFactory,
+        private DiscountMechanics\MechanicFactoryInterface $discountFactory,
         private PromotionsRepositoryInterface $promotions
     ) {}
 

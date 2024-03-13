@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
 
-interface DiscountMechanicFactoryInterface
+interface MechanicFactoryInterface
 {
     public function make(
         DiscountType $type,

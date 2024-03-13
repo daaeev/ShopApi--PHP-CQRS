@@ -16,14 +16,14 @@ class AddPromotionDiscountCommandTest extends \PHPUnit\Framework\TestCase
 {
     use PromotionFactory;
 
-    private DiscountMechanics\DiscountMechanicFactoryInterface $mechanicFactory;
+    private DiscountMechanics\MechanicFactoryInterface $mechanicFactory;
     private PromotionsRepositoryInterface $promotions;
     private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
         $this->promotions = new PromotionsMemoryRepository(new Hydrator, new IdentityMap);
-        $this->mechanicFactory = $this->getMockBuilder(DiscountMechanics\DiscountMechanicFactoryInterface::class)
+        $this->mechanicFactory = $this->getMockBuilder(DiscountMechanics\MechanicFactoryInterface::class)
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)

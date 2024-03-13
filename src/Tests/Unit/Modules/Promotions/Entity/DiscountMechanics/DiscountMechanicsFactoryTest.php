@@ -5,17 +5,17 @@ namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics;
 use PHPUnit\Framework\TestCase;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicId;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactory;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\PercentageDiscountMechanic;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactory;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage\PercentageDiscountMechanic;
 
 class DiscountMechanicsFactoryTest extends TestCase
 {
-    protected DiscountMechanicFactoryInterface $factory;
+    protected MechanicFactoryInterface $factory;
 
     protected function setUp(): void
     {
-        $this->factory = new DiscountMechanicFactory;
+        $this->factory = new MechanicFactory;
         parent::setUp();
     }
 

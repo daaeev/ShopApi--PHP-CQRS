@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
 
-class DiscountMechanicFactory implements DiscountMechanicFactoryInterface
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage\PercentageDiscountMechanic;
+
+class MechanicFactory implements MechanicFactoryInterface
 {
     public function make(
         DiscountType $type,
@@ -14,7 +16,7 @@ class DiscountMechanicFactory implements DiscountMechanicFactoryInterface
                 $id ?? DiscountMechanicId::next(),
                 $data,
             ),
-            default => throw new \DomainException('Discount does not have creation method')
+            default => throw new \DomainException("Discount '{$type->value}' does not have creation method")
         };
     }
 }

@@ -10,14 +10,14 @@ use Project\Modules\Shopping\Discounts\Promotions\Entity\Promotion;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\PromotionId;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactoryInterface;
 
 trait PromotionsRepositoryTestTrait
 {
     use PromotionFactory;
 
     protected PromotionsRepositoryInterface $promotions;
-    protected DiscountMechanicFactoryInterface $discountFactory;
+    protected MechanicFactoryInterface $discountFactory;
 
     public function testAdd()
     {

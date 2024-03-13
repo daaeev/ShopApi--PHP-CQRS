@@ -1,8 +1,11 @@
 <?php
 
-namespace Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
+namespace Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage;
 
 use Webmozart\Assert\Assert;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicId;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\AbstractDiscountMechanic;
 
 class PercentageDiscountMechanic extends AbstractDiscountMechanic
 {

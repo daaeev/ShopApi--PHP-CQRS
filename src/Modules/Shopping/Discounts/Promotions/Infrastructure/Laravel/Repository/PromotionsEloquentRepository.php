@@ -8,7 +8,7 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Eloquent;
 
@@ -17,7 +17,7 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
     public function __construct(
         private Hydrator $hydrator,
 		private IdentityMap $identityMap,
-        private DiscountMechanicFactoryInterface $discountsFactory
+        private MechanicFactoryInterface $discountsFactory
     ) {}
 
     public function add(Entity\Promotion $promotion): void

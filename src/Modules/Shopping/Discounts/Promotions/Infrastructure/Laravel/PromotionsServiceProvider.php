@@ -9,8 +9,10 @@ use Project\Modules\Shopping\Discounts\Promotions\Commands;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Console;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\QueryPromotionsRepositoryInterface;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactory;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountMechanicFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactory;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerFactory;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerFactoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Repository\PromotionsEloquentRepository;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Repository\QueryPromotionsEloquentRepository;
 
@@ -35,7 +37,8 @@ class PromotionsServiceProvider extends ServiceProvider
     public array $singletons = [
         PromotionsRepositoryInterface::class => PromotionsEloquentRepository::class,
         QueryPromotionsRepositoryInterface::class => QueryPromotionsEloquentRepository::class,
-        DiscountMechanicFactoryInterface::class => DiscountMechanicFactory::class,
+        MechanicFactoryInterface::class => MechanicFactory::class,
+        MechanicHandlerFactoryInterface::class => MechanicHandlerFactory::class,
     ];
 
     public function boot()
