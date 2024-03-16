@@ -13,4 +13,6 @@ interface PromotionsRepositoryInterface
     public function delete(Entity\Promotion $promotion): void;
 
     public function get(Entity\PromotionId $id): Entity\Promotion;
+
+    public function getActivePromotions(): array;
 }

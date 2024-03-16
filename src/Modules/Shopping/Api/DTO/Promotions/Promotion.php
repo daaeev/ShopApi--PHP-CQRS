@@ -12,7 +12,6 @@ class Promotion implements DTO
         public readonly int $id,
         public readonly string $name,
         public readonly Duration $duration,
-        public readonly string $status,
         public readonly array $discounts,
         public readonly \DateTimeImmutable $createdAt,
         public readonly ?\DateTimeImmutable $updatedAt,
@@ -30,7 +29,6 @@ class Promotion implements DTO
             'id' => $this->id,
             'name' => $this->name,
             'duration' => $this->duration->toArray(),
-            'status' => $this->status,
             'discounts' => array_map(function (PromotionDiscount $discount) {
                 return $discount->toArray();
             }, $this->discounts),

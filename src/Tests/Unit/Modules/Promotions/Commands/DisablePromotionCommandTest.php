@@ -6,7 +6,6 @@ use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\PromotionStatus;
 use Project\Modules\Shopping\Discounts\Promotions\Commands\DisablePromotionCommand;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsMemoryRepository;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
@@ -42,7 +41,5 @@ class DisablePromotionCommandTest extends \PHPUnit\Framework\TestCase
         call_user_func($handler, $command);
 
         $this->assertTrue($promotion->disabled());
-        $this->assertSame(PromotionStatus::DISABLED, $promotion->getStatus());
-
     }
 }

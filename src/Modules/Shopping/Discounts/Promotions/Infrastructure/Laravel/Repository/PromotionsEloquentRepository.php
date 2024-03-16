@@ -137,7 +137,6 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
                     ? new \DateTimeImmutable($record->end_date)
                     : null,
             ),
-            'status' => $record->status,
             'disabled' => $record->disabled,
             'discounts' => array_map(function (Eloquent\PromotionDiscount $discountRecord) {
                 return $this->discountsFactory->make(
@@ -152,4 +151,25 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
                 : null,
         ]);
     }
+
+	public function getActivePromotions(): array
+	{
+		$records = Eloquent\Promotion::query()
+			->started()
+			->with('discounts')
+			->get();
+
+		$promotions = [];
+		foreach ($records as $record) {
+			if ($this->identityMap->has($record->id)) {
+				$promotions[] = $this->identityMap->get($record->id);
+			} else {
+				$promotion = $this->hydrate($record);
+				$this->identityMap->add($record->id, $promotion);
+				$promotions[] = $promotion;
+			}
+		}
+
+		return $promotions;
+	}
 }

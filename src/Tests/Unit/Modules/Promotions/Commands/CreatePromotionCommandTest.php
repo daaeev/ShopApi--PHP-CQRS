@@ -61,7 +61,6 @@ class CreatePromotionCommandTest extends \PHPUnit\Framework\TestCase
         $promotionId = call_user_func($handler, $command);
 
         $promotion = $this->promotions->get(new Entity\PromotionId($promotionId));
-        $this->assertSame(Entity\PromotionStatus::DISABLED, $promotion->getStatus());
         $this->assertSamePromotion($promotion, $command);
     }
 

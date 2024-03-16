@@ -38,12 +38,11 @@ trait PromotionsRepositoryTestTrait
 		$id = $promotion->getId();
 		$name = $promotion->getName();
 		$duration = $promotion->getDuration();
-		$status = $promotion->getStatus();
 		$disabled = $promotion->disabled();
 		$discounts = $promotion->getDiscounts();
 		$createdAt = $promotion->getCreatedAt();
 		$updatedAt = $promotion->getUpdatedAt();
-		return [$id, $name, $duration, $status, $disabled, $discounts, $createdAt, $updatedAt];
+		return [$id, $name, $duration, $disabled, $discounts, $createdAt, $updatedAt];
 	}
 
     public function testAddIncrementIds()

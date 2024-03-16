@@ -7,7 +7,6 @@ use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Api\Events\Promotions\PromotionCreated;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\PromotionId;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\PromotionStatus;
 
 class CreatePromotionTest extends TestCase
 {
@@ -28,7 +27,6 @@ class CreatePromotionTest extends TestCase
         $this->assertSame($promotion->getName(), $name);
         $this->assertSame($promotion->getDuration()->getStartDate()?->getTimestamp(), $startDate->getTimestamp());
         $this->assertSame($promotion->getDuration()->getEndDate()?->getTimestamp(), $endDate->getTimestamp());
-        $this->assertSame(PromotionStatus::DISABLED, $promotion->getStatus());
         $this->assertSame($promotion->getDiscounts(), $discounts);
         $this->assertSame($disabled, $promotion->disabled());
         $this->assertNotNull($promotion->getCreatedAt());

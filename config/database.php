@@ -41,7 +41,8 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-        ],
+			'timezone' => env('APP_TIMEZONE', 'UTC'),
+		],
 
         'mysql' => [
             'driver' => 'mysql',
@@ -61,6 +62,7 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
+			'timezone' => env('APP_TIMEZONE', 'UTC'),
         ],
 
         'pgsql' => [
@@ -76,7 +78,8 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => 'prefer',
-        ],
+			'timezone' => env('APP_TIMEZONE', 'UTC'),
+		],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
@@ -89,7 +92,8 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
+			'timezone' => env('APP_TIMEZONE', 'UTC'),
+			// 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 

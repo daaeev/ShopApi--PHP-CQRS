@@ -71,4 +71,20 @@ class PromotionsMemoryRepository implements PromotionsRepositoryInterface
 
         return $this->identityMap->get($id->getId());
     }
+
+	public function getActivePromotions(): array
+	{
+		$promotions = [];
+		foreach ($this->items as $promotion) {
+			if ($promotion->disabled()) {
+				continue;
+			}
+
+			if ($promotion->started()) {
+				$promotions[] = $this->identityMap->get($promotion->getId()->getId());
+			}
+		}
+
+		return $promotions;
+	}
 }

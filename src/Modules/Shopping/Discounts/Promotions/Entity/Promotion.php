@@ -14,7 +14,6 @@ class Promotion extends Aggregate
     private PromotionId $id;
     private string $name;
     private Duration $duration;
-    private PromotionStatus $status;
     private bool $disabled;
     private array $discounts;
     private \DateTimeImmutable $createdAt;
@@ -33,7 +32,6 @@ class Promotion extends Aggregate
         $this->name = $name;
         $this->duration = $duration;
         $this->disabled = $disabled;
-        $this->status = PromotionStatus::calculate($this);
         $this->discounts = $discounts;
         $this->createdAt = new \DateTimeImmutable;
 
@@ -96,17 +94,6 @@ class Promotion extends Aggregate
     private function isActive(): bool
     {
         return !$this->disabled && $this->duration->started();
-    }
-
-    public function refreshStatus(): void
-    {
-        $refreshedStatus = PromotionStatus::calculate($this);
-        if ($refreshedStatus === $this->status) {
-            return;
-        }
-
-        $this->status = $refreshedStatus;
-        $this->updated();
     }
 
     public function addDiscount(AbstractDiscountMechanic $discount): void
@@ -181,11 +168,6 @@ class Promotion extends Aggregate
     public function getDuration(): Duration
     {
         return $this->duration;
-    }
-
-    public function getStatus(): PromotionStatus
-    {
-        return $this->status;
     }
 
     public function disabled(): bool

@@ -20,7 +20,6 @@ class EnablePromotionHandler implements DispatchEventsInterface
     {
         $promotion = $this->promotions->get(Entity\PromotionId::make($command->id));
         $promotion->enable();
-        $promotion->refreshStatus();
         $this->promotions->update($promotion);
         $this->dispatchEvents($promotion->flushEvents());
     }

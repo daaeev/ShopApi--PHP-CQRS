@@ -11,26 +11,8 @@ class Duration implements Arrayable
         private ?\DateTimeImmutable $startDate = null,
         private ?\DateTimeImmutable $endDate = null,
     ) {
-        Assert::notEmpty(
-            $startDate || $endDate,
-            'Duration start date or end date required'
-        );
-
-        Assert::nullOrGreaterThan(
-            $endDate,
-            $startDate,
-            'End date must be greater than start date'
-        );
-    }
-
-    public function getStartDate(): ?\DateTimeImmutable
-    {
-        return $this->startDate;
-    }
-
-    public function getEndDate(): ?\DateTimeImmutable
-    {
-        return $this->endDate;
+        Assert::notEmpty($startDate || $endDate, 'Duration start date or end date required');
+        Assert::nullOrGreaterThan($endDate, $startDate, 'End date must be greater than start date');
     }
 
     public function notStarted(): bool
@@ -57,6 +39,16 @@ class Duration implements Arrayable
             && ($this->endDate?->getTimestamp() === $other->endDate?->getTimestamp())
         );
     }
+
+	public function getStartDate(): ?\DateTimeImmutable
+	{
+		return $this->startDate;
+	}
+
+	public function getEndDate(): ?\DateTimeImmutable
+	{
+		return $this->endDate;
+	}
 
     public function toArray(): array
     {
