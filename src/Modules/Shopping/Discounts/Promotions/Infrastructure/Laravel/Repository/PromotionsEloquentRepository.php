@@ -45,7 +45,6 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
     {
         $record->id = $entity->getId()->getId();
         $record->name = $entity->getName();
-        $record->status = $entity->getStatus();
         $record->start_date = $entity->getDuration()->getStartDate()?->getTimestamp();
         $record->end_date = $entity->getDuration()->getEndDate()?->getTimestamp();
         $record->disabled = $entity->disabled();
@@ -161,6 +160,7 @@ class PromotionsEloquentRepository implements PromotionsRepositoryInterface
 
 		$promotions = [];
 		foreach ($records as $record) {
+
 			if ($this->identityMap->has($record->id)) {
 				$promotions[] = $this->identityMap->get($record->id);
 			} else {

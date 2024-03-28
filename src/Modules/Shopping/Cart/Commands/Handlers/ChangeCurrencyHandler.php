@@ -4,6 +4,7 @@ namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Common\Product\Currency;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
 use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
@@ -17,6 +18,7 @@ class ChangeCurrencyHandler implements DispatchEventsInterface
     public function __construct(
         private CartsRepositoryInterface $carts,
         private CatalogueService $productsService,
+        private DiscountsService $discountsService,
         private EnvironmentInterface $environment
     ) {}
 
@@ -38,6 +40,7 @@ class ChangeCurrencyHandler implements DispatchEventsInterface
             ));
         }
 
+        $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());
     }

@@ -40,11 +40,15 @@ trait PromotionFactory
         return $promotion;
     }
 
-    public function generateDiscount(): DiscountMechanics\AbstractDiscountMechanic
-    {
-        return new DiscountMechanics\Percentage\PercentageDiscountMechanic(
-            DiscountMechanics\DiscountMechanicId::random(),
-            ['percent' => 25]
-        );
+    public function generateDiscount(
+        DiscountMechanics\DiscountType $type = DiscountMechanics\DiscountType::PERCENTAGE
+    ): DiscountMechanics\AbstractDiscountMechanic {
+        return match ($type) {
+            DiscountMechanics\DiscountType::PERCENTAGE => new DiscountMechanics\Percentage\PercentageDiscountMechanic(
+                DiscountMechanics\DiscountMechanicId::random(),
+                ['percent' => rand(1, 100)]
+            ),
+            default => throw new \DomainException('Unexpected discount type'),
+        };
     }
 }

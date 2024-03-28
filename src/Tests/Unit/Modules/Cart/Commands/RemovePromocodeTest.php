@@ -1,27 +1,25 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Cart\Commands;
+namespace Cart\Commands;
 
-use Project\Common\Product\Currency;
 use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
-use Project\Modules\Shopping\Cart\Commands\AddItemCommand;
-use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
+use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
+use Project\Modules\Shopping\Cart\Commands\RemovePromocodeCommand;
 use Project\Modules\Shopping\Cart\Repository\CartsMemoryRepository;
-use Project\Modules\Shopping\Cart\Commands\Handlers\AddItemHandler;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
+use Project\Modules\Shopping\Cart\Commands\Handlers\RemovePromocodeHandler;
 
-class AddItemTest extends \PHPUnit\Framework\TestCase
+class RemovePromocodeTest extends \PHPUnit\Framework\TestCase
 {
-    use CartFactory;
+    use CartFactory, PromocodeFactory;
 
     private CartsRepositoryInterface $carts;
-    private CatalogueService $productsService;
     private EnvironmentInterface $environment;
     private Client $client;
     private MessageBusInterface $dispatcher;
@@ -36,10 +34,6 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->productsService = $this->getMockBuilder(CatalogueService::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
         $this->environment->expects($this->once())
             ->method('getClient')
@@ -48,35 +42,24 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
         parent::setUp();
     }
 
-    public function testAddItem()
+    public function testRemovePromocode()
     {
-        // Cart updated
-        $this->dispatcher->expects($this->once())->method('dispatch');
+        // Promocode removed, Cart updated
+        $this->dispatcher->expects($this->exactly(2))->method('dispatch');
 
         $cart = $this->carts->getActiveCart($this->client);
+        $cart->usePromocode($this->generatePromocode());
         $cart->flushEvents();
+
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
             ->with($cart);
 
-        $command = new AddItemCommand(
-            $product = rand(1, 10),
-            $quantity = rand(1, 10),
-            $size = md5(rand()),
-            $color = md5(rand()),
-        );
-
-        $this->productsService->expects($this->once())
-            ->method('resolveCartItem')
-            ->with($product, $quantity, Currency::default(), $size, $color, true)
-            ->willReturn($cartItem = $this->generateCartItem());
-
-		$handler = new AddItemHandler($this->carts, $this->productsService, $this->discountsService, $this->environment);
+        $command = new RemovePromocodeCommand;
+		$handler = new RemovePromocodeHandler($this->carts, $this->discountsService, $this->environment,);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
-        $this->assertCount(1, $cart->getItems());
-        $addedItem = $cart->getItem($cartItem->getId());
-        $this->assertSame($cartItem, $addedItem);
+        $this->assertNull($cart->getPromocode());
     }
 }

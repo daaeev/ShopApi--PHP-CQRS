@@ -34,7 +34,6 @@ class EnablePromotionCommandTest extends \PHPUnit\Framework\TestCase
     {
         $promotion = $this->generatePromotion();
         $promotion->disable();
-        $promotion->refreshStatus();
         $promotion->flushEvents();
         $this->promotions->add($promotion);
 

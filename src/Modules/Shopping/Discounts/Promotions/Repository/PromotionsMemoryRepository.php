@@ -80,7 +80,7 @@ class PromotionsMemoryRepository implements PromotionsRepositoryInterface
 				continue;
 			}
 
-			if ($promotion->started()) {
+			if ($promotion->getDuration()->started()) {
 				$promotions[] = $this->identityMap->get($promotion->getId()->getId());
 			}
 		}

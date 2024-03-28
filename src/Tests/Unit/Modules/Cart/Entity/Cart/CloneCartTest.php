@@ -1,6 +1,6 @@
 <?php
 
-namespace Cart\Entity;
+namespace Project\Tests\Unit\Modules\Cart\Entity\Cart;
 
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;

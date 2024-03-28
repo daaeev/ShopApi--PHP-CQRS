@@ -4,7 +4,8 @@ namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
+use Project\Modules\Shopping\Discounts\DiscountsService;
+use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
 use Project\Modules\Shopping\Cart\Commands\UpdateItemCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
@@ -16,8 +17,9 @@ class UpdateItemHandler implements DispatchEventsInterface
 
     public function __construct(
         private CartsRepositoryInterface $carts,
-        private CatalogueService $productsService,
-        private EnvironmentInterface $environment
+        private DiscountsService $discountsService,
+        private EnvironmentInterface $environment,
+        private CartItemBuilder $cartItemBuilder,
     ) {}
 
     public function __invoke(UpdateItemCommand $command): void
@@ -25,14 +27,13 @@ class UpdateItemHandler implements DispatchEventsInterface
         $client = $this->environment->getClient();
         $cart = $this->carts->getActiveCart($client);
         $item = $cart->getItem(new CartItemId($command->item));
-        $cart->addItem($this->productsService->resolveCartItem(
-            $item->getProduct(),
-            $command->quantity,
-            $cart->getCurrency(),
-            $item->getSize(),
-            $item->getColor(),
-        ));
+        $updatedCartItem = $this->cartItemBuilder
+            ->from($item)
+            ->withQuantity($command->quantity)
+            ->build();
 
+        $cart->addItem($updatedCartItem);
+        $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());
     }

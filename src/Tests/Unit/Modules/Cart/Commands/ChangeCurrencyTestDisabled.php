@@ -9,6 +9,7 @@ use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
@@ -26,88 +27,55 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
     private EnvironmentInterface $environment;
     private Client $client;
     private MessageBusInterface $dispatcher;
+    private DiscountsService $discountsService;
 
     protected function setUp(): void
     {
         $this->client = new Client(md5(rand()), rand(1, 100));
         $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
+        $this->discountsService = $this->getMockBuilder(DiscountsService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->productsService = $this->getMockBuilder(CatalogueService::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->environment = $this->getMockBuilder(EnvironmentInterface::class)
-            ->getMock();
-
+        $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
         $this->environment->expects($this->once())
             ->method('getClient')
             ->willReturn($this->client);
 
-        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
-            ->getMock();
-
-
         parent::setUp();
     }
 
-    public function testChangeCurrencyWithEmptyCart()
+    public function testChangeCartCurrency()
     {
-        $this->dispatcher->expects($this->once()) // Cart currency changed
-            ->method('dispatch');
+        // Cart currency changed, Cart updated
+        $this->dispatcher->expects($this->exactly(2))->method('dispatch');
 
-        $initialCart = $this->makeCart(
-            CartId::next(),
-            $this->client
-        );
-        $initialCart->flushEvents();
-        $this->carts->save($initialCart);
-        $this->assertNotSame(Currency::USD, $initialCart->getCurrency());
+        $cart = $this->makeCart(CartId::next(), $this->client);
+        $cart->addItem($this->generateCartItem());
+        $cart->addItem($this->generateCartItem());
+        $cart->flushEvents();
+        $this->carts->save($cart);
 
-        $command = new ChangeCurrencyCommand(Currency::USD->value);
-        $handler = new ChangeCurrencyHandler(
-            $this->carts,
-            $this->productsService,
-            $this->environment
-        );
-        $handler->setDispatcher($this->dispatcher);
-        call_user_func($handler, $command);
+        $this->discountsService->expects($this->once())
+            ->method('applyDiscounts')
+            ->with($cart);
 
-        $cart = $this->carts->get($initialCart->getId());
-        $this->assertSame(Currency::USD, $cart->getCurrency());
-    }
-
-    public function testChangeCurrencyWithNotEmptyCart()
-    {
-        $this->dispatcher->expects($this->exactly(2)) // Cart currency changed, Cart updated
-            ->method('dispatch');
-
-        $initialCart = $this->makeCart(
-            CartId::next(),
-            $this->client
-        );
-        $initialCart->addItem($this->generateCartItem());
-        $initialCart->addItem($this->generateCartItem());
-        $initialCart->flushEvents();
-        $this->carts->save($initialCart);
-
-        $this->productsService->expects($this->exactly(count($initialCart->getItems())))
+        $this->productsService->expects($this->exactly(count($cart->getItems())))
             ->method('resolveCartItem')
             ->willReturnOnConsecutiveCalls(
-                ...array_map([$this, 'generateCartItem'], $initialCart->getItems())
+                ...array_map([$this, 'generateCartItem'], $cart->getItems())
             );
 
-        $this->assertNotSame(Currency::USD, $initialCart->getCurrency());
-
         $command = new ChangeCurrencyCommand(Currency::USD->value);
-        $handler = new ChangeCurrencyHandler(
-            $this->carts,
-            $this->productsService,
-            $this->environment
-        );
+        $handler = new ChangeCurrencyHandler($this->carts, $this->productsService, $this->discountsService, $this->environment);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
 
-        $cart = $this->carts->get($initialCart->getId());
         $this->assertSame(Currency::USD, $cart->getCurrency());
     }
 }

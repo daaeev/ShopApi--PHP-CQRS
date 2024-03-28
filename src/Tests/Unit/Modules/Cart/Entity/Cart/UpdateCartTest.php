@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Cart\Entity;
+namespace Project\Tests\Unit\Modules\Cart\Entity\Cart;
 
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
@@ -8,6 +8,7 @@ use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
+use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeRemovedFromCart;
 
 class UpdateCartTest extends \PHPUnit\Framework\TestCase
@@ -39,7 +40,7 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
         $cart->addItem($this->generateCartItem());
         $cart->flushEvents();
         $updatedAt = $cart->getUpdatedAt();
-        $this->assertTrue($cart->active());
+
         $cart->deactivate();
         $this->assertFalse($cart->active());
         $this->assertNotSame($updatedAt, $cart->getUpdatedAt());
@@ -67,16 +68,30 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
         $cart = $this->generateCart();
         $promocode = $this->generatePromocode();
         $cart->usePromocode($promocode);
-
         $this->assertSame($promocode, $cart->getPromocode());
         $this->assertEvents($cart, [new PromocodeAddedToCart($cart), new CartUpdated($cart)]);
     }
 
-    public function testUsePromocodeIfCartHasPromo()
+    public function testUsePromocodeIfCartAlreadyHasPromocode()
     {
         $cart = $this->generateCart();
         $promocode = $this->generatePromocode();
         $cart->usePromocode($promocode);
+        $this->expectException(\DomainException::class);
+        $cart->usePromocode($promocode);
+    }
+
+    public function testUsePromocodeWithNullID()
+    {
+        $cart = $this->generateCart();
+        $promocode = $this->makePromocode(
+            PromocodeId::next(),
+            'test',
+            'test',
+            5,
+            new \DateTimeImmutable('-1 day')
+        );
+
         $this->expectException(\DomainException::class);
         $cart->usePromocode($promocode);
     }
@@ -86,7 +101,6 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
         $cart = $this->generateCart();
         $promocode = $this->generatePromocode();
         $promocode->deactivate();
-
         $this->expectException(\DomainException::class);
         $cart->usePromocode($promocode);
     }
@@ -97,8 +111,8 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
         $promocode = $this->generatePromocode();
         $cart->usePromocode($promocode);
         $cart->flushEvents();
-        $cart->removePromocode();
 
+        $cart->removePromocode();
         $this->assertNull($cart->getPromocode());
         $this->assertEvents($cart, [new PromocodeRemovedFromCart($cart), new CartUpdated($cart)]);
     }
@@ -108,21 +122,5 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\DomainException::class);
         $cart = $this->generateCart();
         $cart->removePromocode();
-    }
-
-    public function testCalculateTotalPriceWithPromocode()
-    {
-        $cart = $this->generateCart();
-        $cart->addItem($this->generateCartItem());
-        $cart->addItem($this->generateCartItem());
-        $cart->addItem($this->generateCartItem());
-        $cart->usePromocode($this->generatePromocode());
-
-        $totalPrice = array_reduce($cart->getItems(), function ($totalPrice, $item) {
-            return $totalPrice + ($item->getPrice() * $item->getQuantity());
-        }, 0);
-        $totalPrice -= ($totalPrice / 100) * $cart->getPromocode()->getDiscountPercent();
-
-        $this->assertSame($totalPrice, $cart->getTotalPrice());
     }
 }

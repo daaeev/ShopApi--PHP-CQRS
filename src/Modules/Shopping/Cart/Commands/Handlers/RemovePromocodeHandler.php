@@ -3,6 +3,7 @@
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Modules\Shopping\Cart\Commands\RemovePromocodeCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
@@ -14,6 +15,7 @@ class RemovePromocodeHandler implements DispatchEventsInterface
 
     public function __construct(
         private CartsRepositoryInterface $carts,
+        private DiscountsService $discountsService,
         private EnvironmentInterface $environment,
     ) {}
 
@@ -21,6 +23,7 @@ class RemovePromocodeHandler implements DispatchEventsInterface
     {
         $cart = $this->carts->getActiveCart($this->environment->getClient());
         $cart->removePromocode();
+        $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());
     }

@@ -35,14 +35,16 @@ trait PromotionsRepositoryTestTrait
 
 	private function getPromotionProperties(Promotion $promotion): array
 	{
-		$id = $promotion->getId();
+		$idObject = $promotion->getId();
+		$id = $promotion->getId()->getId();
 		$name = $promotion->getName();
-		$duration = $promotion->getDuration();
+		$durationObject = $promotion->getDuration()->toArray();
+		$duration = $promotion->getDuration()->toArray();
 		$disabled = $promotion->disabled();
 		$discounts = $promotion->getDiscounts();
 		$createdAt = $promotion->getCreatedAt();
 		$updatedAt = $promotion->getUpdatedAt();
-		return [$id, $name, $duration, $disabled, $discounts, $createdAt, $updatedAt];
+		return [$idObject, $id, $name, $durationObject, $duration, $disabled, $discounts, $createdAt, $updatedAt];
 	}
 
     public function testAddIncrementIds()
@@ -133,5 +135,17 @@ trait PromotionsRepositoryTestTrait
     {
         $this->expectException(NotFoundException::class);
         $this->promotions->get(PromotionId::random());
+    }
+
+    public function testGetActivePromotions()
+    {
+        $this->assertEmpty($this->promotions->getActivePromotions());
+        $this->promotions->add($firstActivePromotion = $this->generatePromotion());
+        $this->promotions->add($secondActivePromotion = $this->generatePromotion());
+
+        $activePromotions = $this->promotions->getActivePromotions();
+        $this->assertCount(2, $activePromotions);
+        $this->assertContains($firstActivePromotion, $activePromotions);
+        $this->assertContains($secondActivePromotion, $activePromotions);
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Cart\Entity;
+namespace Project\Tests\Unit\Modules\Cart\Entity\Cart;
 
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 
-class UpdateCartItemTest extends \PHPUnit\Framework\TestCase
+class UpdateCartItemsTest extends \PHPUnit\Framework\TestCase
 {
     use CartFactory, AssertEvents;
 
@@ -16,9 +16,10 @@ class UpdateCartItemTest extends \PHPUnit\Framework\TestCase
         $cart = $this->generateCart();
         $item = $this->generateCartItem();
         $cart->addItem($item);
-        $this->assertCount(1, $cart->getItems());
-        $this->assertTrue($item->equalsTo($cart->getItems()[0]));
         $this->assertNotEmpty($cart->getUpdatedAt());
+        $this->assertCount(1, $cart->getItems());
+        $foundItem = $cart->getItem($item->getId());
+        $this->assertSame($item, $foundItem);
         $this->assertEvents($cart, [new CartUpdated($cart)]);
     }
 
@@ -28,8 +29,6 @@ class UpdateCartItemTest extends \PHPUnit\Framework\TestCase
         $item = $this->generateCartItem();
         $cart->addItem($item);
         $cart->flushEvents();
-        $this->assertCount(1, $cart->getItems());
-        $this->assertTrue($item->equalsTo($cart->getItems()[0]));
 
         $updatedAt = $cart->getUpdatedAt();
         $cart->addItem($item);
@@ -38,33 +37,35 @@ class UpdateCartItemTest extends \PHPUnit\Framework\TestCase
         $this->assertEvents($cart, []);
     }
 
-    public function testUpdateItemQuantity()
+    public function testAddAnotherEqualsItem()
     {
         $cart = $this->generateCart();
         $item = $this->generateCartItem();
-        $updatedItem = $this->makeCartItem(
+        $anotherEqualsItem = $this->makeCartItem(
             CartItemId::random(),
             $item->getProduct(),
             $item->getName(),
             $item->getRegularPrice(),
             $item->getPrice(),
-            $item->getQuantity() + 1,
+            $item->getQuantity(),
             $item->getSize(),
             $item->getColor(),
         );
 
         $cart->addItem($item);
-        $this->assertCount(1, $cart->getItems());
         $cart->flushEvents();
 
         $updatedAt = $cart->getUpdatedAt();
-        $cart->addItem($updatedItem);
+        $cart->addItem($anotherEqualsItem);
         $this->assertCount(1, $cart->getItems());
         $this->assertNotSame($updatedAt, $cart->getUpdatedAt());
 
-        $cartItem = $cart->getItem($updatedItem->getId());
-        $this->assertSame($item->getQuantity() + 1, $cartItem->getQuantity());
+        $foundItem = $cart->getItem($anotherEqualsItem->getId());
+        $this->assertSame($anotherEqualsItem, $foundItem);
         $this->assertEvents($cart, [new CartUpdated($cart)]);
+
+        $this->expectException(\DomainException::class);
+        $cart->getItem($item->getId());
     }
 
     public function testRemoveCartItem()
@@ -74,13 +75,12 @@ class UpdateCartItemTest extends \PHPUnit\Framework\TestCase
         $cart->addItem($item);
         $cart->flushEvents();
 
-        $this->assertCount(1, $cart->getItems());
-        $cartItem = $cart->getItem($item->getId());
-        $cart->removeItem($cartItem->getId());
+        $cart->removeItem($item->getId());
         $this->assertEmpty($cart->getItems());
+        $this->assertEvents($cart, [new CartUpdated($cart)]);
+
         $this->expectException(\DomainException::class);
         $cart->getItem($item->getId());
-        $this->assertEvents($cart, [new CartUpdated($cart)]);
     }
 
     public function testRemoveCartItemIfDoesNotExists()
@@ -89,5 +89,32 @@ class UpdateCartItemTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($cart->getItems());
         $this->expectException(\DomainException::class);
         $cart->removeItem(CartItemId::random());
+    }
+
+    public function testSetCartItems()
+    {
+        $cart = $this->generateCart();
+        $cart->addItem($this->generateCartItem());
+        $cart->flushEvents();
+
+        $newCartItems = [$this->generateCartItem(), $this->generateCartItem()];
+        $oldUpdatedAt = $cart->getUpdatedAt();
+
+        $cart->setItems($newCartItems);
+        $this->assertNotSame($oldUpdatedAt, $cart->getUpdatedAt());
+        $this->assertSame($cart->getItems(), $newCartItems);
+        $this->assertEvents($cart, [new CartUpdated($cart)]);
+    }
+
+    public function testSetSameCartItems()
+    {
+        $cart = $this->generateCart();
+        $cart->addItem($this->generateCartItem());
+        $cart->flushEvents();
+        $oldUpdatedAt = $cart->getUpdatedAt();
+
+        $cart->setItems($cart->getItems());
+        $this->assertNotSame($oldUpdatedAt, $cart->getUpdatedAt());
+        $this->assertEvents($cart, [new CartUpdated($cart)]);
     }
 }

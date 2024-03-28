@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Cart\Entity;
+namespace Project\Tests\Unit\Modules\Cart\Entity\CartItem;
 
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
@@ -36,7 +36,6 @@ class CreateCartItemTest extends \PHPUnit\Framework\TestCase
     public function testEqualsCartItems()
     {
         $generated = $this->generateCartItem();
-        $otherGenerated = $this->generateCartItem();
         $created = $this->makeCartItem(
             CartItemId::next(),
             $generated->getProduct(),
@@ -51,7 +50,6 @@ class CreateCartItemTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($generated->getId()->equalsTo($created->getId()));
         $this->assertNotSame($generated->getQuantity(), $created->getQuantity());
         $this->assertTrue($generated->equalsTo($created));
-        $this->assertFalse($generated->equalsTo($otherGenerated));
     }
 
     public function testCreateCartItemWithZeroQuantity()

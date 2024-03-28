@@ -66,47 +66,30 @@ class Cart extends Aggregate
 
     public function addItem(CartItem $newItem): void
     {
-        if (!$this->sameItemExists($newItem)) {
+        if ($sameItem = $this->getSameItem($newItem)) {
+            $this->replaceItem($sameItem, $newItem);
+        } else {
             $this->items[] = $newItem;
-            $this->updated();
-            return;
         }
 
-        $sameItem = $this->getSameItem($newItem);
-        if ($sameItem->getQuantity() === $newItem->getQuantity()) {
-            return;
-        }
-
-        $this->replaceItem($sameItem, $newItem);
         $this->updated();
     }
 
-    private function sameItemExists(CartItem $item): bool
+    private function getSameItem(CartItem $item): ?CartItem
     {
         foreach ($this->items as $currentItem) {
-            if ($currentItem->equalsTo($item)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private function getSameItem(CartItem $item): CartItem
-    {
-        foreach ($this->items as $currentItem) {
-            if ($currentItem->equalsTo($item)) {
+            if ($item->getId()->equalsTo($currentItem->getId()) || $currentItem->equalsTo($item)) {
                 return $currentItem;
             }
         }
 
-        throw new \DomainException('Cart item not found');
+        return null;
     }
 
     private function replaceItem(CartItem $old, CartItem $new): void
     {
         foreach ($this->items as $index => $currentItem) {
-            if ($currentItem->equalsTo($old)) {
+            if ($old->getId()->equalsTo($currentItem->getId()) || $currentItem->equalsTo($old)) {
                 $this->items[$index] = $new;
             }
         }
@@ -142,6 +125,13 @@ class Cart extends Aggregate
         $this->updatedAt = new \DateTimeImmutable;
     }
 
+	public function setItems(array $cartItems): void
+	{
+        Assert::allIsInstanceOf($cartItems, CartItem::class);
+		$this->items = $cartItems;
+        $this->updated();
+	}
+
     public function deactivate(): void
     {
         if (false === $this->active) {
@@ -176,6 +166,10 @@ class Cart extends Aggregate
     {
         if (null !== $this->promocode) {
             throw new \DomainException('Other promocode already used');
+        }
+
+        if (empty($promocode->getId()->getId())) {
+            throw new \DomainException('Promocode id cant be empty');
         }
 
         if (!$promocode->isActive()) {

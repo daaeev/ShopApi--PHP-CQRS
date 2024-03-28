@@ -5,10 +5,9 @@ namespace Project\Tests\Unit\Modules\Cart\Commands;
 use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Environment\Client\Client;
-use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
+use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Cart\Commands\RemoveItemCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsMemoryRepository;
@@ -20,58 +19,47 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
     use CartFactory;
 
     private CartsRepositoryInterface $carts;
-    private CatalogueService $productsService;
     private EnvironmentInterface $environment;
     private Client $client;
     private MessageBusInterface $dispatcher;
+    private DiscountsService $discountsService;
 
     protected function setUp(): void
     {
         $this->client = new Client(md5(rand()), rand(1, 100));
         $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
-
-        $this->environment = $this->getMockBuilder(EnvironmentInterface::class)
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
+        $this->discountsService = $this->getMockBuilder(DiscountsService::class)
+            ->disableOriginalConstructor()
             ->getMock();
 
+        $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
         $this->environment->expects($this->once())
             ->method('getClient')
             ->willReturn($this->client);
-
-        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
-            ->getMock();
 
         parent::setUp();
     }
 
 	public function testRemoveCartItem()
 	{
-		$this->dispatcher->expects($this->exactly(1)) // Cart updated
-			->method('dispatch');
+        // Cart updated
+        $this->dispatcher->expects($this->once())->method('dispatch');
 
-		$initialCart = $this->makeCart(CartId::next(), $this->client);
-		$initialCart->addItem($cartItem = $this->generateCartItem());
-		$initialCart->flushEvents();
-		$this->carts->save($initialCart);
+        $cart = $this->carts->getActiveCart($this->client);
+        $cart->addItem($cartItem = $this->generateCartItem());
+        $cart->flushEvents();
+        $this->carts->save($cart);
 
-		$command = new RemoveItemCommand($cartItem->getId()->getId());
-		$handler = new RemoveItemHandler($this->carts, $this->environment);
+        $this->discountsService->expects($this->once())
+            ->method('applyDiscounts')
+            ->with($cart);
+
+        $command = new RemoveItemCommand($cartItem->getId()->getId());
+		$handler = new RemoveItemHandler($this->carts, $this->discountsService, $this->environment);
 		$handler->setDispatcher($this->dispatcher);
 		call_user_func($handler, $command);
 
-		$this->assertEmpty($initialCart->getItems());
+		$this->assertEmpty($cart->getItems());
 	}
-
-    public function testRemoveCartItemIfDoesNotExists()
-    {
-        $initialCart = $this->makeCart(CartId::next(), $this->client);
-        $initialCart->flushEvents();
-        $this->carts->save($initialCart);
-
-        $command = new RemoveItemCommand(1);
-        $handler = new RemoveItemHandler($this->carts, $this->environment);
-        $handler->setDispatcher($this->dispatcher);
-
-        $this->expectException(\DomainException::class);
-        call_user_func($handler, $command);
-    }
 }

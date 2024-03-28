@@ -9,6 +9,7 @@ class Promotion extends Model
     protected $table = 'shopping_discounts_promotions';
 
     protected $fillable = [
+        'id',
         'name',
         'start_date',
         'end_date',

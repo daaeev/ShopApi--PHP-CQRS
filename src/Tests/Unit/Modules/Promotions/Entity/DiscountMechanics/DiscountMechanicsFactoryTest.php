@@ -11,7 +11,7 @@ use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Perce
 
 class DiscountMechanicsFactoryTest extends TestCase
 {
-    protected MechanicFactoryInterface $factory;
+    private MechanicFactoryInterface $factory;
 
     protected function setUp(): void
     {
