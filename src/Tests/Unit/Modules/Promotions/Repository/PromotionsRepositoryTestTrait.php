@@ -38,7 +38,7 @@ trait PromotionsRepositoryTestTrait
 		$idObject = $promotion->getId();
 		$id = $promotion->getId()->getId();
 		$name = $promotion->getName();
-		$durationObject = $promotion->getDuration()->toArray();
+		$durationObject = $promotion->getDuration();
 		$duration = $promotion->getDuration()->toArray();
 		$disabled = $promotion->disabled();
 		$discounts = $promotion->getDiscounts();

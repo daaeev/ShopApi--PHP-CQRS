@@ -13,6 +13,7 @@ class Product extends Model
     ];
 
     protected $fillable = [
+        'id',
         'name',
         'code',
         'active',

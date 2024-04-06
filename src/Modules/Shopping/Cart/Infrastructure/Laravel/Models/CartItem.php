@@ -9,6 +9,7 @@ class CartItem extends Model
     protected $table = 'shopping_carts_items';
 
     protected $fillable = [
+        'id',
         'cart_id',
         'product',
         'name',

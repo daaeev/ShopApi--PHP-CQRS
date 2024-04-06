@@ -10,6 +10,7 @@ class Client extends Model
     protected $table = 'clients';
 
     protected $fillable = [
+        'id',
         'hash',
         'firstname',
         'lastname',

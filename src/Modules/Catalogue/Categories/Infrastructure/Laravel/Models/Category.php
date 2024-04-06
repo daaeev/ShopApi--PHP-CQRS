@@ -9,6 +9,7 @@ class Category extends Model
     protected $table = 'catalogue_categories';
 
     protected $fillable = [
+        'id',
         'name',
         'slug',
         'parent_id',

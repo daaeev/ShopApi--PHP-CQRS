@@ -8,6 +8,7 @@ use Illuminate\Contracts\Hashing\Hasher;
 class Administrator extends Model
 {
     protected $fillable = [
+        'id',
         'name',
         'login',
         'password',

@@ -28,7 +28,8 @@ trait PromocodesRepositoryTestTrait
 
 	private function getPromocodeProperties(Promocode $promocode): array
 	{
-		$id = $promocode->getId();
+		$idObject = $promocode->getId();
+		$id = $promocode->getId()->getId();
 		$name = $promocode->getName();
 		$code = $promocode->getCode();
 		$discountPercent = $promocode->getDiscountPercent();
@@ -37,7 +38,7 @@ trait PromocodesRepositoryTestTrait
 		$endDate = $promocode->getEndDate();
 		$createdAt = $promocode->getCreatedAt();
 		$updatedAt = $promocode->getUpdatedAt();
-		return [$id, $name, $code, $discountPercent, $active, $startDate, $endDate, $createdAt, $updatedAt];
+		return [$idObject, $id, $name, $code, $discountPercent, $active, $startDate, $endDate, $createdAt, $updatedAt];
 	}
 
     public function testAddIncrementIds()

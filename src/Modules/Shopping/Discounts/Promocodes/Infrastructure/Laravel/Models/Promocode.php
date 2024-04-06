@@ -9,6 +9,7 @@ class Promocode extends Model
     protected $table = 'shopping_discounts_promocodes';
 
     protected $fillable = [
+        'id',
         'name',
         'code',
         'active',

@@ -46,7 +46,8 @@ trait CartsRepositoryTestTrait
 
 	private function getCartProperties(Cart $cart): array
 	{
-		$id = $cart->getId();
+		$idObject = $cart->getId();
+		$id = $cart->getId()->getId();
 		$client = $cart->getClient();
 		$items = $cart->getItems();
 		$currency = $cart->getCurrency();
@@ -54,7 +55,7 @@ trait CartsRepositoryTestTrait
 		$promocode = $cart->getPromocode();
 		$createdAt = $cart->getCreatedAt();
 		$updatedAt = $cart->getUpdatedAt();
-		return [$id, $client, $items, $currency, $active, $promocode, $createdAt, $updatedAt];
+		return [$idObject, $id, $client, $items, $currency, $active, $promocode, $createdAt, $updatedAt];
 	}
 
 	public function testSaveIncrementIds()
