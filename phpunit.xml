@@ -38,6 +38,14 @@
         <testsuite name="ProjectUnitEvents">
             <directory suffix="Test.php">./src/Tests/Unit/Events</directory>
         </testsuite>
+        <!--Services-->
+        <testsuite name="ProjectUnitServices">
+            <directory suffix="Test.php">./src/Tests/Unit/Services</directory>
+        </testsuite>
+        <!--Services/FileManager-->
+        <testsuite name="ProjectUnitFileManager">
+            <directory suffix="Test.php">./src/Tests/Unit/Services/FileManager</directory>
+        </testsuite>
         <!--Modules/Catalogue/Product-->
         <testsuite name="ProjectUnitProduct">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>
@@ -66,22 +74,21 @@
         <testsuite name="ProjectUnitClient">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Client</directory>
         </testsuite>
-        <!--Services-->
-        <testsuite name="ProjectUnitServices">
-            <directory suffix="Test.php">./src/Tests/Unit/Services</directory>
-        </testsuite>
-        <!--Services/FileManager-->
-        <testsuite name="ProjectUnitFileManager">
-            <directory suffix="Test.php">./src/Tests/Unit/Services/FileManager</directory>
-        </testsuite>
-
 
         <!--END-SECTION-->
         <!--SECTION LARAVEL-->
 
-        <!--CQRS-->
+        <!--MessageBusses-->
         <testsuite name="ProjectLaravelMessageBuses">
             <directory suffix="Test.php">./src/Tests/Laravel/MessageBuses</directory>
+        </testsuite>
+        <!--Services-->
+        <testsuite name="ProjectLaravelServices">
+            <directory suffix="Test.php">./src/Tests/Laravel/Services</directory>
+        </testsuite>
+        <!--Services/FileManager-->
+        <testsuite name="ProjectLaravelFileManager">
+            <directory suffix="Test.php">./src/Tests/Laravel/Services/FileManager</directory>
         </testsuite>
         <!--Modules/Catalogue/Product-->
         <testsuite name="ProjectLaravelProduct">
@@ -110,14 +117,6 @@
         <!--Modules/Client-->
         <testsuite name="ProjectLaravelClient">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Client</directory>
-        </testsuite>
-        <!--Services-->
-        <testsuite name="ProjectLaravelServices">
-            <directory suffix="Test.php">./src/Tests/Laravel/Services</directory>
-        </testsuite>
-        <!--Services/FileManager-->
-        <testsuite name="ProjectLaravelFileManager">
-            <directory suffix="Test.php">./src/Tests/Laravel/Services/FileManager</directory>
         </testsuite>
 
         <!--END-SECTION-->

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cart\Entity\CartItem;
+namespace Project\Tests\Unit\Modules\Cart\Entity\CartItem;
 
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;

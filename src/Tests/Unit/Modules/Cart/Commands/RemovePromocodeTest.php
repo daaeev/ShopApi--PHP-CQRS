@@ -1,6 +1,6 @@
 <?php
 
-namespace Cart\Commands;
+namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Administrators\Entity;
+namespace Project\Tests\Unit\Modules\Administrators\Entity;
 
 use Project\Tests\Unit\Modules\Helpers\AdminFactory;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Client\Repository;
+namespace Project\Tests\Laravel\Modules\Client\Repository;
 
 use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
