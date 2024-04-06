@@ -27,11 +27,7 @@ class UpdateItemHandler implements DispatchEventsInterface
         $client = $this->environment->getClient();
         $cart = $this->carts->getActiveCart($client);
         $item = $cart->getItem(new CartItemId($command->item));
-        $updatedCartItem = $this->cartItemBuilder
-            ->from($item)
-            ->withQuantity($command->quantity)
-            ->build();
-
+        $updatedCartItem = $this->cartItemBuilder->from($item)->withQuantity($command->quantity)->build();
         $cart->addItem($updatedCartItem);
         $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);

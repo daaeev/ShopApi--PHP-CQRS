@@ -14,9 +14,10 @@ class MechanicHandlerFactory implements MechanicHandlerFactoryInterface
 
     public function make(AbstractDiscountMechanic $discountMechanic): MechanicHandlerInterface
 	{
-		return match ($discountMechanic::class) {
+        $class = $discountMechanic::class;
+		return match ($class) {
 			PercentageDiscountMechanic::class => new PercentageDiscountHandler($discountMechanic, $this->cartItemBuilder),
-			default => throw new \DomainException("Discount mechanic '{$discountMechanic::class}' does not have registered handler"),
+			default => throw new \DomainException("Discount mechanic '$class' does not have registered handler"),
 		};
 	}
 }

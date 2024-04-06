@@ -6,8 +6,10 @@ use PHPUnit\Framework\TestCase;
 use Project\Modules\Shopping\Cart\Entity\CartItem;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
+use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage\PercentageDiscountHandler;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage\PercentageDiscountMechanic;
 
 class PercentageMechanicHandlerTest extends TestCase
 {
@@ -15,33 +17,67 @@ class PercentageMechanicHandlerTest extends TestCase
 
     public function testHandle()
     {
-        $cartItem = $this->generateCartItem();
-        $initialCartItemPrice = $cartItem->getPrice();
+        $cartItem = $this->getMockBuilder(CartItem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $discount = $this->generateDiscount(DiscountType::PERCENTAGE);
-        $handler = new PercentageDiscountHandler($discount);
+        $cartItem->expects($this->exactly(2))
+            ->method('getPrice')
+            ->willReturn((float) 100);
 
+
+        $discount = $this->getMockBuilder(PercentageDiscountMechanic::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $discount->expects($this->once())
+            ->method('getPercent')
+            ->willReturn(50);
+
+        $builder = $this->getMockBuilder(CartItemBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $builder->expects($this->once())
+            ->method('from')
+            ->with($cartItem)
+            ->willReturnSelf();
+
+        $builder->expects($this->once())
+            ->method('withPrice')
+            ->with(50)
+            ->willReturnSelf();
+
+        $builder->expects($this->once())
+            ->method('build')
+            ->willReturn($builded = $this->generateCartItem());
+
+        $handler = new PercentageDiscountHandler($discount, $builder);
         $handled = $handler->handle([$cartItem]);
-        $this->assertInstanceOf(CartItem::class, $handled[0]);
-        $this->assertSame($initialCartItemPrice, $cartItem->getPrice());
-        $this->assertTrue($handled[0]->getId()->equalsTo($cartItem->getId()));
-        $this->assertNotSame($cartItem, $handled[0]);
 
-        $itemDiscount = ($cartItem->getPrice() / 100) * $discount->getPercent();
-        $this->assertSame($handled[0]->getPrice(), $cartItem->getPrice() - $itemDiscount);
+        $this->assertCount(1, $handled);
+        $this->assertSame($builded, $handled[0]);
     }
 
     public function testHandleWithEmptyCartItemsArray()
     {
         $discount = $this->generateDiscount(DiscountType::PERCENTAGE);
-        $handler = new PercentageDiscountHandler($discount);
+        $builder = $this->getMockBuilder(CartItemBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $handler = new PercentageDiscountHandler($discount, $builder);
         $this->assertEmpty($handler->handle([]));
     }
 
     public function testHandleWithInvalidCartItemsArray()
     {
         $discount = $this->generateDiscount(DiscountType::PERCENTAGE);
-        $handler = new PercentageDiscountHandler($discount);
+        $builder = $this->getMockBuilder(CartItemBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $handler = new PercentageDiscountHandler($discount, $builder);
         $this->expectException(\InvalidArgumentException::class);
         $handler->handle([1, 2, 3]);
     }

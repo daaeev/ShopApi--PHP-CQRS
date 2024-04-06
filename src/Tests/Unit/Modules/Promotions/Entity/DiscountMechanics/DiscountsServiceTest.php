@@ -4,10 +4,10 @@ namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics;
 
 use PHPUnit\Framework\TestCase;
 use Project\Modules\Shopping\Cart\Entity\Cart;
-use Project\Modules\Shopping\Cart\Entity\CartItem;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Discounts\DiscountsService;
+use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerInterface;
@@ -31,22 +31,30 @@ class DiscountsServiceTest extends TestCase
 
     public function testApplyDiscounts()
     {
-        $cartItemMock = $this->getMockBuilder(CartItem::class)
+        $cartItem = $this->generateCartItem();
+        $cartItems = [$cartItem];
+
+        $builderMock = $this->getMockBuilder(CartItemBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $cartItemMock->expects($this->once())
-            ->method('getRegularPrice')
-            ->willReturn((float) 100);
+        $builderMock->expects($this->exactly(1))
+            ->method('from')
+            ->with($cartItem)
+            ->willReturnSelf();
 
-        $cartItemMock->expects($this->once())
-            ->method('updatePrice')
-            ->with(100);
+        $builderMock->expects($this->exactly(1))
+            ->method('withPrice')
+            ->with($cartItem->getRegularPrice())
+            ->willReturnSelf();
 
-        $cartItems = [$cartItemMock];
+        $builderMock->expects($this->exactly(1))
+            ->method('build')
+            ->willReturn($cartItem);
+
         $cart = $this->getMockBuilder(Cart::class)->disableOriginalConstructor()->getMock();
 
-        $cart->expects($this->exactly(2))
+        $cart->expects($this->once())
             ->method('getItems')
             ->willReturn($cartItems);
 
@@ -67,7 +75,7 @@ class DiscountsServiceTest extends TestCase
             ->with($cartItems)
             ->willReturn($cartItems);
 
-        $service = new DiscountsService($this->promotions, $this->handlerFactory);
+        $service = new DiscountsService($builderMock, $this->promotions, $this->handlerFactory);
         $service->applyDiscounts($cart);
     }
 

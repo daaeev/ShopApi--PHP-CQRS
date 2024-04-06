@@ -6,6 +6,7 @@ use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
+use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
 
 class UpdateCartItemsTest extends \PHPUnit\Framework\TestCase
 {
@@ -18,12 +19,13 @@ class UpdateCartItemsTest extends \PHPUnit\Framework\TestCase
         $cart->addItem($item);
         $this->assertNotEmpty($cart->getUpdatedAt());
         $this->assertCount(1, $cart->getItems());
+
         $foundItem = $cart->getItem($item->getId());
         $this->assertSame($item, $foundItem);
         $this->assertEvents($cart, [new CartUpdated($cart)]);
     }
 
-    public function testAddSameItem()
+    public function testAddEqualsItemWithNotEqualsIds()
     {
         $cart = $this->generateCart();
         $item = $this->generateCartItem();
@@ -31,16 +33,6 @@ class UpdateCartItemsTest extends \PHPUnit\Framework\TestCase
         $cart->flushEvents();
 
         $updatedAt = $cart->getUpdatedAt();
-        $cart->addItem($item);
-        $this->assertCount(1, $cart->getItems());
-        $this->assertSame($updatedAt, $cart->getUpdatedAt());
-        $this->assertEvents($cart, []);
-    }
-
-    public function testAddAnotherEqualsItem()
-    {
-        $cart = $this->generateCart();
-        $item = $this->generateCartItem();
         $anotherEqualsItem = $this->makeCartItem(
             CartItemId::random(),
             $item->getProduct(),
@@ -52,20 +44,41 @@ class UpdateCartItemsTest extends \PHPUnit\Framework\TestCase
             $item->getColor(),
         );
 
+        $cart->addItem($anotherEqualsItem);
+        $this->assertCount(1, $cart->getItems());
+        $this->assertNotSame($updatedAt, $cart->getUpdatedAt());
+        $this->assertEvents($cart, [new CartUpdated($cart)]);
+
+        $foundItem = $cart->getItem($anotherEqualsItem->getId());
+        $this->assertNotSame($item, $foundItem);
+        $this->assertSame($anotherEqualsItem, $foundItem);
+
+        $this->expectException(\DomainException::class);
+        $cart->getItem($item->getId());
+    }
+
+    public function testAddItemWithSameIdButAnotherPriceAndQuantity()
+    {
+        $cart = $this->generateCart();
+        $item = $this->generateCartItem();
         $cart->addItem($item);
         $cart->flushEvents();
 
         $updatedAt = $cart->getUpdatedAt();
-        $cart->addItem($anotherEqualsItem);
+        $builder = new CartItemBuilder;
+        $anotherCartItem = $builder->from($item)
+            ->withPrice($item->getPrice() - 1)
+            ->withQuantity($item->getQuantity() + 1)
+            ->build();
+
+        $cart->addItem($anotherCartItem);
         $this->assertCount(1, $cart->getItems());
         $this->assertNotSame($updatedAt, $cart->getUpdatedAt());
 
-        $foundItem = $cart->getItem($anotherEqualsItem->getId());
-        $this->assertSame($anotherEqualsItem, $foundItem);
+        $foundItem = $cart->getItem($anotherCartItem->getId());
+        $this->assertNotSame($anotherCartItem, $item);
+        $this->assertSame($anotherCartItem, $foundItem);
         $this->assertEvents($cart, [new CartUpdated($cart)]);
-
-        $this->expectException(\DomainException::class);
-        $cart->getItem($item->getId());
     }
 
     public function testRemoveCartItem()
