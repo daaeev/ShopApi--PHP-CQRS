@@ -2,8 +2,8 @@
 
 namespace Project\Tests\Unit\Modules\Helpers;
 
+use Project\Common\Client\Client;
 use Project\Modules\Shopping\Cart\Entity;
-use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\CartItemId;
 
 trait CartFactory

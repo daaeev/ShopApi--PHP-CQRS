@@ -2,7 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Repository;
 
-use Project\Common\Environment\Client\Client;
+use Project\Common\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Common\Repository\NotFoundException;

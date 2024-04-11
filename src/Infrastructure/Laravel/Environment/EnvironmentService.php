@@ -3,10 +3,10 @@
 namespace Project\Infrastructure\Laravel\Environment;
 
 use Project\Common\Language;
+use Project\Common\Client\Client;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
 use Project\Modules\Client\Api\ClientsApi;
-use Project\Common\Environment\Client\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Environment\EnvironmentInterface;
 
@@ -33,20 +33,21 @@ class EnvironmentService implements EnvironmentInterface
         if (empty($hash)) {
             throw new \DomainException('Client hash cookie does not instantiated');
         }
+
         if (mb_strlen($hash) !== $this->hashCookieLength) {
             throw new \DomainException('Client hash cookie does not decrypted. Make sure that EncryptCookies middleware is enabled');
         }
+
         return $hash;
     }
 
     private function retrieveClientId(): int
     {
         try {
-            $client = $this->clients->get($this->retrieveClientHashCookie());
+            return $this->clients->get($this->retrieveClientHashCookie())->id;
         } catch (NotFoundException) {
-            $client = $this->clients->create($this->retrieveClientHashCookie());
+            return $this->clients->create($this->retrieveClientHashCookie())->id;
         }
-        return $client->id;
     }
 
     public function getLanguage(): Language

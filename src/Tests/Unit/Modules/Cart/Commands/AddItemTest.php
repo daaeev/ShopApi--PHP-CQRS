@@ -2,10 +2,10 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
+use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Common\Environment\Client\Client;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;

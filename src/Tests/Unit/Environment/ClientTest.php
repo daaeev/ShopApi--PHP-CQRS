@@ -2,7 +2,7 @@
 
 namespace Project\Tests\Unit\Environment;
 
-use Project\Common\Environment\Client\Client;
+use Project\Common\Client\Client;
 
 class ClientTest extends \PHPUnit\Framework\TestCase
 {

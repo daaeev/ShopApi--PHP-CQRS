@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository;
 
+use Project\Common\Client\Client;
 use Project\Modules\Shopping\Cart\Entity;
 use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Common\Environment\Client\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;

@@ -4,7 +4,7 @@ namespace Project\Modules\Shopping\Api\DTO\Cart;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;
-use Project\Common\Environment\Client\Client;
+use Project\Common\Client\Client;
 use Project\Modules\Shopping\Api\DTO\Promocodes\Promocode;
 
 class Cart implements DTO

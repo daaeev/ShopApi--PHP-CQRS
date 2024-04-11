@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Shopping\Cart\Entity;
 
-use Project\Common\Entity\Aggregate;
 use Webmozart\Assert\Assert;
+use Project\Common\Client\Client;
+use Project\Common\Entity\Aggregate;
 use Project\Common\Product\Currency;
-use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
 use Project\Modules\Shopping\Api\Events\Cart\CartInstantiated;

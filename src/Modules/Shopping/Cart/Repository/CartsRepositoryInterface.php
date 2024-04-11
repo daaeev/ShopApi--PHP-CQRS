@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Cart\Repository;
 
+use Project\Common\Client\Client;
 use Project\Modules\Shopping\Cart\Entity;
-use Project\Common\Environment\Client\Client;
 
 interface CartsRepositoryInterface
 {

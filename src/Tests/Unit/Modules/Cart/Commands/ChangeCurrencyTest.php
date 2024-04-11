@@ -2,8 +2,8 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
+use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
-use Project\Common\Environment\Client\Client;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Cart\Entity\CartItem;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
