@@ -18,7 +18,7 @@ class GetActiveCartHandler
     public function __invoke(GetActiveCartQuery $query): array
     {
         $client = $this->environment->getClient();
-        $cart = $this->carts->getActiveCart($client);
+        $cart = $this->carts->get($client);
         return $this->presenter->present($cart, $this->environment->getLanguage());
     }
 }

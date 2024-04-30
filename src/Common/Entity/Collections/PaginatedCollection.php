@@ -12,6 +12,12 @@ class PaginatedCollection extends Collection
         parent::__construct($entities);
     }
 
+    public function __clone(): void
+    {
+        $this->pagination = clone $this->pagination;
+        parent::__clone();
+    }
+
     public function toArray(): array
     {
         return [

@@ -2,12 +2,13 @@
 
 namespace Project\Modules\Shopping\Cart\Entity;
 
-use Webmozart\Assert\Assert;
 use Project\Common\Client\Client;
 use Project\Common\Entity\Aggregate;
 use Project\Common\Product\Currency;
+use Project\Modules\Shopping\Entity\Offer;
+use Project\Modules\Shopping\Entity\OfferId;
+use Project\Modules\Shopping\Entity\OffersCollection;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
-use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
 use Project\Modules\Shopping\Api\Events\Cart\CartInstantiated;
 use Project\Modules\Shopping\Api\Events\Cart\CartCurrencyChanged;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
@@ -18,42 +19,29 @@ class Cart extends Aggregate
 {
     private CartId $id;
     private Client $client;
-    private array $items;
-    private Currency $currentCurrency;
-    private bool $active = true;
+    private OffersCollection $offers;
+    private Currency $currency;
     private ?Promocode $promocode = null;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
-    public function __construct(
-        CartId $id,
-        Client $client,
-        array $items = []
-    ) {
+    public function __construct(CartId $id, Client $client) {
         $this->id = $id;
         $this->client = $client;
-        $this->items = $items;
-        $this->currentCurrency = Currency::default();
+        $this->offers = new OffersCollection;
+        $this->currency = Currency::default();
         $this->createdAt = new \DateTimeImmutable;
-        $this->guardValidItems();
         $this->addEvent(new CartInstantiated($this));
-    }
-
-    private function guardValidItems()
-    {
-        Assert::allIsInstanceOf($this->items, CartItem::class);
     }
 
 	public function __clone(): void
 	{
 		$this->id = clone $this->id;
 		$this->client = clone $this->client;
+        $this->offers = clone $this->offers;
 		$this->promocode = $this->promocode ? clone $this->promocode : null;
 		$this->createdAt = clone $this->createdAt;
 		$this->updatedAt = $this->updatedAt ? clone $this->updatedAt : null;
-		foreach ($this->items as $index => $cartItem) {
-			$this->items[$index] = clone $cartItem;
-		}
 	}
 
 	public static function instantiate(Client $client): self
@@ -64,59 +52,21 @@ class Cart extends Aggregate
         );
     }
 
-    public function addItem(CartItem $newItem): void
+    public function addOffer(Offer $offer): void
     {
-        if ($sameItem = $this->getSameItem($newItem)) {
-            $this->replaceItem($sameItem, $newItem);
-        } else {
-            $this->items[] = $newItem;
-        }
-
+        $this->offers->add($offer);
         $this->updated();
     }
 
-    private function getSameItem(CartItem $item): ?CartItem
+    public function getOffer(OfferId $offerId): Offer
     {
-        foreach ($this->items as $currentItem) {
-            if ($item->getId()->equalsTo($currentItem->getId()) || $currentItem->equalsTo($item)) {
-                return $currentItem;
-            }
-        }
-
-        return null;
+        return $this->offers->get($offerId);
     }
 
-    private function replaceItem(CartItem $old, CartItem $new): void
+    public function removeOffer(OfferId $offerId): void
     {
-        foreach ($this->items as $index => $currentItem) {
-            if ($old->getId()->equalsTo($currentItem->getId()) || $currentItem->equalsTo($old)) {
-                $this->items[$index] = $new;
-            }
-        }
-    }
-
-    public function getItem(CartItemId $itemId): CartItem
-    {
-        foreach ($this->items as $currentItem) {
-            if ($currentItem->getId()->equalsTo($itemId)) {
-                return $currentItem;
-            }
-        }
-
-        throw new \DomainException('Cart item not found');
-    }
-
-    public function removeItem(CartItemId $itemId): void
-    {
-        foreach ($this->items as $index => $currentItem) {
-            if ($currentItem->getId()->equalsTo($itemId)) {
-                unset($this->items[$index]);
-                $this->updated();
-                return;
-            }
-        }
-
-        throw new \DomainException('Cart item not found');
+        $this->offers->remove($offerId);
+        $this->updated();
     }
 
     private function updated(): void
@@ -125,31 +75,15 @@ class Cart extends Aggregate
         $this->updatedAt = new \DateTimeImmutable;
     }
 
-	public function setItems(array $cartItems): void
+	public function setOffers(array $offers): void
 	{
-        Assert::allIsInstanceOf($cartItems, CartItem::class);
-		$this->items = $cartItems;
+		$this->offers->set($offers);
         $this->updated();
 	}
 
-    public function deactivate(): void
-    {
-        if (false === $this->active) {
-            throw new \DomainException('Cart already deactivated');
-        }
-
-        if (empty($this->items)) {
-            throw new \DomainException('Cant deactivate empty cart');
-        }
-
-        $this->active = false;
-        $this->addEvent(new CartDeactivated($this));
-        $this->updated();
-    }
-
     public function changeCurrency(Currency $currency): void
     {
-        if ($currency === $this->currentCurrency) {
+        if ($currency === $this->currency) {
             return;
         }
 
@@ -157,7 +91,7 @@ class Cart extends Aggregate
             throw new \DomainException('Cant update cart currency to inactive currency ');
         }
 
-        $this->currentCurrency = $currency;
+        $this->currency = $currency;
         $this->addEvent(new CartCurrencyChanged($this));
         $this->updated();
     }
@@ -194,9 +128,11 @@ class Cart extends Aggregate
 
     public function getTotalPrice(): float
     {
-        $totalPrice = array_reduce($this->items, function ($totalPrice, $item) {
-            return $totalPrice + ($item->getPrice() * $item->getQuantity());
-        }, 0);
+        $totalPrice = array_reduce(
+            array: $this->offers->all(),
+            callback: fn ($totalPrice, $item) => $totalPrice + ($item->getPrice() * $item->getQuantity()),
+            initial: 0
+        );
 
         if (null !== $this->promocode) {
             $discountPrice = ($totalPrice / 100) * $this->promocode->getDiscountPercent();
@@ -216,22 +152,17 @@ class Cart extends Aggregate
         return $this->client;
     }
 
-    public function active(): bool
-    {
-        return $this->active;
-    }
-
     /**
-     * @return CartItem[]
+     * @return Offer[]
      */
-    public function getItems(): array
+    public function getOffers(): array
     {
-        return $this->items;
+        return $this->offers->all();
     }
 
     public function getCurrency(): Currency
     {
-        return $this->currentCurrency;
+        return $this->currency;
     }
 
     public function getPromocode(): ?Promocode

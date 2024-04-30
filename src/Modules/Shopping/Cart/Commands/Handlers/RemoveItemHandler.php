@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
-use Project\Modules\Shopping\Cart\Entity\CartItemId;
+use Project\Modules\Shopping\Entity\OfferId;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Cart\Commands\RemoveItemCommand;
@@ -23,8 +23,8 @@ class RemoveItemHandler implements DispatchEventsInterface
     public function __invoke(RemoveItemCommand $command): void
     {
         $client = $this->environment->getClient();
-        $cart = $this->carts->getActiveCart($client);
-        $cart->removeItem(new CartItemId($command->item));
+        $cart = $this->carts->getByClient($client);
+        $cart->removeOffer(OfferId::make($command->item));
         $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());

@@ -4,8 +4,8 @@ namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Common\Product\Currency;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Shopping\Adapters\CatalogueService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
-use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
 use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
@@ -26,18 +26,20 @@ class ChangeCurrencyHandler implements DispatchEventsInterface
     {
         $currency = Currency::from($command->currency);
         $client = $this->environment->getClient();
-        $cart = $this->carts->getActiveCart($client);
+        $cart = $this->carts->getByClient($client);
         $cart->changeCurrency($currency);
 
-        foreach ($cart->getItems() as $cartItem) {
-            $cart->removeItem($cartItem->getId());
-            $cart->addItem($this->productsService->resolveCartItem(
-                $cartItem->getProduct(),
-                $cartItem->getQuantity(),
+        foreach ($cart->getOffers() as $offer) {
+            $offerWithNewCurrency = $this->productsService->resolveOffer(
+                $offer->getProduct(),
+                $offer->getQuantity(),
                 $cart->getCurrency(),
-                $cartItem->getSize(),
-                $cartItem->getColor(),
-            ));
+                $offer->getSize(),
+                $offer->getColor(),
+            );
+
+            $cart->removeOffer($offer->getId());
+            $cart->addOffer($offerWithNewCurrency);
         }
 
         $this->discountsService->applyDiscounts($cart);

@@ -7,5 +7,5 @@ use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 
 interface QueryCartsRepositoryInterface
 {
-    public function getActiveCart(Client $client): DTO\Cart;
+    public function get(Client $client): DTO\Cart;
 }

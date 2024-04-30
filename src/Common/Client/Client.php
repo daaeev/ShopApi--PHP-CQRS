@@ -23,4 +23,9 @@ class Client
     {
         return $this->id;
     }
+
+    public function same(self $other): bool
+    {
+        return $this->id === $other->id;
+    }
 }

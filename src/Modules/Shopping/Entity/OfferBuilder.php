@@ -1,10 +1,10 @@
 <?php
 
-namespace Project\Modules\Shopping\Cart\Entity;
+namespace Project\Modules\Shopping\Entity;
 
-class CartItemBuilder
+class OfferBuilder
 {
-    private ?CartItemId $id = null;
+    private ?OfferId $id = null;
     private ?int $product = null;
     private ?string $name = null;
     private ?float $regularPrice = null; // Price without any discounts
@@ -13,17 +13,17 @@ class CartItemBuilder
     private ?string $size = null;
     private ?string $color = null;
 
-    public function from(CartItem $item): self
+    public function from(Offer $offer): self
     {
         $builder = new self;
-        $builder->id = clone $item->getId();
-        $builder->product = $item->getProduct();
-        $builder->name = $item->getName();
-        $builder->regularPrice = $item->getRegularPrice();
-        $builder->price = $item->getPrice();
-        $builder->quantity = $item->getQuantity();
-        $builder->size = $item->getSize();
-        $builder->color = $item->getColor();
+        $builder->id = clone $offer->getId();
+        $builder->product = $offer->getProduct();
+        $builder->name = $offer->getName();
+        $builder->regularPrice = $offer->getRegularPrice();
+        $builder->price = $offer->getPrice();
+        $builder->quantity = $offer->getQuantity();
+        $builder->size = $offer->getSize();
+        $builder->color = $offer->getColor();
         return $builder;
     }
 
@@ -39,9 +39,9 @@ class CartItemBuilder
         return $this;
     }
 
-    public function build(): CartItem
+    public function build(): Offer
     {
-        $cartItem = new CartItem(
+        $cartItem = new Offer(
             $this->id,
             $this->product,
             $this->name,
@@ -60,7 +60,6 @@ class CartItemBuilder
         $this->quantity = null;
         $this->size = null;
         $this->color = null;
-
         return $cartItem;
     }
 }

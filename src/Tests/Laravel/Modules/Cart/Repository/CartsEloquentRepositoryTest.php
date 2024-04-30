@@ -7,7 +7,7 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Cart\Repository\CartsRepositoryTestTrait;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository\CartsEloquentRepository;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquent2EntityConverter;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquentToEntityConverter;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodesEloquentRepository;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquentToEntityConverter as PromocodeEloquentConverter;
 
@@ -20,7 +20,7 @@ class CartsEloquentRepositoryTest extends \Tests\TestCase
         $this->carts = new CartsEloquentRepository(
             new Hydrator,
 			new IdentityMap,
-            new CartEloquent2EntityConverter(
+            new CartEloquentToEntityConverter(
                 new Hydrator,
                 new PromocodeEloquentConverter(new Hydrator)
             )

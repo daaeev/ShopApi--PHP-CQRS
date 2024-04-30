@@ -14,7 +14,6 @@ class PromotionEntity2DTOConverter
             $entity->getId()->getId(),
             $entity->getName(),
             $entity->getDuration(),
-            $entity->getStatus()->value,
             array_map(function (DiscountMechanics\AbstractDiscountMechanic $discount) {
                 return $discount->toArray();
             }, $entity->getDiscounts()),

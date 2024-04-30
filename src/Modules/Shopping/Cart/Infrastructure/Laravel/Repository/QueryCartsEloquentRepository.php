@@ -8,32 +8,30 @@ use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Modules\Shopping\Cart\Utils\CartEntity2DTOConverter;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
 use Project\Modules\Shopping\Cart\Repository\QueryCartsRepositoryInterface;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquent2EntityConverter;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquentToEntityConverter;
 
 class QueryCartsEloquentRepository implements QueryCartsRepositoryInterface
 {
     public function __construct(
-        private CartEloquent2EntityConverter $eloquentConverter,
+        private CartEloquentToEntityConverter $eloquentConverter,
     ) {}
 
-    public function getActiveCart(Client $client): DTO\Cart
+    public function get(Client $client): DTO\Cart
     {
         $record = Eloquent\Cart::query()
             ->with('items')
             ->where('client_id', $client->getId())
-            ->where('active', true)
             ->first();
 
         if (empty($record)) {
             return new DTO\Cart(
-                0,
-                $client,
-                Currency::default()->value,
-                true,
-                [],
-                0,
-                null,
-                new \DateTimeImmutable,
+                id: 0,
+                client: $client,
+                currency: Currency::default()->value,
+                offers: [],
+                totalPrice: 0,
+                promocode: null,
+                createdAt: new \DateTimeImmutable,
             );
         }
 

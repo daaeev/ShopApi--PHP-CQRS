@@ -7,31 +7,38 @@ use Project\Common\Utils\Arrayable;
 class Collection implements Arrayable, \Iterator
 {
     private int $position = 0;
+    protected array $entities;
 
-    public function __construct(
-        private array $entities
-    ) {
-        $this->entities = array_values($this->entities);
+    public function __construct(array $entities)
+    {
+        $this->entities = array_values($entities);
+    }
+
+    public function __clone(): void
+    {
+        foreach ($this->entities as $index => $value) {
+            if (is_object($value)) {
+                $this->entities[$index] = clone $value;
+            }
+        }
     }
 
     public function toArray(): array
     {
         $items = [];
-
         foreach ($this->entities as $position => $value) {
-            $items[] = $this->hydrateValue($value, $position);
+            $items[] = $this->convertValueToArray($value, $position);
         }
 
         return $items;
     }
 
-    protected function hydrateValue(mixed $value, int $position)
+    protected function convertValueToArray(mixed $value, int $position)
     {
         if (is_array($value)) {
             $items = [];
-
             foreach ($value as $key => $item) {
-                $items[$key] = $this->hydrateValue($item, $key);
+                $items[$key] = $this->convertValueToArray($item, $key);
             }
 
             return $items;
@@ -62,7 +69,7 @@ class Collection implements Arrayable, \Iterator
         ++$this->position;
     }
 
-    public function key(): mixed
+    public function key(): int
     {
         return $this->position;
     }
@@ -75,5 +82,10 @@ class Collection implements Arrayable, \Iterator
     public function rewind(): void
     {
         $this->position = 0;
+    }
+
+    public function all(): array
+    {
+        return $this->entities;
     }
 }

@@ -3,27 +3,27 @@
 namespace Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage;
 
 use Webmozart\Assert\Assert;
-use Project\Modules\Shopping\Cart\Entity\CartItem;
-use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
+use Project\Modules\Shopping\Entity\Offer;
+use Project\Modules\Shopping\Entity\OfferBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerInterface;
 
 class PercentageDiscountHandler implements MechanicHandlerInterface
 {
 	public function __construct(
 		private readonly PercentageDiscountMechanic $discount,
-        private readonly CartItemBuilder $cartItemBuilder,
+        private readonly OfferBuilder $offerBuilder,
 	) {}
 
-	public function handle(array $cartItems): array
+	public function handle(array $offers): array
 	{
-        Assert::allIsInstanceOf($cartItems, CartItem::class);
-		$newCartItems = [];
-		foreach ($cartItems as $cartItem) {
-			$discount = ($cartItem->getPrice() / 100) * $this->discount->getPercent();
-			$newPrice = $cartItem->getPrice() - $discount;
-			$newCartItems[] = $this->cartItemBuilder->from($cartItem)->withPrice($newPrice)->build();
+        Assert::allIsInstanceOf($offers, Offer::class);
+		$newOffers = [];
+		foreach ($offers as $offer) {
+			$discount = ($offer->getPrice() / 100) * $this->discount->getPercent();
+			$newPrice = $offer->getPrice() - $discount;
+            $newOffers[] = $this->offerBuilder->from($offer)->withPrice($newPrice)->build();
 		}
 
-		return $newCartItems;
+		return $newOffers;
 	}
 }

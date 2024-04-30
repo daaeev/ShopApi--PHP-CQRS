@@ -23,9 +23,12 @@ class UsePromocodeHandler implements DispatchEventsInterface
 
     public function __invoke(UsePromocodeCommand $command): void
     {
-        $cart = $this->carts->getActiveCart($this->environment->getClient());
+        $client = $this->environment->getClient();
+        $cart = $this->carts->getByClient($client);
+
         $promocode = $this->promocodes->getByCode($command->promocode);
         $cart->usePromocode($promocode);
+
         $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());

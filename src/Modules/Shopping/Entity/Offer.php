@@ -1,17 +1,17 @@
 <?php
 
-namespace Project\Modules\Shopping\Cart\Entity;
+namespace Project\Modules\Shopping\Entity;
 
 use Webmozart\Assert\Assert;
 
-class CartItem
+class Offer
 {
     public function __construct(
-        private CartItemId $id,
+        private OfferId $id,
         private int $product,
         private string $name,
         private float $regularPrice, // Price without any discounts
-		private float $price, // Price with discounts
+        private float $price, // Price with discounts
         private int $quantity,
         private ?string $size = null,
         private ?string $color = null,
@@ -32,17 +32,17 @@ class CartItem
         Assert::greaterThanEq($this->price, 0);
     }
 
-	private function guardReqularPriceGreaterThanPrice()
-	{
-		Assert::greaterThanEq($this->regularPrice, $this->price);
-	}
+    private function guardReqularPriceGreaterThanPrice()
+    {
+        Assert::greaterThanEq($this->regularPrice, $this->price);
+    }
 
-	public function __clone(): void
-	{
-		$this->id = clone $this->id;
-	}
+    public function __clone(): void
+    {
+        $this->id = clone $this->id;
+    }
 
-	public function equalsTo(self $other): bool
+    public function equalsTo(self $other): bool
     {
         return (
             ($this->getProduct() === $other->getProduct())
@@ -53,7 +53,7 @@ class CartItem
         );
     }
 
-    public function getId(): CartItemId
+    public function getId(): OfferId
     {
         return $this->id;
     }
@@ -68,12 +68,12 @@ class CartItem
         return $this->name;
     }
 
-	public function getRegularPrice(): float
-	{
-		return $this->regularPrice;
-	}
+    public function getRegularPrice(): float
+    {
+        return $this->regularPrice;
+    }
 
-	public function getPrice(): float
+    public function getPrice(): float
     {
         return $this->price;
     }

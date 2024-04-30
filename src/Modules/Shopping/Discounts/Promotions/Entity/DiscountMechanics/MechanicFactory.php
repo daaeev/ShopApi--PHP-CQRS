@@ -6,11 +6,7 @@ use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Perce
 
 class MechanicFactory implements MechanicFactoryInterface
 {
-    public function make(
-        DiscountType $type,
-        array $data,
-        ?DiscountMechanicId $id = null
-    ): AbstractDiscountMechanic {
+    public function make(DiscountType $type, array $data, ?DiscountMechanicId $id = null): AbstractDiscountMechanic {
         return match ($type) {
             DiscountType::PERCENTAGE => new PercentageDiscountMechanic(
                 $id ?? DiscountMechanicId::next(),

@@ -3,9 +3,9 @@
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Shopping\Adapters\CatalogueService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Cart\Commands\AddItemCommand;
-use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
@@ -24,17 +24,16 @@ class AddItemHandler implements DispatchEventsInterface
     public function __invoke(AddItemCommand $command): void
     {
         $client = $this->environment->getClient();
-        $cart = $this->carts->getActiveCart($client);
-		$cartItem = $this->productsService->resolveCartItem(
+        $cart = $this->carts->getByClient($client);
+		$offer = $this->productsService->resolveOffer(
 			$command->product,
 			$command->quantity,
 			$cart->getCurrency(),
 			$command->size,
 			$command->color,
-			guardProductAvailable: true
 		);
 
-        $cart->addItem($cartItem);
+        $cart->addOffer($offer);
         $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());

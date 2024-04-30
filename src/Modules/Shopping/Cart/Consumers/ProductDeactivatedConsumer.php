@@ -32,7 +32,7 @@ class ProductDeactivatedConsumer implements DispatchEventsInterface
             }
         }
 
-        $carts = $this->carts->getActiveCartsWithProduct($event->getDTO()->id);
+        $carts = $this->carts->getCartsWithProduct($event->getDTO()->id);
         foreach ($carts as $cart) {
             $this->removeProductFromCart($cart, $event->getDTO()->id);
         }
@@ -40,9 +40,9 @@ class ProductDeactivatedConsumer implements DispatchEventsInterface
 
     private function removeProductFromCart(Cart $cart, int $product): void
     {
-        foreach ($cart->getItems() as $cartItem) {
-            if ($cartItem->getProduct() === $product) {
-                $cart->removeItem($cartItem->getId());
+        foreach ($cart->getOffers() as $offer) {
+            if ($offer->getProduct() === $product) {
+                $cart->removeOffer($offer->getId());
             }
         }
 

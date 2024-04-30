@@ -31,14 +31,10 @@ class CartsMemoryRepository implements CartsRepositoryInterface
 		throw new NotFoundException('Cart does not exists');
 	}
 
-    public function getActiveCart(Client $client): Entity\Cart
+    public function getByClient(Client $client): Entity\Cart
     {
 		foreach ($this->items as $cart) {
-			if (!$cart->active()) {
-				continue;
-			}
-
-			if ($cart->getClient()->getHash() === $client->getHash()) {
+			if ($cart->getClient()->same($client)) {
 				return $this->identityMap->get($cart->getId()->getId());
 			}
 		}
@@ -48,16 +44,12 @@ class CartsMemoryRepository implements CartsRepositoryInterface
 		return $cart;
     }
 
-    public function getActiveCartsWithProduct(int $product): array
+    public function getCartsWithProduct(int $product): array
     {
         $carts = [];
         foreach ($this->items as $cart) {
-            if (!$cart->active()) {
-                continue;
-            }
-
-            foreach ($cart->getItems() as $cartItem) {
-                if ($cartItem->getProduct() === $product) {
+            foreach ($cart->getOffers() as $offer) {
+                if ($offer->getProduct() === $product) {
 					$carts[] = $this->identityMap->get($cart->getId()->getId());
                 }
             }
@@ -68,15 +60,15 @@ class CartsMemoryRepository implements CartsRepositoryInterface
 
     public function save(Entity\Cart $cart): void
     {
-        $this->guardClientDoesNotHaveAnotherActiveCart($cart);
+        $this->guardClientDoesNotHaveAnotherCart($cart);
 
         if (null === $cart->getId()->getId()) {
             $this->hydrator->hydrate($cart->getId(), ['id' => ++$this->increment]);
         }
 
-        foreach ($cart->getItems() as $cartItem) {
-            if (null === $cartItem->getId()->getId()) {
-                $this->hydrator->hydrate($cartItem->getId(), ['id' => ++$this->increment]);
+        foreach ($cart->getOffers() as $offer) {
+            if (null === $offer->getId()->getId()) {
+                $this->hydrator->hydrate($offer->getId(), ['id' => ++$this->increment]);
             }
         }
 
@@ -87,25 +79,23 @@ class CartsMemoryRepository implements CartsRepositoryInterface
         $this->items[$cart->getId()->getId()] = clone $cart;
     }
 
-    private function guardClientDoesNotHaveAnotherActiveCart(Entity\Cart $cart)
+    private function guardClientDoesNotHaveAnotherCart(Entity\Cart $cart)
     {
-        if (!$cart->active()) {
-            return;
-        }
-
         foreach ($this->items as $currentCart) {
-            if (
-                !$currentCart->getId()->equalsTo($cart->getId())
-                && $this->isSameClient($cart, $currentCart)
-                && $currentCart->active()
-            ) {
-                throw new \DomainException('Client already have active cart');
+            $sameId = $currentCart->getId()->equalsTo($cart->getId());
+            if (!$sameId && $cart->getClient()->same($currentCart->getClient())) {
+                throw new \DomainException('Client already have another cart');
             }
         }
     }
 
-    private function isSameClient(Entity\Cart $cart, Entity\Cart $otherCart): bool
+    public function delete(Entity\Cart $cart): void
     {
-        return $cart->getClient()->getHash() === $otherCart->getClient()->getHash();
+        if (empty($this->items[$cart->getId()->getId()])) {
+            throw new NotFoundException('Cart does not exists');
+        }
+
+        $this->identityMap->remove($cart->getId()->getId());
+        unset($this->items[$cart->getId()->getId()]);
     }
 }

@@ -4,7 +4,7 @@ namespace Project\Modules\Shopping\Cart\Presenters;
 
 use Project\Common\Language;
 use Project\Modules\Shopping\Api\DTO\Cart as DTO;
-use Project\Modules\Shopping\Cart\Adapters\CatalogueService;
+use Project\Modules\Shopping\Adapters\CatalogueService;
 
 class CartPresenter implements CartPresenterInterface
 {
@@ -15,14 +15,14 @@ class CartPresenter implements CartPresenterInterface
     public function present(DTO\Cart $cart, Language $language): array
     {
         $cartAsArray = $cart->toArray();
-        $cartAsArray['items'] = array_map(function (array $item) use ($language) {
-            $item['content'] = $this->catalogueService->presentProduct(
-                $item['product'],
+        $cartAsArray['offers'] = array_map(function (array $offer) use ($language) {
+            $offer['content'] = $this->catalogueService->presentProduct(
+                $offer['product'],
                 $language
             );
 
-            return $item;
-        }, $cartAsArray['items']);
+            return $offer;
+        }, $cartAsArray['offers']);
 
         return $cartAsArray;
     }

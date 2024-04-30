@@ -1,10 +1,10 @@
 <?php
 
-namespace Project\Modules\Shopping\Api\DTO\Cart;
+namespace Project\Modules\Shopping\Api\DTO;
 
 use Project\Common\Utils\Arrayable;
 
-class CartItem implements Arrayable
+class Offer implements Arrayable
 {
     public function __construct(
         public readonly int $id,

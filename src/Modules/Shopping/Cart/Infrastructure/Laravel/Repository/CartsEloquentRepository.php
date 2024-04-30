@@ -9,14 +9,14 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquent2EntityConverter;
+use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquentToEntityConverter;
 
 class CartsEloquentRepository implements CartsRepositoryInterface
 {
     public function __construct(
         private Hydrator $hydrator,
 		private IdentityMap $identityMap,
-        private CartEloquent2EntityConverter $cartEloquentConverter
+        private CartEloquentToEntityConverter $cartEloquentConverter
     ) {}
 
     public function get(Entity\CartId $id): Entity\Cart
@@ -38,9 +38,9 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 		return $cart;
 	}
 
-    public function getActiveCart(Client $client): Entity\Cart
+    public function getByClient(Client $client): Entity\Cart
     {
-		$record = Eloquent\Cart::where(['client_id' => $client->getId(), 'active' => true])->first();
+		$record = Eloquent\Cart::where(['client_id' => $client->getId()])->first();
         if (empty($record)) {
             $cart = Entity\Cart::instantiate($client);
             $this->save($cart);
@@ -56,11 +56,10 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 		return $cart;
     }
 
-    public function getActiveCartsWithProduct(int $product): array
+    public function getCartsWithProduct(int $product): array
     {
         $records = Eloquent\Cart::query()
             ->whereRelation('items', 'product', '=', $product)
-            ->where(['active' => true])
             ->get();
 
 		$carts = [];
@@ -80,7 +79,7 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 
     public function save(Entity\Cart $cart): void
     {
-        $this->guardClientDoesNotHasAnotherActiveCart($cart);
+        $this->guardClientDoesNotHasAnotherCart($cart);
         $this->persist($cart);
 		
 		if (!$this->identityMap->has($cart->getId()->getId())) {
@@ -88,20 +87,15 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 		}
     }
 
-	private function guardClientDoesNotHasAnotherActiveCart(Entity\Cart $cart): void
+	private function guardClientDoesNotHasAnotherCart(Entity\Cart $cart): void
 	{
-		if (!$cart->active()) {
-			return;
-		}
-
-		$anotherActiveCartExists = Eloquent\Cart::query()
+		$anotherCartExists = Eloquent\Cart::query()
 			->where('id', '!=', $cart->getId()->getId())
 			->where('client_id', $cart->getClient()->getId())
-			->where('active', true)
 			->exists();
 
-		if ($anotherActiveCartExists) {
-			throw new \DomainException('Client already have active cart');
+		if ($anotherCartExists) {
+			throw new \DomainException('Client already have another cart');
 		}
 	}
 
@@ -110,7 +104,6 @@ class CartsEloquentRepository implements CartsRepositoryInterface
         $record = Eloquent\Cart::firstOrNew(['id' => $cart->getId()->getId()]);
         $record->client_hash = $cart->getClient()->getHash();
         $record->client_id = $cart->getClient()->getId();
-        $record->active = $cart->active();
         $record->currency = $cart->getCurrency()->value;
         $record->promocode_id = $cart->getPromocode()?->getId()->getId();
         $record->created_at = $cart->getCreatedAt()->format(\DateTimeInterface::RFC3339);
@@ -124,19 +117,34 @@ class CartsEloquentRepository implements CartsRepositoryInterface
     private function persistCartItems(Entity\Cart $cart, Eloquent\Cart $record): void
     {
         $record->items()->delete();
-        foreach ($cart->getItems() as $cartItem) {
+        foreach ($cart->getOffers() as $offer) {
             $cartItemRecord = $record->items()->create([
                 'cart_id' => $cart->getId()->getId(),
-                'product' => $cartItem->getProduct(),
-                'name' => $cartItem->getName(),
-                'regular_price' => $cartItem->getRegularPrice(),
-                'price' => $cartItem->getPrice(),
-                'quantity' => $cartItem->getQuantity(),
-                'size' => $cartItem->getSize(),
-                'color' => $cartItem->getColor(),
+                'product' => $offer->getProduct(),
+                'name' => $offer->getName(),
+                'regular_price' => $offer->getRegularPrice(),
+                'price' => $offer->getPrice(),
+                'quantity' => $offer->getQuantity(),
+                'size' => $offer->getSize(),
+                'color' => $offer->getColor(),
             ]);
 
-            $this->hydrator->hydrate($cartItem->getId(), ['id' => $cartItemRecord->id]);
+            $this->hydrator->hydrate($offer->getId(), ['id' => $cartItemRecord->id]);
         }
+    }
+
+    public function delete(Entity\Cart $cart): void
+    {
+        $id = $cart->getId()->getId();
+        if (empty($id) || !$this->identityMap->has($id)) {
+            throw new NotFoundException('Cart does not exists');
+        }
+
+        if (!$record = Eloquent\Cart::find($id)) {
+            throw new NotFoundException('Cart does not exists');
+        }
+
+        $this->identityMap->remove($id);
+        $record->delete();
     }
 }

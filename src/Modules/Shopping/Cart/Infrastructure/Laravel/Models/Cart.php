@@ -14,7 +14,6 @@ class Cart extends Model
         'client_hash',
         'client_id',
         'currency',
-        'active',
         'promocode_id'
     ];
 

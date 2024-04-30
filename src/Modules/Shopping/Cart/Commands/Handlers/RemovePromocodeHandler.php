@@ -21,7 +21,8 @@ class RemovePromocodeHandler implements DispatchEventsInterface
 
     public function __invoke(RemovePromocodeCommand $command): void
     {
-        $cart = $this->carts->getActiveCart($this->environment->getClient());
+        $client = $this->environment->getClient();
+        $cart = $this->carts->getByClient($client);
         $cart->removePromocode();
         $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
