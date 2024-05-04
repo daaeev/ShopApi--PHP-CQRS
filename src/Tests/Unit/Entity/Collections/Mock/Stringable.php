@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\Entity\Collections\Entities;
+namespace Project\Tests\Unit\Entity\Collections\Mock;
 
 class Stringable
 {

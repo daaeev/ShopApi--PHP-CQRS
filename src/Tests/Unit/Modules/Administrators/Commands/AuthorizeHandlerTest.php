@@ -47,6 +47,7 @@ class AuthorizeHandlerTest extends \PHPUnit\Framework\TestCase
             $this->correctAdminLogin,
             $this->correctAdminPassword
         );
+
         $handler = new AuthorizeHandler($this->auth);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
@@ -66,6 +67,7 @@ class AuthorizeHandlerTest extends \PHPUnit\Framework\TestCase
             $this->correctAdminLogin,
             $this->correctAdminPassword
         );
+
         $handler = new AuthorizeHandler($this->auth);
         $this->expectException(\DomainException::class);
         call_user_func($handler, $command);

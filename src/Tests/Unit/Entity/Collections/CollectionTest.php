@@ -2,41 +2,34 @@
 
 namespace Project\Tests\Unit\Entity\Collections;
 
-use Project\Tests\Unit\Entity\Collections\Entities\TestDTO;
+use Project\Common\Utils\Arrayable;
 use Project\Common\Entity\Collections\Collection;
-use Project\Tests\Unit\Entity\Collections\Entities\Stringable;
-use Project\Tests\Unit\Entity\Collections\Entities\NotStringable;
 
 class CollectionTest extends \PHPUnit\Framework\TestCase
 {
-    public function testForEach()
+    public function testWithNumericKeys()
     {
-        $data = range(1, 5);
-        $collectionData = [];
-        $collection = new Collection($data);
-
+        $nums = range(1, 5);
+        $collection = new Collection($nums);
         foreach ($collection as $key => $value) {
-            $collectionData[$key] = $value;
-            $this->assertSame($data[$key], $value);
+            $this->assertSame($nums[$key], $value);
         }
 
-        $this->assertSame($data, $collectionData);
+        $this->assertSame($nums, $collection->all());
     }
 
-    public function testCheckCollectionItemsKeys()
+    public function testWithStringKeys()
     {
-        $data = [
-            'test1' => 1,
-            'test2' => 2,
-            'test3' => 2,
-        ];
-        $collection = new Collection($data);
-
-        $iter = 0;
+        $nums = ['test1' => 1, 'test2' => 2, 'test3' => 2];
+        $collection = new Collection($nums);
+        $keyAsNum = 0;
         foreach ($collection as $key => $value) {
-            $this->assertSame($iter++, $key);
-            $this->assertArrayNotHasKey($key, $data);
+            $this->assertSame($keyAsNum++, $key);
+            $this->assertArrayNotHasKey($key, $nums);
         }
+
+        $this->assertSame(array_values($nums), $collection->all());
+        $this->assertSame(range(0, 2), array_keys($collection->all()));
     }
 
     public function testToArrayWithScalarValues()
@@ -44,64 +37,66 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $data = [1, true, 'test'];
         $collection = new Collection($data);
         $this->assertSame($data, $collection->toArray());
+        $this->assertSame($data, $collection->all());
     }
 
-    public function testToArrayWithStringableItems()
+    public function testToArrayWithStringableObjects()
     {
-        $data = [new Stringable];
+        $data = [new Mock\Stringable];
         $collection = new Collection($data);
         $this->assertSame(['Stringable'], $collection->toArray());
+        $this->assertSame($data, $collection->all());
     }
 
-    public function testToArrayWithArrayableItems()
+    public function testToArrayWithArrayableObjects()
     {
-        $dto = ['test', 'dto'];
-        $data = [new TestDTO($dto)];
+        $dto = $this->getMockBuilder(Arrayable::class)->getMock();
+        $dto->expects($this->once())
+            ->method('toArray')
+            ->willReturn([1, 2, 3]);
+
+        $data = [$dto];
         $collection = new Collection($data);
-        $this->assertSame([$dto], $collection->toArray());
+        $this->assertSame([[1, 2, 3]], $collection->toArray());
+        $this->assertSame($data, $collection->all());
     }
 
     public function testToArrayWithArrayItems()
     {
-        $dto = ['test', 'dto'];
-        $data = [
-            [1],
-            ['test'],
-            [
-                new TestDTO($dto),
-                new Stringable,
-                new NotStringable
-            ],
-        ];
+        $dto = $this->getMockBuilder(Arrayable::class)->getMock();
+        $dto->expects($this->once())
+            ->method('toArray')
+            ->willReturn([1, 2, 3]);
+
+        $data = [[1], [$dto]];
         $collection = new Collection($data);
-        $this->assertSame([
-            [1],
-            ['test'],
-            [
-                $dto,
-                'Stringable',
-                'Item #2'
-            ]
-        ], $collection->toArray());
+
+        $expected = [[1], [[1, 2, 3]]];
+        $this->assertSame($expected, $collection->toArray());
+        $this->assertSame($data, $collection->all());
     }
 
-    public function testToArrayWithNotStringableItems()
+    public function testToArrayWithNotStringableOrArrayableObjects()
     {
-        $data = [
-            1,
-            new NotStringable,
-            new NotStringable,
-            'test',
-            new NotStringable,
-        ];
+        $data = [new \stdClass, new \stdClass];
         $collection = new Collection($data);
-        $this->assertSame([
-            1,
-            'Item #1',
-            'Item #2',
-            'test',
-            'Item #4'
-        ], $collection->toArray());
+        $this->assertSame(['Item #0', 'Item #1'], $collection->toArray());
+        $this->assertSame($data, $collection->all());
+    }
 
+    public function testCloneWithScalarItems()
+    {
+        $data = [1, true, 'string'];
+        $collection = new Collection($data);
+        $cloned = clone $collection;
+        $this->assertSame($data, $cloned->all());
+    }
+
+    public function testCloneWithObjectsItems()
+    {
+        $data = [new \stdClass];
+        $collection = new Collection($data);
+        $cloned = clone $collection;
+        $this->assertNotSame($data, $cloned->all());
     }
 }

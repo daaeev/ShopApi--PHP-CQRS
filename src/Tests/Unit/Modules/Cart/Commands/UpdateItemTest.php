@@ -3,11 +3,12 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Client\Client;
+use Project\Modules\Shopping\Entity\Offer;
+use Project\Modules\Shopping\Entity\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
-use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Modules\Shopping\Entity\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
-use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Cart\Commands\UpdateItemCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
@@ -16,83 +17,97 @@ use Project\Modules\Shopping\Cart\Commands\Handlers\UpdateItemHandler;
 
 class UpdateItemTest extends \PHPUnit\Framework\TestCase
 {
-    use CartFactory;
+    private Client $client;
+    private Cart $cart;
+    private Offer $offer;
 
     private CartsRepositoryInterface $carts;
-    private EnvironmentInterface $environment;
-    private Client $client;
-    private MessageBusInterface $dispatcher;
     private DiscountsService $discountsService;
-    private CartItemBuilder $builderMock;
+    private EnvironmentInterface $environment;
+    private OfferBuilder $offerBuilder;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->client = new Client(md5(rand()), rand(1, 100));
-        $this->carts = $this->getMockBuilder(CartsRepositoryInterface::class)->getMock();
-        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
-        $this->builderMock = $this->getMockBuilder(CartItemBuilder::class)->getMock();
-        $this->discountsService = $this->getMockBuilder(DiscountsService::class)
+        $this->client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
-        $this->environment->expects($this->once())
-            ->method('getClient')
-            ->willReturn($this->client);
+
+        $this->carts = $this->getMockBuilder(CartsRepositoryInterface::class)->getMock();
+        $this->cart = $this->getMockBuilder(Cart::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->offer = $this->getMockBuilder(Offer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->offerBuilder = $this->getMockBuilder(OfferBuilder::class)->getMock();
+
+        $this->discountsService = $this->getMockBuilder(DiscountsService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
 
         parent::setUp();
     }
 
-    public function testUpdateCartItem()
+    public function testUpdateItem()
     {
-        $cart = $this->getMockBuilder(Cart::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->environment->expects($this->once())
+            ->method('getClient')
+            ->willReturn($this->client);
 
         $this->carts->expects($this->once())
-            ->method('getActiveCart')
+            ->method('getByClient')
             ->with($this->client)
-            ->willReturn($cart);
+            ->willReturn($this->cart);
 
-        $cartItem = $this->generateCartItem();
-        $cart->expects($this->once())
-            ->method('getItem')
-            ->with(self::callback(fn ($id) => $id->equalsTo($cartItem->getId())))
-            ->willReturn($cartItem);
+        $command = new UpdateItemCommand($product = rand(1, 10), $quantity = rand(1, 10));
+
+        $this->cart->expects($this->once())
+            ->method('getOffer')
+            ->with(OfferId::make($product))
+            ->willReturn($this->offer);
+
+        $this->offerBuilder->expects($this->once())
+            ->method('from')
+            ->with($this->offer)
+            ->willReturnSelf();
+
+        $this->offerBuilder->expects($this->once())
+            ->method('withQuantity')
+            ->with($quantity)
+            ->willReturnSelf();
+
+        $this->offerBuilder->expects($this->once())
+            ->method('build')
+            ->willReturn($this->offer);
+
+        $this->cart->expects($this->once())
+            ->method('addOffer')
+            ->with($this->offer);
 
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
-            ->with($cart);
+            ->with($this->cart);
 
-        $this->builderMock->expects($this->once())
-            ->method('from')
-            ->with($cartItem)
-            ->willReturnSelf();
+        $this->carts->expects($this->once())
+            ->method('save')
+            ->with($this->cart);
 
-        $quantityToUpdate = $cartItem->getQuantity() + 1;
-        $this->builderMock->expects($this->once())
-            ->method('withQuantity')
-            ->with($quantityToUpdate)
-            ->willReturnSelf();
-
-        $this->builderMock->expects($this->once())
-            ->method('build')
-            ->willReturn($buildedCartItem = $this->generateCartItem());
-
-        $cart->expects($this->once())
-            ->method('addItem')
-            ->with($buildedCartItem);
-
-        $cart->expects($this->once())
+        $this->cart->expects($this->once())
             ->method('flushEvents')
-            ->willReturn([$event = new CartUpdated($cart)]);
+            ->willReturn([$event = new CartUpdated($this->cart)]);
 
         $this->dispatcher->expects($this->once())
             ->method('dispatch')
             ->with($event);
 
-		$command = new UpdateItemCommand($cartItem->getId()->getId(), $quantityToUpdate);
-        $handler = new UpdateItemHandler($this->carts, $this->discountsService, $this->environment, $this->builderMock);
+		$handler = new UpdateItemHandler($this->carts, $this->discountsService, $this->environment, $this->offerBuilder);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
     }

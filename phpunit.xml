@@ -13,14 +13,8 @@
         <testsuite name="ProjectUnit">
             <directory suffix="Test.php">./src/Tests/Unit</directory>
         </testsuite>
-        <testsuite name="ProjectUnitModules">
-            <directory suffix="Test.php">./src/Tests/Unit/Modules</directory>
-        </testsuite>
         <testsuite name="ProjectLaravel">
             <directory suffix="Test.php">./src/Tests/Laravel</directory>
-        </testsuite>
-        <testsuite name="ProjectLaravelModules">
-            <directory suffix="Test.php">./src/Tests/Laravel/Modules</directory>
         </testsuite>
 
         <!--END-SECTION-->

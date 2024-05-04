@@ -1,18 +1,19 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Cart\Entity\Cart;
+namespace Project\Tests\Unit\Modules\Cart\Entity;
 
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 
 class CloneCartTest extends \PHPUnit\Framework\TestCase
 {
-    use CartFactory, PromocodeFactory;
+    use CartFactory, OffersFactory, PromocodeFactory;
 
     public function testClone()
     {
         $cart = $this->generateCart();
-		$cart->addItem($this->generateCartItem());
+		$cart->addOffer($this->generateOffer());
 		$cart->usePromocode($this->generatePromocode());
 
 		$cloned = clone $cart;
@@ -21,6 +22,6 @@ class CloneCartTest extends \PHPUnit\Framework\TestCase
 		$this->assertNotSame($cart->getPromocode(), $cloned->getPromocode());
 		$this->assertNotSame($cart->getCreatedAt(), $cloned->getCreatedAt());
 		$this->assertNotSame($cart->getUpdatedAt(), $cloned->getUpdatedAt());
-		$this->assertNotSame($cart->getItems(), $cloned->getItems());
+		$this->assertNotSame($cart->getOffers(), $cloned->getOffers());
     }
 }

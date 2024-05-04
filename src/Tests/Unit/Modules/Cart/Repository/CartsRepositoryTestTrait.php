@@ -3,18 +3,19 @@
 namespace Project\Tests\Unit\Modules\Cart\Repository;
 
 use Project\Common\Client\Client;
+use Project\Modules\Shopping\Entity\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Common\Repository\NotFoundException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
-use Project\Modules\Shopping\Cart\Entity\CartItemId;
+use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 
 trait CartsRepositoryTestTrait
 {
-    use CartFactory, PromocodeFactory;
+    use CartFactory, OffersFactory, PromocodeFactory;
 
     protected CartsRepositoryInterface $carts;
     protected PromocodesRepositoryInterface $promocodes;
@@ -28,7 +29,7 @@ trait CartsRepositoryTestTrait
 		$added = $this->carts->get($initial->getId());
 		$this->assertSame($initialProperties, $this->getCartProperties($added));
 
-		$added->addItem($this->generateCartItem());
+		$added->addOffer($this->generateOffer());
 		$added->usePromocode($this->generatePromocode());
 		$this->promocodes->add($added->getPromocode());
 		$addedProperties = $this->getCartProperties($added);
@@ -49,37 +50,28 @@ trait CartsRepositoryTestTrait
 		$idObject = $cart->getId();
 		$id = $cart->getId()->getId();
 		$client = $cart->getClient();
-		$items = $cart->getItems();
+		$offers = $cart->getOffers();
 		$currency = $cart->getCurrency();
-		$active = $cart->active();
 		$promocode = $cart->getPromocode();
 		$createdAt = $cart->getCreatedAt();
 		$updatedAt = $cart->getUpdatedAt();
-		return [$idObject, $id, $client, $items, $currency, $active, $promocode, $createdAt, $updatedAt];
+		return [$idObject, $id, $client, $offers, $currency, $promocode, $createdAt, $updatedAt];
 	}
 
 	public function testSaveIncrementIds()
 	{
 		$cart = $this->makeCart(CartId::next(), new Client('test', 1));
-		$cartItem = $this->makeCartItem(
-			CartItemId::next(),
-			rand(1, 10),
-			md5(rand()),
-			rand(400, 500),
-			rand(100, 400),
-			rand(1, 10)
-		);
-
-		$cart->addItem($cartItem);
+		$cartItem = $this->makeOffer(OfferId::next());
+		$cart->addOffer($cartItem);
 		$this->carts->save($cart);
 
 		$this->assertNotNull($cart->getId()->getId());
-		foreach ($cart->getItems() as $item) {
-			$this->assertNotNull($item->getId()->getId());
+		foreach ($cart->getOffers() as $offer) {
+			$this->assertNotNull($offer->getId()->getId());
 		}
 	}
 
-	public function testSaveAnotherActiveCartWithSameClient()
+	public function testSaveAnotherCartWithSameClient()
 	{
 		$activeCart = $this->generateCart();
 		$anotherActiveCart = $this->makeCart(CartId::next(), $activeCart->getClient());
@@ -88,106 +80,53 @@ trait CartsRepositoryTestTrait
 		$this->carts->save($anotherActiveCart);
 	}
 
-	public function testSaveAnotherDeactivatedCartWithSameClient()
-	{
-		$activeCart = $this->generateCart();
-		$anotherDeactivatedCart = $this->makeCart(CartId::next(), $activeCart->getClient());
-		$anotherDeactivatedCart->addItem($this->generateCartItem());
-		$anotherDeactivatedCart->deactivate();
-
-		$this->carts->save($activeCart);
-		$this->carts->save($anotherDeactivatedCart);
-		$this->expectNotToPerformAssertions();
-	}
-
-	public function testSaveActiveCartIfAnotherDeactivatedCartWithSameClientExists()
-	{
-		$activeCart = $this->generateCart();
-		$anotherDeactivatedCart = $this->makeCart(CartId::next(), $activeCart->getClient());
-		$anotherDeactivatedCart->addItem($this->generateCartItem());
-		$anotherDeactivatedCart->deactivate();
-
-		$this->carts->save($anotherDeactivatedCart);
-		$this->carts->save($activeCart);
-		$this->expectNotToPerformAssertions();
-	}
-
     public function testGetIfDoesNotExists()
     {
         $this->expectException(NotFoundException::class);
         $this->carts->get(CartId::random());
     }
 
-    public function testGetActiveCart()
+    public function testGetByClient()
     {
         $initial = $this->generateCart();
-        $initial->addItem($this->generateCartItem());
+        $initial->addOffer($this->generateOffer());
 		$initialProperties = $this->getCartProperties($initial);
 		$this->carts->save($initial);
 
-        $found = $this->carts->getActiveCart($initial->getClient());
+        $found = $this->carts->getByClient($initial->getClient());
         $this->assertSame($initial, $found);
 		$this->assertSame($initialProperties, $this->getCartProperties($found));
     }
 
-	public function testGetActiveCartIfAnotherDeactivatedExists()
-	{
-		$deactivated = $this->generateCart();
-		$deactivated->addItem($this->generateCartItem());
-		$deactivated->deactivate();
-		$this->carts->save($deactivated);
-
-		$initial = $this->makeCart(CartId::next(), $deactivated->getClient());
-		$this->carts->save($initial);
-
-		$found = $this->carts->getActiveCart($initial->getClient());
-		$this->assertSame($initial, $found);
-	}
-
-    public function testGetActiveCartIfDoesNotExists()
+    public function testGetByClientIfDoesNotExists()
     {
-        $newCart = $this->carts->getActiveCart(new Client('test', 1));
-        $this->assertNotEmpty($newCart->getId()->getId());
-        $this->assertSame($newCart->getClient()->getHash(), 'test');
-        $this->assertSame($newCart->getClient()->getId(), 1);
-        $this->assertEmpty($newCart->getItems());
+        $found = $this->carts->getByClient($client = new Client('hash', 1));
+        $this->assertNotNull($found->getId()->getId());
+        $this->assertSame($found->getClient(), $client);
+        $this->assertEmpty($found->getOffers());
     }
 
-    public function testGetActiveCartsWithProduct()
+    public function testGetCartsWithProduct()
     {
-        $cartItem = $this->generateCartItem();
+        $offer = $this->generateOffer();
 
-        $cart1WithProduct = $this->generateCart();
-		$cart1WithProduct->addItem($cartItem);
-		$cart1Properties = $this->getCartProperties($cart1WithProduct);
-
-        $cart2WithProduct = $this->generateCart();
-		$cart2WithProduct->addItem($cartItem);
-		$cart2Properties = $this->getCartProperties($cart2WithProduct);
+        $cartWithProduct = $this->generateCart();
+		$cartWithProduct->addOffer($offer);
+        $cartWithProductProperties = $this->getCartProperties($cartWithProduct);
+        $this->carts->save($cartWithProduct);
 
 		$cartWithoutProduct = $this->generateCart();
-
-        $deactivatedCartWithProduct = $this->generateCart();
-        $deactivatedCartWithProduct->addItem($cartItem);
-        $deactivatedCartWithProduct->deactivate();
-
-        $this->carts->save($cart1WithProduct);
-        $this->carts->save($cart2WithProduct);
         $this->carts->save($cartWithoutProduct);
-        $this->carts->save($deactivatedCartWithProduct);
 
-        $carts = $this->carts->getActiveCartsWithProduct($cartItem->getProduct());
-        $this->assertCount(2, $carts);
-        $this->assertSame($cart1WithProduct, $carts[0]);
-        $this->assertSame($cart2WithProduct, $carts[1]);
-
-		$this->assertSame($cart1Properties, $this->getCartProperties($carts[0]));
-		$this->assertSame($cart2Properties, $this->getCartProperties($carts[1]));
+        $carts = $this->carts->getCartsWithProduct($offer->getProduct());
+        $this->assertCount(1, $carts);
+        $this->assertSame($cartWithProduct, $carts[0]);
+		$this->assertSame($cartWithProductProperties, $this->getCartProperties($carts[0]));
     }
 
-    public function testGetActiveCartsWithProductIfDoesNotExists()
+    public function testGetCartsWithProductIfDoesNotExists()
     {
-        $carts = $this->carts->getActiveCartsWithProduct(rand(1, 10));
+        $carts = $this->carts->getCartsWithProduct(1);
         $this->assertEmpty($carts);
     }
 }

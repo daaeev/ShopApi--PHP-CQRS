@@ -1,26 +1,25 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Cart\Entity\Cart;
+namespace Project\Tests\Unit\Modules\Offers;
 
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
-use Project\Modules\Shopping\Cart\Entity\CartItemId;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
+use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
-use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
 
 class UpdateCartItemsTest extends \PHPUnit\Framework\TestCase
 {
-    use CartFactory, AssertEvents;
+    use CartFactory, OffersFactory, AssertEvents;
 
     public function testAddItem()
     {
         $cart = $this->generateCart();
-        $item = $this->generateCartItem();
-        $cart->addItem($item);
+        $item = $this->generateOffer();
+        $cart->addOffer($item);
         $this->assertNotEmpty($cart->getUpdatedAt());
-        $this->assertCount(1, $cart->getItems());
+        $this->assertCount(1, $cart->getOffers());
 
-        $foundItem = $cart->getItem($item->getId());
+        $foundItem = $cart->getOffer($item->getId());
         $this->assertSame($item, $foundItem);
         $this->assertEvents($cart, [new CartUpdated($cart)]);
     }

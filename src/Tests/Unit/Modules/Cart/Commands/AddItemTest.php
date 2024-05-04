@@ -4,35 +4,43 @@ namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
-use Project\Common\Repository\IdentityMap;
-use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Modules\Shopping\Entity\Offer;
+use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Adapters\CatalogueService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
+use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Cart\Commands\AddItemCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
-use Project\Modules\Shopping\Cart\Repository\CartsMemoryRepository;
 use Project\Modules\Shopping\Cart\Commands\Handlers\AddItemHandler;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
 class AddItemTest extends \PHPUnit\Framework\TestCase
 {
-    use CartFactory;
+    private Client $client;
+    private Cart $cart;
+    private Offer $offer;
 
     private CartsRepositoryInterface $carts;
     private CatalogueService $productsService;
-    private EnvironmentInterface $environment;
-    private Client $client;
-    private MessageBusInterface $dispatcher;
     private DiscountsService $discountsService;
+    private EnvironmentInterface $environment;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->client = new Client(md5(rand()), rand(1, 100));
-        $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
-        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
-        $this->discountsService = $this->getMockBuilder(DiscountsService::class)
+        $this->client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
+
+        $this->carts = $this->getMockBuilder(CartsRepositoryInterface::class)->getMock();
+        $this->cart = $this->getMockBuilder(Cart::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->offer = $this->getMockBuilder(Offer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -40,24 +48,25 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
-        $this->environment->expects($this->once())
-            ->method('getClient')
-            ->willReturn($this->client);
+        $this->discountsService = $this->getMockBuilder(DiscountsService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
 
         parent::setUp();
     }
 
     public function testAddItem()
     {
-        // Cart updated
-        $this->dispatcher->expects($this->once())->method('dispatch');
+        $this->environment->expects($this->once())
+            ->method('getClient')
+            ->willReturn($this->client);
 
-        $cart = $this->carts->getActiveCart($this->client);
-        $cart->flushEvents();
-        $this->discountsService->expects($this->once())
-            ->method('applyDiscounts')
-            ->with($cart);
+        $this->carts->expects($this->once())
+            ->method('getByClient')
+            ->with($this->client)
+            ->willReturn($this->cart);
 
         $command = new AddItemCommand(
             $product = rand(1, 10),
@@ -66,17 +75,37 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             $color = md5(rand()),
         );
 
+        $this->cart->expects($this->once())
+            ->method('getCurrency')
+            ->willReturn(Currency::default());
+
         $this->productsService->expects($this->once())
-            ->method('resolveCartItem')
-            ->with($product, $quantity, Currency::default(), $size, $color, true)
-            ->willReturn($cartItem = $this->generateCartItem());
+            ->method('resolveOffer')
+            ->with($product, $quantity, Currency::default(), $size, $color)
+            ->willReturn($this->offer);
+
+        $this->cart->expects($this->once())
+            ->method('addOffer')
+            ->with($this->offer);
+
+        $this->discountsService->expects($this->once())
+            ->method('applyDiscounts')
+            ->with($this->cart);
+
+        $this->carts->expects($this->once())
+            ->method('save')
+            ->with($this->cart);
+
+        $this->cart->expects($this->once())
+            ->method('flushEvents')
+            ->willReturn([$event = new CartUpdated($this->cart)]);
+
+        $this->dispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with($event);
 
 		$handler = new AddItemHandler($this->carts, $this->productsService, $this->discountsService, $this->environment);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
-
-        $this->assertCount(1, $cart->getItems());
-        $addedItem = $cart->getItem($cartItem->getId());
-        $this->assertSame($cartItem, $addedItem);
     }
 }

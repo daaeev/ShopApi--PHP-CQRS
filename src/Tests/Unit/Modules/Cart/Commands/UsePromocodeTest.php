@@ -3,75 +3,96 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Client\Client;
-use Project\Common\Repository\IdentityMap;
-use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
-use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Cart\Commands\UsePromocodeCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
-use Project\Modules\Shopping\Cart\Repository\CartsMemoryRepository;
+use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
+use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Shopping\Cart\Commands\Handlers\UsePromocodeHandler;
-use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesMemoryRepository;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
 
 class UsePromocodeTest extends \PHPUnit\Framework\TestCase
 {
-    use CartFactory, PromocodeFactory;
+    private Client $client;
+    private Cart $cart;
+    private Promocode $promocode;
 
     private CartsRepositoryInterface $carts;
     private PromocodesRepositoryInterface $promocodes;
-    private EnvironmentInterface $environment;
-    private Client $client;
-    private MessageBusInterface $dispatcher;
     private DiscountsService $discountsService;
+    private EnvironmentInterface $environment;
+    private MessageBusInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $this->client = new Client(md5(rand()), rand(1, 100));
-        $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
-        $this->promocodes = new PromocodesMemoryRepository(new Hydrator, new IdentityMap);
-        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
-        $this->discountsService = $this->getMockBuilder(DiscountsService::class)
+        $this->client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
-        $this->environment->expects($this->once())
-            ->method('getClient')
-            ->willReturn($this->client);
+
+        $this->carts = $this->getMockBuilder(CartsRepositoryInterface::class)->getMock();
+        $this->cart = $this->getMockBuilder(Cart::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->promocodes = $this->getMockBuilder(PromocodesRepositoryInterface::class)->getMock();
+        $this->promocode = $this->getMockBuilder(Promocode::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->discountsService = $this->getMockBuilder(DiscountsService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
 
         parent::setUp();
     }
 
     public function testUsePromocode()
     {
-        // Promocode added, Cart updated
-        $this->dispatcher->expects($this->exactly(2))->method('dispatch');
+        $this->environment->expects($this->once())
+            ->method('getClient')
+            ->willReturn($this->client);
 
-        $cart = $this->carts->getActiveCart($this->client);
-        $cart->flushEvents();
+        $this->carts->expects($this->once())
+            ->method('getByClient')
+            ->with($this->client)
+            ->willReturn($this->cart);
+
+        $command = new UsePromocodeCommand($promo = 'promo');
+
+        $this->promocodes->expects($this->once())
+            ->method('getByCode')
+            ->with($promo)
+            ->willReturn($this->promocode);
+
+        $this->cart->expects($this->once())
+            ->method('usePromocode')
+            ->with($this->promocode);
 
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
-            ->with($cart);
+            ->with($this->cart);
 
-        $promocode = $this->generatePromocode();
-        $this->promocodes->add($promocode);
+        $this->carts->expects($this->once())
+            ->method('save')
+            ->with($this->cart);
 
-        $command = new UsePromocodeCommand($promocode->getCode());
-		$handler = new UsePromocodeHandler(
-            $this->carts,
-            $this->environment,
-            $this->promocodes,
-            $this->discountsService,
-        );
+        $this->cart->expects($this->once())
+            ->method('flushEvents')
+            ->willReturn([$event = new PromocodeAddedToCart($this->cart)]);
 
+        $this->dispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with($event);
+
+		$handler = new UsePromocodeHandler($this->carts, $this->environment, $this->promocodes, $this->discountsService);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
-
-        $this->assertSame($promocode, $cart->getPromocode());
     }
 }

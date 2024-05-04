@@ -18,11 +18,7 @@ class ProductCreatedConsumer implements DispatchEventsInterface
 
     public function __invoke(ProductCreatedEvent $event)
     {
-        $command = new UpdateProductSettingsCommand(
-            $event->getDTO()->id,
-            false
-        );
-
+        $command = new UpdateProductSettingsCommand(product: $event->getDTO()->id, displayed: false);
         $this->settings->update($command);
     }
 }

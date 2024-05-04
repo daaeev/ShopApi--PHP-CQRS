@@ -1,12 +1,11 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Cart\Entity\Cart;
+namespace Project\Tests\Unit\Modules\Cart\Entity;
 
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
-use Project\Modules\Shopping\Api\Events\Cart\CartDeactivated;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeRemovedFromCart;
@@ -33,35 +32,6 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
     //    $this->expectException(\DomainException::class);
     //    $cart->changeCurrency(Currency::INACTIVE);
     //}
-
-    public function testDeactivate()
-    {
-        $cart = $this->generateCart();
-        $cart->addItem($this->generateCartItem());
-        $cart->flushEvents();
-        $updatedAt = $cart->getUpdatedAt();
-
-        $cart->deactivate();
-        $this->assertFalse($cart->active());
-        $this->assertNotSame($updatedAt, $cart->getUpdatedAt());
-        $this->assertEvents($cart, [new CartDeactivated($cart), new CartUpdated($cart)]);
-    }
-
-    public function testDeactivateIfAlreadyDeactivated()
-    {
-        $cart = $this->generateCart();
-        $cart->addItem($this->generateCartItem());
-        $cart->deactivate();
-        $this->expectException(\DomainException::class);
-        $cart->deactivate();
-    }
-
-    public function testDeactivateEmptyCart()
-    {
-        $cart = $this->generateCart();
-        $this->expectException(\DomainException::class);
-        $cart->deactivate();
-    }
 
     public function testUsePromocode()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Cart\Entity\CartItem;
+namespace Modules\Offers;
 
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
