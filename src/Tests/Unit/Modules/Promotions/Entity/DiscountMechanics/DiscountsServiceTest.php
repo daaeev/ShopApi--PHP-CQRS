@@ -4,37 +4,38 @@ namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics;
 
 use PHPUnit\Framework\TestCase;
 use Project\Modules\Shopping\Cart\Entity\Cart;
+use Project\Modules\Shopping\Entity\OfferBuilder;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
+use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Discounts\DiscountsService;
-use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerInterface;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\HandlerFactoryInterface;
 
 class DiscountsServiceTest extends TestCase
 {
-    use CartFactory, PromotionFactory;
+    use CartFactory, OffersFactory, PromotionFactory;
 
     private PromotionsRepositoryInterface $promotions;
-    private MechanicHandlerFactoryInterface $handlerFactory;
+    private HandlerFactoryInterface $handlerFactory;
     private MechanicHandlerInterface $handler;
 
     protected function setUp(): void
     {
         $this->promotions = $this->getMockBuilder(PromotionsRepositoryInterface::class)->getMock();
-        $this->handlerFactory = $this->getMockBuilder(MechanicHandlerFactoryInterface::class)->getMock();
+        $this->handlerFactory = $this->getMockBuilder(HandlerFactoryInterface::class)->getMock();
         $this->handler = $this->getMockBuilder(MechanicHandlerInterface::class)->getMock();
         parent::setUp();
     }
 
     public function testApplyDiscounts()
     {
-        $cartItem = $this->generateCartItem();
+        $cartItem = $this->generateOffer();
         $cartItems = [$cartItem];
 
-        $builderMock = $this->getMockBuilder(CartItemBuilder::class)
+        $builderMock = $this->getMockBuilder(OfferBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -52,14 +53,16 @@ class DiscountsServiceTest extends TestCase
             ->method('build')
             ->willReturn($cartItem);
 
-        $cart = $this->getMockBuilder(Cart::class)->disableOriginalConstructor()->getMock();
+        $cart = $this->getMockBuilder(Cart::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $cart->expects($this->once())
-            ->method('getItems')
+            ->method('getOffers')
             ->willReturn($cartItems);
 
         $cart->expects($this->once())
-            ->method('setItems')
+            ->method('setOffers')
             ->with($cartItems);
 
         $this->promotions->expects($this->once())

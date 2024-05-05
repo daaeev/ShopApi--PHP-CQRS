@@ -8,9 +8,9 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Modules\Shopping\Discounts\Promotions\Entity;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactoryInterface;
-use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Eloquent;
+use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\MechanicFactoryInterface;
 
 class PromotionsEloquentRepository implements PromotionsRepositoryInterface
 {

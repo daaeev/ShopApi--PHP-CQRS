@@ -6,7 +6,7 @@ use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Promotions\Repository\PromotionsRepositoryTestTrait;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactory;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\MechanicFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Repository\PromotionsEloquentRepository;
 
 class PromotionsEloquentRepositoryTest extends \Tests\TestCase

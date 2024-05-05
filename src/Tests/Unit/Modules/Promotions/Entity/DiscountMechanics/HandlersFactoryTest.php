@@ -3,24 +3,24 @@
 namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics;
 
 use PHPUnit\Framework\TestCase;
+use Project\Modules\Shopping\Entity\OfferBuilder;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Tests\Unit\Modules\Helpers\ReflectionHelper;
-use Project\Modules\Shopping\Cart\Entity\CartItemBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerFactory;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\HandlerFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\AbstractDiscountMechanic;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\HandlerFactoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage\PercentageDiscountHandler;
 
-class MechanicsHandlersFactoryTest extends TestCase
+class HandlersFactoryTest extends TestCase
 {
     use PromotionFactory, ReflectionHelper;
 
-    private MechanicHandlerFactoryInterface $factory;
+    private HandlerFactoryInterface $factory;
 
     protected function setUp(): void
     {
-        $this->factory = new MechanicHandlerFactory(new CartItemBuilder);
+        $this->factory = new HandlerFactory(new OfferBuilder);
         parent::setUp();
     }
 

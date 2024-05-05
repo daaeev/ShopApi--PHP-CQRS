@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsMemoryRepository;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicFactory;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\MechanicFactory;
 
 class PromotionsMemoryRepositoryTest extends TestCase
 {

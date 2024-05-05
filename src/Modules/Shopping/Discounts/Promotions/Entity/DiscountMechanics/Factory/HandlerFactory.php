@@ -1,12 +1,14 @@
 <?php
 
-namespace Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics;
+namespace Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory;
 
 use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\AbstractDiscountMechanic;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage\PercentageDiscountHandler;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage\PercentageDiscountMechanic;
 
-class MechanicHandlerFactory implements MechanicHandlerFactoryInterface
+class HandlerFactory implements HandlerFactoryInterface
 {
     public function __construct(
         private readonly OfferBuilder $offerBuilder,

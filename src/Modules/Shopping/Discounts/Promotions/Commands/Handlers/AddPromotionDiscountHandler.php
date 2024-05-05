@@ -15,7 +15,7 @@ class AddPromotionDiscountHandler implements DispatchEventsInterface
     use DispatchEventsTrait;
 
     public function __construct(
-        private DiscountMechanics\MechanicFactoryInterface $discountFactory,
+        private DiscountMechanics\Factory\MechanicFactoryInterface $discountFactory,
         private PromotionsRepositoryInterface $promotions
     ) {}
 

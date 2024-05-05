@@ -5,14 +5,14 @@ namespace Project\Modules\Shopping\Discounts;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Entity\OfferBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
-use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerFactoryInterface;
+use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\HandlerFactoryInterface;
 
 class DiscountsService
 {
 	public function __construct(
         private readonly OfferBuilder $offerBuilder,
 		private readonly PromotionsRepositoryInterface $promotions,
-		private readonly MechanicHandlerFactoryInterface $handlerFactory,
+		private readonly HandlerFactoryInterface $handlerFactory,
 	) {}
 
 	public function applyDiscounts(Cart $cart): void
