@@ -27,8 +27,6 @@ class DeletePromocodeTest extends \PHPUnit\Framework\TestCase
 
         $this->dispatcher->expects($this->exactly(1)) // promo deleted
             ->method('dispatch');
-
-        parent::setUp();
     }
 
     public function testDelete()

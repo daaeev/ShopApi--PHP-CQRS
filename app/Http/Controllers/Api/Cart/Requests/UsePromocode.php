@@ -16,8 +16,6 @@ class UsePromocode extends ApiRequest
 
     public function getCommand(): UsePromocodeCommand
     {
-        return new UsePromocodeCommand(
-            $this->validated('promocode'),
-        );
+        return new UsePromocodeCommand($this->validated('promocode'));
     }
 }

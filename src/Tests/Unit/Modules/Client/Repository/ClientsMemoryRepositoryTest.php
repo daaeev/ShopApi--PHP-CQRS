@@ -13,6 +13,5 @@ class ClientsMemoryRepositoryTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->clients = new ClientsMemoryRepository(new Hydrator, new IdentityMap);
-        parent::setUp();
     }
 }

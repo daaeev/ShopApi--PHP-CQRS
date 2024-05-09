@@ -13,6 +13,5 @@ class ProductsMemoryRepositoryTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->products = new ProductsMemoryRepository(new Hydrator, new IdentityMap);
-        parent::setUp();
     }
 }

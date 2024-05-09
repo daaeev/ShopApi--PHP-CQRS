@@ -26,8 +26,6 @@ class AuthorizeHandlerTest extends \PHPUnit\Framework\TestCase
 
         $this->dispatcher->expects($this->never())
             ->method('dispatch');
-
-        parent::setUp();
     }
 
     public function testAuthorize()

@@ -6,12 +6,12 @@ use Project\Modules\Shopping\Entity\OfferId;
 use Project\Modules\Shopping\Entity\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
-use Project\Modules\Shopping\Cart\Commands\UpdateItemCommand;
+use Project\Modules\Shopping\Cart\Commands\UpdateOfferCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
-class UpdateItemHandler implements DispatchEventsInterface
+class UpdateOfferHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
@@ -22,7 +22,7 @@ class UpdateItemHandler implements DispatchEventsInterface
         private OfferBuilder $cartItemBuilder,
     ) {}
 
-    public function __invoke(UpdateItemCommand $command): void
+    public function __invoke(UpdateOfferCommand $command): void
     {
         $client = $this->environment->getClient();
         $cart = $this->carts->getByClient($client);

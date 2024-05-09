@@ -13,6 +13,5 @@ class AdminsMemoryRepositoryTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->admins = new AdminsMemoryRepository(new Hydrator, new IdentityMap);
-        parent::setUp();
     }
 }

@@ -26,8 +26,6 @@ class DisablePromotionCommandTest extends \PHPUnit\Framework\TestCase
 
         $this->dispatcher->expects($this->exactly(1)) // promotion updated
             ->method('dispatch');
-
-        parent::setUp();
     }
 
     public function testCreate()

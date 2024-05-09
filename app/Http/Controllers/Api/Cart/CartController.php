@@ -6,22 +6,22 @@ use App\Http\Controllers\BaseApiController;
 
 class CartController extends BaseApiController
 {
-    public function addItem(Requests\AddItem $request)
+    public function addOffer(Requests\AddOffer $request)
     {
         $this->dispatchCommand($request->getCommand());
-        return $this->success([], 'Cart item added');
+        return $this->success([], 'Offer added');
     }
 
-    public function updateItem(Requests\UpdateItem $request)
+    public function updateOffer(Requests\UpdateOffer $request)
     {
         $this->dispatchCommand($request->getCommand());
-        return $this->success([], 'Cart item updated');
+        return $this->success([], 'Offer updated');
     }
 
-    public function removeItem(Requests\RemoveItem $request)
+    public function removeOffer(Requests\RemoveOffer $request)
     {
         $this->dispatchCommand($request->getCommand());
-        return $this->success([], 'Cart item removed');
+        return $this->success([], 'Offer removed');
     }
 
     public function changeCartCurrency(Requests\ChangeCartCurrency $request)
@@ -42,7 +42,7 @@ class CartController extends BaseApiController
         return $this->success([], 'Promocode removed');
     }
 
-    public function getActiveCart(Requests\GetActiveCart $request)
+    public function getActiveCart(Requests\GetCart $request)
     {
         return $this->success($this->dispatchQuery($request->getQuery()));
     }

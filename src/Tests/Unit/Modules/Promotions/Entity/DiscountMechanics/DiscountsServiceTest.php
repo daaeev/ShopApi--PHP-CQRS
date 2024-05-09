@@ -27,7 +27,6 @@ class DiscountsServiceTest extends TestCase
         $this->promotions = $this->getMockBuilder(PromotionsRepositoryInterface::class)->getMock();
         $this->handlerFactory = $this->getMockBuilder(HandlerFactoryInterface::class)->getMock();
         $this->handler = $this->getMockBuilder(MechanicHandlerInterface::class)->getMock();
-        parent::setUp();
     }
 
     public function testApplyDiscounts()

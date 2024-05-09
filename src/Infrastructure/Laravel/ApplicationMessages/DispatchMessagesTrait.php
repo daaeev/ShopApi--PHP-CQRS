@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Http\Utils;
+namespace Project\Infrastructure\Laravel\ApplicationMessages;
 
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Common\ApplicationMessages\ApplicationMessagesManager;
 
-trait DispatchRequests
+trait DispatchMessagesTrait
 {
-    protected ApplicationMessagesManager $messagesManager;
-
     protected function dispatchCommand(object $command): mixed
     {
-        return $this->messagesManager->dispatchCommand($command);
+        return app()->make(ApplicationMessagesManager::class)->dispatchCommand($command);
     }
 
     protected function dispatchQuery(object $query): mixed
     {
-        return $this->messagesManager->dispatchQuery($query);
+        return app()->make(ApplicationMessagesManager::class)->dispatchQuery($query);
     }
 
     protected function dispatchEvent(Event $event): void
     {
-        $this->messagesManager->dispatchEvent($event);
+        app()->make(ApplicationMessagesManager::class)->dispatchEvent($event);
     }
 }

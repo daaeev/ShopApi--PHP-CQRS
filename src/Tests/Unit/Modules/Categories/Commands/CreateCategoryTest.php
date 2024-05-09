@@ -32,8 +32,6 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
 
         $this->dispatcher->expects($this->exactly(2)) // Category created, category updated
             ->method('dispatch');
-
-        parent::setUp();
     }
 
     public function testCreate()

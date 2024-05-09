@@ -14,7 +14,6 @@ class AggregateTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->aggregate = new class extends Aggregate {};
-        parent::setUp();
     }
 
     public function testAddEvent()

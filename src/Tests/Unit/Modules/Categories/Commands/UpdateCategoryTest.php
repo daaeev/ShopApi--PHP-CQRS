@@ -32,8 +32,6 @@ class UpdateCategoryTest extends \PHPUnit\Framework\TestCase
 
         $this->dispatcher->expects($this->once()) // Category updated
             ->method('dispatch');
-
-        parent::setUp();
     }
 
     public function testUpdate()

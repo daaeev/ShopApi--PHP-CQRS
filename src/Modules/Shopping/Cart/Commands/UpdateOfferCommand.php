@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Cart\Commands;
 
-class UpdateItemCommand
+class UpdateOfferCommand
 {
     public function __construct(
         public readonly int $item,

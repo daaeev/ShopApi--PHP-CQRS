@@ -10,9 +10,9 @@ use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Adapters\CatalogueService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
-use Project\Modules\Shopping\Cart\Commands\AddItemCommand;
+use Project\Modules\Shopping\Cart\Commands\AddOfferCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
-use Project\Modules\Shopping\Cart\Commands\Handlers\AddItemHandler;
+use Project\Modules\Shopping\Cart\Commands\Handlers\AddOfferHandler;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
 class AddItemTest extends \PHPUnit\Framework\TestCase
@@ -53,8 +53,6 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
-
-        parent::setUp();
     }
 
     public function testAddItem()
@@ -68,7 +66,7 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             ->with($this->client)
             ->willReturn($this->cart);
 
-        $command = new AddItemCommand(
+        $command = new AddOfferCommand(
             $product = rand(1, 10),
             $quantity = rand(1, 10),
             $size = md5(rand()),
@@ -104,7 +102,7 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             ->method('dispatch')
             ->with($event);
 
-		$handler = new AddItemHandler($this->carts, $this->productsService, $this->discountsService, $this->environment);
+		$handler = new AddOfferHandler($this->carts, $this->productsService, $this->discountsService, $this->environment);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
     }

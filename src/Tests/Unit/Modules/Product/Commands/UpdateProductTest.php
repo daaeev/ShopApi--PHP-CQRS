@@ -32,8 +32,6 @@ class UpdateProductTest extends \PHPUnit\Framework\TestCase
 
         $this->dispatcher->expects($this->exactly(5)) // product updated, code changed, prices changed, activity changed, availability changed
             ->method('dispatch');
-
-        parent::setUp();
     }
 
     public function testUpdate()

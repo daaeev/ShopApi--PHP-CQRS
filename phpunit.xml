@@ -52,6 +52,10 @@
         <testsuite name="ProjectUnitAdmins">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Administrators</directory>
         </testsuite>
+        <!--Modules/Shopping/Entity-->
+        <testsuite name="ProjectUnitOffers">
+            <directory suffix="Test.php">./src/Tests/Unit/Modules/Offers</directory>
+        </testsuite>
         <!--Modules/Shopping/Cart-->
         <testsuite name="ProjectUnitCart">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Cart</directory>

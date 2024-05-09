@@ -28,8 +28,6 @@ class DeleteCategoryTest extends \PHPUnit\Framework\TestCase
 
         $this->dispatcher->expects($this->once()) // Category deleted
             ->method('dispatch');
-
-        parent::setUp();
     }
 
     public function testDelete()

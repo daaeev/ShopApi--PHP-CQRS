@@ -27,8 +27,6 @@ class DeletePromotionCommandTest extends \PHPUnit\Framework\TestCase
 
         $this->dispatcher->expects($this->exactly(1)) // promotion deleted
             ->method('dispatch');
-
-        parent::setUp();
     }
 
     public function testCreate()

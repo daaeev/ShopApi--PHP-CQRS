@@ -2,29 +2,38 @@
 
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
-use Project\Modules\Shopping\Entity\OfferId;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Shopping\Adapters\CatalogueService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
-use Project\Modules\Shopping\Cart\Commands\RemoveItemCommand;
+use Project\Modules\Shopping\Cart\Commands\AddOfferCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 
-class RemoveItemHandler implements DispatchEventsInterface
+class AddOfferHandler implements DispatchEventsInterface
 {
     use DispatchEventsTrait;
 
     public function __construct(
         private CartsRepositoryInterface $carts,
+        private CatalogueService $productsService,
         private DiscountsService $discountsService,
         private EnvironmentInterface $environment
     ) {}
 
-    public function __invoke(RemoveItemCommand $command): void
+    public function __invoke(AddOfferCommand $command): void
     {
         $client = $this->environment->getClient();
         $cart = $this->carts->getByClient($client);
-        $cart->removeOffer(OfferId::make($command->item));
+		$offer = $this->productsService->resolveOffer(
+			$command->product,
+			$command->quantity,
+			$cart->getCurrency(),
+			$command->size,
+			$command->color,
+		);
+
+        $cart->addOffer($offer);
         $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());

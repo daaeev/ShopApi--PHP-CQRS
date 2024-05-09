@@ -16,7 +16,6 @@ class DiscountMechanicsFactoryTest extends TestCase
     protected function setUp(): void
     {
         $this->factory = new MechanicFactory;
-        parent::setUp();
     }
 
     public function testCreateDiscount()

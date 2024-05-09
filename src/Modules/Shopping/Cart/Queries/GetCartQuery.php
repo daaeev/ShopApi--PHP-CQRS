@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Cart\Queries;
 
-class GetActiveCartQuery
+class GetCartQuery
 {
 
 }

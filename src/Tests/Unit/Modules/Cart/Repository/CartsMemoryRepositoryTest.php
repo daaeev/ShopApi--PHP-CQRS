@@ -15,6 +15,5 @@ class CartsMemoryRepositoryTest extends \PHPUnit\Framework\TestCase
     {
         $this->carts = new CartsMemoryRepository(new Hydrator, new IdentityMap);
         $this->promocodes = new PromocodesMemoryRepository(new Hydrator, new IdentityMap);
-        parent::setUp();
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\Cart\Requests;
 
 use App\Http\Requests\ApiRequest;
-use Project\Modules\Shopping\Cart\Commands\AddItemCommand;
+use Project\Modules\Shopping\Cart\Commands\AddOfferCommand;
 
-class AddItem extends ApiRequest
+class AddOffer extends ApiRequest
 {
     public function rules()
     {
@@ -17,10 +17,10 @@ class AddItem extends ApiRequest
         ];
     }
 
-    public function getCommand(): AddItemCommand
+    public function getCommand(): AddOfferCommand
     {
         $validated = $this->validated();
-        return new AddItemCommand(
+        return new AddOfferCommand(
             $validated['product'],
             $validated['quantity'],
             $validated['size'] ?? null,

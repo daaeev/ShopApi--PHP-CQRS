@@ -7,6 +7,15 @@
 	},
 	"item": [
 		{
+			"name": "Technical",
+			"item": [
+				{
+					"name": "NovaPost",
+					"item": []
+				}
+			]
+		},
+		{
 			"name": "CSRF",
 			"item": [
 				{
@@ -665,7 +674,7 @@
 					},
 					"response": [
 						{
-							"name": "Example: Add item",
+							"name": "Example: Add offer",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -748,7 +757,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Cart item added\",\n    \"dataset\": []\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Offer added\",\n    \"dataset\": []\n}"
 						}
 					]
 				},
@@ -781,7 +790,7 @@
 					},
 					"response": [
 						{
-							"name": "Example: Update item",
+							"name": "Example: Update offer",
 							"originalRequest": {
 								"method": "PATCH",
 								"header": [],
@@ -849,7 +858,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Cart item updated\",\n    \"dataset\": []\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Offer updated\",\n    \"dataset\": []\n}"
 						}
 					]
 				},
@@ -872,7 +881,7 @@
 					},
 					"response": [
 						{
-							"name": "Example: Remove item",
+							"name": "Example: Remove offer",
 							"originalRequest": {
 								"method": "DELETE",
 								"header": [],
@@ -930,7 +939,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Cart item removed\",\n    \"dataset\": []\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Offer removed\",\n    \"dataset\": []\n}"
 						}
 					]
 				},
@@ -1250,7 +1259,7 @@
 					},
 					"response": [
 						{
-							"name": "Example: Get active cart",
+							"name": "Example: Get cart",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1318,7 +1327,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"client\": {\n            \"hash\": \"fVySTgejClBHpU3VFfnbzVDKlLGzm6LIv80bY8cQ\",\n            \"id\": 2\n        },\n        \"currency\": \"uah\",\n        \"active\": true,\n        \"totalPrice\": 420,\n        \"promocode\": null,\n        \"items\": [\n            {\n                \"id\": 2,\n                \"product\": 1,\n                \"name\": \"Test product\",\n                \"price\": 420,\n                \"quantity\": 1,\n                \"size\": null,\n                \"color\": null,\n                \"content\": {\n                    \"id\": 1,\n                    \"name\": \"Test product\",\n                    \"code\": \"test\",\n                    \"active\": true,\n                    \"availability\": \"in_stock\",\n                    \"prices\": [\n                        {\n                            \"currency\": \"uah\",\n                            \"price\": 420\n                        }\n                    ],\n                    \"colors\": [\n                        \"Blue\"\n                    ],\n                    \"sizes\": [\n                        \"45\"\n                    ],\n                    \"createdAt\": \"2023-09-10 11:00:16\",\n                    \"updatedAt\": \"2023-09-10 11:00:16\",\n                    \"content\": {\n                        \"language\": \"ua\",\n                        \"name\": \"Test product name\",\n                        \"description\": \"Test product description\"\n                    },\n                    \"images\": {\n                        \"preview\": null,\n                        \"additional\": []\n                    },\n                    \"settings\": {\n                        \"displayed\": false\n                    },\n                    \"categories\": []\n                }\n            }\n        ],\n        \"createdAt\": \"2023-10-12 15:06:31\",\n        \"updatedAt\": \"2023-10-12 15:06:32\"\n    }\n}"
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 1,\n        \"client\": {\n            \"hash\": \"GsgjDeD4rrjbp0ynNeHmSczjx9bNzQEmyHFgGioY\",\n            \"id\": 2\n        },\n        \"currency\": \"uah\",\n        \"totalPrice\": 420,\n        \"promocode\": null,\n        \"offers\": [\n            {\n                \"id\": 4,\n                \"product\": 1,\n                \"name\": \"Test product\",\n                \"regularPrice\": 420,\n                \"price\": 420,\n                \"quantity\": 1,\n                \"size\": null,\n                \"color\": null,\n                \"content\": {\n                    \"id\": 1,\n                    \"name\": \"Test product\",\n                    \"code\": \"test\",\n                    \"active\": true,\n                    \"availability\": \"in_stock\",\n                    \"prices\": [\n                        {\n                            \"currency\": \"uah\",\n                            \"price\": 420\n                        }\n                    ],\n                    \"colors\": [\n                        \"Blue\"\n                    ],\n                    \"sizes\": [\n                        \"45\"\n                    ],\n                    \"createdAt\": \"2024-05-09T11:27:03+03:00\",\n                    \"updatedAt\": \"2024-05-09T11:27:03+03:00\",\n                    \"content\": {\n                        \"language\": \"ua\",\n                        \"name\": \"\",\n                        \"description\": \"\"\n                    },\n                    \"images\": {\n                        \"preview\": null,\n                        \"additional\": []\n                    },\n                    \"settings\": {\n                        \"displayed\": false\n                    },\n                    \"categories\": []\n                }\n            }\n        ],\n        \"createdAt\": \"2024-05-09T11:33:44+03:00\",\n        \"updatedAt\": \"2024-05-09T11:46:09+03:00\"\n    }\n}"
 						}
 					]
 				}
@@ -3460,744 +3469,6 @@
 			]
 		},
 		{
-			"name": "Promocodes",
-			"item": [
-				{
-					"name": "admin/promocodes",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "Test promocode",
-									"type": "text"
-								},
-								{
-									"key": "code",
-									"value": "Test",
-									"type": "text"
-								},
-								{
-									"key": "discountPercent",
-									"value": "30",
-									"type": "text"
-								},
-								{
-									"key": "startDate",
-									"value": "09.09.2023 00:00:00",
-									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "10.09.2023 00:00:00",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{domain}}/api/admin/promocodes",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promocodes"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Create promocode",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "name",
-											"value": "Test promocode",
-											"type": "text"
-										},
-										{
-											"key": "code",
-											"value": "Test",
-											"type": "text"
-										},
-										{
-											"key": "discountPercent",
-											"value": "30",
-											"type": "text"
-										},
-										{
-											"key": "startDate",
-											"value": "09.09.2023 00:00:00",
-											"type": "text"
-										},
-										{
-											"key": "endDate",
-											"value": "10.09.2023 00:00:00",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{domain}}/api/admin/promocodes",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"promocodes"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sat, 09 Sep 2023 11:12:08 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6ImVzWU5MeVhmbHBPclBpdllYbngvZnc9PSIsInZhbHVlIjoiaW56VDYxdlp4U1N2T255VkZtaEU2c3JCSzh1S1kzNkdJcDhKeGI3dm1XMk8vSzhlMWJVNGtWYXBvcnpYbWtVSmNkWjEyWWFtc2gyRUJtRjFZNG9xallwcFVHYXBRZnB0bkRldXdXTHVHRzlZTzg0MytHZFNia0JIMUtkMHFHTGQiLCJtYWMiOiJlNzI3ZGEyY2FiZmNkMWZjYTc3ZTYwMDY3NzNmYmQwNzIxZDUyNjZkOGZjMDI1MzYwZjQxNDFjZDE0Y2RkYjMwIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:12:08 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IkI1b3hSNHZWNDU5bmk0SHN0aG45N3c9PSIsInZhbHVlIjoieDd4VWlueDNvMjBRUEViTnoxSU9GMGlydUxoYmxEOEFtVmpoM1Q4MGZSZXNqZjB2R2V3L1Q5b0xHUElPbklma3lGNDVjMGFtaDRkSHA1c21oTGV5SG9XY0M2NFpDOEp1TXFxaEFFekI4VkdML2VXUExFMEFPdTA4WmtOekJ0V3kiLCJtYWMiOiI4YjYxN2E2NWYwMjIwMGU1NjU0Mzg4NGFhMGZiZGVkYzkwMzU5OWVhMDg4MzJkZTA5MTE2YzhhMmY5NzE2MjVlIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:12:08 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=999"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promocodes/{id}",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Test promocode updated",
-									"type": "text"
-								},
-								{
-									"key": "startDate",
-									"value": "08.09.2023 00:00:00",
-									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "11.09.2023 00:00:00",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{domain}}/api/admin/promocodes/1",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promocodes",
-								"1"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Update promocode",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "name",
-											"value": "Test promocode updated",
-											"type": "text"
-										},
-										{
-											"key": "startDate",
-											"value": "08.09.2023 00:00:00",
-											"type": "text"
-										},
-										{
-											"key": "endDate",
-											"value": "11.09.2023 00:00:00",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{domain}}/api/admin/promocodes/1",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"promocodes",
-										"1"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sat, 09 Sep 2023 11:13:27 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6Ikh0QVZhdWVaV3ZZaUQ4bG5yYWdyUXc9PSIsInZhbHVlIjoiVDBaRnVtNDVzalRyNUE3ZUVUUm5ab1BvS1RSZGlzNkZGS2ExRVZDbDBQcGszWTJ1dXZVM3VmaVRpTU1xWWNzMzNpZGZBNkNTNERMN2tPdDJaWlplNGozYmdLYWpwZUVWTEF4Z00wWUo0TjJmMDdETHlhV2ZDb0t1b2Y4Z3Q1UU4iLCJtYWMiOiI1MWQ4YjhlNTJlMTIyMTAyODQzNzZjODcyZmNiZWQyNGM0ZjMwZDUzYjc5MzdhNmFmNjY0YTU4ODY1Y2E2N2QxIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:13:28 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6ImpaWHptUVduTmdtUnV6RW5EeFdZREE9PSIsInZhbHVlIjoiN2lCeFNiaFRTRmlvdFg5SmhDM3p3My9YRzBXNjZ1WGZCVDA4enhCakVPOUZUc1JCKzdPY1FUQTNCbHNVUUN2V1RPejFWeWVKQkNEUjdTS1lEYzNncUZkSlNXWFd3U3c2ZnIzWGtvbE9pZmhWOFFqVGRTdFk2R2NwRUMwSTQxQmoiLCJtYWMiOiIwYzU3YjdiYjAwYWU4YjNkY2E4N2I1OWMwZTJjMWE1MTM5NjExNzM1NDIwY2UwY2Q5OTM5OTZhMDY5ZmI3MDNiIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:13:28 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=995"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promocodes/{id}/activate",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promocodes/1/activate",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promocodes",
-								"1",
-								"activate"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Activate promocode",
-							"originalRequest": {
-								"method": "PATCH",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/promocodes/1/activate",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"promocodes",
-										"1",
-										"activate"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sat, 09 Sep 2023 11:14:51 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6IitPNE9aNzB4c0dSd21FMkxhREQ1TFE9PSIsInZhbHVlIjoiQlhpaXBLY3lPOTJ5NDJzMmRtTkJ1eGE1MWtlcjFrZkVGSStjTFY3Y01xZFNPVDIzTkxJYWFLd0hOTjRFNUtCbkl4bkF2cktmY2kzcS9vTVNNVlJ3VmpqazVsd0V5RzhNVDRreVdqVGJZWFFJb1Q4d0NhT0gyQ1IrZUM3Y1NwRmgiLCJtYWMiOiJlNzk3ZmI3MDY5NzZhZWMwNWIxOWMxMDA4YjIxNDY2MjQwMTE2ZGNjMWMyYmIxN2ZlNGM1ODIwYzI1YmU5MjQ5IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:14:51 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IlZDTXF6Q2gvOW5YWG5qVWc1U1N6VWc9PSIsInZhbHVlIjoiYldGOFZRQ3ZvQkVmVzM2T0U2REpmVE5MZGNiTUh6UmRISEJERDNsSFhwLzhtckdFUm5kWGlWRFN0eUJXTDZveE5odEoxL1k1Z1FVcjBYZHRMck9zU3hBNzRxTVFWbTBweFFQcGpnTUJRenVLN1RZYWFUK3lKMVp1OGVJekpXMHMiLCJtYWMiOiI0NTQzYjBlNmZhZmExODhjMDg2ZmM4MDBiNjU1YmM5MzA5ZDI1NWZkMWMyYTg0MTc2M2U5ZTk3MzI4YjJkYzJiIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:14:51 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=997"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode activated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promocodes/{id}/deactivate",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promocodes/1/deactivate",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promocodes",
-								"1",
-								"deactivate"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Deactivate promocode",
-							"originalRequest": {
-								"method": "PATCH",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/promocodes/1/deactivate",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"promocodes",
-										"1",
-										"deactivate"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sat, 09 Sep 2023 11:14:37 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6IlBVYjJzekdndEtjNmJqOTR0QVdhcVE9PSIsInZhbHVlIjoidDVJRjFPMWdZQi94eTc1aitpSDdLQU9uaTk2dzBJU3VYMUxmaVZjUnhVS0Q1RHhrZFpYYU1TQzh2NmEvV0k0R3FaWkpnNWJKVjhwaUVVcXhjRk12UmFFMVRPSm5JdGtOaXZCdXdTc1lEcllRTHFkUDFnWGxOMzlncGV1bm9NOGkiLCJtYWMiOiIzOTRmYzc1MWRkNmMzNmM5NDhmZDg0ZWI4NzMwYTNmMTYwZTlmMTA3NGVhZjk0M2YxMzI0MjZiNDEzNjM1Mjc3IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:14:38 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IjU2R01DeVFFWUtUUURGMS9LT1VlYXc9PSIsInZhbHVlIjoiSTllYWNGVVBJT3RJN2FIbUtPdXVINGw1L2VHZzBIMW40MTFFMWFRSGJYb0Q3bENaM2h0R1B4SWV2b1Vvd1psdVFvd2h2SXJvVVl0cE1YT0FGNGFyeFVKVnB0VjNmNDFuOVBJVWVPSEZEbytBMkwxOUZaWlY2VmZKYzZyWWJZcHoiLCJtYWMiOiJlMDRiYTNjMjc0MTIzMjQ4ZmZiYTU5NDQwMDdkZjIwMzYwOGNmZDUzM2NmY2VlNDZkOGUzMjU3OWIwZDkxZDkzIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:14:38 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=999"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode deactivated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promocodes/{id}",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promocodes/1",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promocodes",
-								"1"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Delete promocode",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/promocodes/1",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"promocodes",
-										"1"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sat, 09 Sep 2023 11:15:36 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6Ikt1bGtCYkRDcVlsTG5mbXl2eW1oaUE9PSIsInZhbHVlIjoiRzZpS1BUMmtuZlpVVU1jb09UeWNjdDQ4Y3RYbUl4aE1XR21UYmVuRDd0c0FFeXBiMWVtc29aaHJUNDkwTy9hVVBvaDhvN3lYbmJvUWYvS2tHU1M5cDV3dmIzNU56Y3FWOW9laS9PbjZzL3Q1ZGNWWGpKSGNmd2xiVGFVK1hQTVoiLCJtYWMiOiIxMDYxMzk2ODkzNGZhMjdkMjViODY4YWM3MjgyNzU1YmM1Zjk5YWU2MzE4ZjVhM2ZiNjk1YjRjNjQxNDhmNDZmIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:15:36 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IndWQzVRZ1N0N2tRUXYzcWxmS21qcXc9PSIsInZhbHVlIjoiQ3U1bVdhODJEWFFHNU9TeW0zMFJYYXNFTTNUZ28vMFFQbDJwa1NRNkh3SzVBUmpwOTZ3SWxBWndvV3F3NlNZT0ZYNDNGWGJ3YnJWSUt1SG5kMVlZUGJsNHcwR08xQmJCVWJySnpFalRXYVV2ZnU1Nzc5NEFHY0E4NmZHb2ZncGwiLCJtYWMiOiIyZTViMWM5NTNhMTA4NDIwOGUzMWU1MDNiNWUwODBmZTZjMjIwNDY1ODM1MDU5ZmZkN2MyYzUwMGNhZmU3MjVkIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:15:36 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=995"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promocodes/{id}",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promocodes/2",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promocodes",
-								"2"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Get promocode",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/promocodes/2",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"promocodes",
-										"2"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sat, 09 Sep 2023 11:17:35 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6InFKVXQ5Sm9YcmZsUlUvd0QzTGtMYmc9PSIsInZhbHVlIjoiNjdrNkpnaitPeVluelkzUlB4S3VwVUxnQWZ3Uml2eDNUOEV0dlg5UWNTczJQRy9SWVZISEZrbWROQXNpWHlJQkxyMVNQcDNERVlyaEc4MUVHMW85bCsrek83SGYyQXB6YWo1b0FlcVNiZzFFS1UyZ3FUWnZlZW1wYXRFTHE4L3IiLCJtYWMiOiIxOTU4MzI1NTY0ZDc4Yjk5YzhlODkxYzQzOWViOGI3NWJhNjkxNzA3OWIxNjE2YWQ4M2RlOTZhYTJjNzhmNzcxIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:17:35 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6InhZOGNVQklQQnd4am00cDhFYVJOcVE9PSIsInZhbHVlIjoiT1BZcWpPK2NtOC9KUTVoTk81RUc4S2luV0ZrTFI3b3ZzM3pzSWFxZlBlQVRveXdxNUNsRWpXK3dOczBHSEhYQmw1VjBQMXNrNlJ1YUkwV0FPemVTRWN1b0w4RGFFVEo0aWNFb2pBcTZpUnlBQ012V0pnK3ZLVDBNNjkxSXdnUnAiLCJtYWMiOiJmMzllYTc5OWQyYWExNjdhZGE2ZjdmNzE5YjE3MmI0MDUyMDViMjZjY2VkNzI1OTAyMWYwZmE1MjgyMDJmZGI2IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:17:35 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=996"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test promocode\",\n        \"code\": \"Test\",\n        \"discountPercent\": 30,\n        \"active\": true,\n        \"startDate\": \"2023-09-09 00:00:00\",\n        \"endDate\": \"2023-09-10 00:00:00\",\n        \"createdAt\": \"2023-09-09 11:16:05\",\n        \"updatedAt\": null\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promocodes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promocodes",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promocodes"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "limit",
-									"value": "15",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Example: Get promocodes list",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{domain}}/api/admin/promocodes",
-									"host": [
-										"{{domain}}"
-									],
-									"path": [
-										"api",
-										"admin",
-										"promocodes"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										},
-										{
-											"key": "limit",
-											"value": "15",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sat, 09 Sep 2023 11:18:19 GMT"
-								},
-								{
-									"key": "Server",
-									"value": "Apache"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6Ik5CZ3VweUhPM1JyVDhoQ2l4QjhuSVE9PSIsInZhbHVlIjoiTVpPN3I0dkhDb3FmZVBUUnpIVThrTEtNRWdseG02aWRKL2JFcGJoM0IvVzN4RDRVQitzejI3WGtIcHVtWm5Fcms1OEtvVDZzSk1BU3pYQkdtY2huMWxyUUZZc2w5RmVTQ2RsUVEzSjk0cmpGS2J5N3JkQi9jU1ovR21oRUkzdjQiLCJtYWMiOiJjY2YzMmQzZWIyZDAzNTI2OTg2ZjIxOTFiOTNiNmRhNzI2YTFhNTQwZDRkZWY2ZjIxZWFhMjlhODJmZjc3ZmQ0IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:18:19 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6ImNxSzBBbGxVQlM0S0FpK213ZWhMVXc9PSIsInZhbHVlIjoiQ1pmZFRjUDVlcE9JREFIWXd2aENUQ25Vc2JPZXBVUHY4bjlKUVJZaStHRXJ3MEgrTG5kaGZ2Y1krcjhCRnBaWWl5KzB4a0hQTlRINXllSG91Vi9qdFNHRGxIRWpxcUpPbnFuV2RLcjM2UUxCSG4wSlVWUzJiUDQxZkIwVGEyQVciLCJtYWMiOiJjZDI1YTU2ZWU5NmNlNGNmNTVlNWQyOGU5MWIyZGRlNjU1MDA5Y2M5N2M4YWFhNGI3NWI2MDNhMWU1MjJmYmFhIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:18:19 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=120, max=1000"
-								},
-								{
-									"key": "Connection",
-									"value": "Keep-Alive"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test promocode\",\n                \"code\": \"Test\",\n                \"discountPercent\": 30,\n                \"active\": true,\n                \"startDate\": \"2023-09-09 00:00:00\",\n                \"endDate\": \"2023-09-10 00:00:00\",\n                \"createdAt\": \"2023-09-09 11:16:05\",\n                \"updatedAt\": null\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Test without end date promocode\",\n                \"code\": \"Test2\",\n                \"discountPercent\": 30,\n                \"active\": true,\n                \"startDate\": \"2023-09-09 00:00:00\",\n                \"endDate\": null,\n                \"createdAt\": \"2023-09-09 11:16:53\",\n                \"updatedAt\": null\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 2\n        }\n    }\n}"
-						}
-					]
-				}
-			]
-		},
-		{
 			"name": "Clients",
 			"item": [
 				{
@@ -4409,64 +3680,14 @@
 			]
 		},
 		{
-			"name": "Promotions",
+			"name": "Discounts",
 			"item": [
 				{
-					"name": "admin/promotions",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "Test promotion",
-									"type": "text"
-								},
-								{
-									"key": "startDate",
-									"value": "2024-01-07T10:00:00+00:00",
-									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "2024-01-07T23:00:00+00:00",
-									"type": "text"
-								},
-								{
-									"key": "disabled",
-									"value": "0",
-									"type": "text"
-								},
-								{
-									"key": "discounts[0][type]",
-									"value": "percentage",
-									"type": "text"
-								},
-								{
-									"key": "discounts[0][data][percent]",
-									"value": "10",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions"
-							]
-						}
-					},
-					"response": [
+					"name": "Promotions",
+					"item": [
 						{
-							"name": "Example: Create promotion",
-							"originalRequest": {
+							"name": "admin/promotions",
+							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -4516,98 +3737,112 @@
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 12:38:55 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6IkcyVXF4WThoaVI5T2grWkJSUE53SWc9PSIsInZhbHVlIjoiVXVESmhGQWdJU3lrNGpUMVVyNGtNcXRhL2R2TEJHWFBGY0JSVUc4OUtiY3ByRzczWlNLT1lrbThxa2NJVkFCbVprSElKMHhGeXRvdHhScjJoYnZ5Q01OK2lMaGRrQmd6R0tCcWFCZERkc1BOK2NPVnY1VkU2bGZHS3IyUFJQb2giLCJtYWMiOiJjNDJiMzNmMjc4ZjNiOGYzZjQ3MDE5NGY4NmEzZjQ5MzVjOWE3MjAzYThhYmYyNDNmZmNlOTA1ZTRkMjhhZWFlIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:38:55 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IlR4YndsMHZwQktSSUhMSlc4V1pYSEE9PSIsInZhbHVlIjoiK3BhU3VUS01YOE1VMDErVlB2QUhGeTNzV29udEt0Yk03SklqWU9KQ1hpZlJKYmRnVFBGY0g5c05IOWJid1kxdHNVOE91OUNjV3VQcFVqSllEZVlDNXQ4bmFqYUU1OStRWkVvNjJPcExRd1JFcjVqdDMwQ085WFlEaGxHSEhVU00iLCJtYWMiOiI3MzAzMzc0Yjg0MTlmOThiN2QxNDllNmY3MGY2N2U1YWQ3ZDYzOTRjYTU3YzU5ZGYxMjlkOTZhMzZjMzM3ZjRmIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:38:55 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promotions/{id}",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Test promotion updated",
-									"type": "text"
-								},
-								{
-									"key": "startDate",
-									"value": "2024-01-07T12:00:00+00:00",
-									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "2024-01-07T20:00:00+00:00",
-									"type": "text"
+									"name": "Example: Create promotion",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test promotion",
+													"type": "text"
+												},
+												{
+													"key": "startDate",
+													"value": "2024-01-07T10:00:00+00:00",
+													"type": "text"
+												},
+												{
+													"key": "endDate",
+													"value": "2024-01-07T23:00:00+00:00",
+													"type": "text"
+												},
+												{
+													"key": "disabled",
+													"value": "0",
+													"type": "text"
+												},
+												{
+													"key": "discounts[0][type]",
+													"value": "percentage",
+													"type": "text"
+												},
+												{
+													"key": "discounts[0][data][percent]",
+													"value": "10",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 12:38:55 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IkcyVXF4WThoaVI5T2grWkJSUE53SWc9PSIsInZhbHVlIjoiVXVESmhGQWdJU3lrNGpUMVVyNGtNcXRhL2R2TEJHWFBGY0JSVUc4OUtiY3ByRzczWlNLT1lrbThxa2NJVkFCbVprSElKMHhGeXRvdHhScjJoYnZ5Q01OK2lMaGRrQmd6R0tCcWFCZERkc1BOK2NPVnY1VkU2bGZHS3IyUFJQb2giLCJtYWMiOiJjNDJiMzNmMjc4ZjNiOGYzZjQ3MDE5NGY4NmEzZjQ5MzVjOWE3MjAzYThhYmYyNDNmZmNlOTA1ZTRkMjhhZWFlIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:38:55 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IlR4YndsMHZwQktSSUhMSlc4V1pYSEE9PSIsInZhbHVlIjoiK3BhU3VUS01YOE1VMDErVlB2QUhGeTNzV29udEt0Yk03SklqWU9KQ1hpZlJKYmRnVFBGY0g5c05IOWJid1kxdHNVOE91OUNjV3VQcFVqSllEZVlDNXQ4bmFqYUU1OStRWkVvNjJPcExRd1JFcjVqdDMwQ085WFlEaGxHSEhVU00iLCJtYWMiOiI3MzAzMzc0Yjg0MTlmOThiN2QxNDllNmY3MGY2N2U1YWQ3ZDYzOTRjYTU3YzU5ZGYxMjlkOTZhMzZjMzM3ZjRmIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:38:55 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
 								}
 							]
 						},
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions/1",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions",
-								"1"
-							]
-						}
-					},
-					"response": [
 						{
-							"name": "Example: Update promotion",
-							"originalRequest": {
+							"name": "admin/promotions/{id}",
+							"request": {
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -4643,78 +3878,98 @@
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 12:57:45 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6IlZ3S0lmSWxvbkMyY001WlJZaENrUlE9PSIsInZhbHVlIjoiVmtmcU8yRkhteXdMakJoTHBZRENieWdvdDEyemRUOFdFcE5rcm4wNmRDQUdlVVBFdGl6eWE3VDhBOC9Rd3ZQOTZSS0RDbXVCM0xlVDZXcWhaMlR3ZE1xdDd3YXFlSVZING9KcGFFQWJ1UmtMd3dXNkZoM1dMWDFWdVZCYWREcmciLCJtYWMiOiIzN2I0NDIwZjgzMzY4ZDg3Zjk5Mzk1ZWIwYzY0MDJjNDg1MjUzYWY3YmM3MmY5ZDVmYjk0N2M0YzE3MWJkYWYwIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:57:45 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IkVJSDc0MmhTUzExTzhlZ3pWVngwbEE9PSIsInZhbHVlIjoic3VjdkUzQnVYSmp6b3cvbWdUU1UxbzB0eVMxUmJGMzB4Z2hMak0wU2FLY2ZzNVFiQ2kxTkxlSnA5RXhnOTN0aFdsblJXMWVYOEZETzlocUI2VnVuNFAvRkJFQlFHZW5MeUlzU3V1UTlxN2hnQjBEeW9wUkQxU3dmeWFIaGwzU1giLCJtYWMiOiIxMGI0NjQ0NWZhNzEyZTk5MzM2NjA4ZGM5NzkwN2JiOGM1NmIwYzU3ODQxMTc0NmY5OTkxZWIzMjM4ZmI5ODcxIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:57:45 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+									"name": "Example: Update promotion",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "Test promotion updated",
+													"type": "text"
+												},
+												{
+													"key": "startDate",
+													"value": "2024-01-07T12:00:00+00:00",
+													"type": "text"
+												},
+												{
+													"key": "endDate",
+													"value": "2024-01-07T20:00:00+00:00",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 12:57:45 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IlZ3S0lmSWxvbkMyY001WlJZaENrUlE9PSIsInZhbHVlIjoiVmtmcU8yRkhteXdMakJoTHBZRENieWdvdDEyemRUOFdFcE5rcm4wNmRDQUdlVVBFdGl6eWE3VDhBOC9Rd3ZQOTZSS0RDbXVCM0xlVDZXcWhaMlR3ZE1xdDd3YXFlSVZING9KcGFFQWJ1UmtMd3dXNkZoM1dMWDFWdVZCYWREcmciLCJtYWMiOiIzN2I0NDIwZjgzMzY4ZDg3Zjk5Mzk1ZWIwYzY0MDJjNDg1MjUzYWY3YmM3MmY5ZDVmYjk0N2M0YzE3MWJkYWYwIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:57:45 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IkVJSDc0MmhTUzExTzhlZ3pWVngwbEE9PSIsInZhbHVlIjoic3VjdkUzQnVYSmp6b3cvbWdUU1UxbzB0eVMxUmJGMzB4Z2hMak0wU2FLY2ZzNVFiQ2kxTkxlSnA5RXhnOTN0aFdsblJXMWVYOEZETzlocUI2VnVuNFAvRkJFQlFHZW5MeUlzU3V1UTlxN2hnQjBEeW9wUkQxU3dmeWFIaGwzU1giLCJtYWMiOiIxMGI0NjQ0NWZhNzEyZTk5MzM2NjA4ZGM5NzkwN2JiOGM1NmIwYzU3ODQxMTc0NmY5OTkxZWIzMjM4ZmI5ODcxIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:57:45 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
 								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promotions/{id}",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions/1",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions",
-								"1"
 							]
-						}
-					},
-					"response": [
+						},
 						{
-							"name": "Example: Delete promotion",
-							"originalRequest": {
+							"name": "admin/promotions/{id}",
+							"request": {
 								"method": "DELETE",
 								"header": [],
 								"url": {
@@ -4730,79 +3985,78 @@
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 12:58:55 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6IndFdzVTam9tYmhCMFFTSXBtdXpETmc9PSIsInZhbHVlIjoic0xLSndHZURyYUI2YXNOWDBTekxMbVdKRWdodjlTYTk4OGE4akJLTnJuWHdEa0VoTGFReVVQbDNncDNzSDBuZk9YdlVnbXhLa0NZTGxzSzZra0NhZTV4aW1YOVBaNi9yWkFVdU9tWXB2UEF3K3V0K0pYZkRueGQ5bCsyN1plem0iLCJtYWMiOiJmODI0MmM5OWM2NmFhMzAyZWZkODcxMzcxZmM0Yzg1ZTZlYjFlMTc5ZTM2NWI0OGE2OGVlYTQxMTgwYjczMDk5IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:58:55 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6ImVlaUUyL1A2dW9ZVWtRblRnQnJoNEE9PSIsInZhbHVlIjoiRjAxU1JFZkxNcHBWUFV3VitDVjVBdnBMUmY0UXQvZ1JjTExrYWhLNXdZVUhiekk4d2RDNDhyVHRRcFZHNVYycURKVWVzK3kzYTlhcFgwZmEwaklrVDlacE9QTkdkV2hKYmJDTTcyb3lLaG41dGJSS2U5S3ZTS2thUXRLRVU0MUgiLCJtYWMiOiIxNzAxZDJjMjdmOTYyYmFlODJkZDAwMzYxYjRkYzYxODgzOTA4YjZhMjNkOTc1NTRkYmIwMjVlNDdhMjRhNDAyIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:58:55 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+									"name": "Example: Delete promotion",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 12:58:55 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IndFdzVTam9tYmhCMFFTSXBtdXpETmc9PSIsInZhbHVlIjoic0xLSndHZURyYUI2YXNOWDBTekxMbVdKRWdodjlTYTk4OGE4akJLTnJuWHdEa0VoTGFReVVQbDNncDNzSDBuZk9YdlVnbXhLa0NZTGxzSzZra0NhZTV4aW1YOVBaNi9yWkFVdU9tWXB2UEF3K3V0K0pYZkRueGQ5bCsyN1plem0iLCJtYWMiOiJmODI0MmM5OWM2NmFhMzAyZWZkODcxMzcxZmM0Yzg1ZTZlYjFlMTc5ZTM2NWI0OGE2OGVlYTQxMTgwYjczMDk5IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:58:55 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6ImVlaUUyL1A2dW9ZVWtRblRnQnJoNEE9PSIsInZhbHVlIjoiRjAxU1JFZkxNcHBWUFV3VitDVjVBdnBMUmY0UXQvZ1JjTExrYWhLNXdZVUhiekk4d2RDNDhyVHRRcFZHNVYycURKVWVzK3kzYTlhcFgwZmEwaklrVDlacE9QTkdkV2hKYmJDTTcyb3lLaG41dGJSS2U5S3ZTS2thUXRLRVU0MUgiLCJtYWMiOiIxNzAxZDJjMjdmOTYyYmFlODJkZDAwMzYxYjRkYzYxODgzOTA4YjZhMjNkOTc1NTRkYmIwMjVlNDdhMjRhNDAyIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:58:55 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
 								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promotions/{id}/enable",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions/1/enable",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions",
-								"1",
-								"enable"
 							]
-						}
-					},
-					"response": [
+						},
 						{
-							"name": "Example: Enable promotion",
-							"originalRequest": {
+							"name": "admin/promotions/{id}/enable",
+							"request": {
 								"method": "PATCH",
 								"header": [],
 								"url": {
@@ -4819,79 +4073,79 @@
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 12:57:17 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6Imd6UHNIVzlpV2MvNDJ5czdPMEY1cnc9PSIsInZhbHVlIjoiMWNHZnp1T2hVUU91ZFpTdEFETGRkNFplWnY3aFFHdmVHbDd6TVoraGZ3eEV2bU9MNUVBSmtUQmVabHF0Ly92Rmp2UUorMExvMnZjdW5vM3N5TTh0RzhnNDRPOU1GbmVxV1pZcWFNbUg5bnEyU0ZwdXgxa0FTUHFCR0pmVWM3Zy8iLCJtYWMiOiJhZGRjNjgzZjlkNjE5NmIyNjI5MzczMTY0ZWMwMzA1ZDEwZDcyZTlmMDRhODNjZWIxODc4NzI3MTY4NGIwYmNiIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:57:17 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6InNIS1JMTkZTb1F0TUxFUnlwV2txbmc9PSIsInZhbHVlIjoieUdRT0VQZWZ3MkNicWYxU21jbTJuMHFLQ0l6V2JKZmk1WFh6aXhORm5rbXMvdmZoc1RLTXJ3WGtXeGN5UGwxQUpUeldpODFYVnlMTVd0VVBxeExPYnJmM0xscnplakxIait5eXBwUTBUTXJwTmVLdnd1WUkrdXJkeVdLTFZPU2EiLCJtYWMiOiJiZDE5YWMzMTNiYTQ3NjYyNTlhM2RiNTViNmRlMjhlNDFmYmZjMjBlNGMwODg4NGIzNDcwMmQ3Njg3OTFjZTIxIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:57:17 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+									"name": "Example: Enable promotion",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions/1/enable",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions",
+												"1",
+												"enable"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 12:57:17 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6Imd6UHNIVzlpV2MvNDJ5czdPMEY1cnc9PSIsInZhbHVlIjoiMWNHZnp1T2hVUU91ZFpTdEFETGRkNFplWnY3aFFHdmVHbDd6TVoraGZ3eEV2bU9MNUVBSmtUQmVabHF0Ly92Rmp2UUorMExvMnZjdW5vM3N5TTh0RzhnNDRPOU1GbmVxV1pZcWFNbUg5bnEyU0ZwdXgxa0FTUHFCR0pmVWM3Zy8iLCJtYWMiOiJhZGRjNjgzZjlkNjE5NmIyNjI5MzczMTY0ZWMwMzA1ZDEwZDcyZTlmMDRhODNjZWIxODc4NzI3MTY4NGIwYmNiIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:57:17 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6InNIS1JMTkZTb1F0TUxFUnlwV2txbmc9PSIsInZhbHVlIjoieUdRT0VQZWZ3MkNicWYxU21jbTJuMHFLQ0l6V2JKZmk1WFh6aXhORm5rbXMvdmZoc1RLTXJ3WGtXeGN5UGwxQUpUeldpODFYVnlMTVd0VVBxeExPYnJmM0xscnplakxIait5eXBwUTBUTXJwTmVLdnd1WUkrdXJkeVdLTFZPU2EiLCJtYWMiOiJiZDE5YWMzMTNiYTQ3NjYyNTlhM2RiNTViNmRlMjhlNDFmYmZjMjBlNGMwODg4NGIzNDcwMmQ3Njg3OTFjZTIxIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:57:17 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion enabled\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
 								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion enabled\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promotions/{id}/disable",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions/1/disable",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions",
-								"1",
-								"disable"
 							]
-						}
-					},
-					"response": [
+						},
 						{
-							"name": "Example: Disable promotion",
-							"originalRequest": {
+							"name": "admin/promotions/{id}/disable",
+							"request": {
 								"method": "PATCH",
 								"header": [],
 								"url": {
@@ -4908,95 +4162,79 @@
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 12:56:44 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6IlgvaTg5b3NNczVZQ2IwY1VSRmdGR2c9PSIsInZhbHVlIjoiRlRoK1V2TmJpQXJPbGg4UE94UE1nR2hNbWw1Sm9iQXE3MEJSeE1ZUVQvODB1b1BDZUgrZjJ4a1owSmQzUnJqRHJLUno3ZG1IMjB4NFI1dEJySC9XQVlSTjM1K1FCWUswK2o3Z0VWTDZwZXdGVU5IcUxueGhVaGs1eUp3UkZoNXUiLCJtYWMiOiJhYmU5MjkxYjEyMTMxYzc1ZmFkOTkzNTY2Y2ZiNGRjYWFkYmY1N2ZiMzY4NDU2YmE1ZDlmOWMwOWYwNTg0Y2U1IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:56:44 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6ImhWanF2Uk9vZ0M3RFBXN1lrelpwRGc9PSIsInZhbHVlIjoiZXAyZlFhTUVJTldSTmI0Njl0b3N6Sis1TWkvcDQveE9wTlJDVDlreTRETEx2dXNWbUx1alZHejIyOVhKVXU4MitHVTRoUjlubGxPQUVHaWg1RWpEQm92ZXRuQm12V2craDlrK1BGUUpxcThSZlJmck0yWmZtTVZESUU5b0tFRzAiLCJtYWMiOiIxNTgyNmY4MDE0MTFjNmVmZDg1NzI1OWNlOThhN2Q5NDU3YmIwMTMwNjJlYWRhMGUxZjIxMzg4OWI2YjY0MTE4IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:56:44 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion disabled\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promotions/{id}/discounts",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "discountType",
-									"value": "percentage",
-									"description": "percentage",
-									"type": "text"
-								},
-								{
-									"key": "discountData[percent]",
-									"value": "15",
-									"type": "text"
+									"name": "Example: Disable promotion",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions/1/disable",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions",
+												"1",
+												"disable"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 12:56:44 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IlgvaTg5b3NNczVZQ2IwY1VSRmdGR2c9PSIsInZhbHVlIjoiRlRoK1V2TmJpQXJPbGg4UE94UE1nR2hNbWw1Sm9iQXE3MEJSeE1ZUVQvODB1b1BDZUgrZjJ4a1owSmQzUnJqRHJLUno3ZG1IMjB4NFI1dEJySC9XQVlSTjM1K1FCWUswK2o3Z0VWTDZwZXdGVU5IcUxueGhVaGs1eUp3UkZoNXUiLCJtYWMiOiJhYmU5MjkxYjEyMTMxYzc1ZmFkOTkzNTY2Y2ZiNGRjYWFkYmY1N2ZiMzY4NDU2YmE1ZDlmOWMwOWYwNTg0Y2U1IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:56:44 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6ImhWanF2Uk9vZ0M3RFBXN1lrelpwRGc9PSIsInZhbHVlIjoiZXAyZlFhTUVJTldSTmI0Njl0b3N6Sis1TWkvcDQveE9wTlJDVDlreTRETEx2dXNWbUx1alZHejIyOVhKVXU4MitHVTRoUjlubGxPQUVHaWg1RWpEQm92ZXRuQm12V2craDlrK1BGUUpxcThSZlJmck0yWmZtTVZESUU5b0tFRzAiLCJtYWMiOiIxNTgyNmY4MDE0MTFjNmVmZDg1NzI1OWNlOThhN2Q5NDU3YmIwMTMwNjJlYWRhMGUxZjIxMzg4OWI2YjY0MTE4IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 14:56:44 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion disabled\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
 								}
 							]
 						},
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions/2/discounts",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions",
-								"2",
-								"discounts"
-							]
-						}
-					},
-					"response": [
 						{
-							"name": "Example: Add percentage discount",
-							"originalRequest": {
+							"name": "admin/promotions/{id}/discounts",
+							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -5029,84 +4267,99 @@
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 13:01:35 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6IjBHRzE0U3YzNGcvd0ZXQ2ZwSzJKWEE9PSIsInZhbHVlIjoicDRpdjdrL3NGWUVwd0gxSkRrSklwMVVTT0ZWVVZJNE1qb2JMSUZQd05GWXI3Q1ExTTNiSlRlQUkvUHZxVmJnRTljR01jRis5SEYraDhTcGREam8zaTVFbTNwU1JtMjhGd3o3NUhCbGZ2K1Znb2YvUFFTQVZTMUwySWtxSjdzbEEiLCJtYWMiOiIxOGE3ZDRjYThhZDg3NTRkYzg3Yzg3MmRiOTlkZTk1N2IyODU2YmRhMjM4YTBkNzEwZDczZjAwMmNkMWM2NzIxIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 15:01:35 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6Ilh3cUx2NU4vUGZzQXdKeVZhM2VWOUE9PSIsInZhbHVlIjoiNzBlajVUMGV2Wlg5NDVab3R2Z1IxZGF0WVNWS1VVcVJIRmVCNlFLUXFveWI3MGhvU25YRU11M0d2eXhxbXpyNVpoSmNCc0NPYXIwL2ZsT2VGbnZmOEt3L2t1eW5YemFKcmxoRE9uUGJvN0k1djB1VWwxV0twSkltWWNNWG5Dd20iLCJtYWMiOiI0NDZkOWMxZDNkNGM1Yzk5YjA0YmMxZTVhZGE4MGU4MjAyZjEzYTg5ODk4MzEzODQwZmM2MTVkYjExMzgyMTE5IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 15:01:35 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+									"name": "Example: Add percentage discount",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "discountType",
+													"value": "percentage",
+													"description": "percentage",
+													"type": "text"
+												},
+												{
+													"key": "discountData[percent]",
+													"value": "15",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions/2/discounts",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions",
+												"2",
+												"discounts"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 13:01:35 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IjBHRzE0U3YzNGcvd0ZXQ2ZwSzJKWEE9PSIsInZhbHVlIjoicDRpdjdrL3NGWUVwd0gxSkRrSklwMVVTT0ZWVVZJNE1qb2JMSUZQd05GWXI3Q1ExTTNiSlRlQUkvUHZxVmJnRTljR01jRis5SEYraDhTcGREam8zaTVFbTNwU1JtMjhGd3o3NUhCbGZ2K1Znb2YvUFFTQVZTMUwySWtxSjdzbEEiLCJtYWMiOiIxOGE3ZDRjYThhZDg3NTRkYzg3Yzg3MmRiOTlkZTk1N2IyODU2YmRhMjM4YTBkNzEwZDczZjAwMmNkMWM2NzIxIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 15:01:35 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6Ilh3cUx2NU4vUGZzQXdKeVZhM2VWOUE9PSIsInZhbHVlIjoiNzBlajVUMGV2Wlg5NDVab3R2Z1IxZGF0WVNWS1VVcVJIRmVCNlFLUXFveWI3MGhvU25YRU11M0d2eXhxbXpyNVpoSmNCc0NPYXIwL2ZsT2VGbnZmOEt3L2t1eW5YemFKcmxoRE9uUGJvN0k1djB1VWwxV0twSkltWWNNWG5Dd20iLCJtYWMiOiI0NDZkOWMxZDNkNGM1Yzk5YjA0YmMxZTVhZGE4MGU4MjAyZjEzYTg5ODk4MzEzODQwZmM2MTVkYjExMzgyMTE5IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 15:01:35 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion discount added\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
 								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion discount added\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promotions/{id}/discounts/{discountId}",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions/2/discounts/7",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions",
-								"2",
-								"discounts",
-								"7"
 							]
-						}
-					},
-					"response": [
+						},
 						{
-							"name": "Example: Remove promotion discount",
-							"originalRequest": {
+							"name": "admin/promotions/{id}/discounts/{discountId}",
+							"request": {
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{domain}}/api/admin/promotions/2/discounts/8",
+									"raw": "{{domain}}/api/admin/promotions/2/discounts/7",
 									"host": [
 										"{{domain}}"
 									],
@@ -5116,82 +4369,84 @@
 										"promotions",
 										"2",
 										"discounts",
-										"8"
+										"7"
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 13:09:51 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6Ik5xZFg3NitmajRoenQ3Y0ZDcEo0dkE9PSIsInZhbHVlIjoiVDFteHF0azNqSlVGbjdxdi96U0wzYjlsMkd5cnRnZkhJWHpycWZRSXRjbUZpWlNTQ2htdS8rUHJRKzhKNkl6Q1QvbzI5aW56cFNWQU9hRlFLSjEwRWVCUHcxZTVHYzloRkdHSFBObHZHbGN4VERFeXArRWt2bkt3QmtFNVNBUEoiLCJtYWMiOiI2MDI4MmNiMGNiOWM0NzJkYTNjNDMxMDRiNDU5NDNmNTZjYzQzZDlkOGIxNWIxMDEzM2Y2M2FkNGUwZjEyYzg0IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 15:09:51 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IlhtVm5VTkVSRzBaYUVSNk5DNUwvL3c9PSIsInZhbHVlIjoiVmU4Y2JDZFVzZXh4cEhmeUpTYVAyZjlYM1NrL1Nma3piQVVIN3FRRDgzM1lQK1Roa1NvNExURWRkZVZxQStTNy9ZSUMvcmtVVnlLRHYxd1JJU0tOQk55RVAzQ0RlaUZ2YTdXcktsRVJ6VkVJd2N5ejlPc1F1ZWtFVDhxY3dVY1kiLCJtYWMiOiJiYTI4YzcxMmFmZTRjOGMwZjUyNTNhMGE4ZmEyNGJhM2RmMGM3NTM0NDljMTNmZjA2NWQ2ZjRhOTdjNjQ0MTBmIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 15:09:51 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+									"name": "Example: Remove promotion discount",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions/2/discounts/8",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions",
+												"2",
+												"discounts",
+												"8"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 13:09:51 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6Ik5xZFg3NitmajRoenQ3Y0ZDcEo0dkE9PSIsInZhbHVlIjoiVDFteHF0azNqSlVGbjdxdi96U0wzYjlsMkd5cnRnZkhJWHpycWZRSXRjbUZpWlNTQ2htdS8rUHJRKzhKNkl6Q1QvbzI5aW56cFNWQU9hRlFLSjEwRWVCUHcxZTVHYzloRkdHSFBObHZHbGN4VERFeXArRWt2bkt3QmtFNVNBUEoiLCJtYWMiOiI2MDI4MmNiMGNiOWM0NzJkYTNjNDMxMDRiNDU5NDNmNTZjYzQzZDlkOGIxNWIxMDEzM2Y2M2FkNGUwZjEyYzg0IiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 15:09:51 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IlhtVm5VTkVSRzBaYUVSNk5DNUwvL3c9PSIsInZhbHVlIjoiVmU4Y2JDZFVzZXh4cEhmeUpTYVAyZjlYM1NrL1Nma3piQVVIN3FRRDgzM1lQK1Roa1NvNExURWRkZVZxQStTNy9ZSUMvcmtVVnlLRHYxd1JJU0tOQk55RVAzQ0RlaUZ2YTdXcktsRVJ6VkVJd2N5ejlPc1F1ZWtFVDhxY3dVY1kiLCJtYWMiOiJiYTI4YzcxMmFmZTRjOGMwZjUyNTNhMGE4ZmEyNGJhM2RmMGM3NTM0NDljMTNmZjA2NWQ2ZjRhOTdjNjQ0MTBmIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 15:09:51 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion discount removed\",\n    \"dataset\": {\n        \"promotionId\": 2,\n        \"discountId\": 8\n    }\n}"
 								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Promotion discount removed\",\n    \"dataset\": {\n        \"promotionId\": 2,\n        \"discountId\": 8\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promotions/{id}",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions/2",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions",
-								"2"
 							]
-						}
-					},
-					"response": [
+						},
 						{
-							"name": "Example: Get promotion",
-							"originalRequest": {
+							"name": "admin/promotions/{id}",
+							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -5207,87 +4462,78 @@
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 16:00:04 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6ImhsRUVTcXBDVlFmTmhSRVdqOUhnemc9PSIsInZhbHVlIjoiaHJKSitjR0dxQkxMdzlwd0J2OCtJZGZtVGthNlFlbVRpekNscnQ0MHI2aGVCMUFJREpta00rU0Z1TUdFcTZJSDVMNGZLOFJwL2J6RGlnL25LTzVodmFHZXdxMWNWeWNjSjZZU2xGOEs0RDJrb244MDc5QnVDdGk3MnE0NzloTXAiLCJtYWMiOiI5YmZjODYzMTE3ZWI2NjM2MjAxMjhkZTc2YzRlZDZlMjM1MGVmNzNiYjZmMTYzMjY0YzdmYTU4NjhlMmI5MjBhIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 18:00:04 GMT; Max-Age=7200; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6InRkZVhlaVdrdUFFL3o3WXhzQjlLR2c9PSIsInZhbHVlIjoibkFML0k3NzJwVTFSaG5HNTNDb0UwMmhTeXZEaDhHSnpMK042OVk5RU9RTE0rKzd4b0s4cFZ1b1ZmVGVYVjBEckRKakwrcTR1ZGVPdnptN3hTMDdTblhTNHBUeUs3bzVTUk1qWEFaSGVDNlkwekV3VnVUM0NBeG5obnNJOVdyQnUiLCJtYWMiOiI2YmIxMTgxOWNjNTE0YTc2YzAwODBlMjNhYjljYmUzZTM1ZjdmN2QzZjZlNDNkYzdiZTYxMzY4MGY3MmEwMTkyIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 18:00:04 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test promotion\",\n        \"duration\": {\n            \"startDate\": \"2024-01-07T14:41:00+02:00\",\n            \"endDate\": \"2024-01-07T16:42:00+02:00\"\n        },\n        \"status\": \"ended\",\n        \"discounts\": [\n            {\n                \"id\": 9,\n                \"type\": \"percentage\",\n                \"data\": {\n                    \"percent\": \"15\"\n                }\n            }\n        ],\n        \"createdAt\": \"2024-01-07T14:59:27+02:00\",\n        \"updatedAt\": \"2024-01-07T17:59:23+02:00\"\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "admin/promotions",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{domain}}/api/admin/promotions?page=1&limit=15",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"promotions"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "limit",
-									"value": "15"
+									"name": "Example: Get promotion",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions/2",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions",
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 16:00:04 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6ImhsRUVTcXBDVlFmTmhSRVdqOUhnemc9PSIsInZhbHVlIjoiaHJKSitjR0dxQkxMdzlwd0J2OCtJZGZtVGthNlFlbVRpekNscnQ0MHI2aGVCMUFJREpta00rU0Z1TUdFcTZJSDVMNGZLOFJwL2J6RGlnL25LTzVodmFHZXdxMWNWeWNjSjZZU2xGOEs0RDJrb244MDc5QnVDdGk3MnE0NzloTXAiLCJtYWMiOiI5YmZjODYzMTE3ZWI2NjM2MjAxMjhkZTc2YzRlZDZlMjM1MGVmNzNiYjZmMTYzMjY0YzdmYTU4NjhlMmI5MjBhIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 18:00:04 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6InRkZVhlaVdrdUFFL3o3WXhzQjlLR2c9PSIsInZhbHVlIjoibkFML0k3NzJwVTFSaG5HNTNDb0UwMmhTeXZEaDhHSnpMK042OVk5RU9RTE0rKzd4b0s4cFZ1b1ZmVGVYVjBEckRKakwrcTR1ZGVPdnptN3hTMDdTblhTNHBUeUs3bzVTUk1qWEFaSGVDNlkwekV3VnVUM0NBeG5obnNJOVdyQnUiLCJtYWMiOiI2YmIxMTgxOWNjNTE0YTc2YzAwODBlMjNhYjljYmUzZTM1ZjdmN2QzZjZlNDNkYzdiZTYxMzY4MGY3MmEwMTkyIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 18:00:04 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test promotion\",\n        \"duration\": {\n            \"startDate\": \"2024-01-07T14:41:00+02:00\",\n            \"endDate\": \"2024-01-07T16:42:00+02:00\"\n        },\n        \"discounts\": [\n            {\n                \"id\": 9,\n                \"type\": \"percentage\",\n                \"data\": {\n                    \"percent\": \"15\"\n                }\n            }\n        ],\n        \"createdAt\": \"2024-01-07T14:59:27+02:00\",\n        \"updatedAt\": \"2024-01-07T17:59:23+02:00\"\n    }\n}"
 								}
 							]
-						}
-					},
-					"response": [
+						},
 						{
-							"name": "Example: Get promotions list",
-							"originalRequest": {
+							"name": "admin/promotions",
+							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -5312,53 +4558,821 @@
 									]
 								}
 							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
+							"response": [
 								{
-									"key": "Server",
-									"value": "nginx/1.25.2"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "PHP/8.1.24"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, private"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 07 Jan 2024 15:59:27 GMT"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "XSRF-TOKEN=eyJpdiI6IjZ0QlJHblNEVU85eGxuNjhVQ2orcWc9PSIsInZhbHVlIjoiSUYwbHNIYnA0MUFQYnJzSlRFZ0JDb0lNRlRFTkw2Q1BwZm1pbVk0Z2ZJMzJJcDVtN0V4K1lTaXV1VzBScHR5OUtqT25tVmpzSXcwT2U2SVVLVHJFQ09qVjdEdVM2Zmh3RGd6SkhlWGVPWHhFWklPMmZWcXFhcmhBSnpVeWMwYy8iLCJtYWMiOiI0Y2ZkNWU4ZDAxZDBiMjMwMDRlNzI2MWZkMWY4ODEyNWUzY2RmNjdhYzI3MzdmOTY3NjliZmE2NGU4OThmM2EyIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 17:59:27 GMT; Max-Age=7199; path=/; samesite=lax"
-								},
-								{
-									"key": "Set-Cookie",
-									"value": "laravel_session=eyJpdiI6IlNkZEdFTlJuS05FRWZtcVNvQnZmWVE9PSIsInZhbHVlIjoiYkxmaEh6VGJOUFJTaTFuMTE1K20zNTBuZXVTRUVtSnUzQ042M2RhdjFPZzRUeEk0NXNtWXJFZE5UWjdKWHl5RGFDMjRIS3hyL2puK05YV3k5cHU1dzRSeHpTck9LUng0aThkUlJpVzZBbWh2NEZrNXZoWmFXb2JmbjlCTTFMekMiLCJtYWMiOiJmYmU0YzdhZjZiNGIwYTM0ZjQwNWMxNDExNmVmYzgyN2RkYzhkNDYyM2M2OTFjOGFiY2FhOTc4Njc4N2ZjOTBlIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 17:59:27 GMT; Max-Age=7199; path=/; httponly; samesite=lax"
+									"name": "Example: Get promotions list",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promotions?page=1&limit=15",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promotions"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.25.2"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.1.24"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Jan 2024 15:59:27 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IjZ0QlJHblNEVU85eGxuNjhVQ2orcWc9PSIsInZhbHVlIjoiSUYwbHNIYnA0MUFQYnJzSlRFZ0JDb0lNRlRFTkw2Q1BwZm1pbVk0Z2ZJMzJJcDVtN0V4K1lTaXV1VzBScHR5OUtqT25tVmpzSXcwT2U2SVVLVHJFQ09qVjdEdVM2Zmh3RGd6SkhlWGVPWHhFWklPMmZWcXFhcmhBSnpVeWMwYy8iLCJtYWMiOiI0Y2ZkNWU4ZDAxZDBiMjMwMDRlNzI2MWZkMWY4ODEyNWUzY2RmNjdhYzI3MzdmOTY3NjliZmE2NGU4OThmM2EyIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 17:59:27 GMT; Max-Age=7199; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IlNkZEdFTlJuS05FRWZtcVNvQnZmWVE9PSIsInZhbHVlIjoiYkxmaEh6VGJOUFJTaTFuMTE1K20zNTBuZXVTRUVtSnUzQ042M2RhdjFPZzRUeEk0NXNtWXJFZE5UWjdKWHl5RGFDMjRIS3hyL2puK05YV3k5cHU1dzRSeHpTck9LUng0aThkUlJpVzZBbWh2NEZrNXZoWmFXb2JmbjlCTTFMekMiLCJtYWMiOiJmYmU0YzdhZjZiNGIwYTM0ZjQwNWMxNDExNmVmYzgyN2RkYzhkNDYyM2M2OTFjOGFiY2FhOTc4Njc4N2ZjOTBlIiwidGFnIjoiIn0%3D; expires=Sun, 07 Jan 2024 17:59:27 GMT; Max-Age=7199; path=/; httponly; samesite=lax"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test promotion\",\n                \"duration\": {\n                    \"startDate\": \"2024-01-07T14:41:00+02:00\",\n                    \"endDate\": \"2024-01-07T16:42:00+02:00\"\n                },\n                \"discounts\": [\n                    {\n                        \"id\": 9,\n                        \"type\": \"percentage\",\n                        \"data\": {\n                            \"percent\": \"15\"\n                        }\n                    }\n                ],\n                \"createdAt\": \"2024-01-07T14:59:27+02:00\",\n                \"updatedAt\": \"2024-01-07T17:59:23+02:00\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 1\n        }\n    }\n}"
 								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test promotion\",\n                \"duration\": {\n                    \"startDate\": \"2024-01-07T14:41:00+02:00\",\n                    \"endDate\": \"2024-01-07T16:42:00+02:00\"\n                },\n                \"status\": \"ended\",\n                \"discounts\": [\n                    {\n                        \"id\": 9,\n                        \"type\": \"percentage\",\n                        \"data\": {\n                            \"percent\": \"15\"\n                        }\n                    }\n                ],\n                \"createdAt\": \"2024-01-07T14:59:27+02:00\",\n                \"updatedAt\": \"2024-01-07T17:59:23+02:00\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 1\n        }\n    }\n}"
+							]
+						}
+					]
+				},
+				{
+					"name": "Promocodes",
+					"item": [
+						{
+							"name": "admin/promocodes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test promocode",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "Test",
+											"type": "text"
+										},
+										{
+											"key": "discountPercent",
+											"value": "30",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "09.09.2023 00:00:00",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "10.09.2023 00:00:00",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/promocodes",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"promocodes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Create promocode",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test promocode",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "Test",
+													"type": "text"
+												},
+												{
+													"key": "discountPercent",
+													"value": "30",
+													"type": "text"
+												},
+												{
+													"key": "startDate",
+													"value": "09.09.2023 00:00:00",
+													"type": "text"
+												},
+												{
+													"key": "endDate",
+													"value": "10.09.2023 00:00:00",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/promocodes",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promocodes"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 09 Sep 2023 11:12:08 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6ImVzWU5MeVhmbHBPclBpdllYbngvZnc9PSIsInZhbHVlIjoiaW56VDYxdlp4U1N2T255VkZtaEU2c3JCSzh1S1kzNkdJcDhKeGI3dm1XMk8vSzhlMWJVNGtWYXBvcnpYbWtVSmNkWjEyWWFtc2gyRUJtRjFZNG9xallwcFVHYXBRZnB0bkRldXdXTHVHRzlZTzg0MytHZFNia0JIMUtkMHFHTGQiLCJtYWMiOiJlNzI3ZGEyY2FiZmNkMWZjYTc3ZTYwMDY3NzNmYmQwNzIxZDUyNjZkOGZjMDI1MzYwZjQxNDFjZDE0Y2RkYjMwIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:12:08 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IkI1b3hSNHZWNDU5bmk0SHN0aG45N3c9PSIsInZhbHVlIjoieDd4VWlueDNvMjBRUEViTnoxSU9GMGlydUxoYmxEOEFtVmpoM1Q4MGZSZXNqZjB2R2V3L1Q5b0xHUElPbklma3lGNDVjMGFtaDRkSHA1c21oTGV5SG9XY0M2NFpDOEp1TXFxaEFFekI4VkdML2VXUExFMEFPdTA4WmtOekJ0V3kiLCJtYWMiOiI4YjYxN2E2NWYwMjIwMGU1NjU0Mzg4NGFhMGZiZGVkYzkwMzU5OWVhMDg4MzJkZTA5MTE2YzhhMmY5NzE2MjVlIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:12:08 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=999"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/promocodes/{id}",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Test promocode updated",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "08.09.2023 00:00:00",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "11.09.2023 00:00:00",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/promocodes/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"promocodes",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Update promocode",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "Test promocode updated",
+													"type": "text"
+												},
+												{
+													"key": "startDate",
+													"value": "08.09.2023 00:00:00",
+													"type": "text"
+												},
+												{
+													"key": "endDate",
+													"value": "11.09.2023 00:00:00",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{domain}}/api/admin/promocodes/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promocodes",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 09 Sep 2023 11:13:27 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6Ikh0QVZhdWVaV3ZZaUQ4bG5yYWdyUXc9PSIsInZhbHVlIjoiVDBaRnVtNDVzalRyNUE3ZUVUUm5ab1BvS1RSZGlzNkZGS2ExRVZDbDBQcGszWTJ1dXZVM3VmaVRpTU1xWWNzMzNpZGZBNkNTNERMN2tPdDJaWlplNGozYmdLYWpwZUVWTEF4Z00wWUo0TjJmMDdETHlhV2ZDb0t1b2Y4Z3Q1UU4iLCJtYWMiOiI1MWQ4YjhlNTJlMTIyMTAyODQzNzZjODcyZmNiZWQyNGM0ZjMwZDUzYjc5MzdhNmFmNjY0YTU4ODY1Y2E2N2QxIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:13:28 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6ImpaWHptUVduTmdtUnV6RW5EeFdZREE9PSIsInZhbHVlIjoiN2lCeFNiaFRTRmlvdFg5SmhDM3p3My9YRzBXNjZ1WGZCVDA4enhCakVPOUZUc1JCKzdPY1FUQTNCbHNVUUN2V1RPejFWeWVKQkNEUjdTS1lEYzNncUZkSlNXWFd3U3c2ZnIzWGtvbE9pZmhWOFFqVGRTdFk2R2NwRUMwSTQxQmoiLCJtYWMiOiIwYzU3YjdiYjAwYWU4YjNkY2E4N2I1OWMwZTJjMWE1MTM5NjExNzM1NDIwY2UwY2Q5OTM5OTZhMDY5ZmI3MDNiIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:13:28 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=995"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/promocodes/{id}/activate",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/promocodes/1/activate",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"promocodes",
+										"1",
+										"activate"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Activate promocode",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promocodes/1/activate",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promocodes",
+												"1",
+												"activate"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 09 Sep 2023 11:14:51 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IitPNE9aNzB4c0dSd21FMkxhREQ1TFE9PSIsInZhbHVlIjoiQlhpaXBLY3lPOTJ5NDJzMmRtTkJ1eGE1MWtlcjFrZkVGSStjTFY3Y01xZFNPVDIzTkxJYWFLd0hOTjRFNUtCbkl4bkF2cktmY2kzcS9vTVNNVlJ3VmpqazVsd0V5RzhNVDRreVdqVGJZWFFJb1Q4d0NhT0gyQ1IrZUM3Y1NwRmgiLCJtYWMiOiJlNzk3ZmI3MDY5NzZhZWMwNWIxOWMxMDA4YjIxNDY2MjQwMTE2ZGNjMWMyYmIxN2ZlNGM1ODIwYzI1YmU5MjQ5IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:14:51 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IlZDTXF6Q2gvOW5YWG5qVWc1U1N6VWc9PSIsInZhbHVlIjoiYldGOFZRQ3ZvQkVmVzM2T0U2REpmVE5MZGNiTUh6UmRISEJERDNsSFhwLzhtckdFUm5kWGlWRFN0eUJXTDZveE5odEoxL1k1Z1FVcjBYZHRMck9zU3hBNzRxTVFWbTBweFFQcGpnTUJRenVLN1RZYWFUK3lKMVp1OGVJekpXMHMiLCJtYWMiOiI0NTQzYjBlNmZhZmExODhjMDg2ZmM4MDBiNjU1YmM5MzA5ZDI1NWZkMWMyYTg0MTc2M2U5ZTk3MzI4YjJkYzJiIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:14:51 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=997"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode activated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/promocodes/{id}/deactivate",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/promocodes/1/deactivate",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"promocodes",
+										"1",
+										"deactivate"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Deactivate promocode",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promocodes/1/deactivate",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promocodes",
+												"1",
+												"deactivate"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 09 Sep 2023 11:14:37 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6IlBVYjJzekdndEtjNmJqOTR0QVdhcVE9PSIsInZhbHVlIjoidDVJRjFPMWdZQi94eTc1aitpSDdLQU9uaTk2dzBJU3VYMUxmaVZjUnhVS0Q1RHhrZFpYYU1TQzh2NmEvV0k0R3FaWkpnNWJKVjhwaUVVcXhjRk12UmFFMVRPSm5JdGtOaXZCdXdTc1lEcllRTHFkUDFnWGxOMzlncGV1bm9NOGkiLCJtYWMiOiIzOTRmYzc1MWRkNmMzNmM5NDhmZDg0ZWI4NzMwYTNmMTYwZTlmMTA3NGVhZjk0M2YxMzI0MjZiNDEzNjM1Mjc3IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:14:38 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IjU2R01DeVFFWUtUUURGMS9LT1VlYXc9PSIsInZhbHVlIjoiSTllYWNGVVBJT3RJN2FIbUtPdXVINGw1L2VHZzBIMW40MTFFMWFRSGJYb0Q3bENaM2h0R1B4SWV2b1Vvd1psdVFvd2h2SXJvVVl0cE1YT0FGNGFyeFVKVnB0VjNmNDFuOVBJVWVPSEZEbytBMkwxOUZaWlY2VmZKYzZyWWJZcHoiLCJtYWMiOiJlMDRiYTNjMjc0MTIzMjQ4ZmZiYTU5NDQwMDdkZjIwMzYwOGNmZDUzM2NmY2VlNDZkOGUzMjU3OWIwZDkxZDkzIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:14:38 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=999"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode deactivated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/promocodes/{id}",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/promocodes/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"promocodes",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Delete promocode",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promocodes/1",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promocodes",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 09 Sep 2023 11:15:36 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6Ikt1bGtCYkRDcVlsTG5mbXl2eW1oaUE9PSIsInZhbHVlIjoiRzZpS1BUMmtuZlpVVU1jb09UeWNjdDQ4Y3RYbUl4aE1XR21UYmVuRDd0c0FFeXBiMWVtc29aaHJUNDkwTy9hVVBvaDhvN3lYbmJvUWYvS2tHU1M5cDV3dmIzNU56Y3FWOW9laS9PbjZzL3Q1ZGNWWGpKSGNmd2xiVGFVK1hQTVoiLCJtYWMiOiIxMDYxMzk2ODkzNGZhMjdkMjViODY4YWM3MjgyNzU1YmM1Zjk5YWU2MzE4ZjVhM2ZiNjk1YjRjNjQxNDhmNDZmIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:15:36 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6IndWQzVRZ1N0N2tRUXYzcWxmS21qcXc9PSIsInZhbHVlIjoiQ3U1bVdhODJEWFFHNU9TeW0zMFJYYXNFTTNUZ28vMFFQbDJwa1NRNkh3SzVBUmpwOTZ3SWxBWndvV3F3NlNZT0ZYNDNGWGJ3YnJWSUt1SG5kMVlZUGJsNHcwR08xQmJCVWJySnpFalRXYVV2ZnU1Nzc5NEFHY0E4NmZHb2ZncGwiLCJtYWMiOiIyZTViMWM5NTNhMTA4NDIwOGUzMWU1MDNiNWUwODBmZTZjMjIwNDY1ODM1MDU5ZmZkN2MyYzUwMGNhZmU3MjVkIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:15:36 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=995"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Promocode deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/promocodes/{id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/promocodes/2",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"promocodes",
+										"2"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Get promocode",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promocodes/2",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promocodes",
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 09 Sep 2023 11:17:35 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6InFKVXQ5Sm9YcmZsUlUvd0QzTGtMYmc9PSIsInZhbHVlIjoiNjdrNkpnaitPeVluelkzUlB4S3VwVUxnQWZ3Uml2eDNUOEV0dlg5UWNTczJQRy9SWVZISEZrbWROQXNpWHlJQkxyMVNQcDNERVlyaEc4MUVHMW85bCsrek83SGYyQXB6YWo1b0FlcVNiZzFFS1UyZ3FUWnZlZW1wYXRFTHE4L3IiLCJtYWMiOiIxOTU4MzI1NTY0ZDc4Yjk5YzhlODkxYzQzOWViOGI3NWJhNjkxNzA3OWIxNjE2YWQ4M2RlOTZhYTJjNzhmNzcxIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:17:35 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6InhZOGNVQklQQnd4am00cDhFYVJOcVE9PSIsInZhbHVlIjoiT1BZcWpPK2NtOC9KUTVoTk81RUc4S2luV0ZrTFI3b3ZzM3pzSWFxZlBlQVRveXdxNUNsRWpXK3dOczBHSEhYQmw1VjBQMXNrNlJ1YUkwV0FPemVTRWN1b0w4RGFFVEo0aWNFb2pBcTZpUnlBQ012V0pnK3ZLVDBNNjkxSXdnUnAiLCJtYWMiOiJmMzllYTc5OWQyYWExNjdhZGE2ZjdmNzE5YjE3MmI0MDUyMDViMjZjY2VkNzI1OTAyMWYwZmE1MjgyMDJmZGI2IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:17:35 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=996"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 2,\n        \"name\": \"Test promocode\",\n        \"code\": \"Test\",\n        \"discountPercent\": 30,\n        \"active\": true,\n        \"startDate\": \"2023-09-09 00:00:00\",\n        \"endDate\": \"2023-09-10 00:00:00\",\n        \"createdAt\": \"2023-09-09 11:16:05\",\n        \"updatedAt\": null\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "admin/promocodes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/promocodes",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"promocodes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "15",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example: Get promocodes list",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{domain}}/api/admin/promocodes",
+											"host": [
+												"{{domain}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"promocodes"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1",
+													"disabled": true
+												},
+												{
+													"key": "limit",
+													"value": "15",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sat, 09 Sep 2023 11:18:19 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "XSRF-TOKEN=eyJpdiI6Ik5CZ3VweUhPM1JyVDhoQ2l4QjhuSVE9PSIsInZhbHVlIjoiTVpPN3I0dkhDb3FmZVBUUnpIVThrTEtNRWdseG02aWRKL2JFcGJoM0IvVzN4RDRVQitzejI3WGtIcHVtWm5Fcms1OEtvVDZzSk1BU3pYQkdtY2huMWxyUUZZc2w5RmVTQ2RsUVEzSjk0cmpGS2J5N3JkQi9jU1ovR21oRUkzdjQiLCJtYWMiOiJjY2YzMmQzZWIyZDAzNTI2OTg2ZjIxOTFiOTNiNmRhNzI2YTFhNTQwZDRkZWY2ZjIxZWFhMjlhODJmZjc3ZmQ0IiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:18:19 GMT; Max-Age=7200; path=/; samesite=lax"
+										},
+										{
+											"key": "Set-Cookie",
+											"value": "laravel_session=eyJpdiI6ImNxSzBBbGxVQlM0S0FpK213ZWhMVXc9PSIsInZhbHVlIjoiQ1pmZFRjUDVlcE9JREFIWXd2aENUQ25Vc2JPZXBVUHY4bjlKUVJZaStHRXJ3MEgrTG5kaGZ2Y1krcjhCRnBaWWl5KzB4a0hQTlRINXllSG91Vi9qdFNHRGxIRWpxcUpPbnFuV2RLcjM2UUxCSG4wSlVWUzJiUDQxZkIwVGEyQVciLCJtYWMiOiJjZDI1YTU2ZWU5NmNlNGNmNTVlNWQyOGU5MWIyZGRlNjU1MDA5Y2M5N2M4YWFhNGI3NWI2MDNhMWU1MjJmYmFhIiwidGFnIjoiIn0%3D; expires=Sat, 09 Sep 2023 13:18:19 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=120, max=1000"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"Test promocode\",\n                \"code\": \"Test\",\n                \"discountPercent\": 30,\n                \"active\": true,\n                \"startDate\": \"2023-09-09 00:00:00\",\n                \"endDate\": \"2023-09-10 00:00:00\",\n                \"createdAt\": \"2023-09-09 11:16:05\",\n                \"updatedAt\": null\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Test without end date promocode\",\n                \"code\": \"Test2\",\n                \"discountPercent\": 30,\n                \"active\": true,\n                \"startDate\": \"2023-09-09 00:00:00\",\n                \"endDate\": null,\n                \"createdAt\": \"2023-09-09 11:16:53\",\n                \"updatedAt\": null\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 2\n        }\n    }\n}"
+								}
+							]
 						}
 					]
 				}

@@ -13,6 +13,5 @@ class PromocodesMemoryRepositoryTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->promocodes = new PromocodesMemoryRepository(new Hydrator, new IdentityMap);
-        parent::setUp();
     }
 }

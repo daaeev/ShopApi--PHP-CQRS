@@ -10,10 +10,10 @@ use Project\Modules\Shopping\Entity\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
-use Project\Modules\Shopping\Cart\Commands\UpdateItemCommand;
+use Project\Modules\Shopping\Cart\Commands\UpdateOfferCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
-use Project\Modules\Shopping\Cart\Commands\Handlers\UpdateItemHandler;
+use Project\Modules\Shopping\Cart\Commands\Handlers\UpdateOfferHandler;
 
 class UpdateItemTest extends \PHPUnit\Framework\TestCase
 {
@@ -51,8 +51,6 @@ class UpdateItemTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
-
-        parent::setUp();
     }
 
     public function testUpdateItem()
@@ -66,7 +64,7 @@ class UpdateItemTest extends \PHPUnit\Framework\TestCase
             ->with($this->client)
             ->willReturn($this->cart);
 
-        $command = new UpdateItemCommand($product = rand(1, 10), $quantity = rand(1, 10));
+        $command = new UpdateOfferCommand($product = rand(1, 10), $quantity = rand(1, 10));
 
         $this->cart->expects($this->once())
             ->method('getOffer')
@@ -107,7 +105,7 @@ class UpdateItemTest extends \PHPUnit\Framework\TestCase
             ->method('dispatch')
             ->with($event);
 
-		$handler = new UpdateItemHandler($this->carts, $this->discountsService, $this->environment, $this->offerBuilder);
+		$handler = new UpdateOfferHandler($this->carts, $this->discountsService, $this->environment, $this->offerBuilder);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
     }

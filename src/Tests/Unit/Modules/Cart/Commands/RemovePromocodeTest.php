@@ -40,8 +40,6 @@ class RemovePromocodeTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
-
-        parent::setUp();
     }
 
     public function testRemovePromocode()

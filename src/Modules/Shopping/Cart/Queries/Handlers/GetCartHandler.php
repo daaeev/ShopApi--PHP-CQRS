@@ -3,11 +3,11 @@
 namespace Project\Modules\Shopping\Cart\Queries\Handlers;
 
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Shopping\Cart\Queries\GetActiveCartQuery;
+use Project\Modules\Shopping\Cart\Queries\GetCartQuery;
 use Project\Modules\Shopping\Cart\Presenters\CartPresenterInterface;
 use Project\Modules\Shopping\Cart\Repository\QueryCartsRepositoryInterface;
 
-class GetActiveCartHandler
+class GetCartHandler
 {
     public function __construct(
         private QueryCartsRepositoryInterface $carts,
@@ -15,7 +15,7 @@ class GetActiveCartHandler
         private EnvironmentInterface $environment
     ) {}
 
-    public function __invoke(GetActiveCartQuery $query): array
+    public function __invoke(GetCartQuery $query): array
     {
         $client = $this->environment->getClient();
         $cart = $this->carts->get($client);

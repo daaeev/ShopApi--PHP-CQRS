@@ -19,9 +19,9 @@ use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository\QueryCartsEl
 class CartServiceProvider extends ServiceProvider
 {
     private array $commandsMapping = [
-        Commands\AddItemCommand::class => Commands\Handlers\AddItemHandler::class,
-        Commands\UpdateItemCommand::class => Commands\Handlers\UpdateItemHandler::class,
-        Commands\RemoveItemCommand::class => Commands\Handlers\RemoveItemHandler::class,
+        Commands\AddOfferCommand::class => Commands\Handlers\AddOfferHandler::class,
+        Commands\UpdateOfferCommand::class => Commands\Handlers\UpdateOfferHandler::class,
+        Commands\RemoveOfferCommand::class => Commands\Handlers\RemoveOfferHandler::class,
         Commands\ChangeCurrencyCommand::class => Commands\Handlers\ChangeCurrencyHandler::class,
 
         Commands\UsePromocodeCommand::class => Commands\Handlers\UsePromocodeHandler::class,
@@ -29,7 +29,7 @@ class CartServiceProvider extends ServiceProvider
     ];
 
     private array $queriesMapping = [
-        Queries\GetActiveCartQuery::class => Queries\Handlers\GetActiveCartHandler::class,
+        Queries\GetCartQuery::class => Queries\Handlers\GetCartHandler::class,
     ];
 
     private array $eventsMapping = [

@@ -16,6 +16,5 @@ class PromotionsMemoryRepositoryTest extends TestCase
     {
         $this->promotions = new PromotionsMemoryRepository(new Hydrator, new IdentityMap);
         $this->discountFactory = new MechanicFactory;
-        parent::setUp();
     }
 }

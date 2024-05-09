@@ -24,8 +24,6 @@ class DeleteProductTest extends \PHPUnit\Framework\TestCase
         $this->products = new ProductsMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
-
-        parent::setUp();
     }
 
     public function testDelete()

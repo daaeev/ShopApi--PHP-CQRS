@@ -11,7 +11,6 @@ class HydratorTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->hydrator = new Hydrator;
-        parent::setUp();
     }
 
     public function testObjectReturnSameValue()

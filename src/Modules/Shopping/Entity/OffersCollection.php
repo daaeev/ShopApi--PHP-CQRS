@@ -70,9 +70,4 @@ class OffersCollection extends Collection
 
         throw new \DomainException("Offer #{$offerId->getId()} does not exists");
     }
-
-    public function all(): array
-    {
-        return $this->entities;
-    }
 }

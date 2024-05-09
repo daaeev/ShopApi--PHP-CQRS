@@ -8,10 +8,10 @@ use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
-use Project\Modules\Shopping\Cart\Commands\RemoveItemCommand;
+use Project\Modules\Shopping\Cart\Commands\RemoveOfferCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
-use Project\Modules\Shopping\Cart\Commands\Handlers\RemoveItemHandler;
+use Project\Modules\Shopping\Cart\Commands\Handlers\RemoveOfferHandler;
 
 class RemoveItemTest extends \PHPUnit\Framework\TestCase
 {
@@ -41,7 +41,6 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
-        parent::setUp();
     }
 
     public function testRemoveItem()
@@ -55,7 +54,7 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
             ->with($this->client)
             ->willReturn($this->cart);
 
-        $command = new RemoveItemCommand($product = rand(1, 10));
+        $command = new RemoveOfferCommand($product = rand(1, 10));
 
         $this->cart->expects($this->once())
             ->method('removeOffer')
@@ -77,7 +76,7 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
             ->method('dispatch')
             ->with($event);
 
-		$handler = new RemoveItemHandler($this->carts, $this->discountsService, $this->environment);
+		$handler = new RemoveOfferHandler($this->carts, $this->discountsService, $this->environment);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
     }

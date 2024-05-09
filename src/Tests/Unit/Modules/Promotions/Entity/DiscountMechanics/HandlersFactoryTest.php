@@ -21,7 +21,6 @@ class HandlersFactoryTest extends TestCase
     protected function setUp(): void
     {
         $this->factory = new HandlerFactory(new OfferBuilder);
-        parent::setUp();
     }
 
     public function testMakePercentageDiscountHandler()

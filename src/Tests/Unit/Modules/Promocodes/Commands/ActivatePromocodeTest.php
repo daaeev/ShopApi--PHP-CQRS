@@ -23,8 +23,6 @@ class ActivatePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->promocodes = new PromocodesMemoryRepository(new Hydrator, new IdentityMap);
         $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
             ->getMock();
-
-        parent::setUp();
     }
 
     public function testActivate()
