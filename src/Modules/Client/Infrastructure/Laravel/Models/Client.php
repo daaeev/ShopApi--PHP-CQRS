@@ -27,17 +27,17 @@ class Client extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function carts()
+    public function cart()
     {
-        return $this->hasMany(ReadOnly\Cart::class, 'client_id');
+        return $this->hasOne(ReadOnly\Cart::class, 'client_id');
     }
 
-    public function scopeApplyOptions(Builder $query, array $options)
+    public function scopeHasNotEmptyCart(Builder $query, bool $hasNotEmptyCart)
     {
-        if (!empty($options['hasNotEmptyCart'])) {
-            $query->whereHas('carts', function (Builder $query) {
-                $query->where('active', true)->has('items');
-            });
+        if (!$hasNotEmptyCart) {
+            return;
         }
+
+        $query->whereHas('cart.items');
     }
 }
