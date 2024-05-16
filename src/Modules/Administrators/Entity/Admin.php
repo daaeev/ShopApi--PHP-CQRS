@@ -43,11 +43,6 @@ class Admin extends Aggregate
         $this->addEvent(new AdminCreated($this));
     }
 
-    public function __clone(): void
-    {
-        $this->id = clone $this->id;
-    }
-
     private function guardCorrectLogin(): void
     {
         Assert::greaterThan(mb_strlen($this->login), 6, 'Login length must be greater than 6 characters');
@@ -64,6 +59,11 @@ class Admin extends Aggregate
         if (str_contains($this->password, ' ')) {
             throw new \DomainException('Password must not contains whitespaces');
         }
+    }
+
+    public function __clone(): void
+    {
+        $this->id = clone $this->id;
     }
 
     public function setName(string $name): void

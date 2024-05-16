@@ -5,14 +5,14 @@ namespace Project\Modules\Shopping\Cart\Entity;
 use Project\Common\Client\Client;
 use Project\Common\Entity\Aggregate;
 use Project\Common\Product\Currency;
-use Project\Modules\Shopping\Entity\Offer;
-use Project\Modules\Shopping\Entity\OfferId;
-use Project\Modules\Shopping\Entity\OffersCollection;
+use Project\Modules\Shopping\Offers\Offer;
+use Project\Modules\Shopping\Offers\OfferId;
+use Project\Modules\Shopping\Entity\Promocode;
+use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Api\Events\Cart\CartInstantiated;
 use Project\Modules\Shopping\Api\Events\Cart\CartCurrencyChanged;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
-use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeRemovedFromCart;
 
 class Cart extends Aggregate
@@ -46,10 +46,7 @@ class Cart extends Aggregate
 
 	public static function instantiate(Client $client): self
     {
-        return new self(
-            CartId::next(),
-            $client
-        );
+        return new self(CartId::next(), $client);
     }
 
     public function addOffer(Offer $offer): void
@@ -106,10 +103,6 @@ class Cart extends Aggregate
             throw new \DomainException('Promocode id cant be empty');
         }
 
-        if (!$promocode->isActive()) {
-            throw new \DomainException('Cant use not active promo-code');
-        }
-
         $this->promocode = $promocode;
         $this->addEvent(new PromocodeAddedToCart($this));
         $this->updated();
@@ -130,7 +123,7 @@ class Cart extends Aggregate
     {
         $totalPrice = array_reduce(
             array: $this->offers->all(),
-            callback: fn ($totalPrice, $item) => $totalPrice + ($item->getPrice() * $item->getQuantity()),
+            callback: fn ($totalPrice, Offer $offer) => $totalPrice + ($offer->getPrice() * $offer->getQuantity()),
             initial: 0
         );
 

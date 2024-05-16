@@ -3,7 +3,7 @@
 namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics;
 
 use PHPUnit\Framework\TestCase;
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Tests\Unit\Modules\Helpers\ReflectionHelper;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;

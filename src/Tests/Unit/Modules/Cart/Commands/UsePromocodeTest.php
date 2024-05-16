@@ -7,9 +7,11 @@ use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Cart\Commands\UsePromocodeCommand;
+use Project\Modules\Shopping\Entity\Promocode as CartPromocode;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;
+use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;
 use Project\Modules\Shopping\Cart\Commands\Handlers\UsePromocodeHandler;
 use Project\Modules\Shopping\Discounts\Promocodes\Repository\PromocodesRepositoryInterface;
@@ -69,9 +71,31 @@ class UsePromocodeTest extends \PHPUnit\Framework\TestCase
             ->with($promo)
             ->willReturn($this->promocode);
 
+        $this->promocode->expects($this->once())
+            ->method('isActive')
+            ->willReturn(true);
+
+        $cartPromocode = new CartPromocode(
+            PromocodeId::random(),
+            'promo',
+            15
+        );
+
+        $this->promocode->expects($this->once())
+            ->method('getId')
+            ->willReturn($cartPromocode->getId());
+
+        $this->promocode->expects($this->once())
+            ->method('getCode')
+            ->willReturn($cartPromocode->getCode());
+
+        $this->promocode->expects($this->once())
+            ->method('getDiscountPercent')
+            ->willReturn($cartPromocode->getDiscountPercent());
+
         $this->cart->expects($this->once())
             ->method('usePromocode')
-            ->with($this->promocode);
+            ->with($cartPromocode);
 
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
@@ -90,6 +114,35 @@ class UsePromocodeTest extends \PHPUnit\Framework\TestCase
             ->with($event);
 
 		$handler = new UsePromocodeHandler($this->carts, $this->environment, $this->promocodes, $this->discountsService);
+        $handler->setDispatcher($this->dispatcher);
+        call_user_func($handler, $command);
+    }
+
+    public function testUseInactivePromocode()
+    {
+        $this->environment->expects($this->once())
+            ->method('getClient')
+            ->willReturn($this->client);
+
+        $this->carts->expects($this->once())
+            ->method('getByClient')
+            ->with($this->client)
+            ->willReturn($this->cart);
+
+        $command = new UsePromocodeCommand($promo = 'promo');
+
+        $this->promocodes->expects($this->once())
+            ->method('getByCode')
+            ->with($promo)
+            ->willReturn($this->promocode);
+
+        $this->expectException(\DomainException::class);
+
+        $this->promocode->expects($this->once())
+            ->method('isActive')
+            ->willReturn(false);
+
+        $handler = new UsePromocodeHandler($this->carts, $this->environment, $this->promocodes, $this->discountsService);
         $handler->setDispatcher($this->dispatcher);
         call_user_func($handler, $command);
     }

@@ -5,18 +5,18 @@ namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils;
 use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Cart\Entity;
-use Project\Modules\Shopping\Entity\Offer;
+use Project\Modules\Shopping\Offers\Offer;
 use Project\Common\Entity\Hydrator\Hydrator;
-use Project\Modules\Shopping\Entity\OfferId;
-use Project\Modules\Shopping\Entity\OffersCollection;
+use Project\Modules\Shopping\Offers\OfferId;
+use Project\Modules\Shopping\Entity\Promocode;
+use Project\Modules\Shopping\Offers\OffersCollection;
+use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
-use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquentToEntityConverter as PromocodeEloquentConverter;
 
 class CartEloquentToEntityConverter
 {
     public function __construct(
         private Hydrator $hydrator,
-        private PromocodeEloquentConverter $promocodeConverter
     ) {}
 
     public function convert(Eloquent\Cart $record): Entity\Cart
@@ -29,7 +29,11 @@ class CartEloquentToEntityConverter
             ),
             'currency' => Currency::from($record->currency),
             'promocode' => !empty($record->promocode_id)
-                ? $this->promocodeConverter->convert($record->promocode)
+                ? new Promocode(
+                    PromocodeId::make($record->promocode_id),
+                    $record->promocode,
+                    $record->promocode_discount_percent
+                )
                 : null,
             'offers' => new OffersCollection(array_map([$this, 'convertCartItem'], $record->items->all())),
             'createdAt' => new \DateTimeImmutable($record->created_at),

@@ -6,7 +6,7 @@ use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;
 use Project\Common\Client\Client;
 use Project\Modules\Shopping\Api\DTO\Offer;
-use Project\Modules\Shopping\Api\DTO\Promocodes\Promocode;
+use Project\Modules\Shopping\Api\DTO\Promocode;
 
 class Cart implements DTO
 {

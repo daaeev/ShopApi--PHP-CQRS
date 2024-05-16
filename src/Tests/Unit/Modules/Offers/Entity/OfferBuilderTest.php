@@ -2,7 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Offers\Entity;
 
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 
 class OfferBuilderTest extends \PHPUnit\Framework\TestCase

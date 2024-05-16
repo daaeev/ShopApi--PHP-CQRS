@@ -4,8 +4,8 @@ namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
-use Project\Modules\Shopping\Entity\Offer;
-use Project\Modules\Shopping\Entity\OfferId;
+use Project\Modules\Shopping\Offers\Offer;
+use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Adapters\CatalogueService;

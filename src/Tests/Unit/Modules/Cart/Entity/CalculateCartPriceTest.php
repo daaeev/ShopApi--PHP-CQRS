@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Entity;
 
+use Project\Modules\Shopping\Entity\Promocode;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
@@ -17,7 +18,7 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
         $cart->addOffer($this->generateOffer());
         $cart->addOffer($this->generateOffer());
         $cart->addOffer($this->generateOffer());
-        $cart->usePromocode($this->generatePromocode());
+        $cart->usePromocode(Promocode::fromBaseEntity($this->generatePromocode()));
 
         $totalPrice = array_reduce($cart->getOffers(), function ($totalPrice, $item) {
             return $totalPrice + ($item->getPrice() * $item->getQuantity());

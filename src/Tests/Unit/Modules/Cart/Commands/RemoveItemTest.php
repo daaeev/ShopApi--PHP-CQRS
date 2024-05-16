@@ -3,7 +3,7 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Client\Client;
-use Project\Modules\Shopping\Entity\OfferId;
+use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;

@@ -3,10 +3,10 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Client\Client;
-use Project\Modules\Shopping\Entity\Offer;
-use Project\Modules\Shopping\Entity\OfferId;
+use Project\Modules\Shopping\Offers\Offer;
+use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;

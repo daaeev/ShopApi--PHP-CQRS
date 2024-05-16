@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
+use Project\Modules\Shopping\Entity\Promocode;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Cart\Commands\UsePromocodeCommand;
@@ -27,8 +28,11 @@ class UsePromocodeHandler implements DispatchEventsInterface
         $cart = $this->carts->getByClient($client);
 
         $promocode = $this->promocodes->getByCode($command->promocode);
-        $cart->usePromocode($promocode);
+        if (!$promocode->isActive()) {
+            throw new \DomainException('Promocode is inactive');
+        }
 
+        $cart->usePromocode(Promocode::fromBaseEntity($promocode));
         $this->discountsService->applyDiscounts($cart);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());

@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
-use Project\Modules\Shopping\Entity\OfferId;
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\OfferId;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Cart\Commands\UpdateOfferCommand;

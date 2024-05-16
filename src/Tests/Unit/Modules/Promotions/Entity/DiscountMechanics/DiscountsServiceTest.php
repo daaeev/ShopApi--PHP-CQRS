@@ -4,7 +4,7 @@ namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics;
 
 use PHPUnit\Framework\TestCase;
 use Project\Modules\Shopping\Cart\Entity\Cart;
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;

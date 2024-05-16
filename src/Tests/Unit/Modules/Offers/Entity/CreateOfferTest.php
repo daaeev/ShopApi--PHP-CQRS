@@ -2,7 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Offers\Entity;
 
-use Project\Modules\Shopping\Entity\OfferId;
+use Project\Modules\Shopping\Offers\OfferId;
 use Webmozart\Assert\InvalidArgumentException;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 

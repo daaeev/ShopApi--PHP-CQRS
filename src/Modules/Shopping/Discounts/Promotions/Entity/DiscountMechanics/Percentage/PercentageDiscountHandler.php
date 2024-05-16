@@ -3,8 +3,8 @@
 namespace Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Percentage;
 
 use Webmozart\Assert\Assert;
-use Project\Modules\Shopping\Entity\Offer;
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\Offer;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\MechanicHandlerInterface;
 
 class PercentageDiscountHandler implements MechanicHandlerInterface

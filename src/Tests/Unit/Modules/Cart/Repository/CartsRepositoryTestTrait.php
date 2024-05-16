@@ -3,8 +3,9 @@
 namespace Project\Tests\Unit\Modules\Cart\Repository;
 
 use Project\Common\Client\Client;
-use Project\Modules\Shopping\Entity\OfferId;
+use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
+use Project\Modules\Shopping\Entity\Promocode;
 use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Common\Repository\NotFoundException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
@@ -30,8 +31,7 @@ trait CartsRepositoryTestTrait
 		$this->assertSame($initialProperties, $this->getCartProperties($added));
 
 		$added->addOffer($this->generateOffer());
-		$added->usePromocode($this->generatePromocode());
-		$this->promocodes->add($added->getPromocode());
+		$added->usePromocode($this->getPromocode());
 		$addedProperties = $this->getCartProperties($added);
 		$this->carts->save($added);
 
@@ -43,6 +43,13 @@ trait CartsRepositoryTestTrait
 		$this->assertNotSame($initialProperties, $addedProperties);
 		$this->assertNotSame($initialProperties, $updatedProperties);
 		$this->assertSame($addedProperties, $updatedProperties);
+    }
+
+    private function getPromocode(): Promocode
+    {
+        $promo = $this->generatePromocode();
+        $this->promocodes->add($promo);
+        return Promocode::fromBaseEntity($promo);
     }
 
 	private function getCartProperties(Cart $cart): array

@@ -3,7 +3,7 @@
 namespace Project\Modules\Shopping\Discounts;
 
 use Project\Modules\Shopping\Cart\Entity\Cart;
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\HandlerFactoryInterface;
 

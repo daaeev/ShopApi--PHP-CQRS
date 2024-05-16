@@ -105,7 +105,9 @@ class CartsEloquentRepository implements CartsRepositoryInterface
         $record->client_hash = $cart->getClient()->getHash();
         $record->client_id = $cart->getClient()->getId();
         $record->currency = $cart->getCurrency()->value;
-        $record->promocode_id = $cart->getPromocode()?->getId()->getId();
+        $record->promocode_id = $cart->getPromocode()?->getId()?->getId();
+        $record->promocode = $cart->getPromocode()?->getCode();
+        $record->promocode_discount_percent = $cart->getPromocode()?->getDiscountPercent();
         $record->created_at = $cart->getCreatedAt()->format(\DateTimeInterface::RFC3339);
         $record->updated_at = $cart->getUpdatedAt()?->format(\DateTimeInterface::RFC3339);
         $record->save();

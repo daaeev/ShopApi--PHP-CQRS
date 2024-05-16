@@ -2,10 +2,10 @@
 
 namespace Project\Tests\Unit\Modules\Offers\Entity;
 
-use Project\Modules\Shopping\Entity\OfferId;
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\OfferId;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
-use Project\Modules\Shopping\Entity\OffersCollection;
+use Project\Modules\Shopping\Offers\OffersCollection;
 
 class OffersCollectionTest extends \PHPUnit\Framework\TestCase
 {

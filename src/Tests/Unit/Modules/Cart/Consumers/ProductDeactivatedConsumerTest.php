@@ -3,8 +3,8 @@
 namespace Project\Tests\Unit\Modules\Cart\Consumers;
 
 use Project\Common\Product\Availability;
-use Project\Modules\Shopping\Entity\Offer;
-use Project\Modules\Shopping\Entity\OfferId;
+use Project\Modules\Shopping\Offers\Offer;
+use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Tests\Unit\Modules\Helpers\ProductFactory;
 use Project\Modules\Catalogue\Api\DTO\Product\Product;

@@ -2,12 +2,12 @@
 
 namespace Project\Tests\Unit\Modules\Helpers;
 
-use Project\Modules\Shopping\Entity;
+use Project\Modules\Shopping\Offers;
 
 trait OffersFactory
 {
     private function makeOffer(
-        Entity\OfferId $id,
+        Offers\OfferId $id,
         int $product = 1,
         string $name = 'Offer',
         float $regularPrice = 500,
@@ -15,8 +15,8 @@ trait OffersFactory
         int $quantity = 1,
         ?string $size = null,
         ?string $color = null,
-    ): Entity\Offer {
-        return new Entity\Offer(
+    ): Offers\Offer {
+        return new Offers\Offer(
             id: $id,
             product: $product,
             name: $name,
@@ -28,10 +28,10 @@ trait OffersFactory
         );
     }
 
-    private function generateOffer(): Entity\Offer
+    private function generateOffer(): Offers\Offer
     {
-        return new Entity\Offer(
-            id: Entity\OfferId::random(),
+        return new Offers\Offer(
+            id: Offers\OfferId::random(),
             product: rand(1, 9999),
             name: md5(rand()),
             regularPrice: rand(400, 500),

@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Entity;
 
+use Project\Modules\Shopping\Entity\Promocode;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
@@ -36,7 +37,7 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
     public function testUsePromocode()
     {
         $cart = $this->generateCart();
-        $promocode = $this->generatePromocode();
+        $promocode = Promocode::fromBaseEntity($this->generatePromocode());
         $cart->usePromocode($promocode);
         $this->assertSame($promocode, $cart->getPromocode());
         $this->assertEvents($cart, [new PromocodeAddedToCart($cart), new CartUpdated($cart)]);
@@ -45,7 +46,7 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
     public function testUsePromocodeIfCartAlreadyHasPromocode()
     {
         $cart = $this->generateCart();
-        $promocode = $this->generatePromocode();
+        $promocode = Promocode::fromBaseEntity($this->generatePromocode());
         $cart->usePromocode($promocode);
         $this->expectException(\DomainException::class);
         $cart->usePromocode($promocode);
@@ -54,23 +55,12 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
     public function testUsePromocodeWithNullID()
     {
         $cart = $this->generateCart();
-        $promocode = $this->makePromocode(
+        $promocode = new Promocode(
             PromocodeId::next(),
             'test',
-            'test',
             5,
-            new \DateTimeImmutable('-1 day')
         );
 
-        $this->expectException(\DomainException::class);
-        $cart->usePromocode($promocode);
-    }
-
-    public function testUseInactivePromocode()
-    {
-        $cart = $this->generateCart();
-        $promocode = $this->generatePromocode();
-        $promocode->deactivate();
         $this->expectException(\DomainException::class);
         $cart->usePromocode($promocode);
     }
@@ -78,7 +68,7 @@ class UpdateCartTest extends \PHPUnit\Framework\TestCase
     public function testRemovePromocode()
     {
         $cart = $this->generateCart();
-        $promocode = $this->generatePromocode();
+        $promocode = Promocode::fromBaseEntity($this->generatePromocode());
         $cart->usePromocode($promocode);
         $cart->flushEvents();
 

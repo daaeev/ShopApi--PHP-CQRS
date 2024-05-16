@@ -3,8 +3,8 @@
 namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics\Percentage;
 
 use PHPUnit\Framework\TestCase;
-use Project\Modules\Shopping\Entity\Offer;
-use Project\Modules\Shopping\Entity\OfferBuilder;
+use Project\Modules\Shopping\Offers\Offer;
+use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Tests\Unit\Modules\Helpers\PromotionFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;

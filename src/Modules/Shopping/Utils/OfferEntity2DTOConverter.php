@@ -2,12 +2,12 @@
 
 namespace Project\Modules\Shopping\Utils;
 
-use Project\Modules\Shopping\Entity;
+use Project\Modules\Shopping\Offers;
 use Project\Modules\Shopping\Api\DTO;
 
 class OfferEntity2DTOConverter
 {
-    public static function convert(Entity\Offer $offer): DTO\Offer
+    public static function convert(Offers\Offer $offer): DTO\Offer
     {
         return new DTO\Offer(
             $offer->getId()->getId(),

@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Modules\Shopping\Entity;
+namespace Project\Modules\Shopping\Offers;
 
 use Webmozart\Assert\Assert;
 
