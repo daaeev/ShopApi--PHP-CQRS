@@ -8,7 +8,6 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class Handler extends ExceptionHandler
@@ -20,7 +19,7 @@ class Handler extends ExceptionHandler
     ];
 
 
-    public function render($request, Throwable $e)
+    public function render($request, \Throwable $e)
     {
         if ($request->is('api/*') || $request->wantsJson()) {
             $response = $this->renderExceptionAsJson($this->prepareException($e));
@@ -31,7 +30,7 @@ class Handler extends ExceptionHandler
         return $response;
     }
 
-    protected function prepareException(Throwable $e)
+    protected function prepareException(\Throwable $e)
     {
         return match (true) {
             $e instanceof \DomainException => new HttpException(422, $e->getMessage(), $e),
@@ -40,7 +39,7 @@ class Handler extends ExceptionHandler
         };
     }
 
-    private function renderExceptionAsJson(Throwable $e): JsonResponse
+    private function renderExceptionAsJson(\Throwable $e): JsonResponse
     {
         return match (true) {
             $e instanceof ValidationException => $this->renderInvalidatedAsJson($e),
@@ -61,28 +60,37 @@ class Handler extends ExceptionHandler
 
     protected function renderHttpExceptionAsJson(HttpExceptionInterface $e): JsonResponse
     {
-        return response()->json([
+        $response = [
             'status' => 'Error',
             'code' => $e->getStatusCode() ?: 500,
             'message' => $e->getMessage(),
-        ], $e->getStatusCode() ?: 500);
+        ];
+
+        $this->addDetails($e, $response);
+        return response()->json($response, $e->getStatusCode() ?: 500);
     }
 
-    protected function renderFallback(Throwable $e): JsonResponse
+    protected function addDetails(\Throwable $e, array &$response): void
     {
-        $data = [
+        if (App::isProduction() || !config('app.debug')) {
+            return;
+        }
+
+        $response['message'] = $e->getMessage();
+        $response['file'] = $e->getFile();
+        $response['line'] = $e->getLine();
+        $response['context'] = $e->getTrace();
+    }
+
+    protected function renderFallback(\Throwable $e): JsonResponse
+    {
+        $response = [
             'status' => 'Error',
             'code' => 500,
             'message' => 'Something went wrong',
         ];
 
-        if (!App::isProduction() && config('app.debug')) {
-            $data['message'] = $e->getMessage();
-            $data['file'] = $e->getFile();
-            $data['line'] = $e->getLine();
-            $data['context'] = $e->getTrace();
-        }
-
-        return response()->json($data, $data['code']);
+        $this->addDetails($e, $response);
+        return response()->json($response, $response['code']);
     }
 }

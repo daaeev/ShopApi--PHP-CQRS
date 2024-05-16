@@ -21,6 +21,8 @@ class Cart extends Aggregate
     private Client $client;
     private OffersCollection $offers;
     private Currency $currency;
+    private int $totalPrice; // Price with discounts
+    private int $regularPrice; // Price without discount
     private ?Promocode $promocode = null;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
@@ -31,6 +33,7 @@ class Cart extends Aggregate
         $this->offers = new OffersCollection;
         $this->currency = Currency::default();
         $this->createdAt = new \DateTimeImmutable;
+        $this->refreshPrice();
         $this->addEvent(new CartInstantiated($this));
     }
 
@@ -44,6 +47,37 @@ class Cart extends Aggregate
 		$this->updatedAt = $this->updatedAt ? clone $this->updatedAt : null;
 	}
 
+    public function refreshPrice(): void
+    {
+        $this->refreshTotalPrice();
+        $this->refreshRegularPrice();
+    }
+
+    private function refreshTotalPrice(): void
+    {
+        $totalPrice = array_reduce(
+            array: $this->offers->all(),
+            callback: fn ($totalPrice, Offer $offer) => $totalPrice + ($offer->getPrice() * $offer->getQuantity()),
+            initial: 0
+        );
+
+        if (null !== $this->promocode) {
+            $discountPrice = ($totalPrice / 100) * $this->promocode->getDiscountPercent();
+            $totalPrice -= $discountPrice;
+        }
+
+        $this->totalPrice = $totalPrice;
+    }
+
+    private function refreshRegularPrice(): void
+    {
+        $this->regularPrice = array_reduce(
+            array: $this->offers->all(),
+            callback: fn ($totalPrice, Offer $offer) => $totalPrice + ($offer->getRegularPrice() * $offer->getQuantity()),
+            initial: 0
+        );
+    }
+
 	public static function instantiate(Client $client): self
     {
         return new self(CartId::next(), $client);
@@ -52,6 +86,7 @@ class Cart extends Aggregate
     public function addOffer(Offer $offer): void
     {
         $this->offers->add($offer);
+        $this->refreshPrice();
         $this->updated();
     }
 
@@ -63,6 +98,7 @@ class Cart extends Aggregate
     public function removeOffer(OfferId $offerId): void
     {
         $this->offers->remove($offerId);
+        $this->refreshPrice();
         $this->updated();
     }
 
@@ -75,6 +111,7 @@ class Cart extends Aggregate
 	public function setOffers(array $offers): void
 	{
 		$this->offers->set($offers);
+        $this->refreshPrice();
         $this->updated();
 	}
 
@@ -104,6 +141,7 @@ class Cart extends Aggregate
         }
 
         $this->promocode = $promocode;
+        $this->refreshPrice();
         $this->addEvent(new PromocodeAddedToCart($this));
         $this->updated();
     }
@@ -115,24 +153,9 @@ class Cart extends Aggregate
         }
 
         $this->promocode = null;
+        $this->refreshPrice();
         $this->addEvent(new PromocodeRemovedFromCart($this));
         $this->updated();
-    }
-
-    public function getTotalPrice(): float
-    {
-        $totalPrice = array_reduce(
-            array: $this->offers->all(),
-            callback: fn ($totalPrice, Offer $offer) => $totalPrice + ($offer->getPrice() * $offer->getQuantity()),
-            initial: 0
-        );
-
-        if (null !== $this->promocode) {
-            $discountPrice = ($totalPrice / 100) * $this->promocode->getDiscountPercent();
-            $totalPrice -= $discountPrice;
-        }
-
-        return $totalPrice;
     }
 
     public function getId(): CartId
@@ -156,6 +179,16 @@ class Cart extends Aggregate
     public function getCurrency(): Currency
     {
         return $this->currency;
+    }
+
+    public function getTotalPrice(): int
+    {
+        return $this->totalPrice;
+    }
+
+    public function getRegularPrice(): int
+    {
+        return $this->regularPrice;
     }
 
     public function getPromocode(): ?Promocode

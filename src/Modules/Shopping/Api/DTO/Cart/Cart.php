@@ -15,7 +15,8 @@ class Cart implements DTO
         public readonly Client $client,
         public readonly string $currency,
         public readonly array $offers,
-        public readonly float $totalPrice,
+        public readonly int $totalPrice,
+        public readonly int $regularPrice,
         public readonly ?Promocode $promocode,
         public readonly \DateTimeImmutable $createdAt,
         public readonly ?\DateTimeImmutable $updatedAt = null,
@@ -33,6 +34,7 @@ class Cart implements DTO
             ],
             'currency' => $this->currency,
             'totalPrice' => $this->totalPrice,
+            'regularPrice' => $this->regularPrice,
             'promocode' => $this->promocode?->toArray(),
             'offers' => array_map(function (Offer $offer) {
                 return $offer->toArray();

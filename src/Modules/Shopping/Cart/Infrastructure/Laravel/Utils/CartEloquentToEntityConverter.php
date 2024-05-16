@@ -28,6 +28,8 @@ class CartEloquentToEntityConverter
                 $record->client_id,
             ),
             'currency' => Currency::from($record->currency),
+            'totalPrice' => $record->total_price,
+            'regularPrice' => $record->regular_price,
             'promocode' => !empty($record->promocode_id)
                 ? new Promocode(
                     PromocodeId::make($record->promocode_id),

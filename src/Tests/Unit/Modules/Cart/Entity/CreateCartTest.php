@@ -25,6 +25,8 @@ class CreateCartTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($client->getHash(), $cart->getClient()->getHash());
         $this->assertSame($client->getId(), $cart->getClient()->getId());
         $this->assertSame(Currency::default(), $cart->getCurrency());
+        $this->assertSame(0, $cart->getTotalPrice());
+        $this->assertSame(0, $cart->getRegularPrice());
         $this->assertEmpty($cart->getOffers());
         $this->assertNull($cart->getPromocode());
         $this->assertNotEmpty($cart->getCreatedAt());
@@ -40,6 +42,8 @@ class CreateCartTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($client->getHash(), $cart->getClient()->getHash());
         $this->assertSame($client->getId(), $cart->getClient()->getId());
         $this->assertSame(Currency::default(), $cart->getCurrency());
+        $this->assertSame(0, $cart->getTotalPrice());
+        $this->assertSame(0, $cart->getRegularPrice());
         $this->assertNotEmpty($cart->getCreatedAt());
         $this->assertEmpty($cart->getUpdatedAt());
         $this->assertEvents($cart, [new CartInstantiated($cart)]);

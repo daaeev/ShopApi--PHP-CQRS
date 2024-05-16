@@ -18,6 +18,7 @@ class CartEntity2DTOConverter
             $entity->getCurrency()->value,
             array_map(fn (Offer $offer) => OfferEntity2DTOConverter::convert($offer), $entity->getOffers()),
             $entity->getTotalPrice(),
+            $entity->getRegularPrice(),
             $entity->getPromocode()
                 ? new Promocode(
                     $entity->getPromocode()->getId()->getId(),

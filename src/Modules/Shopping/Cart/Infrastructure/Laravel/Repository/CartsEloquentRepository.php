@@ -105,6 +105,8 @@ class CartsEloquentRepository implements CartsRepositoryInterface
         $record->client_hash = $cart->getClient()->getHash();
         $record->client_id = $cart->getClient()->getId();
         $record->currency = $cart->getCurrency()->value;
+        $record->total_price = $cart->getTotalPrice();
+        $record->regular_price = $cart->getRegularPrice();
         $record->promocode_id = $cart->getPromocode()?->getId()?->getId();
         $record->promocode = $cart->getPromocode()?->getCode();
         $record->promocode_discount_percent = $cart->getPromocode()?->getDiscountPercent();

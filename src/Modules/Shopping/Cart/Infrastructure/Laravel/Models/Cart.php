@@ -13,6 +13,8 @@ class Cart extends Model
         'client_hash',
         'client_id',
         'currency',
+        'total_price',
+        'regular_price',
         'promocode',
         'promocode_id',
         'promocode_discount_percent',
