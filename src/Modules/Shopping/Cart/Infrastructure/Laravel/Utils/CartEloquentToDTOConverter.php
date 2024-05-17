@@ -40,6 +40,7 @@ class CartEloquentToDTOConverter
     {
         return new Offer(
             id: $record->id,
+            uuid: $record->uuid,
             product: $record->product,
             name: $record->name,
             regularPrice: $record->regular_price,

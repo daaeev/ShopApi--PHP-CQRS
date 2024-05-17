@@ -123,6 +123,8 @@ class CartsEloquentRepository implements CartsRepositoryInterface
         $record->items()->delete();
         foreach ($cart->getOffers() as $offer) {
             $cartItemRecord = $record->items()->create([
+                'id' => $offer->getId()->getId(),
+                'uuid' => $offer->getUuid()->getId(),
                 'cart_id' => $cart->getId()->getId(),
                 'product' => $offer->getProduct(),
                 'name' => $offer->getName(),

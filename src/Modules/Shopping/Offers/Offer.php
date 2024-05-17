@@ -8,6 +8,7 @@ class Offer
 {
     public function __construct(
         private OfferId $id,
+        private OfferUuId $uuid,
         private int $product,
         private string $name,
         private float $regularPrice, // Price without any discounts
@@ -40,22 +41,29 @@ class Offer
     public function __clone(): void
     {
         $this->id = clone $this->id;
+        $this->uuid = clone $this->uuid;
     }
 
     public function equalsTo(self $other): bool
     {
-        return (
-            ($this->getProduct() === $other->getProduct())
+        $sameId = $this->id->equalsTo($other->id) || $this->uuid->equalsTo($other->uuid);
+        $sameOffer = ($this->getProduct() === $other->getProduct())
             && ($this->getRegularPrice() === $other->getRegularPrice())
             && ($this->getPrice() === $other->getPrice())
             && ($this->getSize() === $other->getSize())
-            && ($this->getColor() === $other->getColor())
-        );
+            && ($this->getColor() === $other->getColor());
+
+        return $sameId || $sameOffer;
     }
 
     public function getId(): OfferId
     {
         return $this->id;
+    }
+
+    public function getUuid(): OfferUuId
+    {
+        return $this->uuid;
     }
 
     public function getProduct(): int

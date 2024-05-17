@@ -11,6 +11,7 @@ class OfferEntity2DTOConverter
     {
         return new DTO\Offer(
             $offer->getId()->getId(),
+            $offer->getUuid()->getId(),
             $offer->getProduct(),
             $offer->getName(),
             $offer->getRegularPrice(),

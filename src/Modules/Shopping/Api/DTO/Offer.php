@@ -8,6 +8,7 @@ class Offer implements Arrayable
 {
     public function __construct(
         public readonly int $id,
+        public readonly string $uuid,
         public readonly int $product,
         public readonly string $name,
         public readonly float $regularPrice,
@@ -21,6 +22,7 @@ class Offer implements Arrayable
     {
         return [
             'id' => $this->id,
+            'uuid' => $this->uuid,
             'product' => $this->product,
             'name' => $this->name,
             'regularPrice' => $this->regularPrice,

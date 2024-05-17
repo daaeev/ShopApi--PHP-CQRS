@@ -4,7 +4,7 @@ namespace Project\Modules\Shopping\Offers;
 
 class OfferBuilder
 {
-    private ?OfferId $id = null;
+    private ?OfferUuId $id = null;
     private ?int $product = null;
     private ?string $name = null;
     private ?float $regularPrice = null; // Price without any discounts
@@ -25,6 +25,12 @@ class OfferBuilder
         $builder->size = $offer->getSize();
         $builder->color = $offer->getColor();
         return $builder;
+    }
+
+    public function withId(OfferUuId $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function withPrice(float $price): self

@@ -2,12 +2,14 @@
 
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils;
 
+use Ramsey\Uuid\Uuid;
 use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Cart\Entity;
 use Project\Modules\Shopping\Offers\Offer;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Shopping\Offers\OfferId;
+use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
 use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
@@ -49,6 +51,7 @@ class CartEloquentToEntityConverter
     {
         return $this->hydrator->hydrate(Offer::class, [
             'id' => new OfferId($record->id),
+            'uuid' => new OfferUuid(Uuid::fromString($record->id)),
             'product' => $record->product,
             'name' => $record->name,
             'regularPrice' => $record->regular_price,

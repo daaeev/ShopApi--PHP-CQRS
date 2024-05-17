@@ -7,6 +7,7 @@ use Project\Common\Entity\Aggregate;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Offers\Offer;
 use Project\Modules\Shopping\Offers\OfferId;
+use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
 use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
@@ -90,12 +91,12 @@ class Cart extends Aggregate
         $this->updated();
     }
 
-    public function getOffer(OfferId $offerId): Offer
+    public function getOffer(OfferId|OfferUuId $offerId): Offer
     {
         return $this->offers->get($offerId);
     }
 
-    public function removeOffer(OfferId $offerId): void
+    public function removeOffer(OfferId|OfferUuId $offerId): void
     {
         $this->offers->remove($offerId);
         $this->refreshPrice();

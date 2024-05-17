@@ -16,7 +16,7 @@ class OffersCollection extends Collection
     public function add(Offer $offer): void
     {
         if ($sameItem = $this->getSameOffer($offer)) {
-            $this->replaceOffer($sameItem, $offer);
+            $this->replaceOffer($sameItem->getUuid(), $offer);
         } else {
             $this->entities[] = $offer;
         }
@@ -25,7 +25,7 @@ class OffersCollection extends Collection
     private function getSameOffer(Offer $offer): ?Offer
     {
         foreach ($this->entities as $currentOffer) {
-            if ($offer->getId()->equalsTo($currentOffer->getId()) || $currentOffer->equalsTo($offer)) {
+            if ($offer->equalsTo($currentOffer)) {
                 return $currentOffer;
             }
         }
@@ -33,11 +33,17 @@ class OffersCollection extends Collection
         return null;
     }
 
-    private function replaceOffer(Offer $old, Offer $new): void
+    public function replaceOffer(OfferId|OfferUuId $oldOfferId, Offer $newOffer): void
     {
-        foreach ($this->entities as $index => $currentItem) {
-            if ($old->getId()->equalsTo($currentItem->getId()) || $currentItem->equalsTo($old)) {
-                $this->entities[$index] = $new;
+        if (empty($oldOfferId->getId())) {
+            throw new \DomainException('Old offer id cant be empty');
+        }
+
+        foreach ($this->entities as $index => $offer) {
+            $currentOfferId = $oldOfferId instanceof OfferId ? $offer->getId() : $offer->getUuid();
+            if ($oldOfferId->equalsTo($currentOfferId)) {
+                $this->entities[$index] = $newOffer;
+                return;
             }
         }
     }
@@ -48,26 +54,36 @@ class OffersCollection extends Collection
         $this->entities = $offers;
     }
 
-    public function remove(OfferId $offerId): void
+    public function remove(OfferId|OfferUuId $offerId): void
     {
+        if (empty($offerId->getId())) {
+            throw new \DomainException('Offer id cant be empty');
+        }
+
         foreach ($this->entities as $index => $offer) {
-            if ($offer->getId()->equalsTo($offerId)) {
+            $currentOfferId = $offerId instanceof OfferId ? $offer->getId() : $offer->getUuid();
+            if ($offerId->equalsTo($currentOfferId)) {
                 unset($this->entities[$index]);
                 return;
             }
         }
 
-        throw new \DomainException("Offer #{$offerId->getId()} does not exists");
+        throw new \DomainException("Offer does not exists");
     }
 
-    public function get(OfferId $offerId): Offer
+    public function get(OfferId|OfferUuId $offerId): Offer
     {
+        if (empty($offerId->getId())) {
+            throw new \DomainException('Offer id cant be empty');
+        }
+
         foreach ($this->entities as $offer) {
-            if ($offer->getId()->equalsTo($offerId)) {
+            $currentOfferId = $offerId instanceof OfferId ? $offer->getId() : $offer->getUuid();
+            if ($offerId->equalsTo($currentOfferId)) {
                 return $offer;
             }
         }
 
-        throw new \DomainException("Offer #{$offerId->getId()} does not exists");
+        throw new \DomainException("Offer does not exists");
     }
 }
