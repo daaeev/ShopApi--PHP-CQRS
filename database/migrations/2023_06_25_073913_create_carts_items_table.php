@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('shopping_carts_items', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->nullable(false);
             $table->unsignedBigInteger('cart_id')->nullable(false);
             $table->unsignedInteger('product')->nullable(false);
             $table->string('name')->nullable(false);

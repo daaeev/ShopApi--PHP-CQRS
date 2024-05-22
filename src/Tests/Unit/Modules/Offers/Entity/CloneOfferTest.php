@@ -13,5 +13,6 @@ class CloneOfferTest extends \PHPUnit\Framework\TestCase
         $cartItem = $this->generateOffer();
         $cloned = clone $cartItem;
         $this->assertNotSame($cartItem->getId(), $cloned->getId());
+        $this->assertNotSame($cartItem->getUuid(), $cloned->getUuid());
     }
 }

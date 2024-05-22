@@ -2,6 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Offers\Entity;
 
+use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 
@@ -16,6 +17,7 @@ class OfferBuilderTest extends \PHPUnit\Framework\TestCase
         $builded = $builder->from($offer)->build();
 
         $this->assertNotSame($builded->getId(), $offer->getId());
+        $this->assertNotSame($builded->getUuid(), $offer->getUuid());
         $this->assertSame($builded->getId()->getId(), $offer->getId()->getId());
         $this->assertSame($builded->getProduct(), $offer->getProduct());
         $this->assertSame($builded->getName(), $offer->getName());
@@ -24,6 +26,17 @@ class OfferBuilderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($builded->getQuantity(), $offer->getQuantity());
         $this->assertSame($builded->getSize(), $offer->getSize());
         $this->assertSame($builded->getColor(), $offer->getColor());
+    }
+
+    public function testWithId()
+    {
+        $builder = new OfferBuilder();
+        $offer = $this->generateOffer();
+        $builded = $builder->from($offer)
+            ->withId($id = OfferId::random())
+            ->build();
+
+        $this->assertSame($builded->getId(), $id);
     }
 
     public function testWithPrice()

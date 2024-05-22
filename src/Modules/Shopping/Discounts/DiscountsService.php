@@ -17,7 +17,7 @@ class DiscountsService
 
 	public function applyDiscounts(Cart $cart): void
 	{
-        $offers = $this->getOffersWithoutDiscounts($cart);
+        $offers = $this->removeOffersDiscounts($cart->getOffers());
 		$promotions = $this->promotions->getActivePromotions();
 		foreach ($promotions as $promotion) {
 			foreach ($promotion->getDiscounts() as $discount) {
@@ -29,12 +29,12 @@ class DiscountsService
 		$cart->setOffers($offers);
 	}
 
-    private function getOffersWithoutDiscounts(Cart $cart): array
+    private function removeOffersDiscounts(array $offers): array
     {
-        $offers = [];
-        foreach ($cart->getOffers() as $offer) {
+        foreach ($offers as $index => $offer) {
             $regularPrice = $offer->getRegularPrice();
-            $offers[] = $this->offerBuilder->from($offer)->withPrice($regularPrice)->build();
+            $offerWithoutDiscounts = $this->offerBuilder->from($offer)->withPrice($regularPrice)->build();
+            $offers[$index] = $offerWithoutDiscounts;
         }
 
         return $offers;

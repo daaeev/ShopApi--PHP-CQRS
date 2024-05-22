@@ -86,8 +86,8 @@ class UpdateItemTest extends \PHPUnit\Framework\TestCase
             ->willReturn($this->offer);
 
         $this->cart->expects($this->once())
-            ->method('addOffer')
-            ->with($this->offer);
+            ->method('replaceOffer')
+            ->with($this->offer, $this->offer);
 
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')

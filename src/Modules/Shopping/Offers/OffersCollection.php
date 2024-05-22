@@ -16,7 +16,7 @@ class OffersCollection extends Collection
     public function add(Offer $offer): void
     {
         if ($sameItem = $this->getSameOffer($offer)) {
-            $this->replaceOffer($sameItem->getUuid(), $offer);
+            $this->replace($sameItem->getUuid(), $offer);
         } else {
             $this->entities[] = $offer;
         }
@@ -33,12 +33,8 @@ class OffersCollection extends Collection
         return null;
     }
 
-    public function replaceOffer(OfferId|OfferUuId $oldOfferId, Offer $newOffer): void
+    public function replace(OfferId|OfferUuId $oldOfferId, Offer $newOffer): void
     {
-        if (empty($oldOfferId->getId())) {
-            throw new \DomainException('Old offer id cant be empty');
-        }
-
         foreach ($this->entities as $index => $offer) {
             $currentOfferId = $oldOfferId instanceof OfferId ? $offer->getId() : $offer->getUuid();
             if ($oldOfferId->equalsTo($currentOfferId)) {
@@ -46,6 +42,8 @@ class OffersCollection extends Collection
                 return;
             }
         }
+
+        throw new \DomainException('Offer does not exists');
     }
 
     public function set(array $offers): void
@@ -56,10 +54,6 @@ class OffersCollection extends Collection
 
     public function remove(OfferId|OfferUuId $offerId): void
     {
-        if (empty($offerId->getId())) {
-            throw new \DomainException('Offer id cant be empty');
-        }
-
         foreach ($this->entities as $index => $offer) {
             $currentOfferId = $offerId instanceof OfferId ? $offer->getId() : $offer->getUuid();
             if ($offerId->equalsTo($currentOfferId)) {
@@ -73,10 +67,6 @@ class OffersCollection extends Collection
 
     public function get(OfferId|OfferUuId $offerId): Offer
     {
-        if (empty($offerId->getId())) {
-            throw new \DomainException('Offer id cant be empty');
-        }
-
         foreach ($this->entities as $offer) {
             $currentOfferId = $offerId instanceof OfferId ? $offer->getId() : $offer->getUuid();
             if ($offerId->equalsTo($currentOfferId)) {

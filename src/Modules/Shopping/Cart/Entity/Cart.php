@@ -91,6 +91,13 @@ class Cart extends Aggregate
         $this->updated();
     }
 
+    public function replaceOffer(Offer $offer, Offer $newOffer): void
+    {
+        $this->offers->replace($offer->getUuid(), $newOffer);
+        $this->refreshPrice();
+        $this->updated();
+    }
+
     public function getOffer(OfferId|OfferUuId $offerId): Offer
     {
         return $this->offers->get($offerId);

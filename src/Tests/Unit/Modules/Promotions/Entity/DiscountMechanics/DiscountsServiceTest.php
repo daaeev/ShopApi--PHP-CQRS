@@ -34,6 +34,14 @@ class DiscountsServiceTest extends TestCase
         $cartItem = $this->generateOffer();
         $cartItems = [$cartItem];
 
+        $cart = $this->getMockBuilder(Cart::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $cart->expects($this->once())
+            ->method('getOffers')
+            ->willReturn($cartItems);
+
         $builderMock = $this->getMockBuilder(OfferBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -52,18 +60,6 @@ class DiscountsServiceTest extends TestCase
             ->method('build')
             ->willReturn($cartItem);
 
-        $cart = $this->getMockBuilder(Cart::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $cart->expects($this->once())
-            ->method('getOffers')
-            ->willReturn($cartItems);
-
-        $cart->expects($this->once())
-            ->method('setOffers')
-            ->with($cartItems);
-
         $this->promotions->expects($this->once())
             ->method('getActivePromotions')
             ->willReturn($this->generateActivePromotions());
@@ -76,6 +72,10 @@ class DiscountsServiceTest extends TestCase
             ->method('handle')
             ->with($cartItems)
             ->willReturn($cartItems);
+
+        $cart->expects($this->once())
+            ->method('setOffers')
+            ->with($cartItems);
 
         $service = new DiscountsService($builderMock, $this->promotions, $this->handlerFactory);
         $service->applyDiscounts($cart);

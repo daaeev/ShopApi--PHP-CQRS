@@ -2,21 +2,31 @@
 
 namespace Project\Modules\Shopping\Order\Entity;
 
-use Project\Modules\Client\Entity\ClientId;
+use Webmozart\Assert\Assert;
+use Project\Common\Client\Client;
 
 class ClientInfo
 {
     public function __construct(
-        private ClientId $id,
+        private Client $client,
         private string $firstName,
         private string $lastName,
         private string $phone,
         private ?string $email,
-    ) {}
+    ) {
+        Assert::notEmpty($this->firstName);
+        Assert::notEmpty($this->lastName);
+        Assert::notEmpty($this->phone);
+    }
 
-    public function getId(): ClientId
+    public function __clone(): void
     {
-        return $this->id;
+        $this->client = clone $this->client;
+    }
+
+    public function getClient(): Client
+    {
+        return $this->client;
     }
 
     public function getFirstName(): string

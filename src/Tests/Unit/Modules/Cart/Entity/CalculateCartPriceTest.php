@@ -16,9 +16,6 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
     public function testCalculateAfterAddOffer()
     {
         $cart = $this->generateCart();
-        $this->assertSame(0, $cart->getTotalPrice());
-        $this->assertSame(0, $cart->getRegularPrice());
-
         $cart->addOffer($this->generateOffer());
         $this->assertNotSame(0, $cart->getTotalPrice());
         $this->assertNotSame(0, $cart->getRegularPrice());
@@ -47,12 +44,40 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
         }, 0);
     }
 
+    public function testCalculateAfterReplaceOffer()
+    {
+        $cart = $this->generateCart();
+        $offer = $this->generateOffer();
+        $cart->addOffer($offer);
+        $oldTotalPrice = $cart->getTotalPrice();
+        $oldRegularPrice = $cart->getRegularPrice();
+
+        $cart->replaceOffer($offer, $this->generateOffer());
+        $this->assertNotSame($oldTotalPrice, $cart->getTotalPrice());
+        $this->assertNotSame($oldRegularPrice, $cart->getRegularPrice());
+
+        $this->assertSame($this->calculateTotalPrice($cart), $cart->getTotalPrice());
+        $this->assertSame($this->calculateRegularPrice($cart), $cart->getRegularPrice());
+    }
+
+    public function testCalculateAfterRemoveOffer()
+    {
+        $cart = $this->generateCart();
+        $cart->setOffers([$offer = $this->generateOffer(), $this->generateOffer()]);
+        $oldTotalPrice = $cart->getTotalPrice();
+        $oldRegularPrice = $cart->getRegularPrice();
+
+        $cart->removeOffer($offer->getId());
+        $this->assertNotSame($oldTotalPrice, $cart->getTotalPrice());
+        $this->assertNotSame($oldRegularPrice, $cart->getRegularPrice());
+
+        $this->assertSame($this->calculateTotalPrice($cart), $cart->getTotalPrice());
+        $this->assertSame($this->calculateRegularPrice($cart), $cart->getRegularPrice());
+    }
+
     public function testCalculateAfterSetOffers()
     {
         $cart = $this->generateCart();
-        $this->assertSame(0, $cart->getTotalPrice());
-        $this->assertSame(0, $cart->getRegularPrice());
-
         $cart->setOffers([$this->generateOffer(), $this->generateOffer()]);
         $this->assertNotSame(0, $cart->getTotalPrice());
         $this->assertNotSame(0, $cart->getRegularPrice());

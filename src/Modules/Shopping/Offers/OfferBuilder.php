@@ -4,7 +4,8 @@ namespace Project\Modules\Shopping\Offers;
 
 class OfferBuilder
 {
-    private ?OfferUuId $id = null;
+    private ?OfferId $id = null;
+    private ?OfferUuId $uuid = null;
     private ?int $product = null;
     private ?string $name = null;
     private ?float $regularPrice = null; // Price without any discounts
@@ -17,6 +18,7 @@ class OfferBuilder
     {
         $builder = new self;
         $builder->id = clone $offer->getId();
+        $builder->uuid = clone $offer->getUuid();
         $builder->product = $offer->getProduct();
         $builder->name = $offer->getName();
         $builder->regularPrice = $offer->getRegularPrice();
@@ -27,7 +29,7 @@ class OfferBuilder
         return $builder;
     }
 
-    public function withId(OfferUuId $id): self
+    public function withId(OfferId $id): self
     {
         $this->id = $id;
         return $this;
@@ -47,8 +49,9 @@ class OfferBuilder
 
     public function build(): Offer
     {
-        $cartItem = new Offer(
+        $offer = new Offer(
             $this->id,
+            $this->uuid,
             $this->product,
             $this->name,
             $this->regularPrice,
@@ -59,6 +62,7 @@ class OfferBuilder
         );
 
         $this->id = null;
+        $this->uuid = null;
         $this->product = null;
         $this->name = null;
         $this->regularPrice = null;
@@ -66,6 +70,7 @@ class OfferBuilder
         $this->quantity = null;
         $this->size = null;
         $this->color = null;
-        return $cartItem;
+
+        return $offer;
     }
 }

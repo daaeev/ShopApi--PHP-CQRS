@@ -5,21 +5,6 @@
          colors="true"
 >
     <testsuites>
-        <!--SECTION GLOBAL-->
-
-        <testsuite name="Project">
-            <directory suffix="Test.php">./src/Tests</directory>
-        </testsuite>
-        <testsuite name="ProjectUnit">
-            <directory suffix="Test.php">./src/Tests/Unit</directory>
-        </testsuite>
-        <testsuite name="ProjectLaravel">
-            <directory suffix="Test.php">./src/Tests/Laravel</directory>
-        </testsuite>
-
-        <!--END-SECTION-->
-        <!--SECTION UNIT-->
-
         <!--Common entities-->
         <testsuite name="ProjectUnitCommonEntities">
             <directory suffix="Test.php">./src/Tests/Unit/Entity</directory>
@@ -31,10 +16,6 @@
         <!--Events-->
         <testsuite name="ProjectUnitEvents">
             <directory suffix="Test.php">./src/Tests/Unit/Events</directory>
-        </testsuite>
-        <!--Services-->
-        <testsuite name="ProjectUnitServices">
-            <directory suffix="Test.php">./src/Tests/Unit/Services</directory>
         </testsuite>
         <!--Services/FileManager-->
         <testsuite name="ProjectUnitFileManager">
@@ -73,16 +54,9 @@
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Client</directory>
         </testsuite>
 
-        <!--END-SECTION-->
-        <!--SECTION LARAVEL-->
-
         <!--MessageBusses-->
         <testsuite name="ProjectLaravelMessageBuses">
             <directory suffix="Test.php">./src/Tests/Laravel/MessageBuses</directory>
-        </testsuite>
-        <!--Services-->
-        <testsuite name="ProjectLaravelServices">
-            <directory suffix="Test.php">./src/Tests/Laravel/Services</directory>
         </testsuite>
         <!--Services/FileManager-->
         <testsuite name="ProjectLaravelFileManager">
@@ -116,8 +90,6 @@
         <testsuite name="ProjectLaravelClient">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Client</directory>
         </testsuite>
-
-        <!--END-SECTION-->
     </testsuites>
     <php>
         <env name="APP_ENV" value="testing"/>

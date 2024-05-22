@@ -4,6 +4,7 @@ namespace Project\Tests\Unit\Modules\Cart\Repository;
 
 use Project\Common\Client\Client;
 use Project\Modules\Shopping\Offers\OfferId;
+use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Entity\Promocode;
 use Project\Modules\Shopping\Cart\Entity\CartId;
@@ -70,6 +71,7 @@ trait CartsRepositoryTestTrait
             $client->getId(),
             $client->getHash(),
             $offers,
+            json_encode($offers),
             $currency,
             $totalPrice,
             $regularPrice,
@@ -87,7 +89,7 @@ trait CartsRepositoryTestTrait
 	public function testSaveIncrementIds()
 	{
 		$cart = $this->makeCart(CartId::next(), new Client('test', 1));
-		$cartItem = $this->makeOffer(OfferId::next());
+		$cartItem = $this->makeOffer(OfferId::next(), OfferUuId::random());
 		$cart->addOffer($cartItem);
 		$this->carts->save($cart);
 

@@ -38,8 +38,7 @@ class ChangeCurrencyHandler implements DispatchEventsInterface
                 $offer->getColor(),
             );
 
-            $cart->removeOffer($offer->getId());
-            $cart->addOffer($offerWithNewCurrency);
+            $cart->replaceOffer($offer, $offerWithNewCurrency);
         }
 
         $this->discountsService->applyDiscounts($cart);

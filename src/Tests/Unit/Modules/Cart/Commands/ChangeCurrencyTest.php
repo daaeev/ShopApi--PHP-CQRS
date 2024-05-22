@@ -22,7 +22,6 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
     private Cart $cart;
 
     private Offer $offer;
-    private OfferId $offerId;
     private int $product = 1;
     private int $quantity = 1;
     private string $size = 'size';
@@ -47,7 +46,6 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->offerId = OfferId::random();
         $this->offer = $this->getMockBuilder(Offer::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -75,7 +73,7 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
             ->with($this->client)
             ->willReturn($this->cart);
 
-        $command = new ChangeCurrencyCommand($currency = Currency::default()->value);
+        $command = new ChangeCurrencyCommand(Currency::default()->value);
 
         $this->cart->expects($this->once())
             ->method('changeCurrency')
@@ -96,12 +94,8 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
             ->willReturn($this->offer);
 
         $this->cart->expects($this->exactly(2))
-            ->method('removeOffer')
-            ->with($this->offerId);
-
-        $this->cart->expects($this->exactly(2))
-            ->method('addOffer')
-            ->with($this->offer);
+            ->method('replaceOffer')
+            ->with($this->offer, $this->offer);
 
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
@@ -141,9 +135,5 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
         $this->offer->expects($this->exactly(2))
             ->method('getColor')
             ->willReturn($this->color);
-
-        $this->offer->expects($this->exactly(2))
-            ->method('getId')
-            ->willReturn($this->offerId);
     }
 }

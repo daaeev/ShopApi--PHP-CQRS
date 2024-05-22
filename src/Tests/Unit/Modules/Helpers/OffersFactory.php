@@ -8,6 +8,7 @@ trait OffersFactory
 {
     private function makeOffer(
         Offers\OfferId $id,
+        Offers\OfferUuId $uuid,
         int $product = 1,
         string $name = 'Offer',
         float $regularPrice = 500,
@@ -18,6 +19,7 @@ trait OffersFactory
     ): Offers\Offer {
         return new Offers\Offer(
             id: $id,
+            uuid: $uuid,
             product: $product,
             name: $name,
 			regularPrice: $regularPrice,
@@ -32,6 +34,7 @@ trait OffersFactory
     {
         return new Offers\Offer(
             id: Offers\OfferId::random(),
+            uuid: Offers\OfferUuId::random(),
             product: rand(1, 9999),
             name: md5(rand()),
             regularPrice: rand(400, 500),
