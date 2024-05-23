@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
 use Project\Common\Client\Client;
+use Project\Modules\Shopping\Offers\Offer;
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Environment\EnvironmentInterface;
@@ -17,6 +18,7 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
 {
     private Client $client;
     private Cart $cart;
+    private Offer $offer;
 
     private CartsRepositoryInterface $carts;
     private DiscountsService $discountsService;
@@ -33,6 +35,10 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
 
         $this->carts = $this->getMockBuilder(CartsRepositoryInterface::class)->getMock();
         $this->cart = $this->getMockBuilder(Cart::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->offer = $this->getMockBuilder(Offer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -60,9 +66,18 @@ class RemoveItemTest extends \PHPUnit\Framework\TestCase
             ->method('removeOffer')
             ->with(OfferId::make($product));
 
+        $this->cart->expects($this->once())
+            ->method('getOffers')
+            ->willReturn([$this->offer]);
+
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
-            ->with($this->cart);
+            ->with([$this->offer])
+            ->willReturn([$this->offer]);
+
+        $this->cart->expects($this->once())
+            ->method('setOffers')
+            ->with([$this->offer]);
 
         $this->carts->expects($this->once())
             ->method('save')

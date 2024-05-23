@@ -86,9 +86,18 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
             ->method('addOffer')
             ->with($this->offer);
 
+        $this->cart->expects($this->once())
+            ->method('getOffers')
+            ->willReturn([$this->offer]);
+
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
-            ->with($this->cart);
+            ->with([$this->offer])
+            ->willReturn([$this->offer]);
+
+        $this->cart->expects($this->once())
+            ->method('setOffers')
+            ->with([$this->offer]);
 
         $this->carts->expects($this->once())
             ->method('save')

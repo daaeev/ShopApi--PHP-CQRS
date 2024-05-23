@@ -5,7 +5,6 @@ namespace Project\Tests\Unit\Modules\Cart\Commands;
 use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Offers\Offer;
-use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Adapters\CatalogueService;
@@ -79,11 +78,12 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
             ->method('changeCurrency')
             ->with(Currency::default());
 
-        $this->cart->expects($this->once())
+        $this->cart->expects($this->exactly(2))
             ->method('getOffers')
             ->willReturn([$this->offer, $this->offer]);
 
         $this->mockOfferMethods();
+
         $this->cart->expects($this->exactly(2))
             ->method('getCurrency')
             ->willReturn(Currency::default());
@@ -99,7 +99,12 @@ class ChangeCurrencyTest extends \PHPUnit\Framework\TestCase
 
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
-            ->with($this->cart);
+            ->with([$this->offer, $this->offer])
+            ->willReturn([$this->offer, $this->offer]);
+
+        $this->cart->expects($this->once())
+            ->method('setOffers')
+            ->with([$this->offer, $this->offer]);
 
         $this->carts->expects($this->once())
             ->method('save')

@@ -31,7 +31,8 @@ class UpdateOfferHandler implements DispatchEventsInterface
         $updatedOffer = $this->cartItemBuilder->from($offer)->withQuantity($command->quantity)->build();
         $cart->replaceOffer($offer, $updatedOffer);
 
-        $this->discountsService->applyDiscounts($cart);
+        $offersWithDiscounts = $this->discountsService->applyDiscounts($cart->getOffers());
+        $cart->setOffers($offersWithDiscounts);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());
     }

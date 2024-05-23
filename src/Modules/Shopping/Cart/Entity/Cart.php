@@ -67,7 +67,7 @@ class Cart extends Aggregate
             $totalPrice -= $discountPrice;
         }
 
-        $this->totalPrice = $totalPrice;
+        $this->totalPrice = (int) $totalPrice;
     }
 
     private function refreshRegularPrice(): void

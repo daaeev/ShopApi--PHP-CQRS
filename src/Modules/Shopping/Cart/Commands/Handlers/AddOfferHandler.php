@@ -34,7 +34,8 @@ class AddOfferHandler implements DispatchEventsInterface
 		);
 
         $cart->addOffer($offer);
-        $this->discountsService->applyDiscounts($cart);
+        $offersWithDiscounts = $this->discountsService->applyDiscounts($cart->getOffers());
+        $cart->setOffers($offersWithDiscounts);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());
     }

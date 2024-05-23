@@ -34,7 +34,7 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
             $totalPrice -= ($totalPrice / 100) * $cart->getPromocode()->getDiscountPercent();
         }
 
-        return $totalPrice;
+        return (int) $totalPrice;
     }
 
     private function calculateRegularPrice(Cart $cart): int

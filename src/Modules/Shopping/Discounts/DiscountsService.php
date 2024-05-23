@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Shopping\Discounts;
 
-use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Modules\Shopping\Discounts\Promotions\Repository\PromotionsRepositoryInterface;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\HandlerFactoryInterface;
@@ -15,9 +14,9 @@ class DiscountsService
 		private readonly HandlerFactoryInterface $handlerFactory,
 	) {}
 
-	public function applyDiscounts(Cart $cart): void
+	public function applyDiscounts(array $offers): array
 	{
-        $offers = $this->removeOffersDiscounts($cart->getOffers());
+        $offers = $this->removeOffersDiscounts($offers);
 		$promotions = $this->promotions->getActivePromotions();
 		foreach ($promotions as $promotion) {
 			foreach ($promotion->getDiscounts() as $discount) {
@@ -26,7 +25,7 @@ class DiscountsService
 			}
 		}
 
-		$cart->setOffers($offers);
+		return $offers;
 	}
 
     private function removeOffersDiscounts(array $offers): array

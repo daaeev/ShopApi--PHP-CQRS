@@ -24,7 +24,8 @@ class RemovePromocodeHandler implements DispatchEventsInterface
         $client = $this->environment->getClient();
         $cart = $this->carts->getByClient($client);
         $cart->removePromocode();
-        $this->discountsService->applyDiscounts($cart);
+        $offersWithDiscounts = $this->discountsService->applyDiscounts($cart->getOffers());
+        $cart->setOffers($offersWithDiscounts);
         $this->carts->save($cart);
         $this->dispatchEvents($cart->flushEvents());
     }

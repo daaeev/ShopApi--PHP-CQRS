@@ -23,8 +23,7 @@ class PercentageMechanicHandlerTest extends TestCase
 
         $cartItem->expects($this->exactly(2))
             ->method('getPrice')
-            ->willReturn(100.0);
-
+            ->willReturn(100);
 
         $discount = $this->getMockBuilder(PercentageDiscountMechanic::class)
             ->disableOriginalConstructor()

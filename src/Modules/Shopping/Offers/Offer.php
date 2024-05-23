@@ -11,8 +11,8 @@ class Offer
         private OfferUuId $uuid,
         private int $product,
         private string $name,
-        private float $regularPrice, // Price without any discounts
-        private float $price, // Price with discounts
+        private int $regularPrice, // Price without any discounts
+        private int $price, // Price with discounts
         private int $quantity,
         private ?string $size = null,
         private ?string $color = null,
@@ -76,12 +76,12 @@ class Offer
         return $this->name;
     }
 
-    public function getRegularPrice(): float
+    public function getRegularPrice(): int
     {
         return $this->regularPrice;
     }
 
-    public function getPrice(): float
+    public function getPrice(): int
     {
         return $this->price;
     }

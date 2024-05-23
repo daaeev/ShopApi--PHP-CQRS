@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Tests\Unit\Modules\Promotions\Entity\DiscountMechanics;
+namespace Project\Tests\Unit\Modules\Promotions\Services;
 
 use PHPUnit\Framework\TestCase;
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\DiscountType;

@@ -8,8 +8,8 @@ class OfferBuilder
     private ?OfferUuId $uuid = null;
     private ?int $product = null;
     private ?string $name = null;
-    private ?float $regularPrice = null; // Price without any discounts
-    private ?float $price = null; // Price with discounts
+    private ?int $regularPrice = null; // Price without any discounts
+    private ?int $price = null; // Price with discounts
     private ?int $quantity = null;
     private ?string $size = null;
     private ?string $color = null;

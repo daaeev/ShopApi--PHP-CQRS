@@ -3,7 +3,7 @@
 namespace Project\Modules\Shopping\Order\Commands\Handlers;
 
 use Project\Modules\Shopping\Order\Entity;
-use Project\Modules\Shopping\Offers\OfferUuId;
+use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Offers\OffersCollection;
@@ -33,7 +33,7 @@ class CreateOrderHandler implements DispatchEventsInterface
 
         $offers = [];
         foreach ($cart->getOffers() as $offer) {
-            $offers[] = $this->offerBuilder->from($offer)->withId(OfferUuId::next())->build();
+            $offers[] = $this->offerBuilder->from($offer)->withId(OfferId::next())->build();
         }
 
         $order = new Entity\Order(
@@ -52,7 +52,7 @@ class CreateOrderHandler implements DispatchEventsInterface
                 street: $command->delivery->street,
                 houseNumber: $command->delivery->houseNumber,
             ),
-            offers: new OffersCollection($offers)
+            offers: new OffersCollection($this->discountsService->applyDiscounts($offers))
         );
 
         $order->addCustomerComment($command->customerComment);
