@@ -3,7 +3,6 @@
 namespace Project\Modules\Shopping\Order\Commands\Handlers;
 
 use Project\Modules\Shopping\Order\Entity;
-use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Offers\OffersCollection;
@@ -33,7 +32,7 @@ class CreateOrderHandler implements DispatchEventsInterface
 
         $offers = [];
         foreach ($cart->getOffers() as $offer) {
-            $offers[] = $this->offerBuilder->from($offer)->withId(OfferId::next())->build();
+            $offers[] = $this->offerBuilder->from($offer)->withNullableId()->build();
         }
 
         $order = new Entity\Order(
@@ -52,10 +51,21 @@ class CreateOrderHandler implements DispatchEventsInterface
                 street: $command->delivery->street,
                 houseNumber: $command->delivery->houseNumber,
             ),
-            offers: new OffersCollection($this->discountsService->applyDiscounts($offers))
+            offers: $this->discountsService->applyDiscounts($offers),
+            currency: $cart->getCurrency()
         );
 
         $order->addCustomerComment($command->customerComment);
-        $this->orders->add();
+        if ($promo = $cart->getPromocode()) {
+            $order->usePromocode($promo);
+        }
+
+        $cart->delete();
+        $this->carts->delete($cart);
+        $this->orders->add($order);
+
+        $this->dispatchEvents($cart->flushEvents());
+        $this->dispatchEvents($order->flushEvents());
+        return $order->getId()->getId();
     }
 }

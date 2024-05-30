@@ -29,9 +29,9 @@ class OfferBuilder
         return $builder;
     }
 
-    public function withId(OfferId $id): self
+    public function withNullableId(): self
     {
-        $this->id = $id;
+        $this->id = OfferId::next();
         return $this;
     }
 

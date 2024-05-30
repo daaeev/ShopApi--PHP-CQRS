@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Modules\Helpers;
 
 use Project\Modules\Shopping\Offers;
+use Project\Modules\Shopping\Entity\Promocode;
 
 trait OffersFactory
 {
@@ -43,5 +44,25 @@ trait OffersFactory
             size: md5(rand()),
             color: md5(rand()),
         );
+    }
+
+    private function calculateTotalPrice(array $offers, ?Promocode $promocode = null): int
+    {
+        $totalPrice = array_reduce($offers, function ($totalPrice, $item) {
+            return $totalPrice + ($item->getPrice() * $item->getQuantity());
+        }, 0);
+
+        if (null !== $promocode) {
+            $totalPrice -= ($totalPrice / 100) * $promocode->getDiscountPercent();
+        }
+
+        return (int) $totalPrice;
+    }
+
+    private function calculateRegularPrice(array $offers): int
+    {
+        return array_reduce($offers, function ($totalPrice, $item) {
+            return $totalPrice + ($item->getRegularPrice() * $item->getQuantity());
+        }, 0);
     }
 }

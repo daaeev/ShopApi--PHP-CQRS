@@ -11,6 +11,7 @@ use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
 use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
+use Project\Modules\Shopping\Api\Events\Cart\CartDeleted;
 use Project\Modules\Shopping\Api\Events\Cart\CartInstantiated;
 use Project\Modules\Shopping\Api\Events\Cart\CartCurrencyChanged;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
@@ -164,6 +165,11 @@ class Cart extends Aggregate
         $this->refreshPrice();
         $this->addEvent(new PromocodeRemovedFromCart($this));
         $this->updated();
+    }
+
+    public function delete(): void
+    {
+        $this->addEvent(new CartDeleted($this));
     }
 
     public function getId(): CartId

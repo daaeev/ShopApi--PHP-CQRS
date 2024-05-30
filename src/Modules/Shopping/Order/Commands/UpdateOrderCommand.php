@@ -15,7 +15,6 @@ class UpdateOrderCommand
         public readonly string $status,
         public readonly string $paymentStatus,
         public readonly DeliveryInfo $delivery,
-        public readonly ?string $customerComment,
         public readonly ?string $managerComment,
     ) {}
 }

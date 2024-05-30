@@ -20,30 +20,9 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame(0, $cart->getTotalPrice());
         $this->assertNotSame(0, $cart->getRegularPrice());
 
-        $this->assertSame($this->calculateTotalPrice($cart), $cart->getTotalPrice());
-        $this->assertSame($this->calculateRegularPrice($cart), $cart->getRegularPrice());
+        $this->assertSame($this->calculateTotalPrice($cart->getOffers(), $cart->getPromocode()), $cart->getTotalPrice());
+        $this->assertSame($this->calculateRegularPrice($cart->getOffers()), $cart->getRegularPrice());
     }
-
-    private function calculateTotalPrice(Cart $cart): int
-    {
-        $totalPrice = array_reduce($cart->getOffers(), function ($totalPrice, $item) {
-            return $totalPrice + ($item->getPrice() * $item->getQuantity());
-        }, 0);
-
-        if (null !== $cart->getPromocode()) {
-            $totalPrice -= ($totalPrice / 100) * $cart->getPromocode()->getDiscountPercent();
-        }
-
-        return (int) $totalPrice;
-    }
-
-    private function calculateRegularPrice(Cart $cart): int
-    {
-        return array_reduce($cart->getOffers(), function ($totalPrice, $item) {
-            return $totalPrice + ($item->getRegularPrice() * $item->getQuantity());
-        }, 0);
-    }
-
     public function testCalculateAfterReplaceOffer()
     {
         $cart = $this->generateCart();
@@ -56,8 +35,8 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame($oldTotalPrice, $cart->getTotalPrice());
         $this->assertNotSame($oldRegularPrice, $cart->getRegularPrice());
 
-        $this->assertSame($this->calculateTotalPrice($cart), $cart->getTotalPrice());
-        $this->assertSame($this->calculateRegularPrice($cart), $cart->getRegularPrice());
+        $this->assertSame($this->calculateTotalPrice($cart->getOffers(), $cart->getPromocode()), $cart->getTotalPrice());
+        $this->assertSame($this->calculateRegularPrice($cart->getOffers()), $cart->getRegularPrice());
     }
 
     public function testCalculateAfterRemoveOffer()
@@ -71,8 +50,8 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame($oldTotalPrice, $cart->getTotalPrice());
         $this->assertNotSame($oldRegularPrice, $cart->getRegularPrice());
 
-        $this->assertSame($this->calculateTotalPrice($cart), $cart->getTotalPrice());
-        $this->assertSame($this->calculateRegularPrice($cart), $cart->getRegularPrice());
+        $this->assertSame($this->calculateTotalPrice($cart->getOffers(), $cart->getPromocode()), $cart->getTotalPrice());
+        $this->assertSame($this->calculateRegularPrice($cart->getOffers()), $cart->getRegularPrice());
     }
 
     public function testCalculateAfterSetOffers()
@@ -82,8 +61,8 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame(0, $cart->getTotalPrice());
         $this->assertNotSame(0, $cart->getRegularPrice());
 
-        $this->assertSame($this->calculateTotalPrice($cart), $cart->getTotalPrice());
-        $this->assertSame($this->calculateRegularPrice($cart), $cart->getRegularPrice());
+        $this->assertSame($this->calculateTotalPrice($cart->getOffers(), $cart->getPromocode()), $cart->getTotalPrice());
+        $this->assertSame($this->calculateRegularPrice($cart->getOffers()), $cart->getRegularPrice());
     }
 
     public function testCalculateAfterUsePromocode()
@@ -97,8 +76,8 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame($oldTotalPrice, $cart->getTotalPrice());
         $this->assertSame($oldRegularPrice, $cart->getRegularPrice());
 
-        $this->assertSame($this->calculateTotalPrice($cart), $cart->getTotalPrice());
-        $this->assertSame($this->calculateRegularPrice($cart), $cart->getRegularPrice());
+        $this->assertSame($this->calculateTotalPrice($cart->getOffers(), $cart->getPromocode()), $cart->getTotalPrice());
+        $this->assertSame($this->calculateRegularPrice($cart->getOffers()), $cart->getRegularPrice());
     }
 
     public function testCalculateAfterRemovePromocode()
@@ -113,7 +92,7 @@ class CalculateCartPriceTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame($oldTotalPrice, $cart->getTotalPrice());
         $this->assertSame($oldRegularPrice, $cart->getRegularPrice());
 
-        $this->assertSame($this->calculateTotalPrice($cart), $cart->getTotalPrice());
-        $this->assertSame($this->calculateRegularPrice($cart), $cart->getRegularPrice());
+        $this->assertSame($this->calculateTotalPrice($cart->getOffers(), $cart->getPromocode()), $cart->getTotalPrice());
+        $this->assertSame($this->calculateRegularPrice($cart->getOffers()), $cart->getRegularPrice());
     }
 }

@@ -48,4 +48,15 @@ class ClientInfo
     {
         return $this->email;
     }
+
+    public function equalsTo(self $other): bool
+    {
+        return (
+            ($this->client->same($other->client))
+            && ($this->firstName === $other->firstName)
+            && ($this->lastName === $other->lastName)
+            && ($this->phone === $other->phone)
+            && ($this->email === $other->email)
+        );
+    }
 }

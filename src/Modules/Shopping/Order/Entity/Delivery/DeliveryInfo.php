@@ -2,6 +2,8 @@
 
 namespace Project\Modules\Shopping\Order\Entity\Delivery;
 
+use Webmozart\Assert\Assert;
+
 class DeliveryInfo
 {
     public function __construct(
@@ -10,7 +12,12 @@ class DeliveryInfo
         private string $city,
         private string $street,
         private string $houseNumber,
-    ) {}
+    ) {
+        Assert::notEmpty($this->country);
+        Assert::notEmpty($this->city);
+        Assert::notEmpty($this->street);
+        Assert::notEmpty($this->houseNumber);
+    }
 
     public function getService(): DeliveryService
     {
@@ -35,5 +42,16 @@ class DeliveryInfo
     public function getHouseNumber(): string
     {
         return $this->houseNumber;
+    }
+
+    public function equalsTo(self $other): bool
+    {
+        return (
+            ($this->service === $other->service)
+            && ($this->country === $other->country)
+            && ($this->city === $other->city)
+            && ($this->street === $other->street)
+            && ($this->houseNumber === $other->houseNumber)
+        );
     }
 }

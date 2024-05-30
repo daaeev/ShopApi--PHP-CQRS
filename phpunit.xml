@@ -41,6 +41,10 @@
         <testsuite name="ProjectUnitCart">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Cart</directory>
         </testsuite>
+        <!--Modules/Shopping/Order-->
+        <testsuite name="ProjectUnitOrder">
+            <directory suffix="Test.php">./src/Tests/Unit/Modules/Orders</directory>
+        </testsuite>
         <!--Modules/Shopping/Discounts/Promocodes-->
         <testsuite name="ProjectUnitPromocodes">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Promocodes</directory>

@@ -28,15 +28,12 @@ class OfferBuilderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($builded->getColor(), $offer->getColor());
     }
 
-    public function testWithId()
+    public function testWithNullableId()
     {
         $builder = new OfferBuilder();
         $offer = $this->generateOffer();
-        $builded = $builder->from($offer)
-            ->withId($id = OfferId::random())
-            ->build();
-
-        $this->assertSame($builded->getId(), $id);
+        $builded = $builder->from($offer)->withNullableId()->build();
+        $this->assertNull($builded->getId()->getId());
     }
 
     public function testWithPrice()

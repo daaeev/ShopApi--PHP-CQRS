@@ -4,12 +4,15 @@ namespace Project\Modules\Shopping\Order\Entity;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Entity\Aggregate;
+use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Offers\Offer;
+use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
 use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Api\Events\Orders\OrderCreated;
 use Project\Modules\Shopping\Api\Events\Orders\OrderUpdated;
+use Project\Modules\Shopping\Api\Events\Orders\OrderDeleted;
 use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryInfo;
 
 class Order extends Aggregate
@@ -20,7 +23,8 @@ class Order extends Aggregate
     private PaymentStatus $paymentStatus = PaymentStatus::NOT_PAID;
     private DeliveryInfo $delivery;
     private OffersCollection $offers;
-    private ?Promocode $promocode;
+    private Currency $currency;
+    private ?Promocode $promocode = null;
     private int $totalPrice; // Price with discounts
     private int $regularPrice; // Price without discount
     private ?string $customerComment = null;
@@ -32,12 +36,14 @@ class Order extends Aggregate
         OrderId $id,
         ClientInfo $client,
         DeliveryInfo $delivery,
-        OffersCollection $offers
+        array $offers,
+        Currency $currency
     ) {
         $this->id = $id;
         $this->client = $client;
         $this->delivery = $delivery;
-        $this->offers = $offers;
+        $this->offers = new OffersCollection($offers);
+        $this->currency = $currency;
         $this->createdAt = new \DateTimeImmutable;
         $this->guardOffersCantBeEmpty();
         $this->refreshPrice();
@@ -68,7 +74,7 @@ class Order extends Aggregate
             $totalPrice -= $discountPrice;
         }
 
-        $this->totalPrice = $totalPrice;
+        $this->totalPrice = (int) $totalPrice;
     }
 
     private function refreshRegularPrice(): void
@@ -87,13 +93,23 @@ class Order extends Aggregate
         $this->delivery = clone $this->delivery;
         $this->offers = clone $this->offers;
         $this->promocode = clone $this->promocode;
+        $this->createdAt = clone $this->createdAt;
+        $this->updatedAt = $this->updatedAt ? clone $this->updatedAt : null;
     }
 
     public function addOffer(Offer $offer): void
     {
+        $this->guardOrderNotCompleted();
         $this->offers->add($offer);
         $this->refreshPrice();
         $this->updated();
+    }
+
+    private function guardOrderNotCompleted(): void
+    {
+        if (OrderStatus::COMPLETED === $this->status) {
+            throw new \DomainException('Cant update completed order');
+        }
     }
 
     private function updated(): void
@@ -102,8 +118,22 @@ class Order extends Aggregate
         $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function removeOffer(OfferUuId $offerId): void
+    public function replaceOffer(Offer $offer, Offer $newOffer): void
     {
+        $this->guardOrderNotCompleted();
+        $this->offers->replace($offer->getUuid(), $newOffer);
+        $this->refreshPrice();
+        $this->updated();
+    }
+
+    public function getOffer(OfferId|OfferUuId $offerId): Offer
+    {
+        return $this->offers->get($offerId);
+    }
+
+    public function removeOffer(OfferId|OfferUuId $offerId): void
+    {
+        $this->guardOrderNotCompleted();
         $this->offers->remove($offerId);
         $this->guardOffersCantBeEmpty();
         $this->refreshPrice();
@@ -112,6 +142,7 @@ class Order extends Aggregate
 
     public function usePromocode(Promocode $promocode): void
     {
+        $this->guardOrderNotCompleted();
         if (null !== $this->promocode) {
             throw new \DomainException('Order already have other promocode');
         }
@@ -127,6 +158,7 @@ class Order extends Aggregate
 
     public function removePromocode(): void
     {
+        $this->guardOrderNotCompleted();
         if (null === $this->promocode) {
             throw new \DomainException('Order does not have promocode');
         }
@@ -138,6 +170,7 @@ class Order extends Aggregate
 
     public function updateClientInfo(ClientInfo $client): void
     {
+        $this->guardOrderNotCompleted();
         if (!$client->getClient()->same($this->client->getClient())) {
             throw new \DomainException('Cant attach order to another client id');
         }
@@ -148,6 +181,7 @@ class Order extends Aggregate
 
     public function updateStatus(OrderStatus $status): void
     {
+        $this->guardOrderNotCompleted();
         if ($this->status === $status) {
             throw new \DomainException('Order already have same status');
         }
@@ -158,6 +192,7 @@ class Order extends Aggregate
 
     public function updatePaymentStatus(PaymentStatus $status): void
     {
+        $this->guardOrderNotCompleted();
         if ($this->paymentStatus === $status) {
             throw new \DomainException('Order payment already have same status');
         }
@@ -168,25 +203,36 @@ class Order extends Aggregate
 
     public function updateDelivery(DeliveryInfo $delivery): void
     {
+        $this->guardOrderNotCompleted();
         $this->delivery = $delivery;
         $this->updated();
     }
 
     public function addCustomerComment(string $comment): void
     {
-        if (isset($this->customerComment)) {
+        $this->guardOrderNotCompleted();
+        if (!empty($this->customerComment)) {
             throw new \DomainException('Cant update existed customer comment');
         }
 
-        Assert::notEmpty($comment);
         $this->customerComment = $comment;
         $this->updated();
     }
 
-    public function updateManagerComment(?string $comment): void
+    public function updateManagerComment(string $comment): void
     {
+        $this->guardOrderNotCompleted();
         $this->managerComment = $comment;
         $this->updated();
+    }
+
+    public function delete(): void
+    {
+        if (OrderStatus::CANCELED !== $this->status) {
+            throw new \DomainException('Only cancelled order can be deleted');
+        }
+
+        $this->addEvent(new OrderDeleted($this));
     }
 
     public function getId(): OrderId
@@ -222,6 +268,11 @@ class Order extends Aggregate
         return $this->offers->all();
     }
 
+    public function getCurrency(): Currency
+    {
+        return $this->currency;
+    }
+
     public function getTotalPrice(): int
     {
         return $this->totalPrice;
@@ -230,6 +281,11 @@ class Order extends Aggregate
     public function getRegularPrice(): int
     {
         return $this->regularPrice;
+    }
+
+    public function getPromocode(): ?Promocode
+    {
+        return $this->promocode;
     }
 
     public function getCustomerComment(): ?string
