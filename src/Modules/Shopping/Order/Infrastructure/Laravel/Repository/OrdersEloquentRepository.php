@@ -12,7 +12,6 @@ use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
-use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Order\Infrastructure\Laravel\Eloquent;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 use Project\Modules\Shopping\Order\Repository\OrdersRepositoryInterface;
@@ -95,7 +94,7 @@ class OrdersEloquentRepository implements OrdersRepositoryInterface
         $record->offers()->delete();
         foreach ($entity->getOffers() as $offer) {
             $this->guardOfferIdUnique($offer);
-            $record->offers()->create([
+            $offerRecord = $record->offers()->create([
                 'id' => $offer->getId()->getId(),
                 'uuid' => $offer->getUuid()->getId(),
                 'product_id' => $offer->getProduct(),
@@ -106,6 +105,8 @@ class OrdersEloquentRepository implements OrdersRepositoryInterface
                 'size' => $offer->getSize(),
                 'color' => $offer->getColor(),
             ]);
+
+            $this->hydrator->hydrate($offer->getId(), ['id' => $offerRecord->id]);
         }
     }
 

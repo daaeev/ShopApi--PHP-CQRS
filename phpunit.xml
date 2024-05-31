@@ -82,6 +82,10 @@
         <testsuite name="ProjectLaravelCart">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Cart</directory>
         </testsuite>
+        <!--Modules/Shopping/Order-->
+        <testsuite name="ProjectLaravelOrder">
+            <directory suffix="Test.php">./src/Tests/Laravel/Modules/Orders</directory>
+        </testsuite>
         <!--Modules/Shopping/Discounts/Promocodes-->
         <testsuite name="ProjectLaravelPromocodes">
             <directory suffix="Test.php">./src/Tests/Laravel/Modules/Promocodes</directory>

@@ -4,6 +4,8 @@ namespace Project\Tests\Unit\Modules\Orders\Entity;
 
 use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
+use Project\Modules\Shopping\Offers\OfferId;
+use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Order\Entity\OrderId;
 use Project\Tests\Unit\Modules\Helpers\OrderFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
@@ -79,6 +81,54 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
                 houseNumber: md5(rand()),
             ),
             offers: [],
+            currency: Currency::default()
+        );
+    }
+
+    public function testCreateOrderWithDuplicatedOffersIds()
+    {
+        $this->expectException(\DomainException::class);
+        $this->makeOrder(
+            id: OrderId::random(),
+            client: new ClientInfo(
+                client: new Client(hash: md5(rand()), id: rand()),
+                firstName: md5(rand()),
+                lastName: md5(rand()),
+                phone: md5(rand()),
+                email: md5(rand()),
+            ),
+            delivery: new DeliveryInfo(
+                service: DeliveryService::NOVA_POST,
+                country: md5(rand()),
+                city: md5(rand()),
+                street: md5(rand()),
+                houseNumber: md5(rand()),
+            ),
+            offers: [$offer = $this->generateOffer(), $this->makeOffer($offer->getId(), OfferUuId::random())],
+            currency: Currency::default()
+        );
+    }
+
+    public function testCreateOrderWithDuplicatedOffersUuids()
+    {
+        $this->expectException(\DomainException::class);
+        $this->makeOrder(
+            id: OrderId::random(),
+            client: new ClientInfo(
+                client: new Client(hash: md5(rand()), id: rand()),
+                firstName: md5(rand()),
+                lastName: md5(rand()),
+                phone: md5(rand()),
+                email: md5(rand()),
+            ),
+            delivery: new DeliveryInfo(
+                service: DeliveryService::NOVA_POST,
+                country: md5(rand()),
+                city: md5(rand()),
+                street: md5(rand()),
+                houseNumber: md5(rand()),
+            ),
+            offers: [$offer = $this->generateOffer(), $this->makeOffer(OfferId::random(), $offer->getUuid())],
             currency: Currency::default()
         );
     }

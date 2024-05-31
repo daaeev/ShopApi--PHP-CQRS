@@ -46,6 +46,7 @@ class Order extends Aggregate
         $this->currency = $currency;
         $this->createdAt = new \DateTimeImmutable;
         $this->guardOffersCantBeEmpty();
+        $this->guardOffersIdsIsUnique();
         $this->refreshPrice();
         $this->addEvent(new OrderCreated($this));
     }
@@ -53,6 +54,25 @@ class Order extends Aggregate
     private function guardOffersCantBeEmpty(): void
     {
         Assert::notEmpty($this->offers->all(), 'Order must contain at least 1 offer');
+    }
+
+    private function guardOffersIdsIsUnique(): void
+    {
+        foreach ($this->offers as $offer) {
+            foreach ($this->offers as $otherOffer) {
+                if ($offer === $otherOffer) {
+                    continue;
+                }
+
+                if ($offer->getId()->equalsTo($otherOffer->getId())) {
+                    throw new \DomainException('Offers ids must be unique');
+                }
+
+                if ($offer->getUuid()->equalsTo($otherOffer->getUuid())) {
+                    throw new \DomainException('Offers uuids must be unique');
+                }
+            }
+        }
     }
 
     public function refreshPrice(): void

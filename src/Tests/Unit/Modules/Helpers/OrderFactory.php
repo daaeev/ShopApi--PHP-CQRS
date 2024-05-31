@@ -12,10 +12,10 @@ use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryService;
 
 trait OrderFactory
 {
-    private function generateOrder(array $offers): Order
+    private function generateOrder(array $offers, ?OrderId $orderId = null): Order
     {
         $order = new Order(
-            id: OrderId::random(),
+            id: $orderId ?? OrderId::random(),
             client: new ClientInfo(
                 client: new Client(md5(rand()), rand(1, 99999)),
                 firstName: md5(rand()),

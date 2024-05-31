@@ -7,7 +7,7 @@ use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryService;
 
 class OrderDelivery extends Model
 {
-    protected $table = 'shopping_orders';
+    protected $table = 'shopping_orders_delivery';
     public $timestamps = false;
 
     protected $fillable = [
