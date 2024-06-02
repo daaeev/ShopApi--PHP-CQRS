@@ -5,7 +5,6 @@ namespace Project\Modules\Shopping\Order\Commands\Handlers;
 use Project\Modules\Shopping\Order\Entity;
 use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
-use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Order\Commands\CreateOrderCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;

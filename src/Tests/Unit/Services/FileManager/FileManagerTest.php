@@ -36,8 +36,6 @@ class FileManagerTest extends TestCase
             $this->fileNameGeneratorMock,
             $this->fileStorageMock
         );
-
-        parent::setUp();
     }
 
     public function testSave()

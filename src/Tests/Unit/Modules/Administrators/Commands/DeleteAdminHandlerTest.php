@@ -19,13 +19,8 @@ class DeleteAdminHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)
-            ->getMock();
-
-        $this->dispatcher->expects($this->once()) // Admin deleted
-            ->method('dispatch');
-
-        parent::setUp();
+        $this->dispatcher = $this->getMockBuilder(MessageBusInterface::class)->getMock();
+        $this->dispatcher->expects($this->once())->method('dispatch');
     }
 
     public function testDelete()

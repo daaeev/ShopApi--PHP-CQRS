@@ -13,10 +13,7 @@ class EventBusTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->container = $this->getMockBuilder(ContainerInterface::class)
-            ->getMock();
-
-        parent::setUp();
+        $this->container = $this->getMockBuilder(ContainerInterface::class)->getMock();
     }
 
     public function testDispatchEvent()

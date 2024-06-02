@@ -13,6 +13,5 @@ class OrdersMemoryRepositoryTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->orders = new OrdersMemoryRepository(new Hydrator, new IdentityMap);
-        parent::setUp();
     }
 }
