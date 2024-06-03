@@ -15,6 +15,7 @@ use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Api\DTO\Order\DeliveryInfo;
+use Project\Tests\Unit\Modules\Helpers\ContactsGenerator;
 use Project\Modules\Shopping\Api\Events\Orders\OrderCreated;
 use Project\Modules\Shopping\Api\Events\Orders\OrderUpdated;
 use Project\Modules\Shopping\Order\Commands\CreateOrderCommand;
@@ -27,6 +28,8 @@ use Project\Modules\Shopping\Order\Commands\Handlers\CreateOrderHandler;
 
 class CreateOrderTest extends \PHPUnit\Framework\TestCase
 {
+    use ContactsGenerator;
+
     private readonly Hydrator $hydrator;
 
     private readonly OrdersRepositoryInterface $orders;
@@ -157,8 +160,8 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
         return new CreateOrderCommand(
             firstName: uniqid(),
             lastName: uniqid(),
-            phone: uniqid(),
-            email: uniqid(),
+            phone: $this->generatePhone(),
+            email: $this->generateEmail(),
             delivery: new DeliveryInfo(
                 service: DeliveryService::NOVA_POST->value,
                 country: uniqid(),

@@ -74,7 +74,7 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
             AdminId::next(),
             uniqid(),
             'Correct login',
-            md5(rand()),
+            uniqid(),
             [Role::ADMIN, Role::MANAGER],
         );
     }
@@ -84,8 +84,8 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             '',
             [Role::ADMIN, Role::MANAGER],
         );
@@ -96,8 +96,8 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             'pass',
             [Role::ADMIN, Role::MANAGER],
         );
@@ -108,8 +108,8 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\DomainException::class);
         $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             'Correct password',
             [Role::ADMIN, Role::MANAGER],
         );
@@ -120,9 +120,9 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
+            uniqid(),
             [],
         );
     }
@@ -132,9 +132,9 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
+            uniqid(),
             ['Invalid role'],
         );
     }

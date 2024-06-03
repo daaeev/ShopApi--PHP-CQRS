@@ -12,23 +12,25 @@ use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryService;
 
 trait OrderFactory
 {
+    use ContactsGenerator;
+
     private function generateOrder(array $offers, ?OrderId $orderId = null): Order
     {
         $order = new Order(
             id: $orderId ?? OrderId::random(),
             client: new ClientInfo(
-                client: new Client(md5(rand()), rand(1, 99999)),
-                firstName: md5(rand()),
-                lastName: md5(rand()),
-                phone: md5(rand()),
-                email: md5(rand()),
+                client: new Client(uniqid(), rand(1, 99999)),
+                firstName: uniqid(),
+                lastName: uniqid(),
+                phone: $this->generatePhone(),
+                email: $this->generateEmail(),
             ),
             delivery: new DeliveryInfo(
                 service: DeliveryService::NOVA_POST,
-                country: md5(rand()),
-                city: md5(rand()),
-                street: md5(rand()),
-                houseNumber: md5(rand()),
+                country: uniqid(),
+                city: uniqid(),
+                street: uniqid(),
+                houseNumber: uniqid(),
             ),
             offers: $offers,
             currency: Currency::default()

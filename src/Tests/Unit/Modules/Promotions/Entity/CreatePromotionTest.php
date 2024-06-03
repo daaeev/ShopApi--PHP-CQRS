@@ -49,7 +49,7 @@ class CreatePromotionTest extends TestCase
     {
         $promotion = $this->makePromotion(
             id: PromotionId::random(),
-            name: md5(rand()),
+            name: uniqid(),
             startDate: new \DateTimeImmutable('-1 day'),
         );
 
@@ -61,7 +61,7 @@ class CreatePromotionTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->makePromotion(
             id: PromotionId::random(),
-            name: md5(rand()),
+            name: uniqid(),
             startDate: new \DateTimeImmutable('-1 day'),
             discounts: [1, 2, 3]
         );

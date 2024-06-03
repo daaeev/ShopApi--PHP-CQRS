@@ -9,6 +9,7 @@ use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Shopping\Order\Entity\ClientInfo;
 use Project\Modules\Shopping\Order\Entity\OrderStatus;
 use Project\Modules\Shopping\Order\Entity\PaymentStatus;
+use Project\Tests\Unit\Modules\Helpers\ContactsGenerator;
 use Project\Modules\Shopping\Order\Commands\UpdateOrderCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryService;
@@ -19,6 +20,8 @@ use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryInfo as DeliveryInfoE
 
 class UpdateOrderTest extends \PHPUnit\Framework\TestCase
 {
+    use ContactsGenerator;
+
     private readonly OrdersRepositoryInterface $orders;
     private readonly MessageBusInterface $eventBus;
 
@@ -81,8 +84,8 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
             id: $this->orderId->getId(),
             firstName: uniqid(),
             lastName: uniqid(),
-            phone: uniqid(),
-            email: uniqid(),
+            phone: $this->generatePhone(),
+            email: $this->generateEmail(),
             status: OrderStatus::IN_PROGRESS->value,
             paymentStatus: PaymentStatus::PAID->value,
             delivery: new DeliveryInfoDTO(

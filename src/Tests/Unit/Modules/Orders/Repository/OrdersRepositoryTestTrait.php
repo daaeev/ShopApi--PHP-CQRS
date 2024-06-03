@@ -30,8 +30,8 @@ trait OrdersRepositoryTestTrait
     {
         $initial = $this->generateOrder([$this->generateOffer()]);
         $initial->usePromocode(Promocode::fromBaseEntity($this->generatePromocode()));
-        $initial->addCustomerComment(md5(rand(1, 99999)));
-        $initial->updateManagerComment(md5(rand(1, 99999)));
+        $initial->addCustomerComment(uniqid());
+        $initial->updateManagerComment(uniqid());
         $initialAsString = serialize($initial);
         $this->orders->add($initial);
 
@@ -48,15 +48,15 @@ trait OrdersRepositoryTestTrait
                 client: new Client(hash: uniqid(), id: rand()),
                 firstName: uniqid(),
                 lastName: uniqid(),
-                phone: uniqid(),
-                email: uniqid(),
+                phone: $this->generatePhone(),
+                email: $this->generateEmail(),
             ),
             delivery: new DeliveryInfo(
                 service: DeliveryService::NOVA_POST,
-                country: md5(rand()),
-                city: md5(rand()),
-                street: md5(rand()),
-                houseNumber: md5(rand()),
+                country: uniqid(),
+                city: uniqid(),
+                street: uniqid(),
+                houseNumber: uniqid(),
             ),
             offers: [$offer = $this->makeOffer(id: OfferId::next(), uuid: OfferUuId::random())],
             currency: Currency::default()
@@ -108,22 +108,22 @@ trait OrdersRepositoryTestTrait
         $added->updateStatus(OrderStatus::IN_PROGRESS);
         $added->updatePaymentStatus(PaymentStatus::PAID);
         $added->usePromocode(Promocode::fromBaseEntity($this->generatePromocode()));
-        $added->addCustomerComment(md5(rand(1, 99999)));
-        $added->updateManagerComment(md5(rand(1, 99999)));
+        $added->addCustomerComment(uniqid());
+        $added->updateManagerComment(uniqid());
         $added->updateClientInfo(new ClientInfo(
             client: $added->getClient()->getClient(),
-            firstName: md5(rand()),
-            lastName: md5(rand()),
-            phone: md5(rand()),
-            email: md5(rand()),
+            firstName: uniqid(),
+            lastName: uniqid(),
+            phone: $this->generatePhone(),
+            email: $this->generateEmail(),
         ));
 
         $added->updateDelivery(new DeliveryInfo(
             service: DeliveryService::NOVA_POST,
-            country: md5(rand()),
-            city: md5(rand()),
-            street: md5(rand()),
-            houseNumber: md5(rand()),
+            country: uniqid(),
+            city: uniqid(),
+            street: uniqid(),
+            houseNumber: uniqid(),
         ));
 
         $addedAsString = serialize($added);

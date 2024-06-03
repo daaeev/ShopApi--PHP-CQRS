@@ -39,7 +39,7 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
         $promocode = $this->makePromocode(
              PromocodeId::random(),
              uniqid(),
-             md5(rand()),
+             uniqid(),
              rand(1, 100),
              new \DateTimeImmutable('-1 day'),
         );
@@ -53,7 +53,7 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->makePromocode(
             PromocodeId::random(),
             '',
-            md5(rand()),
+            uniqid(),
             rand(1, 100),
             new \DateTimeImmutable('-1 day'),
             new \DateTimeImmutable('+1 day'),
@@ -65,7 +65,7 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->makePromocode(
             PromocodeId::random(),
-            md5(rand()),
+            uniqid(),
             '',
             rand(1, 100),
             new \DateTimeImmutable('-1 day'),
@@ -78,8 +78,8 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->makePromocode(
             PromocodeId::random(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             101,
             new \DateTimeImmutable('-1 day'),
             new \DateTimeImmutable('+1 day'),
@@ -91,8 +91,8 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->makePromocode(
             PromocodeId::random(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             -1,
             new \DateTimeImmutable('-1 day'),
             new \DateTimeImmutable('+1 day'),
@@ -104,8 +104,8 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\DomainException::class);
         $this->makePromocode(
             PromocodeId::random(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             rand(1, 100),
             new \DateTimeImmutable('+1 day'),
             new \DateTimeImmutable('-1 day'),

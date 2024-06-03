@@ -10,13 +10,14 @@ trait ContactsGenerator
         for ($iteration = 1; $iteration <= 9; $iteration++) {
             $phone .= rand(0, 9);
         }
+
         return $phone;
     }
 
     private function generateEmail(): string
     {
         $email = uniqid();
-        $email .= '@gmail.com';
+        $email .= '@test.com';
         return $email;
     }
 }

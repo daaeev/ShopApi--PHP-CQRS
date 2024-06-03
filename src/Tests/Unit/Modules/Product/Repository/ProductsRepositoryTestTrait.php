@@ -91,7 +91,7 @@ trait ProductsRepositoryTestTrait
         $added->setName($name = uniqid());
         $added->setCode($code = uniqid());
         $added->setSizes($sizes = [uniqid()]);
-        $added->setColors($colors = [uniqid(), md5(rand()), md5(rand())]);
+        $added->setColors($colors = [uniqid(), uniqid(), uniqid()]);
         $active = $added->isActive();
         $availability = $added->getAvailability();
         $prices = $added->getPrices();

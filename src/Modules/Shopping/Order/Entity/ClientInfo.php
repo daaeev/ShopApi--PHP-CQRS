@@ -4,6 +4,7 @@ namespace Project\Modules\Shopping\Order\Entity;
 
 use Webmozart\Assert\Assert;
 use Project\Common\Client\Client;
+use Project\Common\Utils\ContactsValidator;
 
 class ClientInfo
 {
@@ -17,6 +18,8 @@ class ClientInfo
         Assert::notEmpty($this->firstName);
         Assert::notEmpty($this->lastName);
         Assert::notEmpty($this->phone);
+        ContactsValidator::validatePhone($this->phone);
+        ContactsValidator::validateEmail($this->email);
     }
 
     public function __clone(): void

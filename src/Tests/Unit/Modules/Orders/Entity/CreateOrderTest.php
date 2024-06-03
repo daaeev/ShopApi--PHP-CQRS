@@ -27,17 +27,17 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
             $id = OrderId::random(),
             $client = new ClientInfo(
                 client: new Client(hash: uniqid(), id: rand()),
-                firstName: md5(rand()),
-                lastName: md5(rand()),
-                phone: md5(rand()),
-                email: md5(rand()),
+                firstName: uniqid(),
+                lastName: uniqid(),
+                phone: $this->generatePhone(),
+                email: $this->generateEmail(),
             ),
             $delivery = new DeliveryInfo(
                 service: DeliveryService::NOVA_POST,
-                country: md5(rand()),
-                city: md5(rand()),
-                street: md5(rand()),
-                houseNumber: md5(rand()),
+                country: uniqid(),
+                city: uniqid(),
+                street: uniqid(),
+                houseNumber: uniqid(),
             ),
             $offers = [$this->generateOffer()],
             $currency = Currency::default()
@@ -67,18 +67,18 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
         $this->makeOrder(
             id: OrderId::random(),
             client: new ClientInfo(
-                client: new Client(hash: md5(rand()), id: rand()),
-                firstName: md5(rand()),
-                lastName: md5(rand()),
-                phone: md5(rand()),
-                email: md5(rand()),
+                client: new Client(hash: uniqid(), id: rand()),
+                firstName: uniqid(),
+                lastName: uniqid(),
+                phone: $this->generatePhone(),
+                email: $this->generateEmail(),
             ),
             delivery: new DeliveryInfo(
                 service: DeliveryService::NOVA_POST,
-                country: md5(rand()),
-                city: md5(rand()),
-                street: md5(rand()),
-                houseNumber: md5(rand()),
+                country: uniqid(),
+                city: uniqid(),
+                street: uniqid(),
+                houseNumber: uniqid(),
             ),
             offers: [],
             currency: Currency::default()
@@ -91,18 +91,18 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
         $this->makeOrder(
             id: OrderId::random(),
             client: new ClientInfo(
-                client: new Client(hash: md5(rand()), id: rand()),
-                firstName: md5(rand()),
-                lastName: md5(rand()),
-                phone: md5(rand()),
-                email: md5(rand()),
+                client: new Client(hash: uniqid(), id: rand()),
+                firstName: uniqid(),
+                lastName: uniqid(),
+                phone: $this->generatePhone(),
+                email: $this->generateEmail(),
             ),
             delivery: new DeliveryInfo(
                 service: DeliveryService::NOVA_POST,
-                country: md5(rand()),
-                city: md5(rand()),
-                street: md5(rand()),
-                houseNumber: md5(rand()),
+                country: uniqid(),
+                city: uniqid(),
+                street: uniqid(),
+                houseNumber: uniqid(),
             ),
             offers: [$offer = $this->generateOffer(), $this->makeOffer($offer->getId(), OfferUuId::random())],
             currency: Currency::default()
@@ -115,21 +115,45 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
         $this->makeOrder(
             id: OrderId::random(),
             client: new ClientInfo(
-                client: new Client(hash: md5(rand()), id: rand()),
-                firstName: md5(rand()),
-                lastName: md5(rand()),
-                phone: md5(rand()),
-                email: md5(rand()),
+                client: new Client(hash: uniqid(), id: rand()),
+                firstName: uniqid(),
+                lastName: uniqid(),
+                phone: $this->generatePhone(),
+                email: $this->generateEmail(),
             ),
             delivery: new DeliveryInfo(
                 service: DeliveryService::NOVA_POST,
-                country: md5(rand()),
-                city: md5(rand()),
-                street: md5(rand()),
-                houseNumber: md5(rand()),
+                country: uniqid(),
+                city: uniqid(),
+                street: uniqid(),
+                houseNumber: uniqid(),
             ),
             offers: [$offer = $this->generateOffer(), $this->makeOffer(OfferId::random(), $offer->getUuid())],
             currency: Currency::default()
+        );
+    }
+
+    public function testCreateClientInfoWithInvalidPhone()
+    {
+        $this->expectException(\DomainException::class);
+        new ClientInfo(
+            client: new Client(hash: uniqid(), id: rand()),
+            firstName: uniqid(),
+            lastName: uniqid(),
+            phone: '+3801234',
+            email: $this->generateEmail(),
+        );
+    }
+
+    public function testCreateClientInfoWithInvalidEmail()
+    {
+        $this->expectException(\DomainException::class);
+        new ClientInfo(
+            client: new Client(hash: uniqid(), id: rand()),
+            firstName: uniqid(),
+            lastName: uniqid(),
+            phone: $this->generatePhone(),
+            email: 'test@test',
         );
     }
 }

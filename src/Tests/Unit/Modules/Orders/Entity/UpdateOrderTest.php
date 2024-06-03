@@ -100,8 +100,8 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
             client: $order->getClient()->getClient(),
             firstName: uniqid(),
             lastName: uniqid(),
-            phone: md5(rand()),
-            email: md5(rand()),
+            phone: $this->generatePhone(),
+            email: $this->generateEmail(),
         );
 
         $order->updateClientInfo($client);
@@ -117,10 +117,10 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
         $order->updateStatus(OrderStatus::COMPLETED);
         $client = new ClientInfo(
             client: $order->getClient()->getClient(),
-            firstName: md5(rand()),
-            lastName: md5(rand()),
-            phone: md5(rand()),
-            email: md5(rand()),
+            firstName: uniqid(),
+            lastName: uniqid(),
+            phone: $this->generatePhone(),
+            email: $this->generateEmail(),
         );
 
         $this->expectException(\DomainException::class);
@@ -131,11 +131,11 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
     {
         $order = $this->generateOrder([$this->generateOffer()]);
         $client = new ClientInfo(
-            client: new Client(hash: md5(rand()), id: rand(1, 99999)),
-            firstName: md5(rand()),
-            lastName: md5(rand()),
-            phone: md5(rand()),
-            email: md5(rand()),
+            client: new Client(hash: uniqid(), id: rand(1, 99999)),
+            firstName: uniqid(),
+            lastName: uniqid(),
+            phone: $this->generatePhone(),
+            email: $this->generateEmail(),
         );
 
         $this->expectException(\DomainException::class);
@@ -202,10 +202,10 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
         $oldUpdatedAt = $order->getUpdatedAt();
         $delivery = new DeliveryInfo(
             service: DeliveryService::NOVA_POST,
-            country: md5(rand()),
-            city: md5(rand()),
-            street: md5(rand()),
-            houseNumber: md5(rand()),
+            country: uniqid(),
+            city: uniqid(),
+            street: uniqid(),
+            houseNumber: uniqid(),
         );
 
         $order->updateDelivery($delivery);
@@ -221,10 +221,10 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
         $order->updateStatus(OrderStatus::COMPLETED);
         $delivery = new DeliveryInfo(
             service: DeliveryService::NOVA_POST,
-            country: md5(rand()),
-            city: md5(rand()),
-            street: md5(rand()),
-            houseNumber: md5(rand()),
+            country: uniqid(),
+            city: uniqid(),
+            street: uniqid(),
+            houseNumber: uniqid(),
         );
 
         $this->expectException(\DomainException::class);
@@ -235,7 +235,7 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
     {
         $order = $this->generateOrder([$this->generateOffer()]);
         $oldUpdatedAt = $order->getUpdatedAt();
-        $comment = md5(rand());
+        $comment = uniqid();
 
         $order->addCustomerComment($comment);
         $this->assertSame($comment, $order->getCustomerComment());
@@ -249,23 +249,23 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
         $order->updateStatus(OrderStatus::COMPLETED);
 
         $this->expectException(\DomainException::class);
-        $order->addCustomerComment(md5(rand()));
+        $order->addCustomerComment(uniqid());
     }
 
     public function testAddCustomerCommentIfOrderAlreadyHaveCustomerComment()
     {
         $order = $this->generateOrder([$this->generateOffer()]);
-        $order->addCustomerComment(md5(rand()));
+        $order->addCustomerComment(uniqid());
 
         $this->expectException(\DomainException::class);
-        $order->addCustomerComment(md5(rand()));
+        $order->addCustomerComment(uniqid());
     }
 
     public function testUpdateManagerComment()
     {
         $order = $this->generateOrder([$this->generateOffer()]);
         $oldUpdatedAt = $order->getUpdatedAt();
-        $comment = md5(rand());
+        $comment = uniqid();
 
         $order->updateManagerComment($comment);
         $this->assertSame($comment, $order->getManagerComment());
@@ -279,6 +279,6 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
         $order->updateStatus(OrderStatus::COMPLETED);
 
         $this->expectException(\DomainException::class);
-        $order->updateManagerComment(md5(rand()));
+        $order->updateManagerComment(uniqid());
     }
 }
