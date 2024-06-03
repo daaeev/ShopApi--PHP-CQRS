@@ -23,8 +23,8 @@ trait ProductsRepositoryTestTrait
         $active = $initial->isActive();
         $availability = $initial->getAvailability();
         $prices = $initial->getPrices();
-        $initial->setColors($colors = [md5(rand()), md5(rand())]);
-        $initial->setSizes($sizes = [md5(rand())]);
+        $initial->setColors($colors = [uniqid(), uniqid()]);
+        $initial->setSizes($sizes = [uniqid()]);
         $createdAt = $initial->getCreatedAt();
         $updatedAt = $initial->getUpdatedAt();
 
@@ -48,8 +48,8 @@ trait ProductsRepositoryTestTrait
     {
         $product = $this->makeProduct(
             ProductId::next(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             $this->makePrices()
         );
 
@@ -88,10 +88,10 @@ trait ProductsRepositoryTestTrait
         $this->products->add($initial);
 
         $added = $this->products->get($initial->getId());
-        $added->setName($name = md5(rand()));
-        $added->setCode($code = md5(rand()));
-        $added->setSizes($sizes = [md5(rand())]);
-        $added->setColors($colors = [md5(rand()), md5(rand()), md5(rand())]);
+        $added->setName($name = uniqid());
+        $added->setCode($code = uniqid());
+        $added->setSizes($sizes = [uniqid()]);
+        $added->setColors($colors = [uniqid(), md5(rand()), md5(rand())]);
         $active = $added->isActive();
         $availability = $added->getAvailability();
         $prices = $added->getPrices();

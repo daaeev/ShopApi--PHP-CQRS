@@ -16,7 +16,7 @@ class ProductCodeTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->generateProduct();
         $initialCode = $product->getCode();
-        $updatedCode = md5(rand());
+        $updatedCode = uniqid();
         $product->setCode($updatedCode);
         $this->assertEquals($updatedCode, $product->getCode());
         $this->assertNotEquals($initialCode, $product->getCode());

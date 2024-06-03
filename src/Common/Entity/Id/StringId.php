@@ -15,6 +15,6 @@ class StringId extends Id
 
     public static function random(): static
     {
-        return new static(md5(rand()));
+        return new static(uniqid());
     }
 }

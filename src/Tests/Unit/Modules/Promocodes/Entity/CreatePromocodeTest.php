@@ -15,8 +15,8 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
     {
         $promocode = $this->makePromocode(
             $id = PromocodeId::random(),
-            $name = md5(rand()),
-            $code = md5(rand()),
+            $name = uniqid(),
+            $code = uniqid(),
             $discountPercent = rand(1, 100),
             $startDate = new \DateTimeImmutable('-1 day'),
             $endDate = new \DateTimeImmutable('+1 day'),
@@ -38,7 +38,7 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
     {
         $promocode = $this->makePromocode(
              PromocodeId::random(),
-             md5(rand()),
+             uniqid(),
              md5(rand()),
              rand(1, 100),
              new \DateTimeImmutable('-1 day'),

@@ -17,9 +17,9 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
     {
         $admin = $this->makeAdmin(
             $id = AdminId::random(),
-            $name = md5(rand()),
-            $login = md5(rand()),
-            $password = md5(rand()),
+            $name = uniqid(),
+            $login = uniqid(),
+            $password = uniqid(),
             $roles = [Role::ADMIN, Role::MANAGER],
         );
 
@@ -37,8 +37,8 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->makeAdmin(
             AdminId::next(),
             '',
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             [Role::ADMIN, Role::MANAGER],
         );
     }
@@ -48,9 +48,9 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
+            uniqid(),
             '',
-            md5(rand()),
+            uniqid(),
             [Role::ADMIN, Role::MANAGER],
         );
     }
@@ -60,9 +60,9 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
+            uniqid(),
             'login',
-            md5(rand()),
+            uniqid(),
             [Role::ADMIN, Role::MANAGER],
         );
     }
@@ -72,7 +72,7 @@ class CreateAdministratorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\DomainException::class);
         $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
+            uniqid(),
             'Correct login',
             md5(rand()),
             [Role::ADMIN, Role::MANAGER],

@@ -13,7 +13,7 @@ class ProductSizesTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $product = $this->generateProduct();
-        $sizes = [md5(rand()), md5(rand())];
+        $sizes = [uniqid(), uniqid()];
         $product->setSizes($sizes);
 
         $this->assertCount(2, $product->getSizes());
@@ -25,7 +25,7 @@ class ProductSizesTest extends \PHPUnit\Framework\TestCase
     public function testUpdateToSame()
     {
         $product = $this->generateProduct();
-        $sizes = [md5(rand()), md5(rand())];
+        $sizes = [uniqid(), uniqid()];
         $product->setSizes($sizes);
         $oldUpdatedAt = $product->getUpdatedAt();
         $product->flushEvents();
@@ -41,8 +41,8 @@ class ProductSizesTest extends \PHPUnit\Framework\TestCase
     public function testUpdateWithRepeatingSizes()
     {
         $product = $this->generateProduct();
-        $clonedSize = md5(rand());
-        $sizes = [$clonedSize, $clonedSize, md5(rand())];
+        $clonedSize = uniqid();
+        $sizes = [$clonedSize, $clonedSize, uniqid()];
         $product->setSizes($sizes);
 
         $this->assertCount(2, $product->getSizes());

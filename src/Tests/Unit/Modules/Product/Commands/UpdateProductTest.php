@@ -41,12 +41,12 @@ class UpdateProductTest extends \PHPUnit\Framework\TestCase
 
         $command = new UpdateProductCommand(
             id: $initial->getId()->getId(),
-            name: md5(rand()),
-            code: md5(rand()),
+            name: uniqid(),
+            code: uniqid(),
             active: false,
             availability: Availability::PREORDER->value,
-            colors: [md5(rand())],
-            sizes: [md5(rand())],
+            colors: [uniqid()],
+            sizes: [uniqid()],
             prices: array_map(function (Entity\Price\Price $price) {
                 return new Price(
                     $price->getCurrency()->value,

@@ -41,8 +41,8 @@ trait ProductFactory
     {
         $product = new Product(
             ProductId::random(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             $this->makePrices()
         );
 

@@ -15,9 +15,9 @@ trait AdminFactory
     {
         $admin = new Admin(
             AdminId::next(),
-            md5(rand()),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
+            uniqid(),
             [Role::ADMIN],
         );
         $admin->flushEvents();

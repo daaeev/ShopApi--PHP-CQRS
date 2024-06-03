@@ -14,7 +14,7 @@ class CategorySlugTest extends \PHPUnit\Framework\TestCase
     public function testUpdateSlug()
     {
         $category = $this->generateCategory();
-        $updatedSlug = md5(rand());
+        $updatedSlug = uniqid();
         $category->updateSlug($updatedSlug);
         $this->assertNotNull($category->getUpdatedAt());
         $this->assertSame($updatedSlug, $category->getSlug());

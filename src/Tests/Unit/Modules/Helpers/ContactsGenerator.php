@@ -15,7 +15,7 @@ trait ContactsGenerator
 
     private function generateEmail(): string
     {
-        $email = substr(md5(rand()), 0, 10);
+        $email = uniqid();
         $email .= '@gmail.com';
         return $email;
     }

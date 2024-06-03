@@ -16,7 +16,7 @@ trait CartFactory
     {
         $cart = new Entity\Cart(
 			Entity\CartId::random(),
-			new Client(hash: md5(rand(1, 9999)), id: rand(1, 9999))
+			new Client(hash: uniqid(), id: rand(1, 9999))
 		);
 
         $cart->flushEvents();

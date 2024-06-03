@@ -35,12 +35,12 @@ class CreateProductTest extends \PHPUnit\Framework\TestCase
     public function testCreate()
     {
         $command = new CreateProductCommand(
-            name: md5(rand()),
-            code: md5(rand()),
+            name: uniqid(),
+            code: uniqid(),
             active: true,
             availability: Availability::IN_STOCK->value,
-            colors: [md5(rand())],
-            sizes: [md5(rand())],
+            colors: [uniqid()],
+            sizes: [uniqid()],
             prices: array_map(function (Entity\Price\Price $price) {
                 return new DTO\Price($price->getCurrency()->value, $price->getPrice());
             }, $this->makePrices())

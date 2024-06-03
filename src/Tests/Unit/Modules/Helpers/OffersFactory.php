@@ -37,12 +37,12 @@ trait OffersFactory
             id: Offers\OfferId::random(),
             uuid: Offers\OfferUuId::random(),
             product: rand(1, 9999),
-            name: md5(rand()),
+            name: uniqid(),
             regularPrice: rand(400, 500),
             price: rand(100, 400),
             quantity: rand(1, 9999),
-            size: md5(rand()),
-            color: md5(rand()),
+            size: uniqid(),
+            color: uniqid(),
         );
     }
 

@@ -88,7 +88,7 @@ trait PromotionsRepositoryTestTrait
         $added = $this->promotions->get($initial->getId());
         $added->disable();
         $added->addDiscount($this->generateDiscount());
-        $added->updateName(md5(rand()));
+        $added->updateName(uniqid());
         $startDate = $added->getDuration()->getStartDate()->add(
             \DateInterval::createFromDateString('-1 day')
         );

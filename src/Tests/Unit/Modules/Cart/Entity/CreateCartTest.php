@@ -18,7 +18,7 @@ class CreateCartTest extends \PHPUnit\Framework\TestCase
     {
         $cart = $this->makeCart(
             $id = CartId::random(),
-            $client = new Client(md5(rand()), rand(1, 100)),
+            $client = new Client(uniqid(), rand(1, 100)),
         );
 
         $this->assertTrue($id->equalsTo($cart->getId()));
@@ -36,7 +36,7 @@ class CreateCartTest extends \PHPUnit\Framework\TestCase
 
     public function testInstantiateCart()
     {
-        $cart = Cart::instantiate($client = new Client(md5(rand()), rand(1, 100)));
+        $cart = Cart::instantiate($client = new Client(uniqid(), rand(1, 100)));
         $this->assertNull($cart->getId()->getId());
         $this->assertNull($cart->getPromocode());
         $this->assertSame($client->getHash(), $cart->getClient()->getHash());

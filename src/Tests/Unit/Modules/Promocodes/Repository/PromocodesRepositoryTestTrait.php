@@ -45,8 +45,8 @@ trait PromocodesRepositoryTestTrait
     {
         $promocode = $this->makePromocode(
             PromocodeId::next(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             rand(1, 100),
             new \DateTimeImmutable('-1 day')
         );
@@ -76,7 +76,7 @@ trait PromocodesRepositoryTestTrait
         $promocode = $this->generatePromocode();
         $promocodeWithNotUniqueCode = $this->makePromocode(
             PromocodeId::next(),
-            md5(rand()),
+            uniqid(),
             $promocode->getCode(),
             rand(1, 100),
             new \DateTimeImmutable('-1 day')
@@ -95,7 +95,7 @@ trait PromocodesRepositoryTestTrait
 
         $added = $this->promocodes->get($initial->getId());
         $added->deactivate();
-        $added->setName(md5(rand()));
+        $added->setName(uniqid());
         $startDate = $added->getStartDate()->add(\DateInterval::createFromDateString('-1 day'));
         $endDate = $added->getEndDate()->add(\DateInterval::createFromDateString('+1 day'));
         $added->setStartDate($startDate);

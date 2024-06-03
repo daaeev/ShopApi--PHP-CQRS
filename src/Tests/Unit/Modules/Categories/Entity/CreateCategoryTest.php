@@ -16,8 +16,8 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
     {
         $category = $this->makeCategory(
             $id = CategoryId::random(),
-            $name = md5(rand()),
-            $slug = md5(rand()),
+            $name = uniqid(),
+            $slug = uniqid(),
         );
 
         $this->assertTrue($category->getId()->equalsTo($id));
@@ -36,7 +36,7 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
          $this->makeCategory(
             CategoryId::random(),
             '',
-            md5(rand()),
+            uniqid(),
         );
     }
 
@@ -45,7 +45,7 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->makeCategory(
             CategoryId::random(),
-            md5(rand()),
+            uniqid(),
             '',
         );
     }

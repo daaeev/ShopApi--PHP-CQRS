@@ -17,12 +17,12 @@ class CreateOfferTest extends \PHPUnit\Framework\TestCase
             $id = OfferId::random(),
             $uuid = OfferUuId::random(),
             $product = rand(1, 10),
-            $name = md5(rand()),
+            $name = uniqid(),
             $regularPrice = rand(400, 500),
             $price = rand(100, 400),
             $quantity = rand(1, 10),
-            $size = md5(rand()),
-            $color = md5(rand()),
+            $size = uniqid(),
+            $color = uniqid(),
         );
 
         $this->assertTrue($id->equalsTo($item->getId()));

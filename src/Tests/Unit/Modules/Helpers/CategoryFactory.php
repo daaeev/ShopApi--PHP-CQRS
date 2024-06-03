@@ -23,8 +23,8 @@ trait CategoryFactory
     {
         $category = new Category(
             CategoryId::random(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
         );
         $category->flushEvents();
         return $category;

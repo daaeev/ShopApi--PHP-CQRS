@@ -8,10 +8,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {
-        $client = new Client(
-            $hash = md5(rand()),
-            $id = rand()
-        );
+        $client = new Client($hash = uniqid(), $id = rand());
         $this->assertSame($hash, $client->getHash());
         $this->assertSame($id, $client->getId());
     }
@@ -19,18 +16,12 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testCreateWithEmptyHash()
     {
         $this->expectException(\InvalidArgumentException::class);
-        new Client(
-            '',
-            rand()
-        );
+        new Client('', rand());
     }
 
     public function testCreateWithEmptyId()
     {
         $this->expectException(\InvalidArgumentException::class);
-        new Client(
-            md5(rand()),
-            0
-        );
+        new Client(uniqid(), 0);
     }
 }

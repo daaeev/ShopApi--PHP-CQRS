@@ -29,8 +29,8 @@ class CreatePromocodeTest extends \PHPUnit\Framework\TestCase
     public function testCreate()
     {
         $command = new CreatePromocodeCommand(
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             rand(1, 100),
             new \DateTimeImmutable('-1 day'),
             new \DateTimeImmutable('+1 day'),

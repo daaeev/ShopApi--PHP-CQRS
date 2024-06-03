@@ -13,7 +13,7 @@ class ProductColorsTest extends \PHPUnit\Framework\TestCase
     public function testUpdate()
     {
         $product = $this->generateProduct();
-        $colors = [md5(rand()), md5(rand())];
+        $colors = [uniqid(), uniqid()];
 
         $product->setColors($colors);
 
@@ -25,7 +25,7 @@ class ProductColorsTest extends \PHPUnit\Framework\TestCase
     public function testUpdateToSame()
     {
         $product = $this->generateProduct();
-        $colors = [md5(rand()), md5(rand())];
+        $colors = [uniqid(), uniqid()];
         $product->setColors($colors);
         $oldUpdatedAt = $product->getUpdatedAt();
         $product->flushEvents();
@@ -40,8 +40,8 @@ class ProductColorsTest extends \PHPUnit\Framework\TestCase
     public function testUpdateWithRepeatingColors()
     {
         $product = $this->generateProduct();
-        $clonedColor = md5(rand());
-        $colors = [$clonedColor, $clonedColor, md5(rand())];
+        $clonedColor = uniqid();
+        $colors = [$clonedColor, $clonedColor, uniqid()];
         $product->setColors($colors);
 
         $this->assertCount(2, $product->getColors());

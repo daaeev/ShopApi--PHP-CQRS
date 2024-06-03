@@ -98,8 +98,8 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
         $oldUpdatedAt = $order->getUpdatedAt();
         $client = new ClientInfo(
             client: $order->getClient()->getClient(),
-            firstName: md5(rand()),
-            lastName: md5(rand()),
+            firstName: uniqid(),
+            lastName: uniqid(),
             phone: md5(rand()),
             email: md5(rand()),
         );

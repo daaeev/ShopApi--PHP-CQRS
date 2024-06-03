@@ -53,8 +53,8 @@ trait CategoriesRepositoryTestTrait
     {
         $category = $this->makeCategory(
             CategoryId::next(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
         );
 
         $this->categories->add($category);
@@ -96,8 +96,8 @@ trait CategoriesRepositoryTestTrait
         $this->categories->add($initial);
         $added = $this->categories->get($initial->getId());
 
-        $added->updateSlug($slug = md5(rand()));
-        $added->updateName($name = md5(rand()));
+        $added->updateSlug($slug = uniqid());
+        $added->updateName($name = uniqid());
         $added->attachParent($parent->getId());
         $added->attachProduct($product->getId()->getId());
         $parentId = $parent->getId()->getId();

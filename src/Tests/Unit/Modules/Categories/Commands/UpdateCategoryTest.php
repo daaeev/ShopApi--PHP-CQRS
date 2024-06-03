@@ -46,8 +46,8 @@ class UpdateCategoryTest extends \PHPUnit\Framework\TestCase
 
         $command = new UpdateCategoryCommand(
             id: $initialCategory->getId()->getId(),
-            name: md5(rand()),
-            slug: md5(rand()),
+            name: uniqid(),
+            slug: uniqid(),
             products: [$categoryProduct->getId()->getId()],
             parent: $parentCategory->getId()->getId()
         );

@@ -14,7 +14,7 @@ class CategoryNameTest extends \PHPUnit\Framework\TestCase
     public function testUpdateName()
     {
         $category = $this->generateCategory();
-        $updatedName = md5(rand());
+        $updatedName = uniqid();
         $category->updateName($updatedName);
         $this->assertNotNull($category->getUpdatedAt());
         $this->assertSame($updatedName, $category->getName());

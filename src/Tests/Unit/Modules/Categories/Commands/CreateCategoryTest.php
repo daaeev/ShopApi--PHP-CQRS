@@ -42,8 +42,8 @@ class CreateCategoryTest extends \PHPUnit\Framework\TestCase
         $this->products->add($categoryProduct);
 
         $command = new CreateCategoryCommand(
-            name: md5(rand()),
-            slug: md5(rand()),
+            name: uniqid(),
+            slug: uniqid(),
             products: [$categoryProduct->getId()->getId()],
             parent: $parentCategory->getId()->getId()
         );

@@ -29,8 +29,8 @@ trait PromocodeFactory
     {
         $promocode = new Promocode(
             PromocodeId::random(),
-            md5(rand()),
-            md5(rand()),
+            uniqid(),
+            uniqid(),
             rand(1, 100),
             new \DateTimeImmutable('-' . rand(1, 10) . ' days'),
             new \DateTimeImmutable('+' . rand(1, 10) . ' days'),

@@ -38,7 +38,7 @@ class UpdatePromocodeTest extends \PHPUnit\Framework\TestCase
 
         $command = new UpdatePromocodeCommand(
             id: $initial->getId()->getId(),
-            name: md5(rand()),
+            name: uniqid(),
             startDate: $initial->getStartDate()->add(\DateInterval::createFromDateString('-1 day')),
             endDate: $initial->getEndDate()?->add(\DateInterval::createFromDateString('+1 day')),
         );

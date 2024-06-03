@@ -39,7 +39,7 @@ trait AdminsRepositoryTestTrait
     {
         $admin = $this->makeAdmin(
             AdminId::next(),
-            md5(rand()),
+            uniqid(),
             $this->correctAdminLogin,
             $this->correctAdminPassword,
             [Role::ADMIN]

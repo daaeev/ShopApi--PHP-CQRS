@@ -16,7 +16,7 @@ class CreatePromotionTest extends TestCase
     {
         $promotion = $this->makePromotion(
             $id = PromotionId::random(),
-            $name = md5(rand()),
+            $name = uniqid(),
             $startDate = new \DateTimeImmutable('-1 day'),
             $endDate = new \DateTimeImmutable('+1 day'),
             $disabled = true,
@@ -38,7 +38,7 @@ class CreatePromotionTest extends TestCase
     {
         $promotion = $this->makePromotion(
             id: PromotionId::random(),
-            name: md5(rand()),
+            name: uniqid(),
             endDate: new \DateTimeImmutable('+1 day'),
         );
 

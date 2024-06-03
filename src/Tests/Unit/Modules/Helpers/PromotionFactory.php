@@ -18,24 +18,25 @@ trait PromotionFactory
         array $discounts = []
     ): Entity\Promotion {
         return new Entity\Promotion(
-            $id,
-            $name,
-            new Duration($startDate, $endDate),
-            $disabled,
-            $discounts,
+            id: $id,
+            name: $name,
+            duration: new Duration($startDate, $endDate),
+            disabled: $disabled,
+            discounts: $discounts,
         );
     }
 
     public function generatePromotion(): Entity\Promotion
     {
         $promotion = new Entity\Promotion(
-            Entity\PromotionId::random(),
-            substr(md5(rand(0, 9999)), 0, 5),
-            new Duration(
+            id: Entity\PromotionId::random(),
+            name: uniqid(),
+            duration: new Duration(
                 new \DateTimeImmutable('-' . rand(1, 5) . ' days'),
                 new \DateTimeImmutable('+' . rand(1, 5) . ' days'),
             )
         );
+
         $promotion->flushEvents();
         return $promotion;
     }

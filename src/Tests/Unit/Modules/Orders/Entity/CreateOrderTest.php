@@ -26,7 +26,7 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
         $order = $this->makeOrder(
             $id = OrderId::random(),
             $client = new ClientInfo(
-                client: new Client(hash: md5(rand()), id: rand()),
+                client: new Client(hash: uniqid(), id: rand()),
                 firstName: md5(rand()),
                 lastName: md5(rand()),
                 phone: md5(rand()),

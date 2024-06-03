@@ -69,8 +69,8 @@ class AddItemTest extends \PHPUnit\Framework\TestCase
         $command = new AddOfferCommand(
             $product = rand(1, 10),
             $quantity = rand(1, 10),
-            $size = md5(rand()),
-            $color = md5(rand()),
+            $size = uniqid(),
+            $color = uniqid(),
         );
 
         $this->cart->expects($this->once())
