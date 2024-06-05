@@ -8,12 +8,6 @@ use Project\Common\Entity\Collections\PaginatedCollection;
 
 class PaginatedCollectionTest extends TestCase
 {
-    public function testPaginationToArray()
-    {
-        $pagination = new Pagination(1, 15, 20);
-        $this->assertSame(['page' => 1, 'limit' => 15, 'total' => 20], $pagination->toArray());
-    }
-
     public function testToArray()
     {
         $pagination = new Pagination(1, 15, 20);
@@ -23,6 +17,13 @@ class PaginatedCollectionTest extends TestCase
             'pagination' => ['page' => 1, 'limit' => 15, 'total' => 20]
         ];
 
+        $this->assertSame($pagination, $collection->getPagination());
         $this->assertSame($expected, $collection->toArray());
+    }
+
+    public function testPaginationToArray()
+    {
+        $pagination = new Pagination(1, 15, 20);
+        $this->assertSame(['page' => 1, 'limit' => 15, 'total' => 20], $pagination->toArray());
     }
 }

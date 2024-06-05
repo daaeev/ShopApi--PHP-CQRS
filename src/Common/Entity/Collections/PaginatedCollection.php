@@ -18,6 +18,11 @@ class PaginatedCollection extends Collection
         parent::__clone();
     }
 
+    public function getPagination(): Pagination
+    {
+        return $this->pagination;
+    }
+
     public function toArray(): array
     {
         return [

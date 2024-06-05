@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Project\Modules\Shopping\Order\Entity\OrderStatus;
 use Project\Modules\Shopping\Order\Entity\PaymentStatus;
+use Project\Infrastructure\Laravel\Eloquent\OrderByTrait;
 
 class Order extends Model
 {
+    use OrderByTrait, OrderFilterScopesTrait;
+
     protected $table = 'shopping_orders';
 
     protected $fillable = [
