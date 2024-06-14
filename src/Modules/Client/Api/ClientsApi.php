@@ -4,6 +4,7 @@ namespace Project\Modules\Client\Api;
 
 use Project\Modules\Client\Entity;
 use Project\Modules\Client\Api\DTO;
+use Project\Common\Utils\PhoneHelper;
 use Project\Modules\Client\Utils\ClientEntity2DTOConverter;
 use Project\Modules\Client\Repository\ClientsRepositoryInterface;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
@@ -21,9 +22,7 @@ class ClientsApi implements DispatchEventsInterface
 
     public function get(int|string $id): DTO\Client
     {
-        return is_int($id)
-            ? $this->queryClients->getById($id)
-            : $this->queryClients->getByHash($id);
+        return is_int($id) ? $this->queryClients->getById($id) : $this->queryClients->getByHash($id);
     }
 
     public function create(
@@ -33,13 +32,9 @@ class ClientsApi implements DispatchEventsInterface
         ?string $phone = null,
         ?string $email = null,
     ): DTO\Client {
-        $client = new Entity\Client(
-            Entity\ClientId::next(),
-            new Entity\ClientHash($hash)
-        );
-
+        $client = new Entity\Client(Entity\ClientId::next(), new Entity\ClientHash($hash));
         $client->updateName(new Entity\Name($firstName, $lastName));
-        $client->updatePhone($phone);
+        $client->updatePhone($phone ? PhoneHelper::normalize($phone) : null);
         $client->updateEmail($email);
         $this->clients->add($client);
         $this->dispatchEvents($client->flushEvents());

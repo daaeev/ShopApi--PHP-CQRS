@@ -30,6 +30,18 @@ class ClientContactsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($contacts->isEmailConfirmed());
     }
 
+    public function testCreateWithInvalidPhone()
+    {
+        $this->expectException(\DomainException::class);
+        new Contacts(phone: '+3801234');
+    }
+
+    public function testCreateWithInvalidEmail()
+    {
+        $this->expectException(\DomainException::class);
+        new Contacts(email: 'test@test');
+    }
+
     public function testCreateWithEmptyConfirmedPhone()
     {
         $this->expectException(\DomainException::class);

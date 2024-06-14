@@ -2,6 +2,8 @@
 
 namespace Project\Modules\Client\Entity;
 
+use Project\Common\Utils\ContactsValidator;
+
 class Contacts
 {
     public function __construct(
@@ -10,6 +12,9 @@ class Contacts
         private bool $phoneConfirmed = false,
         private bool $emailConfirmed = false,
     ) {
+        ContactsValidator::validatePhone($this->phone);
+        ContactsValidator::validateEmail($this->email);
+
         if ($this->phoneConfirmed && empty($this->phone)) {
             throw new \DomainException('Empty phone cant be confirmed');
         }
