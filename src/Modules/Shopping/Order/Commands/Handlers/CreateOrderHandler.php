@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Order\Commands\Handlers;
 
+use Project\Common\Utils\PhoneHelper;
 use Project\Modules\Shopping\Order\Entity;
 use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
@@ -40,7 +41,7 @@ class CreateOrderHandler implements DispatchEventsInterface
                 client: $client,
                 firstName: $command->firstName,
                 lastName: $command->lastName,
-                phone: $command->phone,
+                phone: PhoneHelper::normalize($command->phone),
                 email: $command->email,
             ),
             delivery: new Entity\Delivery\DeliveryInfo(

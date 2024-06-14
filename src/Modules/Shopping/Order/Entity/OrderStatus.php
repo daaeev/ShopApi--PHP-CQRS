@@ -9,4 +9,9 @@ enum OrderStatus: string
     case AWAIT_DELIVERY = 'await_delivery';
     case COMPLETED = 'completed';
     case CANCELED = 'canceled';
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }

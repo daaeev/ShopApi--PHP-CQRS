@@ -24,6 +24,10 @@ class AddPromoHandler implements DispatchEventsInterface
     {
         $order = $this->orders->get(Entity\OrderId::make($command->id));
         $promo = $this->promocodes->get(PromocodeId::make($command->promoId));
+        if (!$promo->isActive()) {
+            throw new \DomainException('Promocode is inactive');
+        }
+
         $order->usePromocode(Promocode::fromBaseEntity($promo));
         $this->orders->update($order);
         $this->dispatchEvents($order->flushEvents());

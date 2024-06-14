@@ -8,7 +8,7 @@ class Price implements Arrayable
 {
     public function __construct(
         public readonly string $currency,
-        public readonly float $price,
+        public readonly int $price,
     ) {}
 
     public function toArray(): array

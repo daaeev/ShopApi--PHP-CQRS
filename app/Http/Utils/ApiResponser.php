@@ -15,18 +15,12 @@ trait ApiResponser
         ]);
     }
 
-    protected function failed(
-        int $statusCode,
-        string $message = 'Failed',
-        array $data = [],
-    ): JsonResponse {
-        return \response()->json(
-            [
-                'status' => $statusCode,
-                'errorMessage' => $message,
-                'dataset' => $data
-            ],
-            $statusCode
-        );
+    protected function error(int $statusCode, string $message = 'Error', array $data = []): JsonResponse
+    {
+        return \response()->json([
+            'status' => $statusCode,
+            'errorMessage' => $message,
+            'dataset' => $data
+        ], $statusCode);
     }
 }

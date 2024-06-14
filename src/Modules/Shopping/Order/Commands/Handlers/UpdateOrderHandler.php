@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Order\Commands\Handlers;
 
+use Project\Common\Utils\PhoneHelper;
 use Project\Modules\Shopping\Order\Entity;
 use Project\Modules\Shopping\Order\Commands\UpdateOrderCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
@@ -23,7 +24,7 @@ class UpdateOrderHandler implements DispatchEventsInterface
             client: $order->getClient()->getClient(),
             firstName: $command->firstName,
             lastName: $command->lastName,
-            phone: $command->phone,
+            phone: PhoneHelper::normalize($command->phone),
             email: $command->email,
         ));
 

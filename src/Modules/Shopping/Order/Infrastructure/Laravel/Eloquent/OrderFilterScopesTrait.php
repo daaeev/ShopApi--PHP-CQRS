@@ -28,14 +28,14 @@ trait OrderFilterScopesTrait
     public function scopePhone(Builder $builder, string|null $phone): void
     {
         if (null !== $phone) {
-            $builder->where('phone', $phone);
+            $builder->where('phone', 'LIKE', "%$phone%");
         }
     }
 
     public function scopeEmail(Builder $builder, string|null $email): void
     {
         if (null !== $email) {
-            $builder->where('email', $email);
+            $builder->where('email', 'LIKE', "%$email%");
         }
     }
 

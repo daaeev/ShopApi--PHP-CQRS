@@ -8,7 +8,7 @@ class Price
 {
     public function __construct(
         private Currency $currency,
-        private float $price
+        private int $price
     ) {}
 
     public function equalsTo(self $other): bool
@@ -19,7 +19,7 @@ class Price
         );
     }
 
-    public function getPrice(): float
+    public function getPrice(): int
     {
         return $this->price;
     }

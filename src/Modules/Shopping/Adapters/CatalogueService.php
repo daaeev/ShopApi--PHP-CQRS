@@ -71,7 +71,7 @@ class CatalogueService
 		}
 	}
 
-    private function getPrice(ProductDTO $product, Currency $currency): float
+    private function getPrice(ProductDTO $product, Currency $currency): int
     {
         $price = null;
         foreach ($product->prices as $productPrice) {

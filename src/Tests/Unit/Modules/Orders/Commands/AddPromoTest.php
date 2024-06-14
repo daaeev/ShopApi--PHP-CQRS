@@ -58,6 +58,10 @@ class AddPromoTest extends \PHPUnit\Framework\TestCase
             ->willReturn($this->promocode);
 
         $this->promocode->expects($this->once())
+            ->method('isActive')
+            ->willReturn(true);
+
+        $this->promocode->expects($this->once())
             ->method('getId')
             ->willReturn($this->promoId);
 
@@ -92,6 +96,30 @@ class AddPromoTest extends \PHPUnit\Framework\TestCase
         $command = new AddPromoCommand($this->orderId->getId(), $this->promoId->getId());
         $handler = new AddPromoHandler($this->orders, $this->promocodes);
         $handler->setDispatcher($this->eventBus);
+        call_user_func($handler, $command);
+    }
+
+    public function testAddDisabledPromo()
+    {
+        $this->orders->expects($this->once())
+            ->method('get')
+            ->with($this->orderId)
+            ->willReturn($this->order);
+
+        $this->promocodes->expects($this->once())
+            ->method('get')
+            ->with($this->promoId)
+            ->willReturn($this->promocode);
+
+        $this->promocode->expects($this->once())
+            ->method('isActive')
+            ->willReturn(false);
+
+        $command = new AddPromoCommand($this->orderId->getId(), $this->promoId->getId());
+        $handler = new AddPromoHandler($this->orders, $this->promocodes);
+        $handler->setDispatcher($this->eventBus);
+
+        $this->expectException(\DomainException::class);
         call_user_func($handler, $command);
     }
 }
