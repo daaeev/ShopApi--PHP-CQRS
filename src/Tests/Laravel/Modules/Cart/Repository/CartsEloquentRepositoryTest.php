@@ -20,10 +20,7 @@ class CartsEloquentRepositoryTest extends \Tests\TestCase
         $this->carts = new CartsEloquentRepository(
             new Hydrator,
 			new IdentityMap,
-            new CartEloquentToEntityConverter(
-                new Hydrator,
-                new PromocodeEloquentConverter(new Hydrator)
-            )
+            new CartEloquentToEntityConverter(new Hydrator)
         );
 
         $this->promocodes = new PromocodesEloquentRepository(

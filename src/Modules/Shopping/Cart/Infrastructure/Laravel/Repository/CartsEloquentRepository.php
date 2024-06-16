@@ -13,6 +13,8 @@ use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquentToEnt
 
 class CartsEloquentRepository implements CartsRepositoryInterface
 {
+    use FindCartByClientTrait;
+
     public function __construct(
         private Hydrator $hydrator,
 		private IdentityMap $identityMap,
@@ -40,8 +42,8 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 
     public function getByClient(Client $client): Entity\Cart
     {
-		$record = Eloquent\Cart::where(['client_id' => $client->getId()])->first();
-        if (empty($record)) {
+        $record = $this->getByClientId($client) ?? $this->getByClientHash($client) ?? null;
+        if (null === $record) {
             $cart = Entity\Cart::instantiate($client);
             $this->save($cart);
             return $cart;
@@ -89,10 +91,12 @@ class CartsEloquentRepository implements CartsRepositoryInterface
 
 	private function guardClientDoesNotHasAnotherCart(Entity\Cart $cart): void
 	{
+        $id = $cart->getClient()->getId();
+        $hash = $cart->getClient()->getHash();
 		$anotherCartExists = Eloquent\Cart::query()
-			->where('id', '!=', $cart->getId()->getId())
-			->where('client_id', $cart->getClient()->getId())
-			->exists();
+            ->where('id', '!=', $cart->getId()->getId())
+            ->client($id, $hash)
+            ->exists();
 
 		if ($anotherCartExists) {
 			throw new \DomainException('Client already have another cart');

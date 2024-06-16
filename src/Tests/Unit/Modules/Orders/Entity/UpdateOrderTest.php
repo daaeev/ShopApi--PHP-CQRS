@@ -127,11 +127,11 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
         $order->updateClientInfo($client);
     }
 
-    public function testUpdateClientInfoUsingOtherClientId()
+    public function testUpdateClientInfoWithOtherClient()
     {
         $order = $this->generateOrder([$this->generateOffer()]);
         $client = new ClientInfo(
-            client: new Client(hash: uniqid(), id: rand(1, 99999)),
+            client: new Client(hash: uniqid(), id: $order->getClient()->getClient()->getId() + 1),
             firstName: uniqid(),
             lastName: uniqid(),
             phone: $this->generatePhone(),

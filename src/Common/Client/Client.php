@@ -8,7 +8,7 @@ class Client
 {
     public function __construct(
         private string $hash,
-        private ?int $id,
+        private ?int $id = null,
     ) {
         Assert::notEmpty($hash, 'Client hash required');
     }
@@ -25,10 +25,8 @@ class Client
 
     public function same(self $other): bool
     {
-        if (!empty($this->id)) {
-            return $this->id === $other->id;
-        }
-
-        return $this->hash === $other->hash;
+        $sameHash = $this->hash === $other->hash;
+        $sameId = $this->id === $other->id;
+        return !empty($this->id) ? $sameId || $sameHash : $sameHash;
     }
 }

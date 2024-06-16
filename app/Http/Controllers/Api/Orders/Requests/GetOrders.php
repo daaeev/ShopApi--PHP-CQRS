@@ -20,6 +20,7 @@ class GetOrders extends ApiRequest
             'filters.priceFrom' => 'nullable|numeric|integer|min:0',
             'filters.priceTo' => 'nullable|numeric|integer',
             'filters.clientId' => 'bail|nullable|numeric|integer|exists:clients,id',
+            'filters.clientHash' => 'nullable|string',
             'filters.phone' => 'nullable|string',
             'filters.email' => 'nullable|string',
             'filters.name' => 'nullable|string',

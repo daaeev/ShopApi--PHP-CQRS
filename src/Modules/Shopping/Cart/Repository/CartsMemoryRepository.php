@@ -33,8 +33,14 @@ class CartsMemoryRepository implements CartsRepositoryInterface
 
     public function getByClient(Client $client): Entity\Cart
     {
+        foreach ($this->items as $cart) {
+            if ($cart->getClient()->getId() === $client->getId()) {
+                return $this->identityMap->get($cart->getId()->getId());
+            }
+        }
+
 		foreach ($this->items as $cart) {
-			if ($cart->getClient()->same($client)) {
+			if ($cart->getClient()->getHash() === $client->getHash()) {
 				return $this->identityMap->get($cart->getId()->getId());
 			}
 		}

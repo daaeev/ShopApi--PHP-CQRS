@@ -25,22 +25,22 @@ trait CartsRepositoryTestTrait
     public function testSave()
     {
         $initial = $this->generateCart();
-		$initialProperties = $this->getCartProperties($initial);
+		$initialProperties = serialize($initial);
         $this->carts->save($initial);
 
 		$added = $this->carts->get($initial->getId());
-		$this->assertSame($initialProperties, $this->getCartProperties($added));
+		$this->assertSame($initialProperties, serialize($added));
 
 		$added->addOffer($this->generateOffer());
 		$added->usePromocode($this->getPromocode());
-		$addedProperties = $this->getCartProperties($added);
+		$addedProperties = serialize($added);
 		$this->carts->save($added);
 
         $updated = $this->carts->get($added->getId());
         $this->assertSame($initial, $added);
         $this->assertSame($added, $updated);
 
-		$updatedProperties = $this->getCartProperties($updated);
+		$updatedProperties = serialize($updated);
 		$this->assertNotSame($initialProperties, $addedProperties);
 		$this->assertNotSame($initialProperties, $updatedProperties);
 		$this->assertSame($addedProperties, $updatedProperties);
@@ -52,39 +52,6 @@ trait CartsRepositoryTestTrait
         $this->promocodes->add($promo);
         return Promocode::fromBaseEntity($promo);
     }
-
-	private function getCartProperties(Cart $cart): array
-	{
-		$id = $cart->getId();
-		$client = $cart->getClient();
-		$offers = $cart->getOffers();
-		$currency = $cart->getCurrency();
-        $totalPrice = $cart->getTotalPrice();
-        $regularPrice = $cart->getRegularPrice();
-		$promocode = $cart->getPromocode();
-		$createdAt = $cart->getCreatedAt();
-		$updatedAt = $cart->getUpdatedAt();
-		return [
-            $id,
-            $id->getId(),
-            $client,
-            $client->getId(),
-            $client->getHash(),
-            $offers,
-            json_encode($offers),
-            $currency,
-            $totalPrice,
-            $regularPrice,
-            $promocode,
-            $promocode?->getId()?->getId(),
-            $promocode?->getDiscountPercent(),
-            $promocode?->getCode(),
-            $createdAt,
-            $createdAt->format(\DateTimeInterface::RFC3339),
-            $updatedAt,
-            $updatedAt?->format(\DateTimeInterface::RFC3339)
-        ];
-	}
 
 	public function testSaveIncrementIds()
 	{
@@ -114,21 +81,41 @@ trait CartsRepositoryTestTrait
         $this->carts->get(CartId::random());
     }
 
-    public function testGetByClient()
+    public function testGetByClientHash()
     {
-        $initial = $this->generateCart();
-        $initial->addOffer($this->generateOffer());
-		$initialProperties = $this->getCartProperties($initial);
+        $client = new Client(uniqid(), 1);
+        $initial = $this->makeCart(CartId::next(), new Client($client->getHash(), 2));
 		$this->carts->save($initial);
 
-        $found = $this->carts->getByClient($initial->getClient());
+        $found = $this->carts->getByClient($client);
         $this->assertSame($initial, $found);
-		$this->assertSame($initialProperties, $this->getCartProperties($found));
+    }
+
+    public function testGetByClientId()
+    {
+        $client = new Client(uniqid(), 1);
+        $initial = $this->makeCart(CartId::next(), new Client(uniqid(), $client->getId()));
+        $this->carts->save($initial);
+
+        $found = $this->carts->getByClient($client);
+        $this->assertSame($initial, $found);
+    }
+
+    public function testCartWithClientIdHasPriority()
+    {
+        $client = new Client(uniqid(), rand(1, 10));
+        $cartWithClientHash = $this->makeCart(CartId::next(), new Client($client->getHash()));
+        $cartWithClientId = $this->makeCart(CartId::next(), new Client(uniqid(), $client->getId()));
+        $this->carts->save($cartWithClientHash);
+        $this->carts->save($cartWithClientId);
+
+        $found = $this->carts->getByClient($client);
+        $this->assertSame($found, $cartWithClientId);
     }
 
     public function testGetByClientIfDoesNotExists()
     {
-        $found = $this->carts->getByClient($client = new Client('hash', 1));
+        $found = $this->carts->getByClient($client = new Client(uniqid()));
         $this->assertNotNull($found->getId()->getId());
         $this->assertSame($found->getClient(), $client);
         $this->assertEmpty($found->getOffers());
@@ -140,7 +127,7 @@ trait CartsRepositoryTestTrait
 
         $cartWithProduct = $this->generateCart();
 		$cartWithProduct->addOffer($offer);
-        $cartWithProductProperties = $this->getCartProperties($cartWithProduct);
+        $cartWithProductProperties = serialize($cartWithProduct);
         $this->carts->save($cartWithProduct);
 
 		$cartWithoutProduct = $this->generateCart();
@@ -149,7 +136,7 @@ trait CartsRepositoryTestTrait
         $carts = $this->carts->getCartsWithProduct($offer->getProduct());
         $this->assertCount(1, $carts);
         $this->assertSame($cartWithProduct, $carts[0]);
-		$this->assertSame($cartWithProductProperties, $this->getCartProperties($carts[0]));
+		$this->assertSame($cartWithProductProperties, serialize($carts[0]));
     }
 
     public function testGetCartsWithProductIfDoesNotExists()

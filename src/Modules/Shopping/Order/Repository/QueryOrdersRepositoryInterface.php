@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Order\Repository;
 
-use Project\Modules\Client\Entity\Client;
+use Project\Common\Client\Client;
 use Project\Modules\Shopping\Api\DTO\Order as DTO;
 use Project\Common\Entity\Collections\PaginatedCollection;
 

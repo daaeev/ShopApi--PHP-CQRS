@@ -3,6 +3,7 @@
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class Cart extends Model
 {
@@ -28,5 +29,16 @@ class Cart extends Model
     public function items()
     {
         return $this->hasMany(CartItem::class, 'cart_id', 'id');
+    }
+
+    public function scopeClient(Builder $query, int|string|null $id, string|null $hash): void
+    {
+        if ($id && $hash) {
+            $query->where(fn ($subQuery) => $subQuery->where('client_id', $id)->orWhere('client_hash', $hash));
+        } else if ($id) {
+            $query->where('client_id', $id);
+        } else if ($hash) {
+            $query->where('client_hash', $hash);
+        }
     }
 }

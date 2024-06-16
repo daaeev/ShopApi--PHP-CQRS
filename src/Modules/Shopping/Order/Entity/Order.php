@@ -192,7 +192,7 @@ class Order extends Aggregate
     {
         $this->guardOrderNotCompleted();
         if (!$client->getClient()->same($this->client->getClient())) {
-            throw new \DomainException('Cant attach order to another client id');
+            throw new \DomainException('Cant attach order to another client');
         }
 
         $this->client = $client;

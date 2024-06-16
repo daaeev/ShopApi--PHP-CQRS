@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Order\Infrastructure\Laravel\Repository;
 
-use Project\Modules\Client\Entity\Client;
+use Project\Common\Client\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Api\DTO\Order as DTO;
 use Project\Common\Entity\Collections\Pagination;
@@ -17,7 +17,7 @@ class QueryOrdersEloquentRepository implements QueryOrdersRepositoryInterface
     {
         $record = Eloquent\Order::query()
             ->where('id', $id)
-            ->client($client?->getId()?->getId())
+            ->client($client?->getId(), $client?->getHash())
             ->first();
 
         if (empty($record)) {
@@ -36,7 +36,7 @@ class QueryOrdersEloquentRepository implements QueryOrdersRepositoryInterface
         $records = Eloquent\Order::query()
             ->with(['offers', 'delivery'])
             ->price($filters['priceFrom'] ?? null, $filters['priceTo'] ?? null)
-            ->client($filters['clientId'] ?? null)
+            ->client($filters['clientId'] ?? null, $filters['clientHash'] ?? null)
             ->phone($filters['phone'] ?? null)
             ->email($filters['email'] ?? null)
             ->name($filters['name'] ?? null)

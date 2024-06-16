@@ -18,10 +18,14 @@ trait OrderFilterScopesTrait
         }
     }
 
-    public function scopeClient(Builder $builder, int|string|null $id): void
+    public function scopeClient(Builder $query, int|string|null $id, string|null $hash): void
     {
-        if (null !== $id) {
-            $builder->where('client_id', $id);
+        if ($id && $hash) {
+            $query->where(fn ($subQuery) => $subQuery->where('client_id', $id)->orWhere('client_hash', $hash));
+        } else if ($id) {
+            $query->where('client_id', $id);
+        } else if ($hash) {
+            $query->where('client_hash', $hash);
         }
     }
 
