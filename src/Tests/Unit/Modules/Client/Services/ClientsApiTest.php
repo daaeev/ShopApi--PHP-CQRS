@@ -38,11 +38,11 @@ class ClientsApiTest extends TestCase
             ->getMock();
     }
 
-    public function testGetById()
+    public function testGet()
     {
         $id = rand(1, 10);
         $this->queryClientsRepository->expects($this->once())
-            ->method('getById')
+            ->method('get')
             ->with($id)
             ->willReturn($this->clientDTO);
 
@@ -50,21 +50,8 @@ class ClientsApiTest extends TestCase
         $this->assertSame($this->clientDTO, $client);
     }
 
-    public function testGetByHash()
-    {
-        $hash = uniqid();
-        $this->queryClientsRepository->expects($this->once())
-            ->method('getByHash')
-            ->with($hash)
-            ->willReturn($this->clientDTO);
-
-        $client = $this->api->get($hash);
-        $this->assertSame($this->clientDTO, $client);
-    }
-
     public function testCreate()
     {
-        $hash = uniqid();
         $firstName = uniqid();
         $lastName = uniqid();
         $phone = $this->generatePhone();
@@ -72,8 +59,7 @@ class ClientsApiTest extends TestCase
 
         $this->clientsRepository->expects($this->once())
             ->method('add')
-            ->with($this->callback(function (Entity\Client $client) use ($hash, $firstName, $lastName, $phone, $email) {
-                $this->assertSame($client->getHash()->getId(), $hash);
+            ->with($this->callback(function (Entity\Client $client) use ($firstName, $lastName, $phone, $email) {
                 $this->assertSame($client->getName()->getFirstName(), $firstName);
                 $this->assertSame($client->getName()->getLastName(), $lastName);
                 $this->assertSame($client->getContacts()->getPhone(), $phone);
@@ -85,8 +71,7 @@ class ClientsApiTest extends TestCase
 
         $this->eventBus->expects($this->exactly(2))->method('dispatch');
 
-        $client = $this->api->create($hash, $firstName, $lastName, $phone, $email);
-        $this->assertSame($client->hash, $hash);
+        $client = $this->api->create($firstName, $lastName, $phone, $email);
         $this->assertSame($client->firstName, $firstName);
         $this->assertSame($client->lastName, $lastName);
         $this->assertSame($client->phone, $phone);

@@ -8,7 +8,6 @@ class Client implements DTO
 {
     public function __construct(
         public readonly int $id,
-        public readonly string $hash,
         public readonly ?string $firstName,
         public readonly ?string $lastName,
         public readonly ?string $phone,
@@ -23,7 +22,6 @@ class Client implements DTO
     {
         return [
             'id' => $this->id,
-            'hash' => $this->hash,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'phone' => $this->phone,

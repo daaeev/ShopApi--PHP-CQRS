@@ -8,18 +8,13 @@ trait ClientFactory
 {
     private function generateClient(): Entity\Client
     {
-        $client = new Entity\Client(
-            Entity\ClientId::random(),
-            Entity\ClientHash::random()
-        );
+        $client = new Entity\Client(Entity\ClientId::random());
         $client->flushEvents();
         return $client;
     }
 
-    private function makeClient(
-        Entity\ClientId $id,
-        Entity\ClientHash $hash,
-    ): Entity\Client {
-        return new Entity\Client($id, $hash);
+    private function makeClient(Entity\ClientId $id): Entity\Client
+    {
+        return new Entity\Client($id);
     }
 }

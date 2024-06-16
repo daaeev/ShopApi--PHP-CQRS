@@ -15,15 +15,10 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id')
                 ->after('client_hash')
                 ->nullable(false);
+
             $table->index('client_id', 'idx-shopping_carts-client_id');
             $table->foreign('client_id', 'fk-shopping_carts-client_id')
                 ->references('id')
-                ->on('clients')
-                ->cascadeOnUpdate();
-
-            $table->index('client_hash', 'idx-shopping_carts-client_hash');
-            $table->foreign('client_hash', 'fk-shopping_carts-client_hash')
-                ->references('hash')
                 ->on('clients')
                 ->cascadeOnUpdate();
         });
@@ -38,9 +33,6 @@ return new class extends Migration
             $table->dropForeign('fk-shopping_carts-client_id');
             $table->dropIndex('idx-shopping_carts-client_id');
             $table->dropColumn('client_id');
-
-            $table->dropForeign('fk-shopping_carts-client_hash');
-            $table->dropIndex('idx-shopping_carts-client_hash');
         });
     }
 };

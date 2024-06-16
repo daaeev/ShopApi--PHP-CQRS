@@ -8,10 +8,9 @@ class Client
 {
     public function __construct(
         private string $hash,
-        private int $id,
+        private ?int $id,
     ) {
-        Assert::notEmpty($hash, 'Client hash does not instantiated');
-        Assert::notEmpty($id, 'Client id cant be empty');
+        Assert::notEmpty($hash, 'Client hash required');
     }
 
     public function getHash(): string
@@ -19,13 +18,17 @@ class Client
         return $this->hash;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     public function same(self $other): bool
     {
-        return $this->id === $other->id;
+        if (!empty($this->id)) {
+            return $this->id === $other->id;
+        }
+
+        return $this->hash === $other->hash;
     }
 }

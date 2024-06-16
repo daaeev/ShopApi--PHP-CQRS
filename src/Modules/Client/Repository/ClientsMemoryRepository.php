@@ -20,7 +20,6 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
 
     public function add(Entity\Client $client): void
     {
-        $this->guardHashUnique($client);
         $this->guardContactsUnique($client);
 
         if (null === $client->getId()->getId()) {
@@ -32,21 +31,7 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
         }
 
         $this->identityMap->add($client->getId()->getId(), $client);
-        $this->identityMap->add($client->getHash()->getId(), $client);
         $this->items[$client->getId()->getId()] = clone $client;
-    }
-
-    private function guardHashUnique(Entity\Client $client): void
-    {
-        foreach ($this->items as $item) {
-            if ($client->getId()->equalsTo($item->getId())) {
-                continue;
-            }
-
-            if ($client->getHash() === $item->getHash()) {
-                throw new DuplicateKeyException('Client with same hash already exists');
-            }
-        }
     }
 
     private function guardContactsUnique(Entity\Client $client): void
@@ -72,7 +57,6 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
 
     public function update(Entity\Client $client): void
     {
-        $this->guardHashUnique($client);
         $this->guardContactsUnique($client);
 
         if (empty($this->items[$client->getId()->getId()])) {
@@ -89,11 +73,10 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
         }
 
         $this->identityMap->remove($client->getId()->getId());
-        $this->identityMap->remove($client->getHash()->getId());
         unset($this->items[$client->getId()->getId()]);
     }
 
-    public function get(Entity\ClientHash|Entity\ClientId $id): Entity\Client
+    public function get(Entity\ClientId $id): Entity\Client
     {
         if (empty($id->getId())) {
             throw new NotFoundException('Client does not exists');
@@ -101,29 +84,6 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
 
         if ($this->identityMap->has($id->getId())) {
             return $this->identityMap->get($id->getId());
-        }
-
-        $client = ($id instanceof Entity\ClientId) ? $this->getById($id) : $this->getByHash($id);
-        $this->identityMap->add($client->getId()->getId(), $client);
-        $this->identityMap->add($client->getHash()->getId(), $client);
-        return $client;
-    }
-
-    private function getById(Entity\ClientId $id): Entity\Client
-    {
-        if (empty($this->items[$id->getId()])) {
-            throw new NotFoundException('Client does not exists');
-        }
-
-        return clone $this->items[$id->getId()];
-    }
-
-    private function getByHash(Entity\ClientHash $hash): Entity\Client
-    {
-        foreach ($this->items as $item) {
-            if ($item->getHash()->equalsTo($hash)) {
-                return clone $item;
-            }
         }
 
         throw new NotFoundException('Client does not exists');

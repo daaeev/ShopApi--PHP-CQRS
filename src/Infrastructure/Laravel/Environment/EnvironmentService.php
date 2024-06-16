@@ -6,14 +6,11 @@ use Project\Common\Language;
 use Project\Common\Client\Client;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
-use Project\Modules\Client\Api\ClientsApi;
-use Project\Common\Repository\NotFoundException;
 use Project\Common\Environment\EnvironmentInterface;
 
 class EnvironmentService implements EnvironmentInterface
 {
     public function __construct(
-        private ClientsApi $clients,
         private string $hashCookieName = 'clientHash',
         private int $hashCookieLength = 40,
     ) {}
@@ -21,12 +18,12 @@ class EnvironmentService implements EnvironmentInterface
     public function getClient(): Client
     {
         return new Client(
-            $this->retrieveClientHashCookie(),
-            $this->retrieveClientId()
+            $this->getClientHashCookie(),
+            $this->getAuthorizedClientId()
         );
     }
 
-    private function retrieveClientHashCookie(): string
+    private function getClientHashCookie(): string
     {
         $queued = Cookie::queued($this->hashCookieName);
         $hash = $queued ? $queued->getValue() : Cookie::get($this->hashCookieName);
@@ -41,13 +38,9 @@ class EnvironmentService implements EnvironmentInterface
         return $hash;
     }
 
-    private function retrieveClientId(): int
+    private function getAuthorizedClientId(): ?int
     {
-        try {
-            return $this->clients->get($this->retrieveClientHashCookie())->id;
-        } catch (NotFoundException) {
-            return $this->clients->create($this->retrieveClientHashCookie())->id;
-        }
+        return null; // TODO: Not implemented yet
     }
 
     public function getLanguage(): Language

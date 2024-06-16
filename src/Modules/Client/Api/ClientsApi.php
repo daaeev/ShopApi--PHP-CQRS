@@ -22,17 +22,16 @@ class ClientsApi implements DispatchEventsInterface
 
     public function get(int|string $id): DTO\Client
     {
-        return is_int($id) ? $this->queryClients->getById($id) : $this->queryClients->getByHash($id);
+        return $this->queryClients->get($id);
     }
 
     public function create(
-        string $hash,
         ?string $firstName = null,
         ?string $lastName = null,
         ?string $phone = null,
         ?string $email = null,
     ): DTO\Client {
-        $client = new Entity\Client(Entity\ClientId::next(), new Entity\ClientHash($hash));
+        $client = new Entity\Client(Entity\ClientId::next());
         $client->updateName(new Entity\Name($firstName, $lastName));
         $client->updatePhone($phone ? PhoneHelper::normalize($phone) : null);
         $client->updateEmail($email);

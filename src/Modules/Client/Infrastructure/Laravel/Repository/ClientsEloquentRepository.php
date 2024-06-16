@@ -30,16 +30,13 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
 
         $this->persist($client, new Eloquent\Client);
         $this->identityMap->add($client->getId()->getId(), $client);
-        $this->identityMap->add($client->getHash()->getId(), $client);
     }
 
     private function persist(Entity\Client $entity, Eloquent\Client $record): void
     {
-        $this->guardHashUnique($entity);
         $this->guardContactsUnique($entity);
 
         $record->id = $entity->getId()->getId();
-        $record->hash = $entity->getHash()->getId();
         $record->firstname = $entity->getName()->getFirstName();
         $record->lastname = $entity->getName()->getLastName();
         $record->phone = $entity->getContacts()->getPhone();
@@ -51,18 +48,6 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
         $record->save();
 
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);
-    }
-
-    private function guardHashUnique(Entity\Client $client): void
-    {
-        $notUnique = Eloquent\Client::query()
-            ->where('hash', $client->getHash()->getId())
-            ->where('id', '!=', $client->getId()->getId())
-            ->exists();
-
-        if ($notUnique) {
-            throw new DuplicateKeyException('Client with same hash already exists');
-        }
     }
 
     private function guardContactsUnique(Entity\Client $client): void
@@ -116,11 +101,10 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
         }
 
         $this->identityMap->remove($id);
-        $this->identityMap->remove($client->getHash()->getId());
         $record->delete();
     }
 
-    public function get(Entity\ClientHash|Entity\ClientId $id): Entity\Client
+    public function get(Entity\ClientId $id): Entity\Client
     {
         if (empty($id->getId())) {
             throw new NotFoundException('Client does not exists');
@@ -130,37 +114,19 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
             return $this->identityMap->get($id->getId());
         }
 
-        $client = ($id instanceof Entity\ClientId) ? $this->getById($id) : $this->getByHash($id);
+        if (empty($record = Eloquent\Client::find($id->getId()))) {
+            throw new NotFoundException('Client does not exists');
+        }
+
+        $client = $this->hydrate($record);
         $this->identityMap->add($client->getId()->getId(), $client);
-        $this->identityMap->add($client->getHash()->getId(), $client);
         return $client;
-    }
-
-    private function getById(Entity\ClientId $id): Entity\Client
-    {
-        $record = Eloquent\Client::find($id->getId());
-        if (empty($record)) {
-            throw new NotFoundException('Client does not exists');
-        }
-
-        return $this->hydrate($record);
-    }
-
-    private function getByHash(Entity\ClientHash $id): Entity\Client
-    {
-        $record = Eloquent\Client::query()->where('hash', $id->getId())->first();
-        if (empty($record)) {
-            throw new NotFoundException('Client does not exists');
-        }
-
-        return $this->hydrate($record);
     }
 
     private function hydrate(Eloquent\Client $record): Entity\Client
     {
         return $this->hydrator->hydrate(Entity\Client::class, [
             'id' => new Entity\ClientId($record->id),
-            'hash' => new Entity\ClientHash($record->hash),
             'name' => new Entity\Name(
                 $record->firstname,
                 $record->lastname,

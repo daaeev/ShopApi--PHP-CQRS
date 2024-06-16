@@ -13,13 +13,9 @@ class CreateClientTest extends \PHPUnit\Framework\TestCase
 
     public function testCreate()
     {
-        $client = $this->makeClient(
-            $id = Entity\ClientId::random(),
-            $hash = Entity\ClientHash::random(),
-        );
+        $client = $this->makeClient($id = Entity\ClientId::random());
 
         $this->assertTrue($id->equalsTo($client->getId()));
-        $this->assertTrue($hash->equalsTo($client->getHash()));
         $this->assertNull($client->getName()->getFirstName());
         $this->assertNull($client->getName()->getLastName());
         $this->assertNull($client->getName()->getFullName());

@@ -11,7 +11,6 @@ class ClientEntity2DTOConverter
     {
         return new DTO\Client(
             $entity->getId()->getId(),
-            $entity->getHash()->getId(),
             $entity->getName()->getFirstName(),
             $entity->getName()->getLastName(),
             $entity->getContacts()->getPhone(),

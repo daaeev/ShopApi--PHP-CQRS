@@ -12,5 +12,5 @@ interface ClientsRepositoryInterface
 
     public function delete(Entity\Client $client): void;
 
-    public function get(Entity\ClientId|Entity\ClientHash $id): Entity\Client;
+    public function get(Entity\ClientId $id): Entity\Client;
 }

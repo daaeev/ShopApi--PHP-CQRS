@@ -9,15 +9,13 @@ use Project\Modules\Client\Api\Events\ClientCreated;
 class Client extends Aggregate
 {
     private ClientId $id;
-    private ClientHash $hash;
     private Name $name;
     private Contacts $contacts;
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
-    public function __construct(ClientId $id, ClientHash $hash) {
+    public function __construct(ClientId $id) {
         $this->id = $id;
-        $this->hash = $hash;
         $this->name = new Name;
         $this->contacts = new Contacts;
         $this->createdAt = new \DateTimeImmutable;
@@ -115,11 +113,6 @@ class Client extends Aggregate
     public function getId(): ClientId
     {
         return $this->id;
-    }
-
-    public function getHash(): ClientHash
-    {
-        return $this->hash;
     }
 
     public function getName(): Name

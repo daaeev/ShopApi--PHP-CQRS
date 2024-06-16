@@ -10,7 +10,6 @@ class ClientEloquent2DTOConverter
     public static function convert(Eloquent\Client $record): DTO\Client {
         return new DTO\Client(
             $record->id,
-            $record->hash,
             $record->firstname,
             $record->lastname,
             $record->phone,

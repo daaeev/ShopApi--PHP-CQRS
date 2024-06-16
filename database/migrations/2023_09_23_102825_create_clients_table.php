@@ -13,17 +13,10 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('hash')
-                ->nullable(false)
-                ->unique('unique-clients-hash');
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('phone')
-                ->nullable()
-                ->unique('unique-clients-phone');
-            $table->string('email')
-                ->nullable()
-                ->unique('unique-clients-email');
+            $table->string('phone')->nullable()->unique('unique-clients-phone');
+            $table->string('email')->nullable()->unique('unique-clients-email');
             $table->boolean('phone_confirmed')->default(false);
             $table->boolean('email_confirmed')->default(false);
             $table->timestamps();

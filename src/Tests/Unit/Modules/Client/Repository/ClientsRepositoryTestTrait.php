@@ -4,7 +4,6 @@ namespace Project\Tests\Unit\Modules\Client\Repository;
 
 use Project\Modules\Client\Entity\Name;
 use Project\Modules\Client\Entity\ClientId;
-use Project\Modules\Client\Entity\ClientHash;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\ClientFactory;
@@ -30,7 +29,6 @@ trait ClientsRepositoryTestTrait
         $found = $this->clients->get($initial->getId());
         $this->assertSame($initial, $found);
         $this->assertTrue($found->getId()->equalsTo($initial->getId()));
-        $this->assertTrue($found->getHash()->equalsTo($initial->getHash()));
         $this->assertTrue($found->getName()->equalsTo($name));
         $this->assertSame($found->getContacts()->getPhone(), $phone);
         $this->assertTrue($found->getContacts()->isPhoneConfirmed());
@@ -42,7 +40,7 @@ trait ClientsRepositoryTestTrait
 
     public function testAddIncrementIds()
     {
-        $client = $this->makeClient(ClientId::next(), ClientHash::random());
+        $client = $this->makeClient(ClientId::next());
         $this->clients->add($client);
         $this->assertNotNull($client->getId()->getId());
     }
@@ -50,19 +48,10 @@ trait ClientsRepositoryTestTrait
     public function testAddWithDuplicatedId()
     {
         $client = $this->generateClient();
-        $clientWithSameId = $this->makeClient($client->getId(), ClientHash::random());
+        $clientWithSameId = $this->makeClient($client->getId());
         $this->clients->add($client);
         $this->expectException(DuplicateKeyException::class);
         $this->clients->add($clientWithSameId);
-    }
-
-    public function testAddWithNotUniqueHash()
-    {
-        $client = $this->generateClient();
-        $clientWithNotUniqueHash = $this->makeClient(ClientId::next(), $client->getHash());
-        $this->clients->add($client);
-        $this->expectException(DuplicateKeyException::class);
-        $this->clients->add($clientWithNotUniqueHash);
     }
 
     public function testAddWithNotUniquePhone()
@@ -102,7 +91,6 @@ trait ClientsRepositoryTestTrait
         $added->updateEmail($email = $this->generateEmail());
         $added->confirmEmail();
         $added->updateName($name = new Name('FirstNameUpdated', 'LastNameUpdated'));
-        $hash = $added->getHash();
         $createdAt = $added->getCreatedAt();
         $updatedAt = $added->getUpdatedAt();
         $this->clients->update($added);
@@ -111,7 +99,6 @@ trait ClientsRepositoryTestTrait
         $this->assertSame($initial, $added);
         $this->assertSame($added, $updated);
         $this->assertTrue($updated->getName()->equalsTo($name));
-        $this->assertTrue($updated->getHash()->equalsTo($hash));
         $this->assertSame($updated->getContacts()->getPhone(), $phone);
         $this->assertTrue($updated->getContacts()->isPhoneConfirmed());
         $this->assertSame($updated->getContacts()->getEmail(), $email);
@@ -184,22 +171,13 @@ trait ClientsRepositoryTestTrait
         $initial = $this->generateClient();
         $this->clients->add($initial);
 
-        $foundedById = $this->clients->get($initial->getId());
-        $foundedByHash = $this->clients->get($initial->getHash());
-
-        $this->assertSame($initial, $foundedById);
-        $this->assertSame($initial, $foundedByHash);
+        $founded = $this->clients->get($initial->getId());
+        $this->assertSame($initial, $founded);
     }
 
     public function testGetByIdIfDoesNotExists()
     {
         $this->expectException(NotFoundException::class);
         $this->clients->get(ClientId::random());
-    }
-
-    public function testGetByHashIfDoesNotExists()
-    {
-        $this->expectException(NotFoundException::class);
-        $this->clients->get(ClientHash::random());
     }
 }

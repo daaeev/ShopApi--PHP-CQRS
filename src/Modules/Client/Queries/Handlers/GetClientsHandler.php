@@ -13,10 +13,6 @@ class GetClientsHandler
 
     public function __invoke(GetClientsQuery $query): array
     {
-        return $this->clients->list(
-            $query->page,
-            $query->limit,
-            $query->options,
-        )->toArray();
+        return $this->clients->list($query->page, $query->limit, $query->options)->toArray();
     }
 }
