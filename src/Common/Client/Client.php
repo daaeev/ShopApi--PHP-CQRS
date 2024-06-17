@@ -26,7 +26,7 @@ class Client
     public function same(self $other): bool
     {
         $sameHash = $this->hash === $other->hash;
-        $sameId = $this->id === $other->id;
-        return !empty($this->id) ? $sameId || $sameHash : $sameHash;
+        $sameId = !empty($this->id) && ($this->id === $other->id);
+        return $sameId || $sameHash;
     }
 }

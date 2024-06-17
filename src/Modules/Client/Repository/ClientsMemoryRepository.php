@@ -36,21 +36,17 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
 
     private function guardContactsUnique(Entity\Client $client): void
     {
+        if (empty($client->getContacts()->getPhone())) {
+            return;
+        }
+
         foreach ($this->items as $item) {
             if ($client->getId()->equalsTo($item->getId())) {
                 continue;
             }
 
-            if (!empty($client->getContacts()->getPhone())) {
-                if ($client->getContacts()->getPhone() === $item->getContacts()->getPhone()) {
-                    throw new DuplicateKeyException('Client with same phone already exists');
-                }
-            }
-
-            if (!empty($client->getContacts()->getEmail())) {
-                if ($client->getContacts()->getEmail() === $item->getContacts()->getEmail()) {
-                    throw new DuplicateKeyException('Client with same phone already exists');
-                }
+            if ($client->getContacts()->getPhone() === $item->getContacts()->getPhone()) {
+                throw new DuplicateKeyException('Client with same phone already exists');
             }
         }
     }

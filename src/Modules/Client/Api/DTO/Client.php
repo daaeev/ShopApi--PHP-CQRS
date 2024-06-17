@@ -10,7 +10,7 @@ class Client implements DTO
         public readonly int $id,
         public readonly ?string $firstName,
         public readonly ?string $lastName,
-        public readonly ?string $phone,
+        public readonly string $phone,
         public readonly ?string $email,
         public readonly bool $phoneConfirmed,
         public readonly bool $emailConfirmed,

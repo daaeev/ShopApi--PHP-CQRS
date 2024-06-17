@@ -14,10 +14,10 @@ class Client extends Aggregate
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
-    public function __construct(ClientId $id) {
+    public function __construct(ClientId $id, string $phone) {
         $this->id = $id;
         $this->name = new Name;
-        $this->contacts = new Contacts;
+        $this->contacts = new Contacts($phone);
         $this->createdAt = new \DateTimeImmutable;
         $this->addEvent(new ClientCreated($this));
     }
@@ -38,75 +38,25 @@ class Client extends Aggregate
         $this->addEvent(new ClientUpdated($this));
     }
 
-    public function updatePhone(?string $phone): void
-    {
-        if ($this->contacts->getPhone() === $phone) {
-            return;
-        }
-
-        $this->contacts = new Contacts(
-            $phone,
-            $this->contacts->getEmail(),
-            false,
-            $this->contacts->isEmailConfirmed(),
-        );
-
-        $this->updated();
-    }
-
     public function updateEmail(?string $email): void
     {
         if ($this->contacts->getEmail() === $email) {
             return;
         }
 
-        $this->contacts = new Contacts(
-            $this->contacts->getPhone(),
-            $email,
-            $this->contacts->isPhoneConfirmed(),
-            false,
-        );
-
+        $this->contacts = $this->contacts->updateEmail($email);
         $this->updated();
     }
 
     public function confirmPhone(): void
     {
-        if (!$this->contacts->getPhone()) {
-            throw new \DomainException('Client does not have phone number');
-        }
-
-        if ($this->contacts->isPhoneConfirmed()) {
-            throw new \DomainException('Client phone already confirmed');
-        }
-
-        $this->contacts = new Contacts(
-            $this->contacts->getPhone(),
-            $this->contacts->getEmail(),
-            true,
-            $this->contacts->isEmailConfirmed(),
-        );
-
+        $this->contacts = $this->contacts->confirmPhone();
         $this->updated();
     }
 
     public function confirmEmail(): void
     {
-        if (!$this->contacts->getEmail()) {
-            throw new \DomainException('Client does not have email');
-        }
-
-        if ($this->contacts->isEmailConfirmed()) {
-            throw new \DomainException('Client email already confirmed');
-        }
-
-        $this->contacts = new Contacts(
-            $this->contacts->getPhone(),
-            $this->contacts->getEmail(),
-            $this->contacts->isPhoneConfirmed(),
-            true
-        );
-
+        $this->contacts = $this->contacts->confirmEmail();
         $this->updated();
     }
 

@@ -11,23 +11,23 @@ class ClientContactsObjectTest extends \PHPUnit\Framework\TestCase
 
     public function testCreate()
     {
-        $contacts = new Contacts();
-        $this->assertNull($contacts->getPhone());
-        $this->assertNull($contacts->getEmail());
-        $this->assertFalse($contacts->isPhoneConfirmed());
-        $this->assertFalse($contacts->isEmailConfirmed());
-
         $contacts = new Contacts(
             $phone = $this->generatePhone(),
             $email = $this->generateEmail(),
-            true,
-            true
+            phoneConfirmed: true,
+            emailConfirmed: true
         );
 
-        $this->assertEquals($phone, $contacts->getPhone());
-        $this->assertEquals($email, $contacts->getEmail());
+        $this->assertSame($phone, $contacts->getPhone());
+        $this->assertSame($email, $contacts->getEmail());
         $this->assertTrue($contacts->isPhoneConfirmed());
         $this->assertTrue($contacts->isEmailConfirmed());
+    }
+
+    public function testCreateWithEmptyPhone()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new Contacts(phone: '');
     }
 
     public function testCreateWithInvalidPhone()
@@ -39,84 +39,88 @@ class ClientContactsObjectTest extends \PHPUnit\Framework\TestCase
     public function testCreateWithInvalidEmail()
     {
         $this->expectException(\DomainException::class);
-        new Contacts(email: 'test@test');
-    }
-
-    public function testCreateWithEmptyConfirmedPhone()
-    {
-        $this->expectException(\DomainException::class);
-        new Contacts(phoneConfirmed: true);
+        new Contacts(phone: $this->generatePhone(), email: 'test@test');
     }
 
     public function testCreateWithEmptyConfirmedEmail()
     {
         $this->expectException(\DomainException::class);
-        new Contacts(emailConfirmed: true);
+        new Contacts(phone: $this->generatePhone(), emailConfirmed: true);
     }
 
-    /**
-     * @dataProvider equalsContacts
-     */
-    public function testEquals(Contacts $contacts1, Contacts $contacts2)
+    public function testUpdateEmail()
     {
+        $contacts = new Contacts(
+            $this->generatePhone(),
+            $initialEmail = $this->generateEmail(),
+            emailConfirmed: true
+        );
+
+        $updated = $contacts->updateEmail($email = $this->generateEmail());
+        $this->assertSame($initialEmail, $contacts->getEmail());
+        $this->assertSame($email, $updated->getEmail());
+        $this->assertFalse($updated->isEmailConfirmed());
+    }
+
+    public function testUpdateEmailToInvalid()
+    {
+        $contacts = new Contacts($this->generatePhone(), $this->generateEmail(), emailConfirmed: true);
+        $this->expectException(\DomainException::class);
+        $contacts->updateEmail('test@test');
+    }
+
+    public function testConfirmPhone()
+    {
+        $contacts = new Contacts($this->generatePhone());
+        $updated = $contacts->confirmPhone();
+        $this->assertFalse($contacts->isPhoneConfirmed());
+        $this->assertTrue($updated->isPhoneConfirmed());
+    }
+
+    public function testConfirmPhoneIfPhoneAlreadyConfirmed()
+    {
+        $contacts = new Contacts($this->generatePhone(), phoneConfirmed: true);
+        $this->expectException(\DomainException::class);
+        $contacts->confirmPhone();
+    }
+
+    public function testConfirmEmail()
+    {
+        $contacts = new Contacts($this->generatePhone(), $this->generateEmail());
+        $updated = $contacts->confirmEmail();
+        $this->assertFalse($contacts->isEmailConfirmed());
+        $this->assertTrue($updated->isEmailConfirmed());
+    }
+
+    public function testConfirmEmptyEmail()
+    {
+        $contacts = new Contacts($this->generatePhone());
+        $this->expectException(\DomainException::class);
+        $contacts->confirmEmail();
+    }
+
+    public function testConfirmEmailIfEmailAlreadyConfirmed()
+    {
+        $contacts = new Contacts($this->generatePhone(), $this->generateEmail(), emailConfirmed: true);
+        $this->expectException(\DomainException::class);
+        $contacts->confirmEmail();
+    }
+
+    public function testEquals()
+    {
+        $contacts1 = new Contacts($this->generatePhone(), $this->generateEmail());
+        $contacts2 = new Contacts($contacts1->getPhone(), $contacts1->getEmail());
         $this->assertTrue($contacts1->equalsTo($contacts2));
     }
 
-    public static function equalsContacts(): array
+    public function testNotEquals()
     {
-        $phone = '+380123456789';
-        $email = 'testequals@gmail.com';
-        return [
-            [new Contacts, new Contacts],
-            [new Contacts($phone), new Contacts($phone)],
-            [new Contacts($phone, $email), new Contacts($phone, $email)],
-            [
-                new Contacts($phone, $email, true),
-                new Contacts($phone, $email, true)
-            ],
-            [
-                new Contacts($phone, $email, true, true),
-                new Contacts($phone, $email, true, true)
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider notEqualsContacts
-     */
-    public function testNotEquals(Contacts $contacts1, Contacts $contacts2)
-    {
+        $contacts1 = new Contacts($this->generatePhone(), $this->generateEmail());
+        $contacts2 = new Contacts($this->generatePhone(), $this->generateEmail());
         $this->assertFalse($contacts1->equalsTo($contacts2));
-    }
 
-    public static function notEqualsContacts(): array
-    {
-        $phone1 = '+380123456789';
-        $phone2 = '+380123456788';
-        $email1 = 'testequals1@gmail.com';
-        $email2 = 'testequals2@gmail.com';
-
-        return [
-            [new Contacts, new Contacts($phone1)],
-            [new Contacts($phone1), new Contacts($phone1, $email1)],
-            [new Contacts($phone1, $email1), new Contacts($phone1, $email2)],
-            [new Contacts($phone1, $email1), new Contacts($phone2, $email1)],
-            [
-                new Contacts($phone1, $email1),
-                new Contacts($phone1, $email1, true)
-            ],
-            [
-                new Contacts($phone1, $email1, true),
-                new Contacts($phone1, $email1, true, true)
-            ],
-            [
-                new Contacts($phone1, $email1, true, true),
-                new Contacts($phone1, $email1, false, true)
-            ],
-            [
-                new Contacts($phone1, $email1, true, true),
-                new Contacts($phone1, $email1, true, false)
-            ],
-        ];
+        $contacts1 = new Contacts($this->generatePhone(), $this->generateEmail());
+        $contacts2 = new Contacts($contacts1->getPhone(), $contacts1->getEmail(), phoneConfirmed: true);
+        $this->assertFalse($contacts1->equalsTo($contacts2));
     }
 }

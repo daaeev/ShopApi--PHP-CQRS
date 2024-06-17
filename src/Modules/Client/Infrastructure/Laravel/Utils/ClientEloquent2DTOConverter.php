@@ -17,9 +17,7 @@ class ClientEloquent2DTOConverter
             $record->phone_confirmed,
             $record->email_confirmed,
             new \DateTimeImmutable($record->created_at),
-            $record->updatedAt
-                ? new \DateTimeImmutable($record->updated_at)
-                : null
+            $record->updatedAt ? new \DateTimeImmutable($record->updated_at) : null
         );
     }
 }

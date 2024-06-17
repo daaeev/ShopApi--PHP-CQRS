@@ -9,62 +9,7 @@ use Project\Tests\Unit\Modules\Helpers\ContactsGenerator;
 
 class ClientContactsTest extends \PHPUnit\Framework\TestCase
 {
-    use ClientFactory, ContactsGenerator, AssertEvents;
-
-    public function testUpdatePhone()
-    {
-        $client = $this->generateClient();
-        $client->updatePhone($phone = $this->generatePhone());
-        $this->assertEquals($phone, $client->getContacts()->getPhone());
-        $this->assertNotEmpty($client->getUpdatedAt());
-        $this->assertEvents($client, [new ClientUpdated($client)]);
-    }
-
-    public function testUpdatePhoneToSame()
-    {
-        $client = $this->generateClient();
-        $client->updatePhone($phone = $this->generatePhone());
-        $client->flushEvents();
-        $updatedAt = $client->getUpdatedAt();
-
-        $client->updatePhone($phone);
-
-        $this->assertSame($updatedAt, $client->getUpdatedAt());
-        $this->assertEvents($client, []);
-    }
-
-    public function testUpdatePhoneToNull()
-    {
-        $client = $this->generateClient();
-        $client->updatePhone($this->generatePhone());
-        $client->updatePhone(null);
-        $this->assertNull($client->getContacts()->getPhone());
-    }
-
-    public function testUpdatePhoneIfAnotherContactsExists()
-    {
-        $client = $this->generateClient();
-        $client->updateEmail($email = $this->generateEmail());
-        $client->confirmEmail();
-
-        $client->updatePhone($phone = $this->generatePhone());
-
-        $this->assertEquals($email, $client->getContacts()->getEmail());
-        $this->assertTrue($client->getContacts()->isEmailConfirmed());
-        $this->assertEquals($phone, $client->getContacts()->getPhone());
-    }
-
-    public function testUpdatePhoneIfAnotherConfirmedPhoneExists()
-    {
-        $client = $this->generateClient();
-        $client->updatePhone($this->generatePhone());
-        $client->confirmPhone();
-
-        $client->updatePhone($phone = $this->generatePhone());
-
-        $this->assertEquals($phone, $client->getContacts()->getPhone());
-        $this->assertFalse($client->getContacts()->isPhoneConfirmed());
-    }
+    use ClientFactory, AssertEvents;
 
     public function testUpdateEmail()
     {
@@ -83,7 +28,6 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $updatedAt = $client->getUpdatedAt();
 
         $client->updateEmail($email);
-
         $this->assertSame($updatedAt, $client->getUpdatedAt());
         $this->assertEvents($client, []);
     }
@@ -93,18 +37,6 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $client->updateEmail($this->generateEmail());
         $client->updateEmail(null);
         $this->assertNull($client->getContacts()->getEmail());
-    }
-
-    public function testUpdateEmailIfAnotherContactsExists()
-    {
-        $client = $this->generateClient();
-        $client->updatePhone($phone = $this->generatePhone());
-        $client->confirmPhone();
-        $client->updateEmail($email = $this->generateEmail());
-
-        $this->assertEquals($phone, $client->getContacts()->getPhone());
-        $this->assertTrue($client->getContacts()->isPhoneConfirmed());
-        $this->assertEquals($email, $client->getContacts()->getEmail());
     }
 
     public function testUpdateEmailIfAnotherConfirmedEmailExists()
@@ -122,46 +54,20 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
     public function testConfirmPhone()
     {
         $client = $this->generateClient();
-        $client->updatePhone($this->generatePhone());
         $updatedAt = $client->getUpdatedAt();
 
         $client->confirmPhone();
-
         $this->assertNotSame($updatedAt, $client->getUpdatedAt());
         $this->assertTrue($client->getContacts()->isPhoneConfirmed());
     }
 
-    public function testConfirmPhoneIfClientDoesNotHavePhone()
-    {
-        $this->expectException(\DomainException::class);
-        $client = $this->generateClient();
-        $client->confirmPhone();
-    }
-
-    public function testConfirmPhoneIfAlreadyConfirmed()
+    public function testConfirmPhoneIfPhoneAlreadyConfirmed()
     {
         $client = $this->generateClient();
-        $client->updatePhone($this->generatePhone());
         $client->confirmPhone();
 
         $this->expectException(\DomainException::class);
         $client->confirmPhone();
-    }
-
-    public function testConfirmPhoneIfClientHasAnotherContacts()
-    {
-        $client = $this->generateClient();
-        $client->updateEmail($email = $this->generateEmail());
-        $client->confirmEmail();
-        $client->updatePhone($this->generatePhone());
-        $updatedAt = $client->getUpdatedAt();
-
-        $client->confirmPhone();
-
-        $this->assertEquals($email, $client->getContacts()->getEmail());
-        $this->assertTrue($client->getContacts()->isEmailConfirmed());
-        $this->assertNotSame($updatedAt, $client->getUpdatedAt());
-        $this->assertTrue($client->getContacts()->isPhoneConfirmed());
     }
 
     public function testConfirmEmail()
@@ -171,7 +77,6 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
         $updatedAt = $client->getUpdatedAt();
 
         $client->confirmEmail();
-
         $this->assertNotSame($updatedAt, $client->getUpdatedAt());
         $this->assertTrue($client->getContacts()->isEmailConfirmed());
     }
@@ -191,21 +96,5 @@ class ClientContactsTest extends \PHPUnit\Framework\TestCase
 
         $this->expectException(\DomainException::class);
         $client->confirmEmail();
-    }
-
-    public function testConfirmEmailIfClientHasAnotherContacts()
-    {
-        $client = $this->generateClient();
-        $client->updatePhone($phone = $this->generatePhone());
-        $client->confirmPhone();
-        $client->updateEmail($this->generateEmail());
-        $updatedAt = $client->getUpdatedAt();
-
-        $client->confirmEmail();
-
-        $this->assertEquals($phone, $client->getContacts()->getPhone());
-        $this->assertTrue($client->getContacts()->isPhoneConfirmed());
-        $this->assertNotSame($updatedAt, $client->getUpdatedAt());
-        $this->assertTrue($client->getContacts()->isEmailConfirmed());
     }
 }

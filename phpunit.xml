@@ -9,22 +9,31 @@
         <testsuite name="ProjectUnitCommonEntities">
             <directory suffix="Test.php">./src/Tests/Unit/Entity</directory>
         </testsuite>
-        <!--MessageBuses-->
-        <testsuite name="ProjectUnitMessageBuses">
-            <directory suffix="Test.php">./src/Tests/Unit/MessageBuses</directory>
+        <!--Environment-->
+        <testsuite name="ProjectUnitEnvironment">
+            <directory suffix="Test.php">./src/Tests/Unit/Environment</directory>
         </testsuite>
         <!--Events-->
         <testsuite name="ProjectUnitEvents">
             <directory suffix="Test.php">./src/Tests/Unit/Events</directory>
         </testsuite>
-        <!--Utils-->
-        <testsuite name="ProjectUnitUtils">
-            <directory suffix="Test.php">./src/Tests/Unit/Utils</directory>
+        <!--MessageBuses-->
+        <testsuite name="ProjectUnitMessageBuses">
+            <directory suffix="Test.php">./src/Tests/Unit/MessageBuses</directory>
+        </testsuite>
+        <!--Repositories-->
+        <testsuite name="ProjectUnitRepositories">
+            <directory suffix="Test.php">./src/Tests/Unit/Repositories</directory>
         </testsuite>
         <!--Services/FileManager-->
         <testsuite name="ProjectUnitFileManager">
             <directory suffix="Test.php">./src/Tests/Unit/Services/FileManager</directory>
         </testsuite>
+        <!--Utils-->
+        <testsuite name="ProjectUnitUtils">
+            <directory suffix="Test.php">./src/Tests/Unit/Utils</directory>
+        </testsuite>
+
         <!--Modules/Catalogue/Product-->
         <testsuite name="ProjectUnitProduct">
             <directory suffix="Test.php">./src/Tests/Unit/Modules/Product</directory>

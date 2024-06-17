@@ -19,7 +19,7 @@ trait ClientsRepositoryTestTrait
     public function testAdd()
     {
         $initial = $this->generateClient();
-        $initial->updatePhone($phone = $this->generatePhone());
+        $phone = $initial->getContacts()->getPhone();
         $initial->confirmPhone();
         $initial->updateEmail($email = $this->generateEmail());
         $initial->confirmEmail();
@@ -40,7 +40,7 @@ trait ClientsRepositoryTestTrait
 
     public function testAddIncrementIds()
     {
-        $client = $this->makeClient(ClientId::next());
+        $client = $this->makeClient(ClientId::next(), $this->generatePhone());
         $this->clients->add($client);
         $this->assertNotNull($client->getId()->getId());
     }
@@ -48,7 +48,7 @@ trait ClientsRepositoryTestTrait
     public function testAddWithDuplicatedId()
     {
         $client = $this->generateClient();
-        $clientWithSameId = $this->makeClient($client->getId());
+        $clientWithSameId = $this->makeClient($client->getId(), $this->generatePhone());
         $this->clients->add($client);
         $this->expectException(DuplicateKeyException::class);
         $this->clients->add($clientWithSameId);
@@ -57,12 +57,9 @@ trait ClientsRepositoryTestTrait
     public function testAddWithNotUniquePhone()
     {
         $client = $this->generateClient();
-        $client->updatePhone($this->generatePhone());
         $this->clients->add($client);
 
-        $clientWithNotUniquePhone = $this->generateClient();
-        $clientWithNotUniquePhone->updatePhone($client->getContacts()->getPhone());
-
+        $clientWithNotUniquePhone = $this->makeClient(ClientId::next(), $client->getContacts()->getPhone());
         $this->expectException(DuplicateKeyException::class);
         $this->clients->add($clientWithNotUniquePhone);
     }
@@ -76,7 +73,7 @@ trait ClientsRepositoryTestTrait
         $clientWithNotUniqueEmail = $this->generateClient();
         $clientWithNotUniqueEmail->updateEmail($client->getContacts()->getEmail());
 
-        $this->expectException(DuplicateKeyException::class);
+        $this->expectNotToPerformAssertions();
         $this->clients->add($clientWithNotUniqueEmail);
     }
 
@@ -86,7 +83,7 @@ trait ClientsRepositoryTestTrait
         $this->clients->add($initial);
 
         $added = $this->clients->get($initial->getId());
-        $added->updatePhone($phone = $this->generatePhone());
+        $phone = $initial->getContacts()->getPhone();
         $added->confirmPhone();
         $added->updateEmail($email = $this->generateEmail());
         $added->confirmEmail();
@@ -122,34 +119,6 @@ trait ClientsRepositoryTestTrait
         $this->expectNotToPerformAssertions();
     }
 
-    public function testUpdateWithNotUniquePhone()
-    {
-        $client = $this->generateClient();
-        $client->updatePhone($this->generatePhone());
-        $this->clients->add($client);
-
-        $clientWithNotUniquePhone = $this->generateClient();
-        $this->clients->add($clientWithNotUniquePhone);
-        $clientWithNotUniquePhone->updatePhone($client->getContacts()->getPhone());
-
-        $this->expectException(DuplicateKeyException::class);
-        $this->clients->update($clientWithNotUniquePhone);
-    }
-
-    public function testUpdateWithNotUniqueEmail()
-    {
-        $client = $this->generateClient();
-        $client->updateEmail($this->generateEmail());
-        $this->clients->add($client);
-
-        $clientWithNotUniqueEmail = $this->generateClient();
-        $this->clients->add($clientWithNotUniqueEmail);
-        $clientWithNotUniqueEmail->updateEmail($client->getContacts()->getEmail());
-
-        $this->expectException(DuplicateKeyException::class);
-        $this->clients->update($clientWithNotUniqueEmail);
-    }
-
     public function testDelete()
     {
         $client = $this->generateClient();
@@ -175,7 +144,7 @@ trait ClientsRepositoryTestTrait
         $this->assertSame($initial, $founded);
     }
 
-    public function testGetByIdIfDoesNotExists()
+    public function testGetIfDoesNotExists()
     {
         $this->expectException(NotFoundException::class);
         $this->clients->get(ClientId::random());

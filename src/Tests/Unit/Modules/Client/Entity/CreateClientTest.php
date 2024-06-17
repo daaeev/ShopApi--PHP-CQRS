@@ -13,7 +13,10 @@ class CreateClientTest extends \PHPUnit\Framework\TestCase
 
     public function testCreate()
     {
-        $client = $this->makeClient($id = Entity\ClientId::random());
+        $client = $this->makeClient(
+            $id = Entity\ClientId::random(),
+            $phone = $this->generatePhone()
+        );
 
         $this->assertTrue($id->equalsTo($client->getId()));
         $this->assertNull($client->getName()->getFirstName());
@@ -21,7 +24,7 @@ class CreateClientTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($client->getName()->getFullName());
         $this->assertFalse($client->getContacts()->isPhoneConfirmed());
         $this->assertFalse($client->getContacts()->isEmailConfirmed());
-        $this->assertNull($client->getContacts()->getPhone());
+        $this->assertSame($phone, $client->getContacts()->getPhone());
         $this->assertNull($client->getContacts()->getEmail());
         $this->assertNotEmpty($client->getCreatedAt());
         $this->assertNull($client->getUpdatedAt());

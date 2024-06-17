@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('phone')->nullable()->unique('unique-clients-phone');
-            $table->string('email')->nullable()->unique('unique-clients-email');
+            $table->string('phone')->nullable(false)->unique('unique-clients-phone');
+            $table->string('email')->nullable();
             $table->boolean('phone_confirmed')->default(false);
             $table->boolean('email_confirmed')->default(false);
             $table->timestamps();

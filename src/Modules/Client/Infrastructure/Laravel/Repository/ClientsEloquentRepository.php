@@ -52,26 +52,17 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
 
     private function guardContactsUnique(Entity\Client $client): void
     {
-        if (!empty($client->getContacts()->getPhone())) {
-            $phoneNotUnique = Eloquent\Client::query()
-                ->where('phone', $client->getContacts()->getPhone())
-                ->where('id', '!=', $client->getId()->getId())
-                ->exists();
-
-            if ($phoneNotUnique) {
-                throw new DuplicateKeyException('Client with same phone already exists');
-            }
+        if (empty($client->getContacts()->getPhone())) {
+            return;
         }
 
-        if (!empty($client->getContacts()->getEmail())) {
-            $emailNotUnique = Eloquent\Client::query()
-                ->where('email', $client->getContacts()->getEmail())
-                ->where('id', '!=', $client->getId()->getId())
-                ->exists();
+        $phoneNotUnique = Eloquent\Client::query()
+            ->where('phone', $client->getContacts()->getPhone())
+            ->where('id', '!=', $client->getId()->getId())
+            ->exists();
 
-            if ($emailNotUnique) {
-                throw new DuplicateKeyException('Client with same email already exists');
-            }
+        if ($phoneNotUnique) {
+            throw new DuplicateKeyException('Client with same phone already exists');
         }
     }
 
