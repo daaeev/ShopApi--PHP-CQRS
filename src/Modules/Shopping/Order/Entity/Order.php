@@ -14,6 +14,7 @@ use Project\Modules\Shopping\Api\Events\Orders\OrderCreated;
 use Project\Modules\Shopping\Api\Events\Orders\OrderUpdated;
 use Project\Modules\Shopping\Api\Events\Orders\OrderDeleted;
 use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryInfo;
+use Project\Modules\Shopping\Api\Events\Orders\OrderCompleted;
 
 class Order extends Aggregate
 {
@@ -207,6 +208,10 @@ class Order extends Aggregate
         }
 
         $this->status = $status;
+        if (OrderStatus::COMPLETED === $status) {
+            $this->addEvent(new OrderCompleted($this));
+        }
+
         $this->updated();
     }
 

@@ -16,11 +16,7 @@ class LaravelStorage implements FileStorageInterface
     public function save(File $file, string $to): File
     {
         $this->storage->put($to, $file->content);
-        return new File(
-            $this->storage->path($to),
-            $file->fileName,
-            $file->content
-        );
+        return new File($this->storage->path($to), $file->fileName, $file->content);
     }
 
     public function delete(string $filePath): void

@@ -13,6 +13,7 @@ use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Order\Entity\PaymentStatus;
 use Project\Modules\Shopping\Api\Events\Orders\OrderUpdated;
 use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryInfo;
+use Project\Modules\Shopping\Api\Events\Orders\OrderCompleted;
 use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryService;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 
@@ -151,6 +152,13 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(OrderStatus::IN_PROGRESS, $order->getStatus());
         $this->assertNotSame($oldUpdatedAt, $order->getUpdatedAt());
         $this->assertEvents($order, [new OrderUpdated($order)]);
+    }
+
+    public function testUpdateOrderStatusToCompleted()
+    {
+        $order = $this->generateOrder([$this->generateOffer()]);
+        $order->updateStatus(OrderStatus::COMPLETED);
+        $this->assertEvents($order, [new OrderCompleted($order), new OrderUpdated($order)]);
     }
 
     public function testUpdateOrderStatusIfOrderCompleted()
