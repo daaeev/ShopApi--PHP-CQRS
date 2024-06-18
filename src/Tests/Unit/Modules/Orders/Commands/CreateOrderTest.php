@@ -13,6 +13,7 @@ use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Modules\Shopping\Order\Entity\OrderId;
 use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Events\Event;
+use Project\Modules\Shopping\Adapters\ClientsService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Api\DTO\Order\DeliveryInfo;
 use Project\Tests\Unit\Modules\Helpers\ContactsGenerator;
@@ -35,17 +36,19 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
     private readonly OrdersRepositoryInterface $orders;
     private readonly CartsRepositoryInterface $carts;
     private readonly EnvironmentInterface $environment;
+    private readonly ClientsService $clients;
     private readonly OfferBuilder $offerBuilder;
     private readonly DiscountsService $discountsService;
     private readonly MessageBusInterface $eventBus;
 
     private readonly OrderId $orderId;
     private readonly Client $client;
+    private readonly Client $orderClient;
     private readonly Cart $cart;
     private readonly Offer $offer;
     private readonly Offer $offerWithNullId;
     private readonly Promocode $promo;
-    private readonly Event $event;
+    private readonly Event $cartDeletedEvent;
 
     protected function setUp(): void
     {
@@ -54,6 +57,10 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
         $this->orders = $this->getMockBuilder(OrdersRepositoryInterface::class)->getMock();
         $this->carts = $this->getMockBuilder(CartsRepositoryInterface::class)->getMock();
         $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
+        $this->clients = $this->getMockBuilder(ClientsService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->offerBuilder = $this->getMockBuilder(OfferBuilder::class)->getMock();
         $this->discountsService = $this->getMockBuilder(DiscountsService::class)
             ->disableOriginalConstructor()
@@ -63,6 +70,10 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
 
         $this->orderId = OrderId::random();
         $this->client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->orderClient = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -82,7 +93,7 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->event = $this->getMockBuilder(Event::class)->getMock();
+        $this->cartDeletedEvent = $this->getMockBuilder(Event::class)->getMock();
     }
 
     public function testCreate()
@@ -113,6 +124,13 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
             ->method('build')
             ->willReturn($this->offerWithNullId);
 
+        $command = $this->getCommand();
+
+        $this->clients->expects($this->once())
+            ->method('findClient')
+            ->with($command->firstName, $command->lastName, $command->phone, $command->email)
+            ->willReturn($this->orderClient);
+
         $this->discountsService->expects($this->once())
             ->method('applyDiscounts')
             ->with([$this->offerWithNullId, $this->offerWithNullId])
@@ -133,12 +151,11 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
         $this->cart->expects($this->once())->method('delete');
         $this->carts->expects($this->once())->method('delete');
 
-        $command = $this->getCommand();
         $this->mockRepositoryAddMethod($command);
 
         $this->cart->expects($this->once())
             ->method('flushEvents')
-            ->willReturn([$this->event]);
+            ->willReturn([$this->cartDeletedEvent]);
 
         $this->mockDispatcherCalls();
 
@@ -146,6 +163,7 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
             $this->orders,
             $this->carts,
             $this->environment,
+            $this->clients,
             $this->discountsService,
             $this->offerBuilder,
         );
@@ -178,7 +196,7 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
         $this->orders->expects($this->once())
             ->method('add')
             ->with($this->callback(function (Order $order) use ($command) {
-                $this->assertSame($this->client, $order->getClient()->getClient());
+                $this->assertSame($this->orderClient, $order->getClient()->getClient());
                 $this->assertSame($command->firstName, $order->getClient()->getFirstName());
                 $this->assertSame($command->lastName, $order->getClient()->getLastName());
                 $this->assertSame($command->phone, $order->getClient()->getPhone());
@@ -207,7 +225,7 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
             ->method('dispatch')
             ->with($this->callback(function (Event $event) use (&$eventNum) {
                 $eventsMap = [
-                    $this->event::class,
+                    $this->cartDeletedEvent::class,
                     OrderCreated::class,
                     OrderUpdated::class,
                 ];

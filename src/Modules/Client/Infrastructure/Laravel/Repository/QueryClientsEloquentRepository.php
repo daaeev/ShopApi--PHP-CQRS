@@ -21,6 +21,16 @@ class QueryClientsEloquentRepository implements QueryClientsRepositoryInterface
         return ClientEloquent2DTOConverter::convert($record);
     }
 
+    public function getByPhone(string $phone): DTO\Client
+    {
+        $record = Eloquent\Client::query()->where('phone', $phone)->first();
+        if (empty($record)) {
+            throw new NotFoundException('Client does not exists');
+        }
+
+        return ClientEloquent2DTOConverter::convert($record);
+    }
+
     public function list(int $page, int $limit, array $options = []): PaginatedCollection
     {
         $query = Eloquent\Client::query()

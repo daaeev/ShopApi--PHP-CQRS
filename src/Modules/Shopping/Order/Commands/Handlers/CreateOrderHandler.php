@@ -6,6 +6,7 @@ use Project\Common\Utils\PhoneHelper;
 use Project\Modules\Shopping\Order\Entity;
 use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Shopping\Adapters\ClientsService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Order\Commands\CreateOrderCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
@@ -21,6 +22,7 @@ class CreateOrderHandler implements DispatchEventsInterface
         private readonly OrdersRepositoryInterface $orders,
         private readonly CartsRepositoryInterface $carts,
         private readonly EnvironmentInterface $environment,
+        private readonly ClientsService $clients,
         private readonly DiscountsService $discountsService,
         private readonly OfferBuilder $offerBuilder,
     ) {}
@@ -30,15 +32,22 @@ class CreateOrderHandler implements DispatchEventsInterface
         $client = $this->environment->getClient();
         $cart = $this->carts->getByClient($client);
 
-        $offers = [];
+        $orderOffers = [];
         foreach ($cart->getOffers() as $offer) {
-            $offers[] = $this->offerBuilder->from($offer)->withNullableId()->build();
+            $orderOffers[] = $this->offerBuilder->from($offer)->withNullableId()->build();
         }
+
+        $orderClient = $this->clients->findClient(
+            $command->firstName,
+            $command->lastName,
+            $command->phone,
+            $command->email
+        );
 
         $order = new Entity\Order(
             id: Entity\OrderId::next(),
             client: new Entity\ClientInfo(
-                client: $client,
+                client: $orderClient,
                 firstName: $command->firstName,
                 lastName: $command->lastName,
                 phone: PhoneHelper::normalize($command->phone),
@@ -51,7 +60,7 @@ class CreateOrderHandler implements DispatchEventsInterface
                 street: $command->delivery->street,
                 houseNumber: $command->delivery->houseNumber,
             ),
-            offers: $this->discountsService->applyDiscounts($offers),
+            offers: $this->discountsService->applyDiscounts($orderOffers),
             currency: $cart->getCurrency()
         );
 
