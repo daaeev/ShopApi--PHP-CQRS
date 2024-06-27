@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Commands;
 
-class DeleteAdminCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class DeleteAdminCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $id,

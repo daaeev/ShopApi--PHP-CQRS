@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Client\Queries;
 
-class GetClientsQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class GetClientsQuery implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $page,

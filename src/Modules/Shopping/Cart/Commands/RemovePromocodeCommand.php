@@ -2,6 +2,8 @@
 
 namespace Project\Modules\Shopping\Cart\Commands;
 
-class RemovePromocodeCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class RemovePromocodeCommand implements ApplicationMessageInterface
 {
 }

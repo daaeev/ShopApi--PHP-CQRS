@@ -6,6 +6,7 @@ use Psr\Container\ContainerInterface;
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Tests\Unit\MessageBuses\Handlers\CallableHandler;
 use Project\Common\ApplicationMessages\Buses\EventBus;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
 class EventBusTest extends \PHPUnit\Framework\TestCase
 {
@@ -19,9 +20,7 @@ class EventBusTest extends \PHPUnit\Framework\TestCase
     public function testDispatchEvent()
     {
         $event = $this->getMockBuilder(Event::class)->getMock();
-        $handlerMock = $this->getMockBuilder(CallableHandler::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $handlerMock = $this->getMockBuilder(CallableHandler::class)->getMock();
 
         $handlerMock->expects($this->once())
             ->method('__invoke')
@@ -36,37 +35,9 @@ class EventBusTest extends \PHPUnit\Framework\TestCase
         $eventBus->dispatch($event);
     }
 
-    public function testDispatchEventWithManyHandlers()
-    {
-        $event = $this->getMockBuilder(Event::class)->getMock();
-        $firstHandlerMock = $this->getMockBuilder(CallableHandler::class)
-            ->getMock();
-
-        $firstHandlerMock->expects($this->once())
-            ->method('__invoke')
-            ->with($event);
-
-        $secondHandlerMock = $this->getMockBuilder(CallableHandler::class)
-            ->getMock();
-
-        $secondHandlerMock->expects($this->once())
-            ->method('__invoke')
-            ->with($event);
-
-        $this->container->expects($this->exactly(2))
-            ->method('get')
-            ->willReturnOnConsecutiveCalls($firstHandlerMock, $secondHandlerMock);
-
-        $eventBus = new EventBus(
-            [$event::class => [$firstHandlerMock::class, $secondHandlerMock::class]],
-            $this->container
-        );
-        $eventBus->dispatch($event);
-    }
-
     public function testDispatchNotEventObject()
     {
-        $event = new \stdClass;
+        $event = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $eventBus = new EventBus([], $this->container);
         $this->expectException(\InvalidArgumentException::class);
         $eventBus->dispatch($event);
@@ -77,6 +48,28 @@ class EventBusTest extends \PHPUnit\Framework\TestCase
         $this->expectNotToPerformAssertions();
         $event = $this->getMockBuilder(Event::class)->getMock();
         $eventBus = new EventBus([], $this->container);
+        $eventBus->dispatch($event);
+    }
+
+    public function testDispatchEventWithManyHandlers()
+    {
+        $event = $this->getMockBuilder(Event::class)->getMock();
+        $handlerMock = $this->getMockBuilder(CallableHandler::class)->getMock();
+
+        $handlerMock->expects($this->exactly(2))
+            ->method('__invoke')
+            ->with($event);
+
+        $this->container->expects($this->exactly(2))
+            ->method('get')
+            ->with($handlerMock::class)
+            ->willReturn($handlerMock);
+
+        $eventBus = new EventBus(
+            [$event::class => [$handlerMock::class, $handlerMock::class]],
+            $this->container
+        );
+
         $eventBus->dispatch($event);
     }
 

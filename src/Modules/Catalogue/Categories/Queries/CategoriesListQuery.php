@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Catalogue\Categories\Queries;
 
-class CategoriesListQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class CategoriesListQuery implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $page,

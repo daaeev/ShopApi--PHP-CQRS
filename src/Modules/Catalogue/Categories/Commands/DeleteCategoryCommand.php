@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Catalogue\Categories\Commands;
 
-class DeleteCategoryCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class DeleteCategoryCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $id,

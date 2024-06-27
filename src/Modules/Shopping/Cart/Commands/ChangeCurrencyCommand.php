@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Cart\Commands;
 
-class ChangeCurrencyCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class ChangeCurrencyCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly string $currency

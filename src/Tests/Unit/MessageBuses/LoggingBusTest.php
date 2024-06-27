@@ -5,13 +5,14 @@ namespace Project\Tests\Unit\MessageBuses;
 use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 use Project\Common\ApplicationMessages\Buses\Decorators\LoggingBusDecorator;
 
 class LoggingBusTest extends TestCase
 {
     public function testDispatch()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $decoratedBusMock = $this->getMockBuilder(CompositeRequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -25,11 +26,7 @@ class LoggingBusTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $message = 'Dispatch message: '
-            . $command::class
-            . ' with params '
-            . json_encode(get_object_vars($command));
-
+        $message = 'Dispatch message: ' . $command::class . ' with params ' . json_encode(get_object_vars($command));
         $loggerMock->expects($this->once())
             ->method('info')
             ->with($message);

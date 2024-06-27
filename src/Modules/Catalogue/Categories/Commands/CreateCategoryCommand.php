@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Catalogue\Categories\Commands;
 
-class CreateCategoryCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class CreateCategoryCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly string $name,

@@ -2,14 +2,16 @@
 
 namespace Project\Common\ApplicationMessages\Buses;
 
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
 abstract class AbstractCompositeMessageBus implements MessageBusInterface
 {
     protected array $buses = [];
 
-    public function canDispatch(object $request): bool
+    public function canDispatch(ApplicationMessageInterface $message): bool
     {
         foreach ($this->buses as $bus) {
-            if ($bus->canDispatch($request)) {
+            if ($bus->canDispatch($message)) {
                 return true;
             }
         }
@@ -22,5 +24,5 @@ abstract class AbstractCompositeMessageBus implements MessageBusInterface
         $this->buses[] = $bus;
     }
 
-    abstract public function dispatch(object $request);
+    abstract public function dispatch(ApplicationMessageInterface $message);
 }

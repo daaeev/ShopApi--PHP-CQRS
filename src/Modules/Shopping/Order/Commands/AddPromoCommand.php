@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Order\Commands;
 
-class AddPromoCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class AddPromoCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int|string $id,

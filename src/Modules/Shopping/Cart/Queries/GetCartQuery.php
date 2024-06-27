@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Cart\Queries;
 
-class GetCartQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class GetCartQuery implements ApplicationMessageInterface
 {
 
 }

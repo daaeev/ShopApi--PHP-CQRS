@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Commands;
 
-class AddPromotionDiscountCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class AddPromotionDiscountCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $id,

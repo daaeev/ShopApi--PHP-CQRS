@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Catalogue\Product\Queries;
 
-class GetProductQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class GetProductQuery implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $id

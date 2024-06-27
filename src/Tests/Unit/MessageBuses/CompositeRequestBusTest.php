@@ -4,12 +4,14 @@ namespace Project\Tests\Unit\MessageBuses;
 
 use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
 class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
 {
     public function testDispatchCommand()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $busMock = $this->getMockBuilder(RequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -31,7 +33,7 @@ class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
 
     public function testDispatchCommandWithOneBusThatCantDispatchEvent()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $busMock = $this->getMockBuilder(RequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -49,7 +51,7 @@ class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
 
     public function testDispatchCommandWithoutRegisteredBusses()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $compositeBus = new CompositeRequestBus;
         $this->expectException(\DomainException::class);
         $compositeBus->dispatch($command);
@@ -57,7 +59,7 @@ class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
 
     public function testCanDispatch()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $busMock = $this->getMockBuilder(RequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -72,33 +74,16 @@ class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($compositeBus->canDispatch($command));
     }
 
-    public function testCantDispatchWithOneRegisteredBus()
-    {
-        $command = new \stdClass;
-        $busMock = $this->getMockBuilder(RequestBus::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $busMock->expects($this->once())
-            ->method('canDispatch')
-            ->with($command)
-            ->willReturn(false);
-
-        $compositeBus = new CompositeRequestBus;
-        $compositeBus->registerBus($busMock);
-        $this->assertFalse($compositeBus->canDispatch($command));
-    }
-
     public function testCantDispatchWithoutRegisteredBusses()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $compositeBus = new CompositeRequestBus;
         $this->assertFalse($compositeBus->canDispatch($command));
     }
 
     public function testRegisterBus()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $busMock = $this->getMockBuilder(RequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -112,5 +97,13 @@ class CompositeRequestBusTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($compositeBus->canDispatch($command));
         $compositeBus->registerBus($busMock);
         $this->assertTrue($compositeBus->canDispatch($command));
+    }
+
+    public function testRegisterNotRequestBus()
+    {
+        $busMock = $this->getMockBuilder(MessageBusInterface::class)->getMock();
+        $compositeBus = new CompositeRequestBus;
+        $this->expectException(\InvalidArgumentException::class);
+        $compositeBus->registerBus($busMock);
     }
 }

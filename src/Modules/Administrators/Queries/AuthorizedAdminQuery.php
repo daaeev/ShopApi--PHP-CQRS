@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Queries;
 
-class AuthorizedAdminQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class AuthorizedAdminQuery implements ApplicationMessageInterface
 {
 
 }

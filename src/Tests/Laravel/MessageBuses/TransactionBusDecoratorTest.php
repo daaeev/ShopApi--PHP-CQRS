@@ -4,13 +4,14 @@ namespace Project\Tests\Laravel\MessageBuses;
 
 use Illuminate\Support\Facades\DB;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 use Project\Infrastructure\Laravel\ApplicationMessages\Buses\Decorators\TransactionBusDecorator;
 
 class TransactionBusDecoratorTest extends \Tests\TestCase
 {
     public function testCheckThatTransactionStartedAndCommitted()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $decoratedMock = $this->getMockBuilder(CompositeRequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -29,7 +30,7 @@ class TransactionBusDecoratorTest extends \Tests\TestCase
 
     public function testCheckThatTransactionRollBackAfterException()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $decoratedMock = $this->getMockBuilder(CompositeRequestBus::class)
             ->disableOriginalConstructor()
             ->getMock();

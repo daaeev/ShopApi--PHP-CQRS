@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Order\Queries;
 
-class GetOrdersQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class GetOrdersQuery implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $page = 1,

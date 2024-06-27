@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\ReadOnly;
 
-use MichaelAChrisco\ReadOnly\ReadOnlyTrait;
 use Illuminate\Database\Eloquent\Model;
+use MichaelAChrisco\ReadOnly\ReadOnlyTrait;
 
 class ReadOnlyModel extends Model
 {

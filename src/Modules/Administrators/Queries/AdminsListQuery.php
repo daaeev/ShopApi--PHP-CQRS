@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Queries;
 
-class AdminsListQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class AdminsListQuery implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $page,

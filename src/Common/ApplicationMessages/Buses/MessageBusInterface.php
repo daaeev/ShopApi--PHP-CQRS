@@ -2,9 +2,11 @@
 
 namespace Project\Common\ApplicationMessages\Buses;
 
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
 interface MessageBusInterface
 {
-    public function dispatch(object $request);
+    public function dispatch(ApplicationMessageInterface $message);
 
-    public function canDispatch(object $request): bool;
+    public function canDispatch(ApplicationMessageInterface $message): bool;
 }

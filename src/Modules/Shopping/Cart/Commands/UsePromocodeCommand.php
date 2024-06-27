@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Cart\Commands;
 
-class UsePromocodeCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class UsePromocodeCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly string $promocode

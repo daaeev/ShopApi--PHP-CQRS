@@ -6,6 +6,7 @@ use Psr\Container\ContainerInterface;
 use Project\Tests\Unit\MessageBuses\Handlers\ServiceHandler;
 use Project\Tests\Unit\MessageBuses\Handlers\CallableHandler;
 use Project\Common\ApplicationMessages\Buses\RequestBus;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
 class RequestBusTest extends \PHPUnit\Framework\TestCase
 {
@@ -18,7 +19,7 @@ class RequestBusTest extends \PHPUnit\Framework\TestCase
 
     public function testDispatchCommandWithCallableHandler()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $handlerMock = $this->getMockBuilder(CallableHandler::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -37,9 +38,9 @@ class RequestBusTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('Success', $requestBus->dispatch($command));
     }
 
-    public function testDispatchCommandWithServiceHandler()
+    public function testDispatchCommandWithServiceMethodHandler()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $handlerMock = $this->getMockBuilder(ServiceHandler::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -64,76 +65,48 @@ class RequestBusTest extends \PHPUnit\Framework\TestCase
 
     public function testDispatchCommandWithoutRegisteredHandlers()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $requestBus = new RequestBus([], $this->container);
         $this->expectException(\DomainException::class);
         $requestBus->dispatch($command);
     }
 
-    public function testDispatchCommandWithUndefinedCallableHandlerClass()
+    public function testDispatchCommandWithUndefinedCallableHandler()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $requestBus = new RequestBus([$command::class => 'Undefined'], $this->container);
         $this->expectException(\DomainException::class);
         $requestBus->dispatch($command);
     }
 
-    public function testDispatchCommandWithUndefinedServiceHandlerClass()
+    public function testDispatchCommandWithUndefinedServiceClass()
     {
-        $command = new \stdClass;
-        $requestBus = new RequestBus(
-            [$command::class => ['Undefined', 'handle']],
-            $this->container
-        );
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
+        $requestBus = new RequestBus([$command::class => ['Undefined', 'handle']], $this->container);
         $this->expectException(\DomainException::class);
         $requestBus->dispatch($command);
     }
 
-    public function testDispatchCommandWithUndefinedServiceHandlerMethod()
+    public function testDispatchCommandWithUndefinedServiceMethod()
     {
-        $command = new \stdClass;
-        $handler = new CallableHandler;
-
-        $this->container->expects($this->once())
-            ->method('get')
-            ->with(CallableHandler::class)
-            ->willReturn($handler);
-
-        $requestBus = new RequestBus(
-            [$command::class => [$handler::class, 'undefined']],
-            $this->container
-        );
-
-        $this->expectException(\DomainException::class);
-        $requestBus->dispatch($command);
-    }
-
-    public function testDispatchEventWithNonCallableHandler()
-    {
-        $command = new \stdClass;
-        $handler = new \stdClass;
-
-        $this->container->expects($this->once())
-            ->method('get')
-            ->with($handler::class)
-            ->willReturn($handler);
-
-        $requestBus = new RequestBus([$command::class => $handler::class], $this->container);
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
+        $handler = new ServiceHandler;
+        $requestBus = new RequestBus([$command::class => [$handler::class, 'undefined']], $this->container);
         $this->expectException(\DomainException::class);
         $requestBus->dispatch($command);
     }
 
     public function testCanDispatch()
     {
-        $command = new \stdClass;
-        $handlerMock = new \stdClass;
-        $requestBus = new RequestBus([$command::class => $handlerMock::class], $this->container);
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
+        $handler = new CallableHandler;
+        $requestBus = new RequestBus([$command::class => $handler::class], $this->container);
         $this->assertTrue($requestBus->canDispatch($command));
     }
 
     public function testCantDispatch()
     {
-        $command = new \stdClass;
+        $command = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
         $requestBus = new RequestBus([], $this->container);
         $this->assertFalse($requestBus->canDispatch($command));
     }

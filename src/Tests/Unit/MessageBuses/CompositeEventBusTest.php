@@ -5,6 +5,8 @@ namespace Project\Tests\Unit\MessageBuses;
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Common\ApplicationMessages\Buses\EventBus;
 use Project\Common\ApplicationMessages\Buses\CompositeEventBus;
+use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
 class CompositeEventBusTest extends \PHPUnit\Framework\TestCase
 {
@@ -29,6 +31,14 @@ class CompositeEventBusTest extends \PHPUnit\Framework\TestCase
         $compositeBus->dispatch($event);
     }
 
+    public function testDispatchNotEventMessage()
+    {
+        $event = $this->getMockBuilder(ApplicationMessageInterface::class)->getMock();
+        $compositeBus = new CompositeEventBus;
+        $this->expectException(\InvalidArgumentException::class);
+        $compositeBus->dispatch($event);
+    }
+
     public function testDispatchEventWithOneBusThatCantDispatchEvent()
     {
         $event = $this->getMockBuilder(Event::class)->getMock();
@@ -40,10 +50,6 @@ class CompositeEventBusTest extends \PHPUnit\Framework\TestCase
             ->method('canDispatch')
             ->with($event)
             ->willReturn(false);
-
-        $busMock->expects($this->never())
-            ->method('dispatch')
-            ->with($event);
 
         $compositeBus = new CompositeEventBus;
         $compositeBus->registerBus($busMock);
@@ -115,5 +121,13 @@ class CompositeEventBusTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($compositeBus->canDispatch($event));
         $compositeBus->registerBus($busMock);
         $this->assertTrue($compositeBus->canDispatch($event));
+    }
+
+    public function testRegisterNotEventBus()
+    {
+        $busMock = $this->getMockBuilder(MessageBusInterface::class)->getMock();
+        $compositeBus = new CompositeEventBus;
+        $this->expectException(\InvalidArgumentException::class);
+        $compositeBus->registerBus($busMock);
     }
 }

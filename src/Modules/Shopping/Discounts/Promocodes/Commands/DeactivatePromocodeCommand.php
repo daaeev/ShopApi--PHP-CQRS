@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Discounts\Promocodes\Commands;
 
-class DeactivatePromocodeCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class DeactivatePromocodeCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $id,

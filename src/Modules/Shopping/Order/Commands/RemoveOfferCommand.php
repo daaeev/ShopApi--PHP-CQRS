@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Order\Commands;
 
-class RemoveOfferCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class RemoveOfferCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int|string $id,

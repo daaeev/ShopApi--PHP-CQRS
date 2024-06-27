@@ -3,6 +3,7 @@
 namespace Project\Common\ApplicationMessages\Buses\Decorators;
 
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 use Project\Common\ApplicationMessages\Buses\AbstractCompositeMessageBus;
 
 abstract class AbstractCompositeMessageBusDecorator extends AbstractCompositeMessageBus
@@ -11,14 +12,14 @@ abstract class AbstractCompositeMessageBusDecorator extends AbstractCompositeMes
         protected AbstractCompositeMessageBus $decorated
     ) {}
 
-    public function dispatch(object $request)
+    public function dispatch(ApplicationMessageInterface $message)
     {
-        return $this->decorated->dispatch($request);
+        return $this->decorated->dispatch($message);
     }
 
-    public function canDispatch(object $request): bool
+    public function canDispatch(ApplicationMessageInterface $message): bool
     {
-        return $this->decorated->canDispatch($request);
+        return $this->decorated->canDispatch($message);
     }
 
     public function registerBus(MessageBusInterface $bus): void

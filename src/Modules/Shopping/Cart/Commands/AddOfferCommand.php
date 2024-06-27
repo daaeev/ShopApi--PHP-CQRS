@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Cart\Commands;
 
-class AddOfferCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class AddOfferCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $product,

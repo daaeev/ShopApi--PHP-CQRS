@@ -12,18 +12,18 @@ class ApplicationMessagesManager
         private MessageBusInterface $eventBus,
     ) {}
 
-    public function dispatchCommand(object $command): mixed
+    public function dispatchCommand(ApplicationMessageInterface $command): mixed
     {
         return $this->commandBus->dispatch($command);
     }
 
-    public function dispatchQuery(object $query): mixed
+    public function dispatchQuery(ApplicationMessageInterface $query): mixed
     {
         return $this->queryBus->dispatch($query);
     }
 
-    public function dispatchEvent(object $query): void
+    public function dispatchEvent(ApplicationMessageInterface $event): void
     {
-        $this->eventBus->dispatch($query);
+        $this->eventBus->dispatch($event);
     }
 }

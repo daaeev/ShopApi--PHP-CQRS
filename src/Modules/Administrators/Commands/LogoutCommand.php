@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Commands;
 
-class LogoutCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class LogoutCommand implements ApplicationMessageInterface
 {
 
 }

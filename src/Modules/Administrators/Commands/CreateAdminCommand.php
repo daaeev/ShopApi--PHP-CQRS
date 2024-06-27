@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Commands;
 
-class CreateAdminCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class CreateAdminCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly string $name,

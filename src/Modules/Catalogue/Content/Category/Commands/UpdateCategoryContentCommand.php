@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Catalogue\Content\Category\Commands;
 
-class UpdateCategoryContentCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class UpdateCategoryContentCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $category,

@@ -3,8 +3,9 @@
 namespace Project\Modules\Shopping\Order\Commands;
 
 use Project\Modules\Shopping\Api\DTO\Order\DeliveryInfo;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
-class CreateOrderCommand
+class CreateOrderCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly string $firstName,

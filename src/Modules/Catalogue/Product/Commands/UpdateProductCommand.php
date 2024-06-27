@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Catalogue\Product\Commands;
 
-class UpdateProductCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class UpdateProductCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $id,

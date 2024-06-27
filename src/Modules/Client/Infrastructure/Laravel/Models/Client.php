@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Client\Infrastructure\Laravel\Models;
 
+use App\Models\ReadOnly\Cart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -28,7 +29,7 @@ class Client extends Model
 
     public function cart()
     {
-        return $this->hasOne(ReadOnly\Cart::class, 'client_id');
+        return $this->hasOne(Cart::class, 'client_id');
     }
 
     public function scopeHasNotEmptyCart(Builder $query, bool $hasNotEmptyCart)

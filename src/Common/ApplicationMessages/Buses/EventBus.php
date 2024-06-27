@@ -5,6 +5,7 @@ namespace Project\Common\ApplicationMessages\Buses;
 use Webmozart\Assert\Assert;
 use Psr\Container\ContainerInterface;
 use Project\Common\ApplicationMessages\Events\Event;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
 class EventBus implements MessageBusInterface
 {
@@ -17,40 +18,40 @@ class EventBus implements MessageBusInterface
         $this->container = $container;
     }
 
-    public function dispatch(object $event): void
+    public function dispatch(ApplicationMessageInterface $message): void
     {
-        Assert::isInstanceOf($event, Event::class, 'Event object must be instance of Event');
-
-        if (!isset($this->bindings[$event::class])) {
+        Assert::isInstanceOf($message, Event::class, 'Message must be instance of ' . Event::class);
+        if (!isset($this->bindings[$message::class])) {
             return;
         }
 
-        $eventHandler = $this->bindings[$event::class];
-        if (is_array($eventHandler)) {
-            $this->executeHandlers($event, $eventHandler);
+        $handler = $this->bindings[$message::class];
+        if (is_array($handler)) {
+            $this->executeHandlers($message, $handler);
         } else {
-            $this->executeHandler($event, $this->container->get($eventHandler));
+            $this->executeHandler($message, $handler);
         }
     }
 
-    private function executeHandlers(object $event, array $handlers): void
+    private function executeHandlers(Event $event, array $handlers): void
     {
         foreach ($handlers as $handler) {
-            $this->executeHandler($event, $this->container->get($handler));
+            $this->executeHandler($event, $handler);
         }
     }
 
-    private function executeHandler(object $event, object $handler): void
+    private function executeHandler(Event $event, string $handler): void
     {
-        if (!is_callable($handler)) {
-            throw new \DomainException($event::class . ' handler not callable');
+        $handlerObject = $this->container->get($handler);
+        if (!is_callable($handlerObject)) {
+            throw new \DomainException($handler . ' event handler must be callable');
         }
 
-        call_user_func($handler, $event);
+        call_user_func($handlerObject, $event);
     }
 
-    public function canDispatch(object $event): bool
+    public function canDispatch(ApplicationMessageInterface $message): bool
     {
-        return isset($this->bindings[$event::class]);
+        return isset($this->bindings[$message::class]);
     }
 }

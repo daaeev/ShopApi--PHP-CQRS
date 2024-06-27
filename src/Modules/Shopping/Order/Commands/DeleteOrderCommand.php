@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Order\Commands;
 
-class DeleteOrderCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class DeleteOrderCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int|string $id,

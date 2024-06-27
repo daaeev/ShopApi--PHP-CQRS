@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Order\Commands;
 
-class UpdateOfferCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class UpdateOfferCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int|string $id,

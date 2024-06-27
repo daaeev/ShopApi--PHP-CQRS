@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Commands;
 
-class AuthorizeCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class AuthorizeCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly string $login,

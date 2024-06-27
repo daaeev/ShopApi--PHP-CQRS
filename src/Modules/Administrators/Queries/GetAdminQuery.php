@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Queries;
 
-class GetAdminQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class GetAdminQuery implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $id

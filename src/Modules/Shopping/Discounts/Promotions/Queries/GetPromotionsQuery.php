@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Shopping\Discounts\Promotions\Queries;
 
-class GetPromotionsQuery
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class GetPromotionsQuery implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $page,

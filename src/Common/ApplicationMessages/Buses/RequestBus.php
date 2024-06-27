@@ -3,6 +3,7 @@
 namespace Project\Common\ApplicationMessages\Buses;
 
 use Psr\Container\ContainerInterface;
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
 class RequestBus implements MessageBusInterface
 {
@@ -15,38 +16,37 @@ class RequestBus implements MessageBusInterface
         $this->container = $container;
     }
 
-    public function dispatch(object $request): mixed
+    public function dispatch(ApplicationMessageInterface $message): mixed
     {
-        if (!$this->canDispatch($request)) {
-            throw new \DomainException('Cant dispatch command ' . $request::class);
+        if (!$this->canDispatch($message)) {
+            throw new \DomainException('Cant dispatch message ' . $message::class);
         }
 
-        $handler = $this->bindings[$request::class];
+        $handler = $this->bindings[$message::class];
         if (is_string($handler) && class_exists($handler)) {
             $handlerObject = $this->container->get($handler);
-            return $this->executeHandler($request, $handlerObject);
+            return call_user_func($handlerObject, $message);
         }
 
         if (is_array($handler) && (count($handler) === 2)) {
+            if (!class_exists($handler[0])) {
+                throw new \DomainException('Handler class does not exists');
+            }
+
+            if (!method_exists($handler[0], $handler[1])) {
+                throw new \DomainException("Handler does not have '$handler[1]' method");
+            }
+
             $handlerObject = $this->container->get($handler[0]);
             $handlerMethod = $handler[1];
-            return $this->executeHandler($request, [$handlerObject, $handlerMethod]);
+            return call_user_func([$handlerObject, $handlerMethod], $message);
         }
 
-        throw new \DomainException('Cant execute ' . $request::class . ' command handler');
+        throw new \DomainException('Cant handle ' . $message::class . ' message');
     }
 
-    private function executeHandler(object $request, object|array $handler): mixed
+    public function canDispatch(ApplicationMessageInterface $message): bool
     {
-        if (!is_callable($handler)) {
-            throw new \DomainException($request::class . ' handler not callable');
-        }
-
-        return call_user_func($handler, $request);
-    }
-
-    public function canDispatch(object $request): bool
-    {
-        return isset($this->bindings[$request::class]);
+        return isset($this->bindings[$message::class]);
     }
 }

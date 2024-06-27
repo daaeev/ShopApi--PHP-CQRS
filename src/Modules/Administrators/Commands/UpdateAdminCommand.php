@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Commands;
 
-class UpdateAdminCommand
+use Project\Common\ApplicationMessages\ApplicationMessageInterface;
+
+class UpdateAdminCommand implements ApplicationMessageInterface
 {
     public function __construct(
         public readonly int $id,
