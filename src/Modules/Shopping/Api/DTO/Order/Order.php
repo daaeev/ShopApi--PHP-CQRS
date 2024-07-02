@@ -5,6 +5,7 @@ namespace Project\Modules\Shopping\Api\DTO\Order;
 use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;
 use Project\Modules\Shopping\Api\DTO\Offer;
+use Project\Modules\Shopping\Api\DTO\Promocode;
 
 class Order implements DTO
 {
@@ -15,6 +16,10 @@ class Order implements DTO
         public readonly string $paymentStatus,
         public readonly DeliveryInfo $delivery,
         public readonly array $offers,
+        public readonly string $currency,
+        public readonly int $totalPrice,
+        public readonly int $regularPrice,
+        public readonly ?Promocode $promocode,
         public readonly ?string $customerComment,
         public readonly ?string $managerComment,
         public readonly \DateTimeImmutable $createdAt,
@@ -32,6 +37,10 @@ class Order implements DTO
             'paymentStatus' => $this->paymentStatus,
             'delivery' => $this->delivery->toArray(),
             'offers' => array_map(fn (Offer $offer) => $offer->toArray(), $this->offers),
+            'currency' => $this->currency,
+            'totalPrice' => $this->totalPrice,
+            'regularPrice' => $this->regularPrice,
+            'promoCode' => $this->promocode?->toArray(),
             'comment' => [
                 'customer' => $this->customerComment,
                 'manager' => $this->managerComment

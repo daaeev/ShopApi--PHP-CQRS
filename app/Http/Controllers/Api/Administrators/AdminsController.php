@@ -50,7 +50,7 @@ class AdminsController extends BaseApiController
     public function authorized()
     {
         if (!$this->auth->check()) {
-            return $this->failed(401, 'You does not authorized');
+            return $this->error(401, 'You does not authorized');
         }
 
         $data = $this->dispatchQuery(new AuthorizedAdminQuery);
@@ -60,7 +60,7 @@ class AdminsController extends BaseApiController
     public function login(Requests\AuthorizeAdmin $request)
     {
         if ($this->auth->check()) {
-            return $this->failed(401, 'You already authorized');
+            return $this->error(401, 'You already authorized');
         }
 
         $this->dispatchCommand($request->getCommand());
@@ -70,7 +70,7 @@ class AdminsController extends BaseApiController
     public function logout()
     {
         if (!$this->auth->check()) {
-            return $this->failed(401, 'You does not authorized');
+            return $this->error(401, 'You does not authorized');
         }
 
         $this->dispatchCommand(new LogoutCommand);

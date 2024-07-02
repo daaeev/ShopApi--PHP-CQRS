@@ -25,8 +25,8 @@ class AddOffer extends ApiRequest
             $validated['id'],
             $validated['product'],
             $validated['quantity'],
-            $validated['size'],
-            $validated['color'],
+            $validated['size'] ?? null,
+            $validated['color'] ?? null,
         );
     }
 }

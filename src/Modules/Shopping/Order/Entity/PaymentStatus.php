@@ -5,7 +5,7 @@ namespace Project\Modules\Shopping\Order\Entity;
 enum PaymentStatus: string
 {
     case PAID = 'paid';
-    case NOT_PAID = 'not_paid';
+    case NOT_PAID = 'notPaid';
 
     public static function values(): array
     {

@@ -34,6 +34,7 @@ class Handler extends ExceptionHandler
     {
         return match (true) {
             $e instanceof \DomainException => new HttpException(422, $e->getMessage(), $e),
+            $e instanceof \InvalidArgumentException => new HttpException(422, $e->getMessage(), $e),
             $e instanceof AuthenticationException => new HttpException(401, $e->getMessage(), $e),
             default => parent::prepareException($e),
         };

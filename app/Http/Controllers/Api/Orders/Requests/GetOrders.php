@@ -37,7 +37,7 @@ class GetOrders extends ApiRequest
         $validated = $this->validated();
         return new GetOrdersQuery(
             $validated['page'] ?? 1,
-            $validated['limit'] ?? 1,
+            $validated['limit'] ?? 15,
             $validated['filters'] ?? [],
             $validated['sorting'] ?? [],
         );

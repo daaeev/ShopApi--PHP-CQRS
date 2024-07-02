@@ -41,10 +41,10 @@ class OfferBuilderTest extends \PHPUnit\Framework\TestCase
         $builder = new OfferBuilder();
         $offer = $this->generateOffer();
         $builded = $builder->from($offer)
-            ->withPrice($offer->getPrice() + 50)
+            ->withPrice($offer->getPrice() - 50)
             ->build();
 
-        $this->assertSame($builded->getPrice(), $offer->getPrice() + 50);
+        $this->assertSame($builded->getPrice(), $offer->getPrice() - 50);
     }
 
     public function testWithQuantity()

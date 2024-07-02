@@ -33,7 +33,7 @@ class Collection implements Arrayable, \Iterator
         return $items;
     }
 
-    protected function convertValueToArray(mixed $value, int $position)
+    protected function convertValueToArray(mixed $value, int|string $index)
     {
         if (is_array($value)) {
             $items = [];
@@ -44,19 +44,19 @@ class Collection implements Arrayable, \Iterator
             return $items;
         }
 
-        if (is_scalar($value)) {
+        if (is_scalar($value) || is_null($value)) {
             return $value;
         }
 
         if (method_exists($value, '__toString')) {
-            return $value->__toString();
+            return (string) $value;
         }
 
         if ($value instanceof Arrayable) {
             return $value->toArray();
         }
 
-        return 'Item #' . $position;
+        return 'Item #' . $index;
     }
 
     public function current(): mixed

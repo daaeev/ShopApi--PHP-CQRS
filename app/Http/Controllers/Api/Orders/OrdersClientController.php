@@ -17,7 +17,7 @@ class OrdersClientController extends BaseApiController
     public function get(Requests\GetOrder $request)
     {
         try {
-            $data = $this->dispatchCommand($request->getQuery());
+            $data = $this->dispatchQuery($request->getQuery());
             return $this->success($data);
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');

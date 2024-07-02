@@ -41,7 +41,7 @@ class QueryOrdersEloquentRepository implements QueryOrdersRepositoryInterface
             ->email($filters['email'] ?? null)
             ->name($filters['name'] ?? null)
             ->status($filters['status'] ?? null)
-            ->paymentsStatus($filters['paymentsStatus'] ?? null)
+            ->paymentStatus($filters['paymentsStatus'] ?? null)
             ->order($sorting)
             ->paginate(perPage: $limit, page: $page);
 

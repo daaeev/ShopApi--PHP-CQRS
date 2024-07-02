@@ -4,8 +4,8 @@ namespace Project\Modules\Shopping\Order\Entity\Delivery;
 
 enum DeliveryService: string
 {
-    case NOVA_POST = 'nova_post';
-    case UKR_POST = 'ukr_post';
+    case NOVA_POST = 'novaPost';
+    case UKR_POST = 'ukrPost';
 
     public static function values(): array
     {

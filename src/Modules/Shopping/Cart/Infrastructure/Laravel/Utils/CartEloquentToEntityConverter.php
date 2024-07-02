@@ -51,7 +51,7 @@ class CartEloquentToEntityConverter
     {
         return $this->hydrator->hydrate(Offer::class, [
             'id' => new OfferId($record->id),
-            'uuid' => new OfferUuid(Uuid::fromString($record->id)),
+            'uuid' => new OfferUuid(Uuid::fromString($record->uuid)),
             'product' => $record->product,
             'name' => $record->name,
             'regularPrice' => $record->regular_price,

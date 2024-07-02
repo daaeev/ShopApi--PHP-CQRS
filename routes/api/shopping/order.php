@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\Orders\OrdersAdminController;
 
 Route::group(['prefix' => 'orders'], function () {
     Route::post('', [OrdersClientController::class, 'create']);
-    Route::get('', [OrdersClientController::class, 'get']);
+    Route::get('/{id}', [OrdersClientController::class, 'get']);
 });
 
 Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])
@@ -23,6 +23,6 @@ Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])
         Route::patch('{id}/offer/{offerId}', [OrdersAdminController::class, 'updateOffer']);
         Route::delete('{id}/offer/{offerId}', [OrdersAdminController::class, 'removeOffer']);
 
-        Route::post('{id}/promo', [OrdersAdminController::class, 'addPromo']);
+        Route::patch('{id}/promo', [OrdersAdminController::class, 'addPromo']);
         Route::delete('{id}/promo', [OrdersAdminController::class, 'removePromo']);
     });

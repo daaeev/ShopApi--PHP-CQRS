@@ -2,6 +2,7 @@
 
 namespace Project\Modules\Shopping\Order\Infrastructure\Laravel\Repository;
 
+use Ramsey\Uuid\Uuid;
 use Project\Common\Client\Client;
 use Project\Common\Repository\IdentityMap;
 use Project\Modules\Shopping\Offers\Offer;
@@ -12,6 +13,7 @@ use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
+use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Order\Infrastructure\Laravel\Eloquent;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 use Project\Modules\Shopping\Order\Repository\OrdersRepositoryInterface;
@@ -190,7 +192,9 @@ class OrdersEloquentRepository implements OrdersRepositoryInterface
                 street: $record->delivery->street,
                 houseNumber: $record->delivery->house_number,
             ),
-            'offers' => array_map([$this, 'convertOfferRecordToEntity'], $record->offers->all()),
+            'offers' => new OffersCollection(
+                array_map([$this, 'convertOfferRecordToEntity'], $record->offers->all())
+            ),
             'currency' => $record->currency,
             'totalPrice' => $record->total_price,
             'regularPrice' => $record->regular_price,
@@ -214,7 +218,7 @@ class OrdersEloquentRepository implements OrdersRepositoryInterface
     {
         return new Offer(
             id: OfferId::make($record->id),
-            uuid: OfferUuId::make($record->uuid),
+            uuid: OfferUuId::make(Uuid::fromString($record->uuid)),
             product: $record->product_id,
             name: $record->product_name,
             regularPrice: $record->regular_price,

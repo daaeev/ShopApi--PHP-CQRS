@@ -33,6 +33,10 @@ class OrderEntityToDTOConverter
                 fn (Offer $offer) => OfferEntity2DTOConverter::convert($offer),
                 $order->getOffers()
             ),
+            currency: $order->getCurrency()->value,
+            totalPrice: $order->getTotalPrice(),
+            regularPrice: $order->getRegularPrice(),
+            promocode: $order->getPromocode(),
             customerComment: $order->getCustomerComment(),
             managerComment: $order->getManagerComment(),
             createdAt: $order->getCreatedAt(),

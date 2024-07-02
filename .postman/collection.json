@@ -5377,6 +5377,1657 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "admin/orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/admin/orders?page=1&limit=15",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								},
+								{
+									"key": "filters[priceFrom]",
+									"value": "500",
+									"disabled": true
+								},
+								{
+									"key": "filters[priceTo]",
+									"value": "500",
+									"disabled": true
+								},
+								{
+									"key": "filters[clientId]",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "filters[clientHash]",
+									"value": "odpibKQ9XTBCGgrnnf9yRgskW9JqkmBvJQJNoZxr",
+									"disabled": true
+								},
+								{
+									"key": "filters[phone]",
+									"value": "1234567",
+									"disabled": true
+								},
+								{
+									"key": "filters[email]",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "filters[name]",
+									"value": "Doe",
+									"disabled": true
+								},
+								{
+									"key": "filters[status]",
+									"value": "new",
+									"disabled": true
+								},
+								{
+									"key": "filters[paymentsStatus]",
+									"value": "notPaid",
+									"disabled": true
+								},
+								{
+									"key": "sorting[id]",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Get orders for manager",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/orders?page=1&limit=15",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "15"
+										},
+										{
+											"key": "filters[priceFrom]",
+											"value": "500",
+											"disabled": true
+										},
+										{
+											"key": "filters[priceTo]",
+											"value": "500",
+											"disabled": true
+										},
+										{
+											"key": "filters[clientId]",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "filters[clientHash]",
+											"value": "odpibKQ9XTBCGgrnnf9yRgskW9JqkmBvJQJNoZxr",
+											"disabled": true
+										},
+										{
+											"key": "filters[phone]",
+											"value": "1234567",
+											"disabled": true
+										},
+										{
+											"key": "filters[email]",
+											"value": "test",
+											"disabled": true
+										},
+										{
+											"key": "filters[name]",
+											"value": "Doe",
+											"disabled": true
+										},
+										{
+											"key": "filters[status]",
+											"value": "new",
+											"disabled": true
+										},
+										{
+											"key": "filters[paymentsStatus]",
+											"value": "notPaid",
+											"disabled": true
+										},
+										{
+											"key": "sorting[id]",
+											"value": "desc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 07:15:55 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6IkV1Wmx1ZnhTc2oxQXIrRFU1c2h2TUE9PSIsInZhbHVlIjoiOUFxL1RzZTB5aXJ5bUcrOVJNSS9kL29Ob3Z1TG1tSm16N3FqWFQ0WVlhOWNMV3J0ZnRxQjRsRkNGMFlHUEhITlp5VGI5MWxoR1h3VVltL01ySTFwQU04M1NFRVRZaWV5a211a2Fua0kzS2ROOXM3V1VkaGdSYUlndVRDcXQyQTciLCJtYWMiOiI5ZjBkMDE4MDEwNzYwNGRiZDJmZjA3NmI1ZTI3MTIwYjc2OWI5MTNlZWU0ZDZkMmRjNGI3MjNlNzIxZGE0NmNjIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 09:15:55 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6IldCKytOaHA0VWJBWHZmSWZmQVJsMFE9PSIsInZhbHVlIjoiRXE0S3doUit3eW9rYjhaWERZdnFRQitPQ3I5KzJDU0RUOTRjYWVEK3BwSm4zWEMzeTJYSU1EaW9TRTJ1MW5CZGZheHljMUkrWXAvdlJ1TGJvVE1OLzY0aHBNenlmQ1pEZ1hobSs4OTg4UzJTRU1UUE5IaWFtMk9uYXc2VEVZMXkiLCJtYWMiOiI4YTE0OTgzOGVlN2YwOWJkYzU4NjdjNDMxYWRkMDJiMGJhOWUwNjUwMzBmYjViYmIyNTU0NTc1NTNmNDBlYjQ3IiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 09:15:55 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=979"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"items\": [\n            {\n                \"id\": 1,\n                \"client\": {\n                    \"id\": 1,\n                    \"hash\": \"odpibKQ9XTBCGgrnnf9yRgskW9JqkmBvJQJNoZxr\",\n                    \"firstName\": \"John\",\n                    \"lastName\": \"Does\",\n                    \"phone\": \"+380501234567\",\n                    \"email\": \"test@mail.com\"\n                },\n                \"status\": \"new\",\n                \"paymentStatus\": \"notPaid\",\n                \"delivery\": {\n                    \"service\": \"novaPost\",\n                    \"country\": \"Ukraine\",\n                    \"city\": \"Dnipro\",\n                    \"street\": \"Street, 73\",\n                    \"houseNumber\": \"1\"\n                },\n                \"offers\": [\n                    {\n                        \"id\": 1,\n                        \"uuid\": \"3f7f524f-419c-48ba-8119-940eb7715eb1\",\n                        \"product\": 1,\n                        \"name\": \"Test product\",\n                        \"regularPrice\": 420,\n                        \"price\": 420,\n                        \"quantity\": 1,\n                        \"size\": null,\n                        \"color\": null,\n                        \"content\": {\n                            \"id\": 1,\n                            \"name\": \"Test product\",\n                            \"code\": \"test\",\n                            \"active\": true,\n                            \"availability\": \"in_stock\",\n                            \"prices\": [\n                                {\n                                    \"currency\": \"uah\",\n                                    \"price\": 420\n                                }\n                            ],\n                            \"colors\": [\n                                \"Blue\"\n                            ],\n                            \"sizes\": [\n                                \"45\"\n                            ],\n                            \"createdAt\": \"2024-06-30T19:51:35+03:00\",\n                            \"updatedAt\": \"2024-06-30T19:51:35+03:00\",\n                            \"content\": {\n                                \"language\": \"ua\",\n                                \"name\": \"\",\n                                \"description\": \"\"\n                            },\n                            \"images\": {\n                                \"preview\": null,\n                                \"additional\": []\n                            },\n                            \"settings\": {\n                                \"displayed\": false\n                            },\n                            \"categories\": []\n                        }\n                    },\n                    {\n                        \"id\": 2,\n                        \"uuid\": \"c8641352-181f-43d0-9f09-d622cc131538\",\n                        \"product\": 1,\n                        \"name\": \"Test product\",\n                        \"regularPrice\": 420,\n                        \"price\": 420,\n                        \"quantity\": 1,\n                        \"size\": \"45\",\n                        \"color\": \"Blue\",\n                        \"content\": {\n                            \"id\": 1,\n                            \"name\": \"Test product\",\n                            \"code\": \"test\",\n                            \"active\": true,\n                            \"availability\": \"in_stock\",\n                            \"prices\": [\n                                {\n                                    \"currency\": \"uah\",\n                                    \"price\": 420\n                                }\n                            ],\n                            \"colors\": [\n                                \"Blue\"\n                            ],\n                            \"sizes\": [\n                                \"45\"\n                            ],\n                            \"createdAt\": \"2024-06-30T19:51:35+03:00\",\n                            \"updatedAt\": \"2024-06-30T19:51:35+03:00\",\n                            \"content\": {\n                                \"language\": \"ua\",\n                                \"name\": \"\",\n                                \"description\": \"\"\n                            },\n                            \"images\": {\n                                \"preview\": null,\n                                \"additional\": []\n                            },\n                            \"settings\": {\n                                \"displayed\": false\n                            },\n                            \"categories\": []\n                        }\n                    }\n                ],\n                \"currency\": \"uah\",\n                \"totalPrice\": 840,\n                \"regularPrice\": 840,\n                \"promoCode\": null,\n                \"comment\": {\n                    \"customer\": \"Customer comment\",\n                    \"manager\": null\n                },\n                \"createdAt\": \"2024-06-30T19:55:15+03:00\",\n                \"updatedAt\": \"2024-06-30T19:55:15+03:00\"\n            },\n            {\n                \"id\": 2,\n                \"client\": {\n                    \"id\": 1,\n                    \"hash\": \"BrhiCU6LOd5oqNDUOKSbyx2nFAWT25YOxhBT7Xgd\",\n                    \"firstName\": \"John\",\n                    \"lastName\": \"Doe\",\n                    \"phone\": \"+380501234567\",\n                    \"email\": \"test@mail.com\"\n                },\n                \"status\": \"new\",\n                \"paymentStatus\": \"notPaid\",\n                \"delivery\": {\n                    \"service\": \"novaPost\",\n                    \"country\": \"Ukraine\",\n                    \"city\": \"Dnipro\",\n                    \"street\": \"Street, 73\",\n                    \"houseNumber\": \"1\"\n                },\n                \"offers\": [\n                    {\n                        \"id\": 3,\n                        \"uuid\": \"965daa67-9d23-4877-acb0-413e5158cf27\",\n                        \"product\": 1,\n                        \"name\": \"Test product\",\n                        \"regularPrice\": 420,\n                        \"price\": 420,\n                        \"quantity\": 1,\n                        \"size\": null,\n                        \"color\": null,\n                        \"content\": {\n                            \"id\": 1,\n                            \"name\": \"Test product\",\n                            \"code\": \"test\",\n                            \"active\": true,\n                            \"availability\": \"in_stock\",\n                            \"prices\": [\n                                {\n                                    \"currency\": \"uah\",\n                                    \"price\": 420\n                                }\n                            ],\n                            \"colors\": [\n                                \"Blue\"\n                            ],\n                            \"sizes\": [\n                                \"45\"\n                            ],\n                            \"createdAt\": \"2024-06-30T19:51:35+03:00\",\n                            \"updatedAt\": \"2024-06-30T19:51:35+03:00\",\n                            \"content\": {\n                                \"language\": \"ua\",\n                                \"name\": \"\",\n                                \"description\": \"\"\n                            },\n                            \"images\": {\n                                \"preview\": null,\n                                \"additional\": []\n                            },\n                            \"settings\": {\n                                \"displayed\": false\n                            },\n                            \"categories\": []\n                        }\n                    }\n                ],\n                \"currency\": \"uah\",\n                \"totalPrice\": 420,\n                \"regularPrice\": 420,\n                \"promoCode\": null,\n                \"comment\": {\n                    \"customer\": \"Customer comment\",\n                    \"manager\": null\n                },\n                \"createdAt\": \"2024-07-02T09:21:46+03:00\",\n                \"updatedAt\": \"2024-07-02T09:21:46+03:00\"\n            },\n            {\n                \"id\": 3,\n                \"client\": {\n                    \"id\": 1,\n                    \"hash\": \"BrhiCU6LOd5oqNDUOKSbyx2nFAWT25YOxhBT7Xgd\",\n                    \"firstName\": \"John\",\n                    \"lastName\": \"Doe\",\n                    \"phone\": \"+380501234567\",\n                    \"email\": \"test@mail.com\"\n                },\n                \"status\": \"new\",\n                \"paymentStatus\": \"notPaid\",\n                \"delivery\": {\n                    \"service\": \"novaPost\",\n                    \"country\": \"Ukraine\",\n                    \"city\": \"Dnipro\",\n                    \"street\": \"Street, 73\",\n                    \"houseNumber\": \"1\"\n                },\n                \"offers\": [\n                    {\n                        \"id\": 4,\n                        \"uuid\": \"825dc064-4583-4fb6-89db-8dc210588783\",\n                        \"product\": 1,\n                        \"name\": \"Test product\",\n                        \"regularPrice\": 420,\n                        \"price\": 420,\n                        \"quantity\": 1,\n                        \"size\": null,\n                        \"color\": null,\n                        \"content\": {\n                            \"id\": 1,\n                            \"name\": \"Test product\",\n                            \"code\": \"test\",\n                            \"active\": true,\n                            \"availability\": \"in_stock\",\n                            \"prices\": [\n                                {\n                                    \"currency\": \"uah\",\n                                    \"price\": 420\n                                }\n                            ],\n                            \"colors\": [\n                                \"Blue\"\n                            ],\n                            \"sizes\": [\n                                \"45\"\n                            ],\n                            \"createdAt\": \"2024-06-30T19:51:35+03:00\",\n                            \"updatedAt\": \"2024-06-30T19:51:35+03:00\",\n                            \"content\": {\n                                \"language\": \"ua\",\n                                \"name\": \"\",\n                                \"description\": \"\"\n                            },\n                            \"images\": {\n                                \"preview\": null,\n                                \"additional\": []\n                            },\n                            \"settings\": {\n                                \"displayed\": false\n                            },\n                            \"categories\": []\n                        }\n                    }\n                ],\n                \"currency\": \"uah\",\n                \"totalPrice\": 294,\n                \"regularPrice\": 420,\n                \"promoCode\": {\n                    \"id\": 1,\n                    \"code\": \"Test\",\n                    \"discountPercent\": 30\n                },\n                \"comment\": {\n                    \"customer\": \"Customer comment\",\n                    \"manager\": null\n                },\n                \"createdAt\": \"2024-07-02T09:23:38+03:00\",\n                \"updatedAt\": \"2024-07-02T09:23:38+03:00\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 15,\n            \"total\": 3\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "Konnor",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Benn",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+380507654321",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "konnor@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "inProgress",
+									"description": "new|inProgress|awaitDelivery|completed|canceled",
+									"type": "text"
+								},
+								{
+									"key": "paymentStatus",
+									"value": "paid",
+									"description": "notPaid|paid",
+									"type": "text"
+								},
+								{
+									"key": "delivery[service]",
+									"value": "ukrPost",
+									"description": "ukrPost|novaPost",
+									"type": "text"
+								},
+								{
+									"key": "delivery[country]",
+									"value": "Ukraine",
+									"type": "text"
+								},
+								{
+									"key": "delivery[city]",
+									"value": "Dnipro",
+									"type": "text"
+								},
+								{
+									"key": "delivery[street]",
+									"value": "Street, 73",
+									"type": "text"
+								},
+								{
+									"key": "delivery[houseNumber]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "managerComment",
+									"value": "Manager comment",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Update order",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "firstName",
+											"value": "Konnor",
+											"type": "text"
+										},
+										{
+											"key": "lastName",
+											"value": "Benn",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+380507654321",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "konnor@mail.com",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "inProgress",
+											"description": "new|inProgress|awaitDelivery|completed|canceled",
+											"type": "text"
+										},
+										{
+											"key": "paymentStatus",
+											"value": "paid",
+											"description": "notPaid|paid",
+											"type": "text"
+										},
+										{
+											"key": "delivery[service]",
+											"value": "ukrPost",
+											"description": "ukrPost|novaPost",
+											"type": "text"
+										},
+										{
+											"key": "delivery[country]",
+											"value": "Ukraine",
+											"type": "text"
+										},
+										{
+											"key": "delivery[city]",
+											"value": "Dnipro",
+											"type": "text"
+										},
+										{
+											"key": "delivery[street]",
+											"value": "Street, 73",
+											"type": "text"
+										},
+										{
+											"key": "delivery[houseNumber]",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "managerComment",
+											"value": "Manager comment",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 07:36:22 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6IlY1VDNkMWlxajhHb2lXNlZwTHlFV2c9PSIsInZhbHVlIjoiZEt1K3pHTWU4WFJxWTZtbm15L1c2YjNFaUc3aXl6VDRQVzhORGFFTWN5YzZEUlNxU3hKWmFhSklGbHRreGVsMTBSWk1uNjJWUHBTVUVQUG54L2R6VUI1VlJtak0yTmlMN056azlZYnZyaUp1Tk5CaldGMENwM25WQUhNaVZyeE4iLCJtYWMiOiIxMWNkNjBhZjIyYjQ1MGY3MmZjNzNlMWM1MmZjZjNiNTRkMmZiNWMxMjZiMzU5ZjlkZDg4NWU3NjE4M2IzYzYwIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 09:36:22 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6Imd3QmExTDFZVWhrelBZODdTbTlTeHc9PSIsInZhbHVlIjoiZTJmUDkrcDd5Tlhwd1NqMzhoMDh2UzVvTU9XOEJJL1ZEQmwxRWJQQmFXWEpLNmwzZGV4cjBqNjdSVEpXenZmanRvZFNURXhEeGZRRXFXVytKVUcwYTlXOE16YU9UaytnTWhvU0FIR2FhNHNJSHJFRnFMTXZZaTVwOEpRRHVwWFMiLCJtYWMiOiJhOGUyNDUzZTA4OWY5MDdiOWExZjExYzk2OTNhYTQzMTcwOTMwNjIyNTkwM2I5Yjk1ZTBjNWFmNDM0ZTlhZmExIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 09:36:22 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=997"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Order updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id}/offer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "size",
+									"value": "45",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "Blue",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/2/offer",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"2",
+								"offer"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Add offer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "product",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "size",
+											"value": "45",
+											"type": "text"
+										},
+										{
+											"key": "color",
+											"value": "Blue",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/2/offer",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"2",
+										"offer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 08:00:59 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6InVDWVl4dFVmQ05WcVlZeC90YkViTXc9PSIsInZhbHVlIjoidVRWVzhwQ1FjbzVCZmRuUXRhZElNYXFpSTJXZWhxMmY0dkNoTjNNdU1sQnNJMXFEMEdURHNRZXA4Q0dVZ2hFRjY5VllwMkdsSE1TSWZ2aThsang4cm9rQlFlU0lZcXNLQnlPaCtKTThRR2VORU5LNWdxM2pKMkZGKzZTc3V1cnoiLCJtYWMiOiI3NDM0NmFjNDc1NmYzMjk0YjM5ZGVlYzZiM2NmNDNjNDEwYTFlM2E5NjlkNzg1MzAxN2JiYzQzZjQ5ZjA4YmI2IiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:00:59 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6IjFxK1V0WlR2TlFRSWNucG9VZFZwU3c9PSIsInZhbHVlIjoiNzQ0aG1VQi9laGVySzhZWlZxczV4Qkd3c3YwZzFaWFVDYXhzaDdXZmNyeVMxR0tEdEpnVHNnbjFEQStBT3cyL2VCdGI5ZmxJUTlpS2RBVFE1LzVIUEVvemZsUzNRbklHZTZVN0hxcW92andBK0pURmdmOXlZdnFjNGxzeTBnVEQiLCJtYWMiOiI1ODkzM2Y3OTY4YmIyYzRkMDNiMzZjZmMzNzEwYTdhODAxYzQ1OWI3OTA4ODEyZDkzM2Y1YjVkMWM3OWVmYTU1IiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:00:59 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=999"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Offer added\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id}/offer/{offerId}",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "quantity",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/2/offer/3",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"2",
+								"offer",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Update offer",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "quantity",
+											"value": "3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/2/offer/3",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"2",
+										"offer",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 08:04:32 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6Im5JZ0lJTnB5Y29jOW1CeURaeEVYdVE9PSIsInZhbHVlIjoiYzdJM3JsTHVRbnUvUDAwb0VSLzJ1WGRrdmdVOXZaaEc4aTdHYlk1WXZnR3F0MGZFUHZTY1JSVHUxODBwQTROaTdZTDVidWdzRlBsejNQSzF3aklsYjZSbG0rc1hhZmU2cEQ2bEFmNFA3N0hwZVJUTXFvMmQwaG1BYXArd2RKbFMiLCJtYWMiOiIxOTgwMzhlZTBmYmY1NTQwNzQ0YzY0MGUxZTdlZDhlYjBhMmQxZTg0MzI2OWJhZTEzNmJhYWRjZGQzNTBiMzc0IiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:04:32 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6ImxwRVcrN2dDTE53VUt4VkNiNFJOREE9PSIsInZhbHVlIjoiN2Nza0o1M1dxTWgzanErRHBJNU1Lb1oyeVhzRlA3dVdLOFpjQS9nL3Rkc2grQURBQjg3UjlQMnNWSE5hcnZlSWYyb2IzOXJvREUwSFZldWtVYXdtanVtbUMyRUpMWVg4ZVVuaHVLSnZYbThLM1RUTG5nSDFMaTBUdVBFMitrU1EiLCJtYWMiOiJlZjBkOTQ4Y2IyNmViMjk2Yzg1NWIwZTcwMTAzNDJkNGRmNzQ0MTg5OThjZjc0N2Q4Y2FmYWIzNzgxMjAyMGU2IiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:04:32 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=999"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Offer updated\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id}/offer/{offerId}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/2/offer/3",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"2",
+								"offer",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Remove offer",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/2/offer/3",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"2",
+										"offer",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 08:05:28 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6IlUwRjhROVppUndUU052VlFEdzkzVHc9PSIsInZhbHVlIjoiRGFaWUk3bU1Fa3Y4emMxRUJUdkF0b1JmS040UGUza1JscGNNc3hBYTNPUXdDcGRtV3NSbnlrMWJyMHI0eDZmQS9KMWVtdkRRUWRmc2NnTTZyK2VRNm5wL0xPZ0xaYU1yRHAxV2dkWmkrTFNIUzA4TFVQdC9TZWJ4Y1RvZmNrakQiLCJtYWMiOiIyNjE2ZjMyYmRmZjQ3Njk4MGI1ODA3YjU3ODgyZDcyNmJmNGYyN2U4MDA3MDgzMWM3YjFiZTk2MTQxZGYzZDg3IiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:05:29 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6Imc1K2FIdjc1enQyQ09zTkt4TFFGZnc9PSIsInZhbHVlIjoiakZ2OWx1NC9VUE4xOTdHRXhKMVFUOHg4WXFGZS9TWjYvVkV4UUVoOGE1cmNCSmZkVWJtc0d6d0IzdExjdTZVYUhxdFgrUFN3TkZNMW5tMTdKYnNMdWs3ak43LyswdXQvYkE2TVJrMnFZa0NaWHc1Wk1UVkd3NGZDNHFJa2Y1NVkiLCJtYWMiOiJkZWYyMTY1Y2UyZmI4MmNjODc2NjkzYjcyNmIzZWRmZjIzNjhhOGUwOWFiYjI4OWI5NzJiNDVmMTdjZTI5ZjQwIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:05:29 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=996"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Offer removed\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id}/promo",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "promoId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/2/promo",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"2",
+								"promo"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Add promo",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "promoId",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/2/promo",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"2",
+										"promo"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 08:07:09 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6InY0Y1l6alN4NzJXMmcxdXI4VXNYOFE9PSIsInZhbHVlIjoiL0FncHNSZkZxVFRya3Evb3NRVDZkYzBDb3E1WEo0QzZ4ZGkxalJpMjBOU1FOaVlOWm5nYkNpN3hlLzYyRzFLeDk1ODFMVXdYaE0yS25XRUNCRERvVHkzSjJqdlBkOUJRUVRnK3Z6VWM0c0hDdjZHNzYvdk5ndEptQWNDdDVPZ0EiLCJtYWMiOiI1MDczNmFlNjcxMzAzOTNmZmUxZTE3MDZhZmQ1MDEyMWJhZTRkMTY4NzA3NmM5ZTlhYzllNGQzZjY1MmM0ZjA5IiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:07:09 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6IjlEYlJ4eDBWMDBJdkM2MEh6UTJja0E9PSIsInZhbHVlIjoiZVQveGF3T3h2WkNMR0ZyVE1TeERQalU1QmdLY1JMTGhONzk5WUFIMjJ0OHo5R2NlRnk3Q25IRmhoaEFQeFNSdWorVUptaWlLOVpVcWlVQVluVEZCdy8yZnhqZ2pSbXczbGZuVnpZdm9Hc0F1TXRYUUhQdFU4Q1dLTlVLcVVta0IiLCJtYWMiOiJkZjI5M2U1ZmI4MDNjN2VmZWU0NmVmNDA3NTA2NDM3MWI4ZDQwZDI5OGI3ZmE4OGMxNjkxNDJhYTRjNzBjZjg0IiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:07:09 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=991"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Promo added\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id}/promo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/2/promo",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"2",
+								"promo"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Remove promo",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/2/promo",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"2",
+										"promo"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 08:07:50 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6IjZSRElrcERNUkN5OEJ5TW5jTjBJYWc9PSIsInZhbHVlIjoic25uRVpZRC9xeVBsRGpTSTRXMGd5SlE3T0NUYzFWWWZzbjVHaUt4U3JxV0FjbzZ4c1VWdnZSRkxDM3IvTnVRV2V5TERrUFZlMnM4YzNDaTF3RjA2VnEzTkp4WXVnUkhkcTJjamY5S3N5M04zZ2V5YXh4Y0RiaUJpakR6UFB1VTQiLCJtYWMiOiIyMmNjOGM1MzMyZDY5YjM5ODAxMzRkYmU2OTk0NjA4OWY4MWM5ZDUxMDA5MDYxZDBmMjE1MTgyOTk1Y2M2NDQxIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:07:50 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6InRPVUlqMHNCeDlYTVpBR3pibGgyUGc9PSIsInZhbHVlIjoiS2JUZVNPeStFUDlxWGw2dDdWQVIvVkVlaTVlZkl0OEV2SXBxY0xqNHgrMlRNL05TTTlxWUMvMExhTm5PU1dpMUVXdDBxcENLQjBRN1JvbU94Z0VqL1JXOWs2SFIwRDhvV1F6L0pXTFRNaktVeTV3a0FlL0JJeUlUWVJON05LZ04iLCJtYWMiOiJmYTFiNjJiOThmMWNkMjIzNGUxOGJlMjVmNDQ5YTZjNjY5YzZmNmZmMDEwMGIwM2QxMzg2NWI2MjhkNDM3ZTgwIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 10:07:50 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=988"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Promo removed\",\n    \"dataset\": {\n        \"id\": 2\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Delete order",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 07:39:00 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6Ii9KOHAyejIzekpNQ1ZSQVpvcTlpNUE9PSIsInZhbHVlIjoiY1FYNzJ4Z3JQejRWNkZKR0tJREZ4eWJPelBFTFB2dXdSM3U0dGdTUHBvMWFGSElyZG1RWFJmbmlBSU9PWVV5Zzd6WXVKQjJYQ0tFckcxVkh6RFNSdXdCR25ZWkJCSkNMWDNWeVhiNWs2THFyL3JJU29YeFN3S1pIWUlEWGJNTXgiLCJtYWMiOiJlZGQ3Y2NkNGQ2MjJlYjFkODdmODBkYzA2NTg3MTgxZTE0Njc4ODUxNGFhMzNjMzNiNDVhYzlhNDg0NGMwNzQxIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 09:39:00 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6IlJaOHNMNVpXUWJKYTlUS0lpdU1SSUE9PSIsInZhbHVlIjoiMlhsYjJEZksxNUxRaWcvM3hYbjJkRllhcUVOVGdUTHJ0WkJSVzlFazBDOHV0OGRJdk50UnJmbC9WRUZyQnRPTCtjQlJyR29xS1dCY3ZaZ0tpN2FFaWhDZlRSWHIra0xiblJZYjdEazZ0Tk1XU2o2OUFNQ1F0bG1YS2RvWHg1U00iLCJtYWMiOiIyNTVhOThmMjM0MzMwOWU2ODNlZDNjZGVkZmUwNDZlYzlmMzY1ODM1NmYzNWYyMjYxMzkzMmYwMGQ3YjAyNWYyIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 09:39:00 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=995"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Order deleted\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Get order for manager",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/3",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 06:38:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6ImRPd09qT0FBTkhPOHZjbzF1VUtTbUE9PSIsInZhbHVlIjoiSTJYL2hHekdEb3kzUGpGc0xFM1VaSE1GSjYyMjdQTy9NczhIdHJaZkNHd0JnMGp6bHo4ZDluUXJOakZZQ2F1ZnV0MnNEYlJZcS9xM05NYTNidzJmSmkyZDlGSDhZbDExR0NxQVFTeFhoUW5ESkI4eG15TUJwSVJ6VUJqM3hTQXIiLCJtYWMiOiI3ZGJhZWIxMDkxMzc4OWFiMzAwYjU5YTg2NDg0NjhlMmM4NDNmMzBjZTJlZjE1YzFlNGE4MzdjMjcyYjhiNDIwIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 08:38:56 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6IldmclBYcnpPMnJNY1Rhb2dUSmtMT2c9PSIsInZhbHVlIjoiYmR5Mm1jUXdFcWpjQmpORHRvSk5lMHBYcS9qWndxOXQyTDNwOFlHSTJIS29icFhYMDkvamNWVGowaUNTNVlVRUl6OHd3QTFXeks4YVRXVEVQNk5WVVRROStVRFB6Tm0xNzJRdTFDTXNYQm1lbnNTbmZpQjZsaGlXV2xXeUMweWsiLCJtYWMiOiI3OGQ1M2Y4YWFjYjA5YTgzYzRlZTE1NzRjMTlhOTY0ZmJjYTZlZTJkYmRmNTU2NzdhMmQ5MWRiYWQ0ODRjN2FhIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 08:38:56 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=997"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 3,\n        \"client\": {\n            \"id\": 1,\n            \"hash\": \"BrhiCU6LOd5oqNDUOKSbyx2nFAWT25YOxhBT7Xgd\",\n            \"firstName\": \"John\",\n            \"lastName\": \"Doe\",\n            \"phone\": \"+380501234567\",\n            \"email\": \"test@mail.com\"\n        },\n        \"status\": \"new\",\n        \"paymentStatus\": \"notPaid\",\n        \"delivery\": {\n            \"service\": \"novaPost\",\n            \"country\": \"Ukraine\",\n            \"city\": \"Dnipro\",\n            \"street\": \"Street, 73\",\n            \"houseNumber\": \"1\"\n        },\n        \"offers\": [\n            {\n                \"id\": 4,\n                \"uuid\": \"825dc064-4583-4fb6-89db-8dc210588783\",\n                \"product\": 1,\n                \"name\": \"Test product\",\n                \"regularPrice\": 420,\n                \"price\": 420,\n                \"quantity\": 1,\n                \"size\": null,\n                \"color\": null,\n                \"content\": {\n                    \"id\": 1,\n                    \"name\": \"Test product\",\n                    \"code\": \"test\",\n                    \"active\": true,\n                    \"availability\": \"in_stock\",\n                    \"prices\": [\n                        {\n                            \"currency\": \"uah\",\n                            \"price\": 420\n                        }\n                    ],\n                    \"colors\": [\n                        \"Blue\"\n                    ],\n                    \"sizes\": [\n                        \"45\"\n                    ],\n                    \"createdAt\": \"2024-06-30T19:51:35+03:00\",\n                    \"updatedAt\": \"2024-06-30T19:51:35+03:00\",\n                    \"content\": {\n                        \"language\": \"ua\",\n                        \"name\": \"\",\n                        \"description\": \"\"\n                    },\n                    \"images\": {\n                        \"preview\": null,\n                        \"additional\": []\n                    },\n                    \"settings\": {\n                        \"displayed\": false\n                    },\n                    \"categories\": []\n                }\n            }\n        ],\n        \"currency\": \"uah\",\n        \"totalPrice\": 294,\n        \"regularPrice\": 420,\n        \"promoCode\": {\n            \"id\": 1,\n            \"code\": \"Test\",\n            \"discountPercent\": 30\n        },\n        \"comment\": {\n            \"customer\": \"Customer comment\",\n            \"manager\": null\n        },\n        \"createdAt\": \"2024-07-02T09:23:38+03:00\",\n        \"updatedAt\": \"2024-07-02T09:23:38+03:00\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "orders",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "John",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Doe",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+380501234567",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "delivery[service]",
+									"value": "novaPost",
+									"description": "urkPost|novaPost",
+									"type": "text"
+								},
+								{
+									"key": "delivery[country]",
+									"value": "Ukraine",
+									"type": "text"
+								},
+								{
+									"key": "delivery[city]",
+									"value": "Dnipro",
+									"type": "text"
+								},
+								{
+									"key": "delivery[street]",
+									"value": "Street, 73",
+									"type": "text"
+								},
+								{
+									"key": "delivery[houseNumber]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "customerComment",
+									"value": "Customer comment",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/orders",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Create order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstName",
+											"value": "John",
+											"type": "text"
+										},
+										{
+											"key": "lastName",
+											"value": "Doe",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+380501234567",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "test@mail.com",
+											"type": "text"
+										},
+										{
+											"key": "delivery[service]",
+											"value": "novaPost",
+											"description": "urkPost|novaPost",
+											"type": "text"
+										},
+										{
+											"key": "delivery[country]",
+											"value": "Ukraine",
+											"type": "text"
+										},
+										{
+											"key": "delivery[city]",
+											"value": "Dnipro",
+											"type": "text"
+										},
+										{
+											"key": "delivery[street]",
+											"value": "Street, 73",
+											"type": "text"
+										},
+										{
+											"key": "delivery[houseNumber]",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "customerComment",
+											"value": "Customer comment",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/orders",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 16:55:15 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6ImJJOEhhaGFKZUhaZVpIVE80eGI4Q0E9PSIsInZhbHVlIjoiRWFXRHJBNVg5VXVSLzloK3FsTmIwdTArWWMrZmtWV25CckxFVWxteE1LOVB6dE9wNU9RT1hnb05wWEI0NHFqdXhTelpsZUMwa1J3RmFuK205Rk91ZlpMR1YzcEIyRjNRWW1OeDk2UFV5RVBDeHFhQWM1NmpIQ2RHWWZjNVcwTUQiLCJtYWMiOiI1OWViMGIyMWYxMDIyZDUxNjkwOWJlZTE1YmQ3ZjhlMjI4MmYyZmI2ZjEwYTgwZmRmOWYyNWYwMjMxMWJhZjM5IiwidGFnIjoiIn0%3D; expires=Sun, 30 Jun 2024 18:55:15 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6ImQzWUp1TW9WQmhpUTBrUlU5ZDNXL1E9PSIsInZhbHVlIjoidHo5Y3V6bEs2OFpQcXNGVTF5c3hXUkd0ZnJpYTVmNGdRRDFMSXBVUmJMNis1VnZQT3FnNDBYcVN3WDh0enB1bGhjYmV4N1JKeFNCTk00YVd4cWh0cFJjTUxJUTBVMld1UVdhYXBscVN0bWhaUWJXUkJGUndlS0NSMUJFUWU1cUIiLCJtYWMiOiI4ZTA0NWU2ZDM5NDU3MWM1YjI0NjRiNzg4OWUwODYwOTNmYjUyY2RlMTUwMjhhNjA1MGVjZWJhOWZhNDM1NGFmIiwidGFnIjoiIn0%3D; expires=Sun, 30 Jun 2024 18:55:15 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=996"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Order created\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "orders/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/orders/3",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Get order for client",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/api/orders/3",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 21:24:33 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6ImdwemFOLzhuTWJhTnU5VVozUkx0bkE9PSIsInZhbHVlIjoiQk9Mc1VWeXBlUTlNNGVHNElTdU8rNTd6YTZ0U1lUSi84N2NoTjEwb0t3UVJxMCtDRXpCNGIrdGlvQ01LTVdGd3NPNVlOOW1SUGQwV2FMRzl5b0xicUtEVlhFdUczOXFZZ0diVHFJbzgrQ2hoTTZoaitXQ3pVUm9BdGYrU3R4YnQiLCJtYWMiOiI5NTE5YzU3MzRjZjEzM2QwZjFhNDI1OTZkNzQ1MzJlMDE5YWVhOTdlODIwZWM4ZTRlMDFiMTg4YmZjMDUwMTY5IiwidGFnIjoiIn0%3D; expires=Sun, 30 Jun 2024 23:24:33 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6IlJ4enhOYUNMalBPeTczOFZVM0lrT0E9PSIsInZhbHVlIjoibmdEQ2VLVE1HRjgyZjlrYjlXclBXSEJGTThPMWFOYWZ0MDM5WlBVVUUvNkZNWCtTOEloTGE2WUIyQnozMG1BUytjYUJxQkkwcEpabU9ZUytyS0poVkI0SjNxZG9JTnVReTF3ai9lTklzbGprNlU3MXRHR3hzVlh1WnM3eUxYUEIiLCJtYWMiOiJmZjhiMzIwYjdkMzQ3NzE5NTNkY2FiMzRhMTg1N2RlMTI4MThlMTFkNmI0N2Q5NmUwMTBjNDU2MzBjZTk4ZDM3IiwidGFnIjoiIn0%3D; expires=Sun, 30 Jun 2024 23:24:33 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=1000"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Success\",\n    \"dataset\": {\n        \"id\": 3,\n        \"client\": {\n            \"id\": 1,\n            \"hash\": \"BrhiCU6LOd5oqNDUOKSbyx2nFAWT25YOxhBT7Xgd\",\n            \"firstName\": \"John\",\n            \"lastName\": \"Doe\",\n            \"phone\": \"+380501234567\",\n            \"email\": \"test@mail.com\"\n        },\n        \"status\": \"new\",\n        \"paymentStatus\": \"notPaid\",\n        \"delivery\": {\n            \"service\": \"novaPost\",\n            \"country\": \"Ukraine\",\n            \"city\": \"Dnipro\",\n            \"street\": \"Street, 73\",\n            \"houseNumber\": \"1\"\n        },\n        \"offers\": [\n            {\n                \"id\": 4,\n                \"uuid\": \"825dc064-4583-4fb6-89db-8dc210588783\",\n                \"product\": 1,\n                \"name\": \"Test product\",\n                \"regularPrice\": 420,\n                \"price\": 420,\n                \"quantity\": 1,\n                \"size\": null,\n                \"color\": null,\n                \"content\": {\n                    \"id\": 1,\n                    \"name\": \"Test product\",\n                    \"code\": \"test\",\n                    \"active\": true,\n                    \"availability\": \"in_stock\",\n                    \"prices\": [\n                        {\n                            \"currency\": \"uah\",\n                            \"price\": 420\n                        }\n                    ],\n                    \"colors\": [\n                        \"Blue\"\n                    ],\n                    \"sizes\": [\n                        \"45\"\n                    ],\n                    \"createdAt\": \"2024-06-30T19:51:35+03:00\",\n                    \"updatedAt\": \"2024-06-30T19:51:35+03:00\",\n                    \"content\": {\n                        \"language\": \"ua\",\n                        \"name\": \"\",\n                        \"description\": \"\"\n                    },\n                    \"images\": {\n                        \"preview\": null,\n                        \"additional\": []\n                    },\n                    \"settings\": {\n                        \"displayed\": false\n                    },\n                    \"categories\": []\n                }\n            }\n        ],\n        \"currency\": \"uah\",\n        \"totalPrice\": 294,\n        \"regularPrice\": 420,\n        \"promoCode\": {\n            \"id\": 1,\n            \"code\": \"Test\",\n            \"discountPercent\": 30\n        },\n        \"comment\": {\n            \"customer\": \"Customer comment\",\n            \"manager\": null\n        },\n        \"createdAt\": \"2024-07-02T09:23:38+03:00\",\n        \"updatedAt\": \"2024-07-02T09:23:38+03:00\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "admin/orders/{id} Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "Konnor",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Benn",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+380507654321",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "konnor@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "inProgress",
+									"description": "new|inProgress|awaitDelivery|completed|canceled",
+									"type": "text"
+								},
+								{
+									"key": "paymentStatus",
+									"value": "paid",
+									"description": "notPaid|paid",
+									"type": "text"
+								},
+								{
+									"key": "delivery[service]",
+									"value": "ukrPost",
+									"description": "ukrPost|novaPost",
+									"type": "text"
+								},
+								{
+									"key": "delivery[country]",
+									"value": "Ukraine",
+									"type": "text"
+								},
+								{
+									"key": "delivery[city]",
+									"value": "Dnipro",
+									"type": "text"
+								},
+								{
+									"key": "delivery[street]",
+									"value": "Street, 73",
+									"type": "text"
+								},
+								{
+									"key": "delivery[houseNumber]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "managerComment",
+									"value": "Manager comment",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/orders/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example: Update order",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "firstName",
+											"value": "Konnor",
+											"type": "text"
+										},
+										{
+											"key": "lastName",
+											"value": "Benn",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+380507654321",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "konnor@mail.com",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "inProgress",
+											"description": "new|inProgress|awaitDelivery|completed|canceled",
+											"type": "text"
+										},
+										{
+											"key": "paymentStatus",
+											"value": "paid",
+											"description": "notPaid|paid",
+											"type": "text"
+										},
+										{
+											"key": "delivery[service]",
+											"value": "ukrPost",
+											"description": "ukrPost|novaPost",
+											"type": "text"
+										},
+										{
+											"key": "delivery[country]",
+											"value": "Ukraine",
+											"type": "text"
+										},
+										{
+											"key": "delivery[city]",
+											"value": "Dnipro",
+											"type": "text"
+										},
+										{
+											"key": "delivery[street]",
+											"value": "Street, 73",
+											"type": "text"
+										},
+										{
+											"key": "delivery[houseNumber]",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "managerComment",
+											"value": "Manager comment",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{domain}}/api/admin/orders/1",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 02 Jul 2024 07:36:22 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=eyJpdiI6IlY1VDNkMWlxajhHb2lXNlZwTHlFV2c9PSIsInZhbHVlIjoiZEt1K3pHTWU4WFJxWTZtbm15L1c2YjNFaUc3aXl6VDRQVzhORGFFTWN5YzZEUlNxU3hKWmFhSklGbHRreGVsMTBSWk1uNjJWUHBTVUVQUG54L2R6VUI1VlJtak0yTmlMN056azlZYnZyaUp1Tk5CaldGMENwM25WQUhNaVZyeE4iLCJtYWMiOiIxMWNkNjBhZjIyYjQ1MGY3MmZjNzNlMWM1MmZjZjNiNTRkMmZiNWMxMjZiMzU5ZjlkZDg4NWU3NjE4M2IzYzYwIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 09:36:22 GMT; Max-Age=7200; path=/; samesite=lax"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "laravel_session=eyJpdiI6Imd3QmExTDFZVWhrelBZODdTbTlTeHc9PSIsInZhbHVlIjoiZTJmUDkrcDd5Tlhwd1NqMzhoMDh2UzVvTU9XOEJJL1ZEQmwxRWJQQmFXWEpLNmwzZGV4cjBqNjdSVEpXenZmanRvZFNURXhEeGZRRXFXVytKVUcwYTlXOE16YU9UaytnTWhvU0FIR2FhNHNJSHJFRnFMTXZZaTVwOEpRRHVwWFMiLCJtYWMiOiJhOGUyNDUzZTA4OWY5MDdiOWExZjExYzk2OTNhYTQzMTcwOTMwNjIyNTkwM2I5Yjk1ZTBjNWFmNDM0ZTlhZmExIiwidGFnIjoiIn0%3D; expires=Tue, 02 Jul 2024 09:36:22 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=120, max=997"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Order updated\",\n    \"dataset\": {\n        \"id\": 1\n    }\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [

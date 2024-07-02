@@ -11,7 +11,7 @@ class OrdersAdminController extends BaseApiController
     {
         try {
             $this->dispatchCommand($request->getCommand());
-            return $this->success(['id' => $request->get('id')], 'Order updated');
+            return $this->success(['id' => (int) $request->get('id')], 'Order updated');
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');
         }
@@ -21,7 +21,7 @@ class OrdersAdminController extends BaseApiController
     {
         try {
             $this->dispatchCommand($request->getCommand());
-            return $this->success(['id' => $request->get('id')], 'Order updated');
+            return $this->success(['id' => (int) $request->get('id')], 'Order deleted');
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');
         }
@@ -31,7 +31,7 @@ class OrdersAdminController extends BaseApiController
     {
         try {
             $this->dispatchCommand($request->getCommand());
-            return $this->success(['id' => $request->get('id')], 'Offer added');
+            return $this->success(['id' => (int) $request->get('id')], 'Offer added');
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');
         }
@@ -41,7 +41,7 @@ class OrdersAdminController extends BaseApiController
     {
         try {
             $this->dispatchCommand($request->getCommand());
-            return $this->success(['id' => $request->get('id')], 'Offer updated');
+            return $this->success(['id' => (int) $request->get('id')], 'Offer updated');
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');
         }
@@ -51,7 +51,7 @@ class OrdersAdminController extends BaseApiController
     {
         try {
             $this->dispatchCommand($request->getCommand());
-            return $this->success(['id' => $request->get('id')], 'Offer removed');
+            return $this->success(['id' => (int) $request->get('id')], 'Offer removed');
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');
         }
@@ -61,7 +61,7 @@ class OrdersAdminController extends BaseApiController
     {
         try {
             $this->dispatchCommand($request->getCommand());
-            return $this->success(['id' => $request->get('id')], 'Promo added');
+            return $this->success(['id' => (int) $request->get('id')], 'Promo added');
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');
         }
@@ -71,7 +71,7 @@ class OrdersAdminController extends BaseApiController
     {
         try {
             $this->dispatchCommand($request->getCommand());
-            return $this->success(['id' => $request->get('id')], 'Promo removed');
+            return $this->success(['id' => (int) $request->get('id')], 'Promo removed');
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');
         }
@@ -80,7 +80,7 @@ class OrdersAdminController extends BaseApiController
     public function get(Requests\GetOrder $request)
     {
         try {
-            $data = $this->dispatchCommand($request->getQuery());
+            $data = $this->dispatchQuery($request->getQuery());
             return $this->success($data);
         } catch (NotFoundException) {
             return $this->error(404, 'Order does not exists');
@@ -89,7 +89,7 @@ class OrdersAdminController extends BaseApiController
 
     public function list(Requests\GetOrders $request)
     {
-        $data = $this->dispatchCommand($request->getQuery());
+        $data = $this->dispatchQuery($request->getQuery());
         return $this->success($data);
     }
 }
