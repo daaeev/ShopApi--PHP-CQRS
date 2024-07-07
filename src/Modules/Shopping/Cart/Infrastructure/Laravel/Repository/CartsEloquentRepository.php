@@ -114,8 +114,8 @@ class CartsEloquentRepository implements CartsRepositoryInterface
         $record->promocode_id = $cart->getPromocode()?->getId()?->getId();
         $record->promocode = $cart->getPromocode()?->getCode();
         $record->promocode_discount_percent = $cart->getPromocode()?->getDiscountPercent();
-        $record->created_at = $cart->getCreatedAt()->format(\DateTimeInterface::RFC3339);
-        $record->updated_at = $cart->getUpdatedAt()?->format(\DateTimeInterface::RFC3339);
+        $record->created_at = $cart->getCreatedAt()->getTimestamp();
+        $record->updated_at = $cart->getUpdatedAt()?->getTimestamp();
         $record->save();
 
         $this->hydrator->hydrate($cart->getId(), ['id' => $record->id]);

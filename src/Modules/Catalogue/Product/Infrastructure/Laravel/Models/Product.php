@@ -18,6 +18,8 @@ class Product extends Model
         'code',
         'active',
         'availability',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [

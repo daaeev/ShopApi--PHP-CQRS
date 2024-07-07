@@ -44,10 +44,10 @@ class PromocodesEloquentRepository implements PromocodesRepositoryInterface
         $record->code = $entity->getCode();
         $record->discount_percent = $entity->getDiscountPercent();
         $record->active = $entity->getActive();
-        $record->start_date = $entity->getStartDate()->format(\DateTimeInterface::RFC3339);
-        $record->end_date = $entity->getEndDate()?->format(\DateTimeInterface::RFC3339);
-        $record->created_at = $entity->getCreatedAt()->format(\DateTimeInterface::RFC3339);
-        $record->updated_at = $entity->getUpdatedAt()?->format(\DateTimeInterface::RFC3339);
+        $record->start_date = $entity->getStartDate()->getTimestamp();
+        $record->end_date = $entity->getEndDate()?->getTimestamp();
+        $record->created_at = $entity->getCreatedAt()->getTimestamp();
+        $record->updated_at = $entity->getUpdatedAt()?->getTimestamp();
         $record->save();
 
         $this->hydrator->hydrate($entity->getId(), ['id' => $record->id]);

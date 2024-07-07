@@ -14,6 +14,8 @@ class Promotion extends Model
         'start_date',
         'end_date',
         'disabled',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [

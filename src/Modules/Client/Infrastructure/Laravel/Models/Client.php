@@ -18,6 +18,8 @@ class Client extends Model
         'email',
         'phone_confirmed',
         'email_confirmed',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [

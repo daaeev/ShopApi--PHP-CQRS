@@ -19,6 +19,8 @@ class Cart extends Model
         'promocode',
         'promocode_id',
         'promocode_discount_percent',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [
