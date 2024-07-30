@@ -4,9 +4,13 @@ namespace Project\Modules\Administrators\Infrastructure\Laravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 
-class Administrator extends Model
+class Administrator extends Model implements Authenticatable
 {
+    use AuthenticatableTrait;
+
     protected $fillable = [
         'id',
         'name',
@@ -29,8 +33,6 @@ class Administrator extends Model
             return;
         }
 
-        $this->password = $hasher->needsRehash($password)
-            ? $hasher->make($password)
-            : $password;
+        $this->password = $hasher->needsRehash($password) ? $hasher->make($password) : $password;
     }
 }

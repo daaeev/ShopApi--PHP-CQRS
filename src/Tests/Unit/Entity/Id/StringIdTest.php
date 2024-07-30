@@ -17,7 +17,7 @@ class StringIdTest extends \PHPUnit\Framework\TestCase
         $randomId2 = StringId::random();
         $this->assertNotEquals($randomId1, $randomId2);
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\InvalidArgumentException::class);
         new StringId('');
     }
 }

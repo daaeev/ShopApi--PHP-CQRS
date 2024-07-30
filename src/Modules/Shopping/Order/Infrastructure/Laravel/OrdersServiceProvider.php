@@ -26,6 +26,9 @@ class OrdersServiceProvider extends ServiceProvider
 
         Commands\AddPromoCommand::class => Commands\Handlers\AddPromoHandler::class,
         Commands\RemovePromoCommand::class => Commands\Handlers\RemovePromoHandler::class,
+
+        Commands\AttachManagerCommand::class => Commands\Handlers\AttachManagerHandler::class,
+        Commands\DetachManagerCommand::class => Commands\Handlers\DetachManagerHandler::class,
     ];
 
     private array $queriesMapping = [

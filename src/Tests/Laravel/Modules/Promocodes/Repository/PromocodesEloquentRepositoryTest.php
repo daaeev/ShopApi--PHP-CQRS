@@ -9,7 +9,7 @@ use Project\Tests\Unit\Modules\Promocodes\Repository\PromocodesRepositoryTestTra
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodesEloquentRepository;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquentToEntityConverter;
 
-class PromocodesEloquentRepositoryTest extends \Tests\TestCase
+class PromocodesEloquentRepositoryTest extends \Project\Tests\Laravel\TestCase
 {
     use PromocodesRepositoryTestTrait, RefreshDatabase;
 

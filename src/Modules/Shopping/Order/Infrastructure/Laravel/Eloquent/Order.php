@@ -20,6 +20,8 @@ class Order extends Model
         'id',
         'client_id',
         'client_hash',
+        'manager_id',
+        'manager_name',
         'first_name',
         'last_name',
         'phone',

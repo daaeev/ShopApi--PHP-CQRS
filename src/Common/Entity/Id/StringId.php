@@ -2,14 +2,13 @@
 
 namespace Project\Common\Entity\Id;
 
+use Webmozart\Assert\Assert;
+
 class StringId extends Id
 {
     public function __construct(string $id)
     {
-        if (mb_strlen($id) === 0) {
-            throw new \DomainException('String id cant be empty');
-        }
-
+        Assert::notEmpty($id, 'String id cant be empty');
         parent::__construct($id);
     }
 

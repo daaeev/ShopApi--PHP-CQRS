@@ -11,7 +11,7 @@ use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquentToEnt
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Repository\PromocodesEloquentRepository;
 use Project\Modules\Shopping\Discounts\Promocodes\Infrastructure\Laravel\Utils\PromocodeEloquentToEntityConverter as PromocodeEloquentConverter;
 
-class CartsEloquentRepositoryTest extends \Tests\TestCase
+class CartsEloquentRepositoryTest extends \Project\Tests\Laravel\TestCase
 {
     use CartsRepositoryTestTrait, RefreshDatabase;
 

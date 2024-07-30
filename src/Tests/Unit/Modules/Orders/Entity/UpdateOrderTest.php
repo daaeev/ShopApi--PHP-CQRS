@@ -4,8 +4,10 @@ namespace Project\Tests\Unit\Modules\Orders\Entity;
 
 use Project\Common\Client\Client;
 use Project\Modules\Shopping\Entity\Promocode;
+use Project\Modules\Shopping\Order\Entity\Manager;
 use Project\Tests\Unit\Modules\Helpers\OrderFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
+use Project\Modules\Shopping\Order\Entity\ManagerId;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Modules\Shopping\Order\Entity\ClientInfo;
 use Project\Modules\Shopping\Order\Entity\OrderStatus;
@@ -288,5 +290,46 @@ class UpdateOrderTest extends \PHPUnit\Framework\TestCase
 
         $this->expectException(\DomainException::class);
         $order->updateManagerComment(uniqid());
+    }
+
+    public function testAttachManager()
+    {
+        $order = $this->generateOrder([$this->generateOffer()]);
+        $oldUpdatedAt = $order->getUpdatedAt();
+
+        $manager = new Manager(ManagerId::random(), uniqid());
+        $order->attachManager($manager);
+
+        $this->assertSame($order->getManager(), $manager);
+        $this->assertNotSame($oldUpdatedAt, $order->getUpdatedAt());
+    }
+
+    public function testAttachManagerIfManagerAlreadyAttached()
+    {
+        $order = $this->generateOrder([$this->generateOffer()]);
+        $manager = new Manager(ManagerId::random(), uniqid());
+        $order->attachManager($manager);
+
+        $this->expectException(\DomainException::class);
+        $order->attachManager($manager);
+    }
+
+    public function testDetachManager()
+    {
+        $order = $this->generateOrder([$this->generateOffer()]);
+        $manager = new Manager(ManagerId::random(), uniqid());
+        $order->attachManager($manager);
+        $oldUpdatedAt = $order->getUpdatedAt();
+
+        $order->detachManager();
+        $this->assertNull($order->getManager());
+        $this->assertNotSame($oldUpdatedAt, $order->getUpdatedAt());
+    }
+
+    public function testDetachManagerIfManagerDoesNotAttached()
+    {
+        $order = $this->generateOrder([$this->generateOffer()]);
+        $this->expectException(\DomainException::class);
+        $order->detachManager();
     }
 }

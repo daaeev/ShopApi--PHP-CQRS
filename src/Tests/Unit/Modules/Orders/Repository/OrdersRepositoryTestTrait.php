@@ -9,8 +9,10 @@ use Project\Modules\Shopping\Entity\Promocode;
 use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Order\Entity\OrderId;
+use Project\Modules\Shopping\Order\Entity\Manager;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Tests\Unit\Modules\Helpers\OrderFactory;
+use Project\Modules\Shopping\Order\Entity\ManagerId;
 use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Modules\Shopping\Order\Entity\ClientInfo;
 use Project\Modules\Shopping\Order\Entity\OrderStatus;
@@ -29,6 +31,7 @@ trait OrdersRepositoryTestTrait
     public function testAdd()
     {
         $initial = $this->generateOrder([$this->generateOffer()]);
+        $initial->attachManager(new Manager(ManagerId::random(), uniqid()));
         $initial->usePromocode(Promocode::fromBaseEntity($this->generatePromocode()));
         $initial->addCustomerComment(uniqid());
         $initial->updateManagerComment(uniqid());
@@ -105,6 +108,7 @@ trait OrdersRepositoryTestTrait
 
         $added = $this->orders->get($initial->getId());
         $added->addOffer($this->generateOffer());
+        $initial->attachManager(new Manager(ManagerId::random(), uniqid()));
         $added->updateStatus(OrderStatus::IN_PROGRESS);
         $added->updatePaymentStatus(PaymentStatus::PAID);
         $added->usePromocode(Promocode::fromBaseEntity($this->generatePromocode()));

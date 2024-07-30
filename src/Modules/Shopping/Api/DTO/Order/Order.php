@@ -12,6 +12,7 @@ class Order implements DTO
     public function __construct(
         public readonly int|string $id,
         public readonly ClientInfo $client,
+        public readonly ?Manager $manager,
         public readonly string $status,
         public readonly string $paymentStatus,
         public readonly DeliveryInfo $delivery,
@@ -33,6 +34,7 @@ class Order implements DTO
         return [
             'id' => $this->id,
             'client' => $this->client->toArray(),
+            'manager' => $this->manager?->toArray(),
             'status' => $this->status,
             'paymentStatus' => $this->paymentStatus,
             'delivery' => $this->delivery->toArray(),

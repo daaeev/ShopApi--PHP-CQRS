@@ -7,7 +7,7 @@ use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
 use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 use Project\Infrastructure\Laravel\ApplicationMessages\Buses\Decorators\TransactionBusDecorator;
 
-class TransactionBusDecoratorTest extends \Tests\TestCase
+class TransactionBusDecoratorTest extends \Project\Tests\Laravel\TestCase
 {
     public function testCheckThatTransactionStartedAndCommitted()
     {

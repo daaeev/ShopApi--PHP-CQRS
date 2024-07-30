@@ -20,6 +20,12 @@ class OrderEntityToDTOConverter
                 phone: $order->getClient()->getPhone(),
                 email: $order->getClient()->getEmail(),
             ),
+            manager: $order->getManager()
+                ? new DTO\Manager(
+                    id: $order->getManager()->getId()->getId(),
+                    name: $order->getManager()->getName()
+                )
+                : null,
             status: $order->getStatus()->value,
             paymentStatus: $order->getPaymentStatus()->value,
             delivery: new DTO\DeliveryInfo(

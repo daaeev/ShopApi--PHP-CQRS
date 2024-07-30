@@ -25,4 +25,7 @@ Route::middleware(['auth:admin', 'hasAccess:' . Role::MANAGER->value])
 
         Route::patch('{id}/promo', [OrdersAdminController::class, 'addPromo']);
         Route::delete('{id}/promo', [OrdersAdminController::class, 'removePromo']);
+
+        Route::patch('{id}/manager', [OrdersAdminController::class, 'attachManager']);
+        Route::delete('{id}/manager', [OrdersAdminController::class, 'detachManager']);
     });

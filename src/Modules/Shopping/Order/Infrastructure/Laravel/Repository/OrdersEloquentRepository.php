@@ -53,6 +53,8 @@ class OrdersEloquentRepository implements OrdersRepositoryInterface
 
         $record->client_id = $entity->getClient()->getClient()->getId();
         $record->client_hash = $entity->getClient()->getClient()->getHash();
+        $record->manager_id = $entity->getManager()?->getId()?->getId();
+        $record->manager_name = $entity->getManager()?->getName();
         $record->first_name = $entity->getClient()->getFirstName();
         $record->last_name = $entity->getClient()->getLastName();
         $record->phone = $entity->getClient()->getPhone();
@@ -183,6 +185,12 @@ class OrdersEloquentRepository implements OrdersRepositoryInterface
                 phone: $record->phone,
                 email: $record->email,
             ),
+            'manager' => $record->manager_id
+                ? new Entity\Manager(
+                    managerId: Entity\ManagerId::make($record->manager_id),
+                    name: $record->manager_name
+                )
+                : null,
             'status' => $record->status,
             'paymentStatus' => $record->payment_status,
             'delivery' => new Entity\Delivery\DeliveryInfo(

@@ -40,11 +40,8 @@ class MakeAdminCommand extends Command implements DispatchEventsInterface
         $this->info('Admin created');
     }
 
-    private function createAdmin(
-        string $name,
-        string $login,
-        string $password
-    ): Admin {
+    private function createAdmin(string $name, string $login, string $password): Admin
+    {
         $admin = new Admin(
             AdminId::next(),
             $name,

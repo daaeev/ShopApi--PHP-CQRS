@@ -20,6 +20,7 @@ class Order extends Aggregate
 {
     private OrderId $id;
     private ClientInfo $client;
+    private ?Manager $manager = null;
     private OrderStatus $status = OrderStatus::NEW;
     private PaymentStatus $paymentStatus = PaymentStatus::NOT_PAID;
     private DeliveryInfo $delivery;
@@ -251,6 +252,26 @@ class Order extends Aggregate
         $this->updated();
     }
 
+    public function attachManager(Manager $manager): void
+    {
+        if (null !== $this->manager) {
+            throw new \DomainException('Manager already attached to order');
+        }
+
+        $this->manager = $manager;
+        $this->updated();
+    }
+
+    public function detachManager(): void
+    {
+        if (null === $this->manager) {
+            throw new \DomainException('Manager does not attached to order');
+        }
+
+        $this->manager = null;
+        $this->updated();
+    }
+
     public function delete(): void
     {
         if (OrderStatus::CANCELED !== $this->status) {
@@ -321,6 +342,11 @@ class Order extends Aggregate
     public function getManagerComment(): ?string
     {
         return $this->managerComment;
+    }
+
+    public function getManager(): ?Manager
+    {
+        return $this->manager;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

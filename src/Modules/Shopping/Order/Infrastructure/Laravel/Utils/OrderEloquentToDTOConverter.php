@@ -21,6 +21,7 @@ class OrderEloquentToDTOConverter
                 phone: $record->phone,
                 email: $record->email,
             ),
+            manager: $record->manager_id ? new DTO\Manager($record->manager_id, $record->manager_name) : null,
             status: $record->status->value,
             paymentStatus: $record->payment_status->value,
             delivery: new DTO\DeliveryInfo(

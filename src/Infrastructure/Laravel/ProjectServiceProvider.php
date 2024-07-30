@@ -5,10 +5,11 @@ namespace Project\Infrastructure\Laravel;
 use Psr\Log\LoggerInterface;
 use App\Http\Middleware\AssignClientHashCookie;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Administrators\Api\AdministratorsApi;
 use Project\Common\ApplicationMessages\Buses\CompositeEventBus;
+use Project\Infrastructure\Laravel\Services\EnvironmentService;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
 use Project\Common\ApplicationMessages\ApplicationMessagesManager;
-use Project\Infrastructure\Laravel\Environment\EnvironmentService;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Client\Infrastructure\Laravel\ClientsServiceProvider;
 use Project\Common\ApplicationMessages\Buses\Decorators\LoggingBusDecorator;
@@ -46,6 +47,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->app->singleton(EnvironmentInterface::class, function ($app) {
             return new EnvironmentService(
+                $app->make(AdministratorsApi::class),
                 config('project.application.client-hash-cookie-name'),
                 config('project.application.client-hash-cookie-length'),
             );

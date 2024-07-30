@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Client\Repository\ClientsRepositoryTestTrait;
 use Project\Modules\Client\Infrastructure\Laravel\Repository\ClientsEloquentRepository;
 
-class ClientsEloquentRepositoryTest extends \Tests\TestCase
+class ClientsEloquentRepositoryTest extends \Project\Tests\Laravel\TestCase
 {
     use ClientsRepositoryTestTrait, RefreshDatabase;
 

@@ -14,12 +14,13 @@ trait AdminFactory
     private function generateAdmin(): Admin
     {
         $admin = new Admin(
-            AdminId::next(),
-            uniqid(),
-            uniqid(),
-            uniqid(),
-            [Role::ADMIN],
+            id: AdminId::random(),
+            name: uniqid(),
+            login: uniqid(),
+            password: uniqid(),
+            roles: [Role::ADMIN],
         );
+
         $admin->flushEvents();
         return $admin;
     }
@@ -32,11 +33,11 @@ trait AdminFactory
         array $roles,
     ): Admin {
         return new Admin(
-            $id,
-            $name,
-            $login,
-            $password,
-            $roles,
+            id: $id,
+            name: $name,
+            login: $login,
+            password: $password,
+            roles: $roles,
         );
     }
 }

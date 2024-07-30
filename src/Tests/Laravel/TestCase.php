@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Project\Tests\Laravel;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 

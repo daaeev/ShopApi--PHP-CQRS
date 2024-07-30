@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Project\Tests\Unit\Modules\Orders\Repository\OrdersRepositoryTestTrait;
 use Project\Modules\Shopping\Order\Infrastructure\Laravel\Repository\OrdersEloquentRepository;
 
-class OrdersEloquentRepositoryTest extends \Tests\TestCase
+class OrdersEloquentRepositoryTest extends \Project\Tests\Laravel\TestCase
 {
     use OrdersRepositoryTestTrait, RefreshDatabase;
 

@@ -77,6 +77,26 @@ class OrdersAdminController extends BaseApiController
         }
     }
 
+    public function attachManager(Requests\AttachManager $request)
+    {
+        try {
+            $this->dispatchCommand($request->getCommand());
+            return $this->success(['id' => (int) $request->get('id')], 'Manager attached');
+        } catch (NotFoundException) {
+            return $this->error(404, 'Order does not exists');
+        }
+    }
+
+    public function detachManager(Requests\DetachManager $request)
+    {
+        try {
+            $this->dispatchCommand($request->getCommand());
+            return $this->success(['id' => (int) $request->get('id')], 'Manager detached');
+        } catch (NotFoundException) {
+            return $this->error(404, 'Order does not exists');
+        }
+    }
+
     public function get(Requests\GetOrder $request)
     {
         try {

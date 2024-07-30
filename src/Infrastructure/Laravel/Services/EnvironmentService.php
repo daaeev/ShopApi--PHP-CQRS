@@ -1,16 +1,19 @@
 <?php
 
-namespace Project\Infrastructure\Laravel\Environment;
+namespace Project\Infrastructure\Laravel\Services;
 
 use Project\Common\Language;
 use Project\Common\Client\Client;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
+use Project\Common\Administrators\Administrator;
 use Project\Common\Environment\EnvironmentInterface;
+use Project\Modules\Administrators\Api\AdministratorsApi;
 
 class EnvironmentService implements EnvironmentInterface
 {
     public function __construct(
+        private AdministratorsApi $administrators,
         private string $hashCookieName = 'clientHash',
         private int $hashCookieLength = 40,
     ) {}
@@ -41,6 +44,16 @@ class EnvironmentService implements EnvironmentInterface
     private function getAuthorizedClientId(): ?int
     {
         return null; // TODO: Not implemented yet
+    }
+
+    public function getAdministrator(): ?Administrator
+    {
+        $authenticated = $this->administrators->getAuthenticated();
+        if (null === $authenticated) {
+            return null;
+        }
+
+        return new Administrator($authenticated->id, $authenticated->name);
     }
 
     public function getLanguage(): Language

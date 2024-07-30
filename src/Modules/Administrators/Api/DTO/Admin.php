@@ -2,7 +2,9 @@
 
 namespace Project\Modules\Administrators\Api\DTO;
 
+use Webmozart\Assert\Assert;
 use Project\Common\Utils\DTO;
+use Project\Common\Administrators\Role;
 
 class Admin implements DTO
 {
@@ -11,7 +13,9 @@ class Admin implements DTO
         public readonly string $name,
         public readonly string $login,
         public readonly array $roles,
-    ) {}
+    ) {
+        Assert::allIsInstanceOf($this->roles, Role::class);
+    }
 
     public function toArray(): array
     {

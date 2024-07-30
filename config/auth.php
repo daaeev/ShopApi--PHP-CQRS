@@ -1,5 +1,7 @@
 <?php
 
+use Project\Modules\Administrators\Infrastructure\Laravel\Models\Administrator;
+
 return [
 
     /*
@@ -61,7 +63,7 @@ return [
     'providers' => [
         'admin' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Administrator::class,
+            'model' => Administrator::class,
         ],
     ],
 

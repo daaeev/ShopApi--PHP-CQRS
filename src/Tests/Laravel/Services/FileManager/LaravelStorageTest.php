@@ -2,7 +2,7 @@
 
 namespace Project\Tests\Laravel\Services\FileManager;
 
-use Tests\TestCase;
+use Project\Tests\Laravel\TestCase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Filesystem\Cloud;
 use Project\Common\Services\FileManager\File;

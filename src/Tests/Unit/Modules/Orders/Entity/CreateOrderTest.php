@@ -45,6 +45,7 @@ class CreateOrderTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue($order->getId()->equalsTo($id));
         $this->assertTrue($order->getClient()->equalsTo($client));
+        $this->assertNull($order->getManager());
         $this->assertSame(OrderStatus::NEW, $order->getStatus());
         $this->assertSame(PaymentStatus::NOT_PAID, $order->getPaymentStatus());
         $this->assertTrue($order->getDelivery()->equalsTo($delivery));

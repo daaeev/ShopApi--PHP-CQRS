@@ -9,7 +9,7 @@ use Project\Tests\Unit\Modules\Promotions\Repository\PromotionsRepositoryTestTra
 use Project\Modules\Shopping\Discounts\Promotions\Entity\DiscountMechanics\Factory\MechanicFactory;
 use Project\Modules\Shopping\Discounts\Promotions\Infrastructure\Laravel\Repository\PromotionsEloquentRepository;
 
-class PromotionsEloquentRepositoryTest extends \Tests\TestCase
+class PromotionsEloquentRepositoryTest extends \Project\Tests\Laravel\TestCase
 {
     use PromotionsRepositoryTestTrait, RefreshDatabase;
 
