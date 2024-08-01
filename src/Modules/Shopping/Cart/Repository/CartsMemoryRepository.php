@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Shopping\Cart\Repository;
 
-use Project\Common\Client\Client;
 use Project\Modules\Shopping\Cart\Entity;
 use Project\Common\Repository\IdentityMap;
 use Project\Common\Entity\Hydrator\Hydrator;
+use Project\Common\Services\Environment\Client;
 use Project\Common\Repository\NotFoundException;
 
 class CartsMemoryRepository implements CartsRepositoryInterface

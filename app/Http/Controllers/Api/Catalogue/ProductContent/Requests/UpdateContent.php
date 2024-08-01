@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\Catalogue\ProductContent\Requests;
 
-use Project\Common\Language;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
+use Project\Common\Services\Environment\Language;
 use Project\Modules\Catalogue\Content\Product\Commands\UpdateProductContentCommand;
 
 class UpdateContent extends ApiRequest

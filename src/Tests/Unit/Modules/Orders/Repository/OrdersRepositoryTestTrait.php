@@ -2,11 +2,11 @@
 
 namespace Project\Tests\Unit\Modules\Orders\Repository;
 
-use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Entity\Promocode;
 use Project\Modules\Shopping\Offers\OfferUuId;
+use Project\Common\Services\Environment\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Order\Entity\OrderId;
 use Project\Modules\Shopping\Order\Entity\Manager;

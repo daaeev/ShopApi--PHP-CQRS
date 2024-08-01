@@ -3,7 +3,7 @@
 namespace Project\Modules\Catalogue\Infrastructure\Laravel\Converters;
 
 use Project\Modules\Catalogue\Api\DTO;
-use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Common\Services\FileManager\FileManagerInterface;
 use Project\Modules\Catalogue\Infrastructure\Laravel\Models as Eloquent;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models\Image;

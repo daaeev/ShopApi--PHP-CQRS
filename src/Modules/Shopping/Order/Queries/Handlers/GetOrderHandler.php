@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Order\Queries\Handlers;
 
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Order\Queries\GetOrderQuery;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Presenters\OrderPresenterInterface;
 use Project\Modules\Shopping\Order\Repository\QueryOrdersRepositoryInterface;
 

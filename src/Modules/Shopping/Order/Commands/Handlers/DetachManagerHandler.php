@@ -3,7 +3,7 @@
 namespace Project\Modules\Shopping\Order\Commands\Handlers;
 
 use Project\Modules\Shopping\Order\Entity\OrderId;
-use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Order\Commands\DetachManagerCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;

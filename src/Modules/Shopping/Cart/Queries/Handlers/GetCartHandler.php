@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Cart\Queries\Handlers;
 
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Queries\GetCartQuery;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Presenters\CartPresenterInterface;
 use Project\Modules\Shopping\Cart\Repository\QueryCartsRepositoryInterface;
 

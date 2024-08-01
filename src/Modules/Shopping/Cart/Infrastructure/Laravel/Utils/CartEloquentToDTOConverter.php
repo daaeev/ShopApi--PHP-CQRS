@@ -2,10 +2,10 @@
 
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils;
 
-use Project\Common\Client\Client;
-use Project\Modules\Shopping\Api\DTO\Promocode;
-use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Modules\Shopping\Api\DTO\Offer;
+use Project\Modules\Shopping\Api\DTO\Promocode;
+use Project\Common\Services\Environment\Client;
+use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
 
 class CartEloquentToDTOConverter

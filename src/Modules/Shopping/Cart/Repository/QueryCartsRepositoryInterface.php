@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Cart\Repository;
 
-use Project\Common\Client\Client;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 
 interface QueryCartsRepositoryInterface

@@ -9,10 +9,6 @@
         <testsuite name="ProjectUnitCommonEntities">
             <directory suffix="Test.php">./src/Tests/Unit/Entity</directory>
         </testsuite>
-        <!--Environment-->
-        <testsuite name="ProjectUnitEnvironment">
-            <directory suffix="Test.php">./src/Tests/Unit/Environment</directory>
-        </testsuite>
         <!--Events-->
         <testsuite name="ProjectUnitEvents">
             <directory suffix="Test.php">./src/Tests/Unit/Events</directory>
@@ -24,6 +20,10 @@
         <!--Repositories-->
         <testsuite name="ProjectUnitRepositories">
             <directory suffix="Test.php">./src/Tests/Unit/Repositories</directory>
+        </testsuite>
+        <!--Services/Environment-->
+        <testsuite name="ProjectUnitEnvironment">
+            <directory suffix="Test.php">./src/Tests/Unit/Services/Environment</directory>
         </testsuite>
         <!--Services/FileManager-->
         <testsuite name="ProjectUnitFileManager">
@@ -75,9 +75,9 @@
         <testsuite name="ProjectLaravelMessageBuses">
             <directory suffix="Test.php">./src/Tests/Laravel/MessageBuses</directory>
         </testsuite>
-        <!--Services/Environment-->
-        <testsuite name="ProjectLaravelEnvironment">
-            <directory suffix="Test.php">./src/Tests/Laravel/Services/Environment</directory>
+        <!--Services/Cookie-->
+        <testsuite name="ProjectLaravelCookie">
+            <directory suffix="Test.php">./src/Tests/Laravel/Services/Cookie</directory>
         </testsuite>
         <!--Services/FileManager-->
         <testsuite name="ProjectLaravelFileManager">

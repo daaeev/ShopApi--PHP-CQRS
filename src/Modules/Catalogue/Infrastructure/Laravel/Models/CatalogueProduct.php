@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Catalogue\Infrastructure\Laravel\Models;
 
-use Project\Common\Language;
 use Illuminate\Database\Eloquent\Builder;
+use Project\Common\Services\Environment\Language;
 use Project\Modules\Catalogue\Product\Infrastructure\Laravel\Models\Product;
 use Project\Modules\Catalogue\Settings\Infrastructure\Laravel\Models\Settings;
 use Project\Modules\Catalogue\Content\Product\Infrastructure\Laravel\Models\Image;

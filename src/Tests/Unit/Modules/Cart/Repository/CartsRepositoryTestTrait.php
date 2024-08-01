@@ -2,11 +2,10 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Repository;
 
-use Project\Common\Client\Client;
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferUuId;
-use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Entity\Promocode;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Cart\Entity\CartId;
 use Project\Common\Repository\NotFoundException;
 use Project\Tests\Unit\Modules\Helpers\CartFactory;

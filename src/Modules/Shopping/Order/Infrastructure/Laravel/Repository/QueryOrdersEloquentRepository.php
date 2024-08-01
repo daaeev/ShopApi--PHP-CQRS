@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Order\Infrastructure\Laravel\Repository;
 
-use Project\Common\Client\Client;
+use Project\Common\Services\Environment\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Shopping\Api\DTO\Order as DTO;
 use Project\Common\Entity\Collections\Pagination;

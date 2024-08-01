@@ -1,77 +1,46 @@
 <?php
 
-namespace Project\Tests\Laravel\Services\Environment;
+namespace Project\Tests\Unit\Services\Environment;
 
-use Project\Common\Language;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cookie;
+use Project\Common\Services\Environment\Language;
 use Project\Modules\Administrators\Api\DTO\Admin;
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Administrators\Api\AdministratorsApi;
-use Symfony\Component\HttpFoundation\Cookie as SymfonyCookie;
-use Project\Infrastructure\Laravel\Services\EnvironmentService;
+use Project\Common\Services\Cookie\CookieManagerInterface;
+use Project\Common\Services\Environment\EnvironmentService;
+use Project\Common\Services\Environment\EnvironmentInterface;
 
-class EnvironmentServiceTest extends \Project\Tests\Laravel\TestCase
+class EnvironmentServiceTest extends \PHPUnit\Framework\TestCase
 {
+    private readonly CookieManagerInterface $cookie;
     private readonly AdministratorsApi $administrators;
-    private readonly SymfonyCookie $queuedCookie;
     private readonly EnvironmentInterface $environment;
 
-    private readonly \Mockery\MockInterface $cookieMock;
     private readonly string $hashCookieName;
     private readonly string $hash;
 
     protected function setUp(): void
     {
+        $this->cookie = $this->getMockBuilder(CookieManagerInterface::class)->getMock();
         $this->administrators = $this->getMockBuilder(AdministratorsApi::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->queuedCookie = $this->getMockBuilder(SymfonyCookie::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->hash = uniqid();
         $this->hashCookieName = uniqid();
+        $this->hash = uniqid();
         $this->environment = new EnvironmentService(
+            $this->cookie,
             $this->administrators,
-            $this->hashCookieName,
-            mb_strlen($this->hash)
+            $this->hashCookieName
         );
-
-        parent::setUp();
-
-        // Swap the actual Cookie facade with the mock.
-        // Cookie::get() method mock always return null in default mock
-        $this->cookieMock = \Mockery::mock('alias:' . Cookie::class);
-        $this->app->instance(Cookie::class, $this->cookieMock);
     }
 
     public function testGetClient()
     {
-        $this->cookieMock->shouldReceive('queued')
+        $this->cookie->expects($this->once())
+            ->method('get')
             ->with($this->hashCookieName)
-            ->andReturnNull();
-
-        $this->cookieMock->shouldReceive('get')
-            ->with($this->hashCookieName)
-            ->andReturn($this->hash);
-
-        $client = $this->environment->getClient();
-        $this->assertNull($client->getId());
-        $this->assertSame($this->hash, $client->getHash());
-    }
-
-    public function testGetClientIfHashCookieQueued()
-    {
-        $this->queuedCookie->expects($this->once())
-            ->method('getValue')
             ->willReturn($this->hash);
-
-        $this->cookieMock->shouldReceive('queued')
-            ->once()
-            ->with($this->hashCookieName)
-            ->andReturn($this->queuedCookie);
 
         $client = $this->environment->getClient();
         $this->assertNull($client->getId());
@@ -80,27 +49,10 @@ class EnvironmentServiceTest extends \Project\Tests\Laravel\TestCase
 
     public function testGetClientIfHashCookieDoesNotExists()
     {
-        $this->cookieMock->shouldReceive('queued')
+        $this->cookie->expects($this->once())
+            ->method('get')
             ->with($this->hashCookieName)
-            ->andReturnNull();
-
-        $this->cookieMock->shouldReceive('get')
-            ->with($this->hashCookieName)
-            ->andReturnNull();
-
-        $this->expectException(\DomainException::class);
-        $this->environment->getClient();
-    }
-
-    public function testGetClientIfHashLengthDoesNotEqualsHashCookieLength()
-    {
-        $this->cookieMock->shouldReceive('queued')
-            ->with($this->hashCookieName)
-            ->andReturnNull();
-
-        $this->cookieMock->shouldReceive('get')
-            ->with($this->hashCookieName)
-            ->andReturn($this->hash . uniqid());
+            ->willReturn(null);
 
         $this->expectException(\DomainException::class);
         $this->environment->getClient();

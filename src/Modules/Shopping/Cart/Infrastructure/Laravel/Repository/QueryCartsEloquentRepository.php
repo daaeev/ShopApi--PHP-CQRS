@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository;
 
-use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Api\DTO\Cart as DTO;
 use Project\Modules\Shopping\Cart\Repository\QueryCartsRepositoryInterface;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils\CartEloquentToDTOConverter;

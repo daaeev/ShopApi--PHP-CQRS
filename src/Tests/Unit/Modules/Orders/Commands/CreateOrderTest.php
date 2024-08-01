@@ -2,16 +2,15 @@
 
 namespace Project\Tests\Unit\Modules\Orders\Commands;
 
-use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Offers\Offer;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Shopping\Cart\Entity\Cart;
 use Project\Modules\Shopping\Entity\Promocode;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Order\Entity\Order;
 use Project\Modules\Shopping\Offers\OfferBuilder;
 use Project\Modules\Shopping\Order\Entity\OrderId;
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Shopping\Adapters\ClientsService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
@@ -19,6 +18,7 @@ use Project\Modules\Shopping\Api\DTO\Order\DeliveryInfo;
 use Project\Tests\Unit\Modules\Helpers\ContactsGenerator;
 use Project\Modules\Shopping\Api\Events\Orders\OrderCreated;
 use Project\Modules\Shopping\Api\Events\Orders\OrderUpdated;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Order\Commands\CreateOrderCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryService;

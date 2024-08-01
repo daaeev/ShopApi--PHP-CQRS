@@ -3,14 +3,14 @@
 namespace Project\Modules\Shopping\Order\Infrastructure\Laravel\Repository;
 
 use Ramsey\Uuid\Uuid;
-use Project\Common\Client\Client;
 use Project\Common\Repository\IdentityMap;
 use Project\Modules\Shopping\Offers\Offer;
-use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Shopping\Order\Entity;
+use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
+use Project\Common\Services\Environment\Client;
 use Project\Common\Repository\NotFoundException;
 use Project\Common\Repository\DuplicateKeyException;
 use Project\Modules\Shopping\Offers\OffersCollection;

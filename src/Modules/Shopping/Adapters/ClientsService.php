@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Shopping\Adapters;
 
-use Project\Common\Client\Client;
 use Project\Modules\Client\Api\ClientsApi;
-use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\Services\Environment\Client;
+use Project\Common\Services\Environment\EnvironmentInterface;
 
 class ClientsService
 {

@@ -3,12 +3,12 @@
 namespace Project\Tests\Unit\Modules\Orders\Services;
 
 use PHPUnit\Framework\TestCase;
-use Project\Common\Client\Client;
 use Project\Modules\Client\Api\DTO;
 use Project\Modules\Client\Api\ClientsApi;
-use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Adapters\ClientsService;
 use Project\Tests\Unit\Modules\Helpers\ContactsGenerator;
+use Project\Common\Services\Environment\EnvironmentInterface;
 
 class ClientsServiceTest extends TestCase
 {

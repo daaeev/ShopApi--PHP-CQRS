@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Catalogue\Api;
 
-use Project\Common\Language;
 use Project\Modules\Catalogue\Api\DTO;
+use Project\Common\Services\Environment\Language;
 use Project\Modules\Catalogue\Repositories\QueryCatalogueRepositoryInterface;
 
 class CatalogueApi

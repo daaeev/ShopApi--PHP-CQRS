@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Orders\Requests\Client;
 
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
-use Project\Common\CountryCodeIso3166;
+use Project\Common\Utils\CountryCodeIso3166;
 use Project\Modules\Shopping\Api\DTO\Order\DeliveryInfo;
 use Project\Modules\Shopping\Order\Commands\CreateOrderCommand;
 use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryService;

@@ -2,14 +2,14 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
-use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Offers\Offer;
 use Project\Modules\Shopping\Cart\Entity\Cart;
-use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Adapters\CatalogueService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
 use Project\Modules\Shopping\Cart\Repository\CartsRepositoryInterface;

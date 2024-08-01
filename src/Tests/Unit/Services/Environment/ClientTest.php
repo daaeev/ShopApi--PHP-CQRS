@@ -1,8 +1,8 @@
 <?php
 
-namespace Project\Tests\Unit\Environment;
+namespace Project\Tests\Unit\Services\Environment;
 
-use Project\Common\Client\Client;
+use Project\Common\Services\Environment\Client;
 
 class ClientTest extends \PHPUnit\Framework\TestCase
 {

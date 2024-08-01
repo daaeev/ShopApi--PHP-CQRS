@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Repository;
 
-use Project\Common\Client\Client;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;
 
 trait FindCartByClientTrait

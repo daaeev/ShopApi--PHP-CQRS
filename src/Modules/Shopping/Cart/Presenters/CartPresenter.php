@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Cart\Presenters;
 
-use Project\Common\Language;
 use Project\Modules\Shopping\Api\DTO\Cart as DTO;
+use Project\Common\Services\Environment\Language;
 use Project\Modules\Shopping\Adapters\CatalogueService;
 
 class CartPresenter implements CartPresenterInterface

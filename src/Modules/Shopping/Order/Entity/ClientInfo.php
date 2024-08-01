@@ -3,8 +3,8 @@
 namespace Project\Modules\Shopping\Order\Entity;
 
 use Webmozart\Assert\Assert;
-use Project\Common\Client\Client;
 use Project\Common\Utils\ContactsValidator;
+use Project\Common\Services\Environment\Client;
 
 class ClientInfo
 {

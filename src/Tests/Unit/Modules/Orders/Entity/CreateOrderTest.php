@@ -2,10 +2,10 @@
 
 namespace Project\Tests\Unit\Modules\Orders\Entity;
 
-use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferUuId;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Order\Entity\OrderId;
 use Project\Tests\Unit\Modules\Helpers\OrderFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;

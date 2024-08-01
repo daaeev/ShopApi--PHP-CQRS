@@ -4,12 +4,12 @@ namespace Project\Tests\Unit\Modules\Orders\Commands;
 
 use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Shopping\Order\Entity\Order;
-use Project\Common\Administrators\Administrator;
 use Project\Modules\Shopping\Order\Entity\OrderId;
 use Project\Modules\Shopping\Order\Entity\Manager;
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Shopping\Order\Entity\ManagerId;
+use Project\Common\Services\Environment\Administrator;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Order\Commands\DetachManagerCommand;
 use Project\Modules\Shopping\Order\Repository\OrdersRepositoryInterface;

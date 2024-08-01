@@ -3,7 +3,6 @@
 namespace Project\Modules\Shopping\Cart\Infrastructure\Laravel\Utils;
 
 use Ramsey\Uuid\Uuid;
-use Project\Common\Client\Client;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Cart\Entity;
 use Project\Modules\Shopping\Offers\Offer;
@@ -11,6 +10,7 @@ use Project\Common\Entity\Hydrator\Hydrator;
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 use Project\Modules\Shopping\Cart\Infrastructure\Laravel\Models as Eloquent;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Common;
+namespace Project\Common\Services\Environment;
 
 enum Language: string
 {

@@ -2,13 +2,13 @@
 
 namespace Project\Tests\Unit\Modules\Cart\Commands;
 
-use Project\Common\Client\Client;
 use Project\Modules\Shopping\Offers\Offer;
 use Project\Modules\Shopping\Cart\Entity\Cart;
-use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Discounts\DiscountsService;
-use Project\Modules\Shopping\Cart\Commands\UsePromocodeCommand;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Entity\Promocode as CartPromocode;
+use Project\Modules\Shopping\Cart\Commands\UsePromocodeCommand;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
 use Project\Modules\Shopping\Api\Events\Cart\PromocodeAddedToCart;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\Promocode;

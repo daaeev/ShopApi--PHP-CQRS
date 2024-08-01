@@ -4,8 +4,8 @@ namespace Project\Modules\Shopping\Order\Commands\Handlers;
 
 use Project\Modules\Shopping\Order\Entity\OrderId;
 use Project\Modules\Shopping\Order\Entity\Manager;
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Order\Entity\ManagerId;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Order\Commands\AttachManagerCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;

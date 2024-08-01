@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Modules\Shopping\Cart\Commands\RemovePromocodeCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;

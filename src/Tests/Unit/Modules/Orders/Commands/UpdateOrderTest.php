@@ -2,7 +2,7 @@
 
 namespace Project\Tests\Unit\Modules\Orders\Commands;
 
-use Project\Common\Client\Client;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Order\Entity\Order;
 use Project\Modules\Shopping\Order\Entity\OrderId;
 use Project\Common\ApplicationMessages\Events\Event;

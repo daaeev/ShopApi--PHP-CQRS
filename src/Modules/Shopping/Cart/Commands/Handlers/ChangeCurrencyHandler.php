@@ -3,9 +3,9 @@
 namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Common\Product\Currency;
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Adapters\CatalogueService;
 use Project\Modules\Shopping\Discounts\DiscountsService;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Commands\ChangeCurrencyCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;

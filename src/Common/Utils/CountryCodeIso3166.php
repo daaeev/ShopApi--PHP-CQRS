@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Common;
+namespace Project\Common\Utils;
 
 final class CountryCodeIso3166
 {

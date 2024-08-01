@@ -2,18 +2,18 @@
 
 namespace Project\Tests\Unit\Modules\Offers\Services;
 
-use Project\Common\Language;
 use PHPUnit\Framework\TestCase;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
 use Project\Modules\Catalogue\Api\CatalogueApi;
-use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\Services\Environment\Language;
 use Project\Modules\Catalogue\Api\DTO\Product\Price;
 use Project\Modules\Catalogue\Api\DTO\Product\Product;
 use Project\Modules\Catalogue\Api\DTO\Product\Content;
 use Project\Modules\Shopping\Adapters\CatalogueService;
 use Project\Modules\Catalogue\Api\DTO\CatalogueProduct;
 use Project\Modules\Catalogue\Api\DTO\Product\Settings;
+use Project\Common\Services\Environment\EnvironmentInterface;
 
 class CatalogueServiceTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Api\DTO\Order;
 
-use Project\Common\Client\Client;
 use Project\Common\Utils\Arrayable;
+use Project\Common\Services\Environment\Client;
 
 class ClientInfo implements Arrayable
 {

@@ -4,10 +4,12 @@ namespace Project\Infrastructure\Laravel;
 
 use Psr\Log\LoggerInterface;
 use App\Http\Middleware\AssignClientHashCookie;
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Administrators\Api\AdministratorsApi;
+use Project\Common\Services\Cookie\CookieManagerInterface;
+use Project\Infrastructure\Laravel\Services\CookieManager;
+use Project\Common\Services\Environment\EnvironmentService;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Buses\CompositeEventBus;
-use Project\Infrastructure\Laravel\Services\EnvironmentService;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
 use Project\Common\ApplicationMessages\ApplicationMessagesManager;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
@@ -30,6 +32,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->registerProviders();
+        $this->registerCookieManager();
         $this->registerEnvironment();
         $this->registerAssignClientHashMiddleware();
         $this->registerBuses();
@@ -43,13 +46,18 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         }
     }
 
+    private function registerCookieManager()
+    {
+        $this->app->singleton(CookieManagerInterface::class, CookieManager::class);
+    }
+
     private function registerEnvironment()
     {
         $this->app->singleton(EnvironmentInterface::class, function ($app) {
             return new EnvironmentService(
+                $app->make(CookieManagerInterface::class),
                 $app->make(AdministratorsApi::class),
                 config('project.application.client-hash-cookie-name'),
-                config('project.application.client-hash-cookie-length'),
             );
         });
     }
@@ -58,6 +66,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->app->singleton(AssignClientHashCookie::class, function ($app) {
             return new AssignClientHashCookie(
+                $app->make(CookieManagerInterface::class),
                 config('project.application.client-hash-cookie-name'),
                 config('project.application.client-hash-cookie-lifetime-in-minutes'),
                 config('project.application.client-hash-cookie-length'),

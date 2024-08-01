@@ -4,8 +4,8 @@ namespace Project\Modules\Shopping\Cart\Commands\Handlers;
 
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferBuilder;
-use Project\Common\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Discounts\DiscountsService;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Shopping\Cart\Commands\UpdateOfferCommand;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;

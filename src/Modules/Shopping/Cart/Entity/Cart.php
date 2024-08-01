@@ -2,13 +2,13 @@
 
 namespace Project\Modules\Shopping\Cart\Entity;
 
-use Project\Common\Client\Client;
 use Project\Common\Entity\Aggregate;
 use Project\Common\Product\Currency;
 use Project\Modules\Shopping\Offers\Offer;
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Shopping\Entity\Promocode;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Offers\OffersCollection;
 use Project\Modules\Shopping\Api\Events\Cart\CartUpdated;
 use Project\Modules\Shopping\Api\Events\Cart\CartDeleted;

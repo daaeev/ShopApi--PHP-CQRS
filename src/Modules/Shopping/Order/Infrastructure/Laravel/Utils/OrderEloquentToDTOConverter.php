@@ -2,8 +2,8 @@
 
 namespace Project\Modules\Shopping\Order\Infrastructure\Laravel\Utils;
 
-use Project\Common\Client\Client;
 use Project\Modules\Shopping\Api\DTO\Offer;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Api\DTO\Promocode;
 use Project\Modules\Shopping\Api\DTO\Order as DTO;
 use Project\Modules\Shopping\Order\Infrastructure\Laravel\Eloquent;

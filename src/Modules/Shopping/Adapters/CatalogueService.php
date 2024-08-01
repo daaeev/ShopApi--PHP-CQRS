@@ -2,14 +2,14 @@
 
 namespace Project\Modules\Shopping\Adapters;
 
-use Project\Common\Language;
 use Project\Common\Product\Currency;
 use Project\Common\Product\Availability;
 use Project\Modules\Shopping\Offers\Offer;
 use Project\Modules\Shopping\Offers\OfferId;
 use Project\Modules\Shopping\Offers\OfferUuId;
 use Project\Modules\Catalogue\Api\CatalogueApi;
-use Project\Common\Environment\EnvironmentInterface;
+use Project\Common\Services\Environment\Language;
+use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Modules\Catalogue\Api\DTO\Product\Product as ProductDTO;
 
 class CatalogueService

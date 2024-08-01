@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Common\Client;
+namespace Project\Common\Services\Environment;
 
 use Webmozart\Assert\Assert;
 

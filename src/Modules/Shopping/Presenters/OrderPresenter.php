@@ -2,7 +2,7 @@
 
 namespace Project\Modules\Shopping\Presenters;
 
-use Project\Common\Language;
+use Project\Common\Services\Environment\Language;
 use Project\Modules\Shopping\Api\DTO\Order as DTO;
 use Project\Modules\Shopping\Adapters\CatalogueService;
 

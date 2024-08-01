@@ -2,8 +2,8 @@
 
 namespace Project\Tests\Unit\Modules\Orders\Entity;
 
-use Project\Common\Client\Client;
 use Project\Modules\Shopping\Entity\Promocode;
+use Project\Common\Services\Environment\Client;
 use Project\Modules\Shopping\Order\Entity\Manager;
 use Project\Tests\Unit\Modules\Helpers\OrderFactory;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
@@ -14,8 +14,8 @@ use Project\Modules\Shopping\Order\Entity\OrderStatus;
 use Project\Tests\Unit\Modules\Helpers\PromocodeFactory;
 use Project\Modules\Shopping\Order\Entity\PaymentStatus;
 use Project\Modules\Shopping\Api\Events\Orders\OrderUpdated;
-use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryInfo;
 use Project\Modules\Shopping\Api\Events\Orders\OrderCompleted;
+use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryInfo;
 use Project\Modules\Shopping\Order\Entity\Delivery\DeliveryService;
 use Project\Modules\Shopping\Discounts\Promocodes\Entity\PromocodeId;
 
