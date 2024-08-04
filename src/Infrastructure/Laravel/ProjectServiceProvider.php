@@ -3,7 +3,6 @@
 namespace Project\Infrastructure\Laravel;
 
 use Psr\Log\LoggerInterface;
-use App\Http\Middleware\AssignClientHashCookie;
 use Project\Modules\Administrators\Api\AdministratorsApi;
 use Project\Common\Services\Cookie\CookieManagerInterface;
 use Project\Infrastructure\Laravel\Services\CookieManager;
@@ -12,6 +11,7 @@ use Project\Common\Services\Environment\EnvironmentInterface;
 use Project\Common\ApplicationMessages\Buses\CompositeEventBus;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
 use Project\Common\ApplicationMessages\ApplicationMessagesManager;
+use Project\Infrastructure\Laravel\Middleware\AssignClientHashCookie;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Client\Infrastructure\Laravel\ClientsServiceProvider;
 use Project\Common\ApplicationMessages\Buses\Decorators\LoggingBusDecorator;

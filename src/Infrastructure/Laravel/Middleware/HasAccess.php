@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Project\Infrastructure\Laravel\Middleware;
 
-use Closure;
 use Illuminate\Http\Request;
 use Project\Common\Administrators\Role;
 use Illuminate\Auth\AuthenticationException;
@@ -15,11 +14,9 @@ class HasAccess
         private AuthManagerInterface $auth
     ) {}
 
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, \Closure $next, string $role): Response
     {
-        $admin = $this->auth->logged();
-
-        if (empty($admin)) {
+        if (empty($admin = $this->auth->logged())) {
             throw new AuthenticationException();
         }
 

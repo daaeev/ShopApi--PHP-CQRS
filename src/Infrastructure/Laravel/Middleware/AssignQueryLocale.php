@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Project\Infrastructure\Laravel\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;

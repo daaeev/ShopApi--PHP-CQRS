@@ -75,6 +75,10 @@
         <testsuite name="ProjectLaravelMessageBuses">
             <directory suffix="Test.php">./src/Tests/Laravel/MessageBuses</directory>
         </testsuite>
+        <!--Middlewares-->
+        <testsuite name="ProjectLaravelMiddlewares">
+            <directory suffix="Test.php">./src/Tests/Laravel/Middleware</directory>
+        </testsuite>
         <!--Services/Cookie-->
         <testsuite name="ProjectLaravelCookie">
             <directory suffix="Test.php">./src/Tests/Laravel/Services/Cookie</directory>

@@ -17,7 +17,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\EncryptCookies::class,
         \Illuminate\Session\Middleware\StartSession::class,
-        \App\Http\Middleware\AssignQueryLocale::class,
+        \Project\Infrastructure\Laravel\Middleware\AssignQueryLocale::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -26,7 +26,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\VerifyCsrfToken::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
 
-        \App\Http\Middleware\AssignClientHashCookie::class,
+        \Project\Infrastructure\Laravel\Middleware\AssignClientHashCookie::class,
     ];
 
     /**
@@ -61,6 +61,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'hasAccess' => \App\Http\Middleware\HasAccess::class,
+        'hasAccess' => \Project\Infrastructure\Laravel\Middleware\HasAccess::class,
     ];
 }
