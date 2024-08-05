@@ -3,6 +3,7 @@
 namespace Project\Infrastructure\Laravel;
 
 use Psr\Log\LoggerInterface;
+use Illuminate\Support\Facades\Config;
 use Project\Modules\Administrators\Api\AdministratorsApi;
 use Project\Common\Services\Cookie\CookieManagerInterface;
 use Project\Infrastructure\Laravel\Services\CookieManager;
@@ -31,12 +32,19 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function register()
     {
+        $this->registerConfiguration();
         $this->registerProviders();
         $this->registerCookieManager();
         $this->registerEnvironment();
         $this->registerAssignClientHashMiddleware();
         $this->registerBuses();
         $this->registerMessageManager();
+    }
+
+    private function registerConfiguration()
+    {
+        Config::set('project.application', require __DIR__ . DIRECTORY_SEPARATOR . 'Configuration' . DIRECTORY_SEPARATOR . 'application.php');
+        Config::set('project.storage', require __DIR__ . DIRECTORY_SEPARATOR . 'Configuration' . DIRECTORY_SEPARATOR . 'storage.php');
     }
 
     private function registerProviders()

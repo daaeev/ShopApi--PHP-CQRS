@@ -2,9 +2,9 @@
 
 namespace Project\Modules\Client\Infrastructure\Laravel\Models;
 
-use App\Models\ReadOnly\Cart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Project\Infrastructure\Laravel\Eloquent\ReadOnly\Cart;
 
 class Client extends Model
 {
