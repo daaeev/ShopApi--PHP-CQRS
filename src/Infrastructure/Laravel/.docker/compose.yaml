@@ -7,19 +7,19 @@ services:
       dockerfile: php/Dockerfile
     working_dir: /var/www/html
     volumes:
-      - ./../:/var/www/html
+      - ../../../../:/var/www/html
   composer:
     image: composer:latest
     working_dir: /var/www/html
     volumes:
-      - ./../:/var/www/html
+      - ../../../../:/var/www/html
     command: tail -f /dev/null
   nginx:
     image: nginx:latest
     working_dir: /var/www/html
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./../:/var/www/html
+      - ../../../../:/var/www/html
     ports:
       - 80:80
     depends_on:
