@@ -39,14 +39,4 @@ class AdministratorRolesTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->generateAdmin()->setRoles(['Invalid role']);
     }
-
-    public function testHasAccess()
-    {
-        $admin = $this->generateAdmin();
-        $this->assertTrue($admin->hasAccess(Role::ADMIN));
-        $this->assertTrue($admin->hasAccess(Role::MANAGER));
-        $admin->setRoles([Role::MANAGER]);
-        $this->assertFalse($admin->hasAccess(Role::ADMIN));
-        $this->assertTrue($admin->hasAccess(Role::MANAGER));
-    }
 }

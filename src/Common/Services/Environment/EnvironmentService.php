@@ -39,7 +39,7 @@ class EnvironmentService implements EnvironmentInterface
             return null;
         }
 
-        return new Administrator($authenticated->id, $authenticated->name);
+        return new Administrator($authenticated->id, $authenticated->name, $authenticated->roles);
     }
 
     public function getLanguage(): Language

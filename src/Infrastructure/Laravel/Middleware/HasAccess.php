@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 use Project\Common\Administrators\Role;
 use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
-use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
+use Project\Common\Services\Environment\EnvironmentInterface;
 
 class HasAccess
 {
     public function __construct(
-        private AuthManagerInterface $auth
+        private EnvironmentInterface $environment
     ) {}
 
     public function handle(Request $request, \Closure $next, string $role): Response
     {
-        if (empty($admin = $this->auth->logged())) {
+        if (empty($admin = $this->environment->getAdministrator())) {
             throw new AuthenticationException();
         }
 

@@ -6,23 +6,28 @@ use Illuminate\Http\Request;
 use Project\Common\Administrators\Role;
 use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
-use Project\Modules\Administrators\Entity\Admin;
+use Project\Common\Services\Environment\Administrator;
 use Project\Infrastructure\Laravel\Middleware\HasAccess;
-use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
+use Project\Common\Services\Environment\EnvironmentInterface;
 
 class HasAccessTest extends \PHPUnit\Framework\TestCase
 {
-    private readonly AuthManagerInterface $authManager;
+    private readonly EnvironmentInterface $environment;
     private readonly HasAccess $middleware;
 
+    private readonly Administrator $administrator;
     private readonly Request $request;
     private readonly Response $response;
     private readonly \Closure $next;
 
     protected function setUp(): void
     {
-        $this->authManager = $this->getMockBuilder(AuthManagerInterface::class)->getMock();
-        $this->middleware = new HasAccess($this->authManager);
+        $this->environment = $this->getMockBuilder(EnvironmentInterface::class)->getMock();
+        $this->middleware = new HasAccess($this->environment);
+
+        $this->administrator = $this->getMockBuilder(Administrator::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->request = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
@@ -37,18 +42,14 @@ class HasAccessTest extends \PHPUnit\Framework\TestCase
 
     public function testHasAccess()
     {
-        $logged = $this->getMockBuilder(Admin::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->environment->expects($this->once())
+            ->method('getAdministrator')
+            ->willReturn($this->administrator);
 
-        $logged->expects($this->once())
+        $this->administrator->expects($this->once())
             ->method('hasAccess')
             ->with(Role::ADMIN)
             ->willReturn(true);
-
-        $this->authManager->expects($this->once())
-            ->method('logged')
-            ->willReturn($logged);
 
         $response = $this->middleware->handle($this->request, $this->next, Role::ADMIN->value);
         $this->assertSame($this->response, $response);
@@ -56,8 +57,8 @@ class HasAccessTest extends \PHPUnit\Framework\TestCase
 
     public function testHasAccessIfUnauthenticated()
     {
-        $this->authManager->expects($this->once())
-            ->method('logged')
+        $this->environment->expects($this->once())
+            ->method('getAdministrator')
             ->willReturn(null);
 
         $this->expectException(AuthenticationException::class);
@@ -66,18 +67,14 @@ class HasAccessTest extends \PHPUnit\Framework\TestCase
 
     public function testHasAccessIfAdminDoesNotHasAccess()
     {
-        $logged = $this->getMockBuilder(Admin::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->environment->expects($this->once())
+            ->method('getAdministrator')
+            ->willReturn($this->administrator);
 
-        $logged->expects($this->once())
+        $this->administrator->expects($this->once())
             ->method('hasAccess')
             ->with(Role::ADMIN)
             ->willReturn(false);
-
-        $this->authManager->expects($this->once())
-            ->method('logged')
-            ->willReturn($logged);
 
         $this->expectException(AuthenticationException::class);
         $this->middleware->handle($this->request, $this->next, Role::ADMIN->value);

@@ -3,6 +3,7 @@
 namespace Project\Tests\Unit\Services\Environment;
 
 use Illuminate\Support\Facades\App;
+use Project\Common\Administrators\Role;
 use Project\Common\Services\Environment\Language;
 use Project\Modules\Administrators\Api\DTO\Admin;
 use Project\Modules\Administrators\Api\AdministratorsApi;
@@ -64,7 +65,7 @@ class EnvironmentServiceTest extends \PHPUnit\Framework\TestCase
             id: random_int(1, 9999),
             name: uniqid(),
             login: uniqid(),
-            roles: []
+            roles: [Role::ADMIN]
         );
 
         $this->administrators->expects($this->once())
@@ -75,6 +76,7 @@ class EnvironmentServiceTest extends \PHPUnit\Framework\TestCase
         $this->assertNotNull($administrator);
         $this->assertSame($administrator->getId(), $authenticated->id);
         $this->assertSame($administrator->getName(), $authenticated->name);
+        $this->assertSame($administrator->getRoles(), $authenticated->roles);
     }
 
     public function testGetAdministratorIfUnauthenticated()

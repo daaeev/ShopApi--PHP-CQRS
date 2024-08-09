@@ -126,20 +126,6 @@ class Admin extends Aggregate
         return true;
     }
 
-    public function hasAccess(Role $role): bool
-    {
-        return match ($role) {
-            Role::ADMIN => $this->hasRole($role),
-            Role::MANAGER => $this->hasRole($role) || $this->hasRole(Role::ADMIN),
-            default => false
-        };
-    }
-
-    private function hasRole(Role $role): bool
-    {
-        return in_array($role, $this->roles);
-    }
-
     public function delete(): void
     {
         $this->addEvent(new AdminDeleted($this));
