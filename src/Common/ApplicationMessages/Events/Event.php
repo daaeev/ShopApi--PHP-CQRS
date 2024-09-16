@@ -7,13 +7,15 @@ use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
 abstract class Event implements Utils\Arrayable, ApplicationMessageInterface
 {
-    public function toArray(): array
+    final public function toArray(): array
     {
         return [
-            'data' => $this->getDTO()->toArray(),
-            'className' => static::class
+            'id' => $this->getEventId(),
+            'data' => $this->getData(),
         ];
     }
 
-    abstract public function getDTO(): Utils\DTO;
+    abstract public function getEventId(): string;
+
+    abstract public function getData(): array;
 }

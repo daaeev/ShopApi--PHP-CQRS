@@ -3,10 +3,10 @@
 namespace Project\Modules\Client\Consumers;
 
 use Project\Modules\Client\Entity\ClientId;
-use Project\Modules\Shopping\Api\Events\Orders\OrderCompleted;
 use Project\Modules\Client\Repository\ClientsRepositoryInterface;
 use Project\Common\ApplicationMessages\Events\DispatchEventsTrait;
 use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
+use Project\Modules\Client\Adapters\Events\OrderCompletedDeserializer;
 
 class OrderCompletedConsumer implements DispatchEventsInterface
 {
@@ -16,10 +16,9 @@ class OrderCompletedConsumer implements DispatchEventsInterface
         private readonly ClientsRepositoryInterface $clients
     ) {}
 
-    public function __invoke(OrderCompleted $event): void
+    public function __invoke(OrderCompletedDeserializer $event): void
     {
-        $clientId = $event->getDTO()->client->client->getId();
-        $client = $this->clients->get(ClientId::make($clientId));
+        $client = $this->clients->get(ClientId::make($event->getClientId()));
         if ($client->getContacts()->isPhoneConfirmed()) {
             return;
         }

@@ -2,7 +2,6 @@
 
 namespace Project\Modules\Client\Api\Events;
 
-use Project\Common\Utils;
 use Project\Modules\Client\Entity\Client;
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Client\Utils\ClientEntity2DTOConverter;
@@ -13,8 +12,8 @@ abstract class AbstractClientEvent extends Event
         private Client $client
     ) {}
 
-    public function getDTO(): Utils\DTO
+    public function getData(): array
     {
-        return ClientEntity2DTOConverter::convert($this->client);
+        return ClientEntity2DTOConverter::convert($this->client)->toArray();
     }
 }

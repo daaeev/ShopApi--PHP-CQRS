@@ -2,19 +2,18 @@
 
 namespace Project\Modules\Shopping\Api\Events\Cart;
 
-use Project\Common\Utils;
 use Project\Modules\Shopping\Cart\Entity;
 use Project\Common\ApplicationMessages\Events\Event;
 use Project\Modules\Shopping\Cart\Utils\CartEntity2DTOConverter;
 
-class AbstractCartEvent extends Event
+abstract class AbstractCartEvent extends Event
 {
     public function __construct(
         private Entity\Cart $cart
     ) {}
 
-    public function getDTO(): Utils\DTO
+    public function getData(): array
     {
-        return CartEntity2DTOConverter::convert($this->cart);
+        return CartEntity2DTOConverter::convert($this->cart)->toArray();
     }
 }

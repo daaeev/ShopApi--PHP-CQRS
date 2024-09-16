@@ -5,17 +5,28 @@ namespace Project\Common\ApplicationMessages\Buses;
 use Webmozart\Assert\Assert;
 use Psr\Container\ContainerInterface;
 use Project\Common\ApplicationMessages\Events\Event;
+use Project\Common\ApplicationMessages\Events\SerializedEvent;
+use Project\Common\ApplicationMessages\Events\RegisteredConsumer;
 use Project\Common\ApplicationMessages\ApplicationMessageInterface;
 
 class EventBus implements MessageBusInterface
 {
-    private array $bindings;
-    private ContainerInterface $container;
+    public function __construct(
+        private readonly array $bindings,
+        private readonly ContainerInterface $container,
+    ) {
+        $this->guardAllIsInstanceOfRegisteredConsumer($bindings);
+    }
 
-    public function __construct(array $bindings, ContainerInterface $container)
+    private function guardAllIsInstanceOfRegisteredConsumer(array $bindings): void
     {
-        $this->bindings = $bindings;
-        $this->container = $container;
+        foreach ($bindings as $consumer) {
+            if (is_array($consumer)) {
+                $this->guardAllIsInstanceOfRegisteredConsumer($consumer);
+            } else {
+                Assert::isInstanceOf($consumer, RegisteredConsumer::class);
+            }
+        }
     }
 
     public function dispatch(ApplicationMessageInterface $message): void
@@ -25,29 +36,49 @@ class EventBus implements MessageBusInterface
             return;
         }
 
-        $handler = $this->bindings[$message::class];
-        if (is_array($handler)) {
-            $this->executeHandlers($message, $handler);
+        $serializedEvent = new SerializedEvent($message);
+        $consumer = $this->bindings[$message::class];
+
+        if (is_array($consumer)) {
+            $this->executeConsumers($serializedEvent, $consumer);
         } else {
-            $this->executeHandler($message, $handler);
+            $this->executeConsumer($serializedEvent, $consumer);
         }
     }
 
-    private function executeHandlers(Event $event, array $handlers): void
+    private function executeConsumers(SerializedEvent $event, array $consumers): void
     {
-        foreach ($handlers as $handler) {
-            $this->executeHandler($event, $handler);
+        foreach ($consumers as $consumer) {
+            $this->executeConsumer($event, $consumer);
         }
     }
 
-    private function executeHandler(Event $event, string $handler): void
+    private function executeConsumer(SerializedEvent $event, RegisteredConsumer $registeredConsumer): void
     {
-        $handlerObject = $this->container->get($handler);
-        if (!is_callable($handlerObject)) {
-            throw new \DomainException($handler . ' event handler must be callable');
+        if (!class_exists($registeredConsumer->consumer)) {
+            throw new \DomainException("$registeredConsumer->consumer event consumer class not found");
         }
 
-        call_user_func($handlerObject, $event);
+        $wrappedSerializedEvent = $this->wrapSerializedEvent($event, $registeredConsumer->deserializer);
+        $consumer = $this->container->get($registeredConsumer->consumer);
+        if (!is_callable($consumer)) {
+            throw new \DomainException("$registeredConsumer->consumer event consumer must be callable");
+        }
+
+        call_user_func($consumer, $wrappedSerializedEvent);
+    }
+
+    private function wrapSerializedEvent(SerializedEvent $event, ?string $deserializer): object
+    {
+        if (null === $deserializer) {
+            return $event;
+        }
+
+        if (!class_exists($deserializer)) {
+            throw new \DomainException("$deserializer event deserializer class not found");
+        }
+
+        return new $deserializer($event);
     }
 
     public function canDispatch(ApplicationMessageInterface $message): bool
