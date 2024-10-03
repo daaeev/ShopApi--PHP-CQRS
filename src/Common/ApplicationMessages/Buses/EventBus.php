@@ -32,13 +32,12 @@ class EventBus implements MessageBusInterface
     public function dispatch(ApplicationMessageInterface $message): void
     {
         Assert::isInstanceOf($message, Event::class, 'Message must be instance of ' . Event::class);
-        if (!isset($this->bindings[$message::class])) {
+        $serializedEvent = new SerializedEvent($message);
+        if (!isset($this->bindings[$serializedEvent->getEventId()])) {
             return;
         }
 
-        $serializedEvent = new SerializedEvent($message);
-        $consumer = $this->bindings[$message::class];
-
+        $consumer = $this->bindings[$serializedEvent->getEventId()];
         if (is_array($consumer)) {
             $this->executeConsumers($serializedEvent, $consumer);
         } else {
@@ -83,6 +82,7 @@ class EventBus implements MessageBusInterface
 
     public function canDispatch(ApplicationMessageInterface $message): bool
     {
-        return isset($this->bindings[$message::class]);
+        Assert::isInstanceOf($message, Event::class, 'Message must be instance of ' . Event::class);
+        return isset($this->bindings[$message->getEventId()]);
     }
 }

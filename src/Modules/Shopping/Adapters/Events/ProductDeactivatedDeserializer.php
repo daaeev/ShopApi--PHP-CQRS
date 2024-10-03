@@ -6,15 +6,13 @@ use Webmozart\Assert\Assert;
 use Project\Common\Product\Availability;
 use Project\Common\ApplicationMessages\Events\SerializedEvent;
 use Project\Modules\Catalogue\Api\Events\Product\ProductEvent;
-use Project\Modules\Catalogue\Api\Events\Product\ProductActivityChanged;
-use Project\Modules\Catalogue\Api\Events\Product\ProductAvailabilityChanged;
 
 class ProductDeactivatedDeserializer
 {
     public function __construct(
         private readonly SerializedEvent $event
     ) {
-        $eventsId = [ProductActivityChanged::class, ProductAvailabilityChanged::class];
+        $eventsId = [ProductEvent::ACTIVITY_CHANGED->value, ProductEvent::AVAILABILITY_CHANGED->value];
         Assert::inArray($event->getEventId(), $eventsId);
     }
 

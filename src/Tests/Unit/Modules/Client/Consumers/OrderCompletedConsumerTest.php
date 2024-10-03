@@ -6,24 +6,20 @@ use PHPUnit\Framework\TestCase;
 use Project\Modules\Client\Entity\Client;
 use Project\Modules\Client\Entity\ClientId;
 use Project\Modules\Client\Entity\Contacts;
-use Project\Tests\Unit\Modules\Helpers\OrderFactory;
 use Project\Common\ApplicationMessages\Events\Event;
-use Project\Tests\Unit\Modules\Helpers\OffersFactory;
 use Project\Modules\Client\Consumers\OrderCompletedConsumer;
-use Project\Modules\Shopping\Api\Events\Orders\OrderCompleted;
 use Project\Modules\Client\Repository\ClientsRepositoryInterface;
 use Project\Common\ApplicationMessages\Buses\MessageBusInterface;
-use Project\Modules\Shopping\Order\Utils\OrderEntityToDTOConverter;
+use Project\Modules\Client\Adapters\Events\OrderCompletedDeserializer;
 
 class OrderCompletedConsumerTest extends TestCase
 {
-    use OffersFactory, OrderFactory;
-
     private readonly ClientsRepositoryInterface $clients;
     private readonly MessageBusInterface $eventBus;
     private readonly OrderCompletedConsumer $consumer;
 
-    private readonly OrderCompleted $orderCompletedEvent;
+    private readonly OrderCompletedDeserializer $deserializer;
+    private readonly int $clientId;
     private readonly Client $client;
     private readonly Contacts $contacts;
     private readonly Event $clientUpdatedEvent;
@@ -35,10 +31,11 @@ class OrderCompletedConsumerTest extends TestCase
         $this->consumer = new OrderCompletedConsumer($this->clients);
         $this->consumer->setDispatcher($this->eventBus);
 
-        $this->orderCompletedEvent = $this->getMockBuilder(OrderCompleted::class)
+        $this->deserializer = $this->getMockBuilder(OrderCompletedDeserializer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->clientId = random_int(1, 100);
         $this->client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -52,15 +49,13 @@ class OrderCompletedConsumerTest extends TestCase
 
     public function testOrderCompletedEvent()
     {
-        $order = $this->generateOrder([$this->generateOffer()]);
-        $orderDTO = OrderEntityToDTOConverter::convert($order);
-        $this->orderCompletedEvent->expects($this->once())
-            ->method('getDTO')
-            ->willReturn($orderDTO);
+        $this->deserializer->expects($this->once())
+            ->method('getClientId')
+            ->willReturn($this->clientId);
 
         $this->clients->expects($this->once())
             ->method('get')
-            ->with(ClientId::make($orderDTO->client->client->getId()))
+            ->with(ClientId::make($this->clientId))
             ->willReturn($this->client);
 
         $this->client->expects($this->once())
@@ -85,20 +80,18 @@ class OrderCompletedConsumerTest extends TestCase
             ->method('dispatch')
             ->with($this->clientUpdatedEvent);
 
-        call_user_func($this->consumer, $this->orderCompletedEvent);
+        call_user_func($this->consumer, $this->deserializer);
     }
 
     public function testOrderCompletedEventIfClientPhoneAlreadyConfirmed()
     {
-        $order = $this->generateOrder([$this->generateOffer()]);
-        $orderDTO = OrderEntityToDTOConverter::convert($order);
-        $this->orderCompletedEvent->expects($this->once())
-            ->method('getDTO')
-            ->willReturn($orderDTO);
+        $this->deserializer->expects($this->once())
+            ->method('getClientId')
+            ->willReturn($this->clientId);
 
         $this->clients->expects($this->once())
             ->method('get')
-            ->with(ClientId::make($orderDTO->client->client->getId()))
+            ->with(ClientId::make($this->clientId))
             ->willReturn($this->client);
 
         $this->client->expects($this->once())
@@ -109,6 +102,6 @@ class OrderCompletedConsumerTest extends TestCase
             ->method('isPhoneConfirmed')
             ->willReturn(true);
 
-        call_user_func($this->consumer, $this->orderCompletedEvent);
+        call_user_func($this->consumer, $this->deserializer);
     }
 }

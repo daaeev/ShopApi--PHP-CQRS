@@ -11,11 +11,11 @@ class OrderCompletedDeserializer
     public function __construct(
         private readonly SerializedEvent $event
     ) {
-        Assert::same($this->event->getEventId(), OrderEvent::COMPLETED);
+        Assert::same($this->event->getEventId(), OrderEvent::COMPLETED->value);
     }
 
     public function getClientId(): int
     {
-        return $this->event->client->id;
+        return $this->event->client['id'];
     }
 }

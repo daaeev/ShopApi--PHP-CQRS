@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Id;
+namespace Project\Tests\Unit\Entity\Id;
 
 use Project\Common\Entity\Id\Uuid;
 use Ramsey\Uuid\Uuid as RamseyUuid;
