@@ -3,8 +3,6 @@
 namespace Project\Modules\Client\Infrastructure\Laravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Project\Infrastructure\Laravel\Eloquent\ReadOnly\Cart;
 
 class Client extends Model
 {
@@ -28,18 +26,4 @@ class Client extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    public function cart()
-    {
-        return $this->hasOne(Cart::class, 'client_id');
-    }
-
-    public function scopeHasNotEmptyCart(Builder $query, bool $hasNotEmptyCart)
-    {
-        if (!$hasNotEmptyCart) {
-            return;
-        }
-
-        $query->whereHas('cart.items');
-    }
 }

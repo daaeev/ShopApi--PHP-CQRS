@@ -3496,11 +3496,6 @@
 									"key": "limit",
 									"value": "15",
 									"disabled": true
-								},
-								{
-									"key": "options[hasNotEmptyCart]",
-									"value": "1",
-									"disabled": true
 								}
 							]
 						}
@@ -3530,11 +3525,6 @@
 										{
 											"key": "limit",
 											"value": "15",
-											"disabled": true
-										},
-										{
-											"key": "options[hasNotEmptyCart]",
-											"value": "0",
 											"disabled": true
 										}
 									]

@@ -33,10 +33,7 @@ class QueryClientsEloquentRepository implements QueryClientsRepositoryInterface
 
     public function list(int $page, int $limit, array $options = []): PaginatedCollection
     {
-        $query = Eloquent\Client::query()
-            ->hasNotEmptyCart($options['hasNotEmptyCart'] ?? false)
-            ->paginate(perPage: $limit, page: $page);
-
+        $query = Eloquent\Client::query()->paginate(perPage: $limit, page: $page);
         $clientsDTO = array_map(function (Eloquent\Client $record) {
             return ClientEloquent2DTOConverter::convert($record);
         }, $query->items());

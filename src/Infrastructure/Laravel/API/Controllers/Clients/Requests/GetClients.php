@@ -13,7 +13,6 @@ class GetClients extends ApiRequest
             'page' => 'nullable|numeric|integer|min:1',
             'limit' => 'nullable|numeric|integer|min:1',
             'options' => 'nullable|array',
-            'options.hasNotEmptyCart' => 'boolean',
         ];
     }
 
