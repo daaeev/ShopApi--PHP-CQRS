@@ -9,6 +9,7 @@ use Project\Common\Administrators\Role;
 use Project\Modules\Administrators\Entity;
 use Project\Common\Entity\Hydrator\Hydrator;
 use Illuminate\Auth\AuthenticationException;
+use Project\Infrastructure\Laravel\Auth\AuthGuard;
 use Project\Modules\Administrators\AuthManager\AuthManagerInterface;
 
 class GuardAuthManager implements AuthManagerInterface
@@ -18,7 +19,7 @@ class GuardAuthManager implements AuthManagerInterface
     public function __construct(
         private Hydrator $hydrator
     ) {
-        $this->guard = Auth::guard('admin');
+        $this->guard = Auth::guard(AuthGuard::ADMIN->value);
     }
 
     public function login(string $login, string $password): void

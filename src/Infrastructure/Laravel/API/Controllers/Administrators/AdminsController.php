@@ -4,6 +4,7 @@ namespace Project\Infrastructure\Laravel\API\Controllers\Administrators;
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
+use Project\Infrastructure\Laravel\Auth\AuthGuard;
 use Project\Modules\Administrators\Commands\LogoutCommand;
 use Project\Modules\Administrators\Queries\AuthorizedAdminQuery;
 use Project\Infrastructure\Laravel\API\Controllers\BaseApiController;
@@ -14,7 +15,7 @@ class AdminsController extends BaseApiController
 
     public function __construct()
     {
-        $this->auth = Auth::guard('admin');
+        $this->auth = Auth::guard(AuthGuard::ADMIN->value);
     }
 
     public function create(Requests\CreateAdmin $request)
