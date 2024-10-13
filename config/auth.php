@@ -1,6 +1,8 @@
 <?php
 
 use Project\Modules\Administrators\Infrastructure\Laravel\Models\Administrator;
+use Project\Modules\Client\Infrastructure\Laravel\Models\Client;
+use Project\Infrastructure\Laravel\Auth\AuthGuard;
 
 return [
 
@@ -16,7 +18,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'admin'
+        'guard' => AuthGuard::ADMIN->value
     ],
 
     /*
@@ -37,9 +39,13 @@ return [
     */
 
     'guards' => [
-        'admin' => [
+        AuthGuard::ADMIN->value => [
             'driver' => 'session',
             'provider' => 'admin',
+        ],
+        AuthGuard::CLIENT->value => [
+            'driver' => 'session',
+            'provider' => 'client',
         ],
     ],
 
@@ -64,6 +70,10 @@ return [
         'admin' => [
             'driver' => 'eloquent',
             'model' => Administrator::class,
+        ],
+        'client' => [
+            'driver' => 'eloquent',
+            'model' => Client::class,
         ],
     ],
 

@@ -8,6 +8,7 @@ class ApplicationMessagesManager
 {
     public function __construct(
         private MessageBusInterface $commandBus,
+        private MessageBusInterface $queueCommandBus,
         private MessageBusInterface $queryBus,
         private MessageBusInterface $eventBus,
     ) {}
@@ -15,6 +16,11 @@ class ApplicationMessagesManager
     public function dispatchCommand(ApplicationMessageInterface $command): mixed
     {
         return $this->commandBus->dispatch($command);
+    }
+
+    public function queueCommand(ApplicationMessageInterface $command): mixed
+    {
+        return $this->queueCommandBus->dispatch($command);
     }
 
     public function dispatchQuery(ApplicationMessageInterface $query): mixed
