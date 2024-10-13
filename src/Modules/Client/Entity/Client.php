@@ -3,6 +3,7 @@
 namespace Project\Modules\Client\Entity;
 
 use Project\Common\Entity\Aggregate;
+use Project\Modules\Client\Entity\Access\Access;
 use Project\Modules\Client\Api\Events\ClientUpdated;
 use Project\Modules\Client\Api\Events\ClientCreated;
 
@@ -11,6 +12,7 @@ class Client extends Aggregate
     private ClientId $id;
     private Name $name;
     private Contacts $contacts;
+    private array $accesses = [];
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -60,6 +62,31 @@ class Client extends Aggregate
         $this->updated();
     }
 
+    public function addAccess(Access $access): void
+    {
+        foreach ($this->getAccesses() as $clientAccess) {
+            if ($clientAccess->equalsTo($access)) {
+                throw new \DomainException('Client already have same access');
+            }
+        }
+
+        $this->accesses[] = $access;
+        $this->updated();
+    }
+
+    public function removeAccess(Access $access): void
+    {
+        foreach ($this->getAccesses() as $index => $clientAccess) {
+            if ($clientAccess->equalsTo($access)) {
+                unset($this->accesses[$index]);
+                $this->updated();
+                return;
+            }
+        }
+
+        throw new \DomainException('Client does not have provided access to delete');
+    }
+
     public function getId(): ClientId
     {
         return $this->id;
@@ -73,6 +100,14 @@ class Client extends Aggregate
     public function getContacts(): Contacts
     {
         return $this->contacts;
+    }
+
+    /**
+     * @return Access[]
+     */
+    public function getAccesses(): array
+    {
+        return $this->accesses;
     }
 
     public function getCreatedAt(): \DateTimeImmutable
