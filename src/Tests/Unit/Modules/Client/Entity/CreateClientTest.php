@@ -4,8 +4,8 @@ namespace Project\Tests\Unit\Modules\Client\Entity;
 
 use Project\Modules\Client\Entity;
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Client\Api\Events\ClientCreated;
 use Project\Tests\Unit\Modules\Helpers\ClientFactory;
+use Project\Modules\Client\Api\Events\Client\ClientCreated;
 
 class CreateClientTest extends \PHPUnit\Framework\TestCase
 {

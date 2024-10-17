@@ -8,6 +8,11 @@ abstract class Id
         protected mixed $id
     ) {}
 
+    public function __toString(): string
+    {
+        return $this->id;
+    }
+
     public static function make($id): static
     {
         return new static($id);

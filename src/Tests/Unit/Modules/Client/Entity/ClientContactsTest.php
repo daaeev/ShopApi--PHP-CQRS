@@ -3,9 +3,8 @@
 namespace Project\Tests\Unit\Modules\Client\Entity;
 
 use Project\Tests\Unit\Modules\Helpers\AssertEvents;
-use Project\Modules\Client\Api\Events\ClientUpdated;
 use Project\Tests\Unit\Modules\Helpers\ClientFactory;
-use Project\Tests\Unit\Modules\Helpers\ContactsGenerator;
+use Project\Modules\Client\Api\Events\Client\ClientUpdated;
 
 class ClientContactsTest extends \PHPUnit\Framework\TestCase
 {

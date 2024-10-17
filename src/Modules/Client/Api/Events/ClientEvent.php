@@ -6,4 +6,6 @@ enum ClientEvent: string
 {
     case CREATED = 'clients.created';
     case UPDATED = 'clients.updated';
+    case CONFIRMATION_CREATED = 'clients.confirmationCreated';
+    case CONFIRMATION_REFRESHED = 'clients.confirmationRefreshed';
 }

@@ -4,8 +4,10 @@ namespace Project\Modules\Client\Entity;
 
 use Project\Common\Entity\Aggregate;
 use Project\Modules\Client\Entity\Access\Access;
-use Project\Modules\Client\Api\Events\ClientUpdated;
-use Project\Modules\Client\Api\Events\ClientCreated;
+use Project\Modules\Client\Api\Events\Client\ClientUpdated;
+use Project\Modules\Client\Api\Events\Client\ClientCreated;
+use Project\Modules\Client\Api\Events\Confirmation\ClientConfirmationCreated;
+use Project\Modules\Client\Api\Events\Confirmation\ClientConfirmationRefreshed;
 
 class Client extends Aggregate
 {
@@ -13,6 +15,7 @@ class Client extends Aggregate
     private Name $name;
     private Contacts $contacts;
     private array $accesses = [];
+    private array $confirmations = [];
     private \DateTimeImmutable $createdAt;
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -87,6 +90,60 @@ class Client extends Aggregate
         throw new \DomainException('Client does not have provided access to delete');
     }
 
+    public function generateConfirmation(
+        Confirmation\CodeGeneratorInterface $codeGenerator,
+        int $lifeTimeInMinutes = 5
+    ): Confirmation\ConfirmationUuid {
+        $confirmation = new Confirmation\Confirmation(
+            Confirmation\ConfirmationUuid::random(),
+            $codeGenerator->generate(),
+            $lifeTimeInMinutes
+        );
+
+        $this->confirmations[] = $confirmation;
+        $this->addEvent(new ClientConfirmationCreated($this, $confirmation));
+        return $confirmation->getUuid();
+    }
+
+    public function refreshConfirmationExpiredAt(
+        Confirmation\ConfirmationUuid $uuid,
+        int $lifeTimeInMinutes = 5
+    ): void {
+        $confirmation = $this->getConfirmation($uuid);
+        $confirmation->refreshExpiredAt($lifeTimeInMinutes);
+        $this->addEvent(new ClientConfirmationRefreshed($this, $confirmation));
+    }
+
+    private function getConfirmation(Confirmation\ConfirmationUuid $uuid): Confirmation\Confirmation
+    {
+        foreach ($this->getConfirmations() as $confirmation) {
+            if ($confirmation->getUuid()->equalsTo($uuid)) {
+                return $confirmation;
+            }
+        }
+
+        throw new \DomainException("Client does not have confirmation with uuid '$uuid'");
+    }
+
+    public function applyConfirmation(Confirmation\ConfirmationUuid $uuid, int|string $inputCode): void
+    {
+        $confirmation = $this->getConfirmation($uuid);
+        $confirmation->validateCode($inputCode);
+        $this->removeConfirmation($uuid);
+    }
+
+    private function removeConfirmation(Confirmation\ConfirmationUuid $uuid): void
+    {
+        foreach ($this->getConfirmations() as $index => $confirmation) {
+            if ($confirmation->getUuid()->equalsTo($uuid)) {
+                unset($this->confirmations[$index]);
+                return;
+            }
+        }
+
+        throw new \DomainException("Client does not have confirmation with uuid '$uuid'");
+    }
+
     public function getId(): ClientId
     {
         return $this->id;
@@ -105,9 +162,17 @@ class Client extends Aggregate
     /**
      * @return Access[]
      */
-    public function getAccesses(): array
+    private function getAccesses(): array
     {
         return $this->accesses;
+    }
+
+    /**
+     * @return Confirmation\Confirmation[]
+     */
+    private function getConfirmations(): array
+    {
+        return $this->confirmations;
     }
 
     public function getCreatedAt(): \DateTimeImmutable
