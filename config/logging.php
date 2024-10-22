@@ -1,8 +1,11 @@
 <?php
 
+use Psr\Log\LogLevel;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\SyslogUdpHandler;
+use Monolog\Handler\RotatingFileHandler;
 
 return [
 
@@ -53,21 +56,35 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily', 'errors'],
             'ignore_exceptions' => false,
+        ],
+
+        'daily' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', LogLevel::DEBUG),
+            'handler' => RotatingFileHandler::class,
+            'formatter' => LineFormatter::class,
+            'with' => [
+                'filename' => storage_path('logs/compact-laravel.log'),
+                'maxFiles' => 2,
+            ],
+        ],
+        'errors' => [
+            'driver' => 'monolog',
+            'level' => LogLevel::WARNING,
+            'handler' => RotatingFileHandler::class,
+            'formatter' => LineFormatter::class,
+            'with' => [
+                'filename' => storage_path('logs/errors-laravel.log'),
+                'maxFiles' => 2,
+            ],
         ],
 
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-        ],
-
-        'daily' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'days' => 14,
         ],
 
         'slack' => [

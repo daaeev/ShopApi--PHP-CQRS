@@ -17,7 +17,7 @@ class LoggingBusDecorator extends AbstractCompositeMessageBusDecorator
 
     public function dispatch(ApplicationMessageInterface $message)
     {
-        $this->logger->info($this->getMessage($message));
+        $this->logger->debug($this->getMessage($message));
         return parent::dispatch($message);
     }
 

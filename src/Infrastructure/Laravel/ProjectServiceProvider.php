@@ -5,6 +5,8 @@ namespace Project\Infrastructure\Laravel;
 use Psr\Log\LoggerInterface;
 use Illuminate\Support\Facades\Config;
 use Project\Common\Commands\SendSmsCommand;
+use Project\Common\Services\SMS\LogSmsSender;
+use Project\Common\Services\SMS\SmsSenderInterface;
 use Project\Common\Commands\Handlers\SendSmsHandler;
 use Project\Common\ApplicationMessages\Buses\RequestBus;
 use Project\Modules\Administrators\Api\AdministratorsApi;
@@ -47,6 +49,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->registerProviders();
         $this->registerCookieManager();
         $this->registerEnvironment();
+        $this->registerSmsSender();
         $this->registerAssignClientHashMiddleware();
         $this->registerBuses();
         $this->registerMessageManager();
@@ -81,6 +84,20 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
                 config('project.application.client-hash-cookie-name'),
             );
         });
+    }
+
+    private function registerSmsSender(): void
+    {
+        $senders = [
+            'log' => LogSmsSender::class,
+        ];
+
+        $currentSender = config('project.application.sms-sender', 'log');
+        if (!array_key_exists($currentSender, $senders)) {
+            $currentSender = 'log';
+        }
+
+        $this->app->singleton(SmsSenderInterface::class, $senders[$currentSender]);
     }
 
     private function registerAssignClientHashMiddleware(): void
