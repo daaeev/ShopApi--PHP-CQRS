@@ -11,7 +11,9 @@ use Project\Modules\Administrators\Api\AdministratorsApi;
 use Project\Common\Services\Cookie\CookieManagerInterface;
 use Project\Infrastructure\Laravel\Services\CookieManager;
 use Project\Common\Services\Environment\EnvironmentService;
+use Project\Common\Services\Translator\TranslatorInterface;
 use Project\Common\Services\Environment\EnvironmentInterface;
+use Project\Infrastructure\Laravel\Services\LaravelTranslator;
 use Project\Common\ApplicationMessages\Buses\CompositeEventBus;
 use Project\Common\ApplicationMessages\Buses\CompositeRequestBus;
 use Project\Common\ApplicationMessages\ApplicationMessagesManager;
@@ -20,6 +22,7 @@ use Project\Common\ApplicationMessages\Events\DispatchEventsInterface;
 use Project\Modules\Client\Infrastructure\Laravel\ClientsServiceProvider;
 use Project\Common\ApplicationMessages\Buses\Decorators\LoggingBusDecorator;
 use Project\Modules\Shopping\Infrastructure\Laravel\ShoppingServiceProvider;
+use Illuminate\Contracts\Translation\Translator as LaravelTranslatorContract;
 use Project\Infrastructure\Laravel\ApplicationMessages\Buses\QueueCommandBus;
 use Project\Modules\Catalogue\Infrastructure\Laravel\CatalogueServiceProvider;
 use Project\Modules\Administrators\Infrastructure\Laravel\AdministratorsServiceProvider;
@@ -35,7 +38,7 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     ];
 
     private array $commonCommands = [
-        SendSmsCommand::class => SendSmsHandler::class
+        SendSmsCommand::class => SendSmsHandler::class,
     ];
 
     public function register(): void
@@ -52,8 +55,9 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
 
     private function registerConfiguration(): void
     {
-        Config::set('project.application', require __DIR__ . DIRECTORY_SEPARATOR . 'Configuration' . DIRECTORY_SEPARATOR . 'application.php');
-        Config::set('project.storage', require __DIR__ . DIRECTORY_SEPARATOR . 'Configuration' . DIRECTORY_SEPARATOR . 'storage.php');
+        Config::set('project.application', require implode(DIRECTORY_SEPARATOR, [__DIR__, 'Configuration', 'application.php']));
+        Config::set('project.storage', require implode(DIRECTORY_SEPARATOR, [__DIR__, 'Configuration', 'storage.php']));
+        Config::set('project.client', require implode(DIRECTORY_SEPARATOR, [__DIR__, 'Configuration', 'client.php']));
     }
 
     private function registerProviders(): void
@@ -136,5 +140,30 @@ class ProjectServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerCommonCommands(): void
     {
         $this->app->get('CommandBus')->registerBus(new RequestBus($this->commonCommands, $this->app));
+    }
+
+    public function boot()
+    {
+        $this->registerTranslator();
+    }
+
+    private function registerTranslator(): void
+    {
+        $translationsNamespace = 'Project';
+        $translationsLoader = $this->app->make(LaravelTranslatorContract::class);
+        $translationsLoader->addNamespace($translationsNamespace, $this->getTranslationsDir());
+
+        $this->app->singleton(TranslatorInterface::class, function ($app) use ($translationsNamespace) {
+            return new LaravelTranslator(
+                $app->make(LaravelTranslatorContract::class),
+                $app->make(EnvironmentInterface::class),
+                $translationsNamespace,
+            );
+        });
+    }
+
+    private function getTranslationsDir(): string
+    {
+        return implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'Common', 'Services', 'Translator', 'Translations']);
     }
 }
