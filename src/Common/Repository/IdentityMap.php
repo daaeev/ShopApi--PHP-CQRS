@@ -39,4 +39,9 @@ class IdentityMap
 
         unset($this->objects[$id]);
     }
+
+    public function all(): array
+    {
+        return $this->objects;
+    }
 }

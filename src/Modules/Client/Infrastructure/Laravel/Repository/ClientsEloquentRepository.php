@@ -134,4 +134,42 @@ class ClientsEloquentRepository implements ClientsRepositoryInterface
                 : null
         ]);
     }
+
+    public function getByPhone(string $phone): Entity\Client
+    {
+        $identityMapClients = $this->identityMap->all();
+        foreach ($identityMapClients as $client) {
+            if ($phone === $client->getPhone()) {
+                return $client;
+            }
+        }
+
+        $record = Eloquent\Client::query()->where('phone', $phone)->first();
+        if (empty($record)) {
+            throw new NotFoundException('Client does not exists');
+        }
+
+        $client = $this->hydrate($record);
+        $this->identityMap->add($client->getId()->getId(), $client);
+        return $client;
+    }
+
+    public function getByConfirmation(Entity\Confirmation\ConfirmationUuid $confirmationUuid): Entity\Client
+    {
+        $identityMapClients = $this->identityMap->all();
+        foreach ($identityMapClients as $client) {
+            if ($client->hasConfirmation($confirmationUuid)) {
+                return $client;
+            }
+        }
+
+        $record = Eloquent\Client::query()->hasConfirmation($confirmationUuid)->first();
+        if (empty($record)) {
+            throw new NotFoundException('Client does not exists');
+        }
+
+        $client = $this->hydrate($record);
+        $this->identityMap->add($client->getId()->getId(), $client);
+        return $client;
+    }
 }

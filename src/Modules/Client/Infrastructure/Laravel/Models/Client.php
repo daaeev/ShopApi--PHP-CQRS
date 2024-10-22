@@ -2,11 +2,11 @@
 
 namespace Project\Modules\Client\Infrastructure\Laravel\Models;
 
+use Project\Modules\Client\Entity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Project\Modules\Client\Entity\Access as Entity;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 
 class Client extends Model implements Authenticatable
@@ -39,10 +39,22 @@ class Client extends Model implements Authenticatable
         return $this->hasMany(Access::class, 'client_id', 'id');
     }
 
-    public function scopeHasAccess(Builder $query, Entity\Access $access): void
+    public function confirmations(): HasMany
+    {
+        return $this->hasMany(Confirmation::class, 'client_id', 'id');
+    }
+
+    public function scopeHasAccess(Builder $query, Entity\Access\Access $access): void
     {
         $query->whereHas('accesses', function (Builder $accessesQuery) use ($access) {
             $accessesQuery->where('credentials', $access->getCredentials());
+        });
+    }
+
+    public function scopeHasConfirmation(Builder $query, Entity\Confirmation\ConfirmationUuid $uuid): void
+    {
+        $query->whereHas('confirmations', function (Builder $confirmationsQuery) use ($uuid) {
+            $confirmationsQuery->where('uuid', $uuid->getId());
         });
     }
 }
