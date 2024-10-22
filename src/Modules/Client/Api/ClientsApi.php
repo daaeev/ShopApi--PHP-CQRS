@@ -3,7 +3,6 @@
 namespace Project\Modules\Client\Api;
 
 use Project\Modules\Client\Entity;
-use Project\Modules\Client\Api\DTO;
 use Project\Common\Repository\NotFoundException;
 use Project\Modules\Client\Utils\ClientEntity2DTOConverter;
 use Project\Modules\Client\Repository\ClientsRepositoryInterface;

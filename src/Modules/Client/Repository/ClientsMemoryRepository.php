@@ -10,7 +10,6 @@ use Project\Common\Repository\DuplicateKeyException;
 
 class ClientsMemoryRepository implements ClientsRepositoryInterface
 {
-    private array $items = [];
     private int $increment = 0;
 
     public function __construct(
@@ -26,12 +25,11 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
             $this->hydrator->hydrate($client->getId(), ['id' => ++$this->increment]);
         }
 
-        if (isset($this->items[$client->getId()->getId()])) {
+        if ($this->identityMap->has($client->getId()->getId())) {
             throw new DuplicateKeyException('Client with same id already exists');
         }
 
         $this->identityMap->add($client->getId()->getId(), $client);
-        $this->items[$client->getId()->getId()] = clone $client;
     }
 
     private function guardContactsUnique(Entity\Client $client): void
@@ -40,7 +38,7 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
             return;
         }
 
-        foreach ($this->items as $item) {
+        foreach ($this->identityMap->all() as $item) {
             if ($client->getId()->equalsTo($item->getId())) {
                 continue;
             }
@@ -54,22 +52,18 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
     public function update(Entity\Client $client): void
     {
         $this->guardContactsUnique($client);
-
-        if (empty($this->items[$client->getId()->getId()])) {
+        if (!$this->identityMap->has($client->getId()->getId())) {
             throw new NotFoundException('Client does not exists');
         }
-
-        $this->items[$client->getId()->getId()] = clone $client;
     }
 
     public function delete(Entity\Client $client): void
     {
-        if (empty($this->items[$client->getId()->getId()])) {
+        if (!$this->identityMap->has($client->getId()->getId())) {
             throw new NotFoundException('Client does not exists');
         }
 
         $this->identityMap->remove($client->getId()->getId());
-        unset($this->items[$client->getId()->getId()]);
     }
 
     public function get(Entity\ClientId $id): Entity\Client
@@ -80,6 +74,30 @@ class ClientsMemoryRepository implements ClientsRepositoryInterface
 
         if ($this->identityMap->has($id->getId())) {
             return $this->identityMap->get($id->getId());
+        }
+
+        throw new NotFoundException('Client does not exists');
+    }
+
+    public function getByPhone(string $phone): Entity\Client
+    {
+        $identityMapClients = $this->identityMap->all();
+        foreach ($identityMapClients as $client) {
+            if ($phone === $client->getPhone()) {
+                return $client;
+            }
+        }
+
+        throw new NotFoundException('Client does not exists');
+    }
+
+    public function getByConfirmation(Entity\Confirmation\ConfirmationUuid $confirmationUuid): Entity\Client
+    {
+        $identityMapClients = $this->identityMap->all();
+        foreach ($identityMapClients as $client) {
+            if ($client->hasConfirmation($confirmationUuid)) {
+                return $client;
+            }
         }
 
         throw new NotFoundException('Client does not exists');

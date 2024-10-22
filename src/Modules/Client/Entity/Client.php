@@ -90,6 +90,17 @@ class Client extends Aggregate
         throw new \DomainException('Client does not have provided access to delete');
     }
 
+    public function hasAccess(Access $access): bool
+    {
+        foreach ($this->getAccesses() as $clientAccess) {
+            if ($clientAccess->equalsTo($access)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function generateConfirmation(
         Confirmation\CodeGeneratorInterface $codeGenerator,
         int $lifeTimeInMinutes = 5
@@ -142,6 +153,17 @@ class Client extends Aggregate
         }
 
         throw new \DomainException("Client does not have confirmation with uuid '$uuid'");
+    }
+
+    public function hasConfirmation(Confirmation\ConfirmationUuid $uuid): bool
+    {
+        foreach ($this->getConfirmations() as $confirmation) {
+            if ($confirmation->getUuid()->equalsTo($uuid)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function getId(): ClientId

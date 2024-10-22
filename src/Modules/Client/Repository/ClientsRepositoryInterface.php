@@ -13,4 +13,8 @@ interface ClientsRepositoryInterface
     public function delete(Entity\Client $client): void;
 
     public function get(Entity\ClientId $id): Entity\Client;
+
+    public function getByPhone(string $phone): Entity\Client;
+
+    public function getByConfirmation(Entity\Confirmation\ConfirmationUuid $confirmationUuid): Entity\Client;
 }
